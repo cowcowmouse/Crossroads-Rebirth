@@ -1,0 +1,20 @@
+; Engine configuration file.
+; Created by Godot Engine 4.5.1
+
+[application]
+config/name="Crossroads Rebirth"
+config/description="A band management narrative game"
+run/main_scene="res://scenes/main/main_scene.tscn"
+config/features=PackedStringArray("4.5")
+
+[autoload]
+SignalBus="*res://autoload/signal_bus.gd"
+ActionPointController="*res://autoload/action_point_controller.gd"
+ResourceManager="*res://autoload/resource_manager.gd"
+WeekCycleController="*res://autoload/week_cycle_controller.gd"
+
+[display]
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
