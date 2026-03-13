@@ -16,4 +16,4 @@ func _ready():
 
 func _on_back_pressed():
 	print("返回主场景")
-	get_tree().change_scene_to_file("res://scenes/main/main.tscn")
+	get_tree().change_scene_to_file("res:///project/scenes/main/main.tscn")

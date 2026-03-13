@@ -53,8 +53,8 @@ func _ready():
 
 func _on_arrow_left_pressed():
 	print("左箭头被点击")
-	get_tree().change_scene_to_file("res://scenes/lounge/lounge_scene.tscn")
+	get_tree().change_scene_to_file("res://project/scenes/lounge/lounge_scene.tscn")
 
 func _on_arrow_right_pressed():
 	print("右箭头被点击")
-	get_tree().change_scene_to_file("res://scenes/rehearsal/rehearsal_scene.tscn")
+	get_tree().change_scene_to_file("res://project/scenes/rehearsal/rehearsal_scene.tscn")
