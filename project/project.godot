@@ -32,3 +32,7 @@ window/stretch/mode="canvas_items"
 [dotnet]
 
 project/assembly_name="Crossroads Rebirth"
+
+[rendering]
+
+rendering_device/fallback_to_vulkan=false
