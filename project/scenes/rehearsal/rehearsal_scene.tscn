@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8uve8pei0ak7"]
+
+[ext_resource type="Texture2D" uid="uid://bhc1huc3q0bxh" path="res://scenes/rehearsal/images/practice-room.jpg" id="1_abjjs"]
+[ext_resource type="Script" uid="uid://bdpkroltk0uem" path="res://scenes/rehearsal/rehearsal_scene.gd" id="1_ow65r"]
+[ext_resource type="Texture2D" uid="uid://b76way3ijbuia" path="res://scenes/main/arrow_left.png" id="2_xw3uf"]
+
+[node name="rehearsal_scene" type="Node2D"]
+script = ExtResource("1_ow65r")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.657, 1.647)
+texture = ExtResource("1_abjjs")
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.755, 0.64)
+metadata/_edit_lock_ = true
+
+[node name="BackButton" type="TextureButton" parent="."]
+custom_minimum_size = Vector2(0.08, 0)
+offset_left = -1248.0
+offset_top = -76.0
+offset_right = -1083.0
+offset_bottom = 78.0
+texture_normal = ExtResource("2_xw3uf")
+ignore_texture_size = true
+stretch_mode = 5
