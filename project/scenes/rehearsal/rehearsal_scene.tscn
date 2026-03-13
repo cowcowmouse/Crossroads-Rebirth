@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://b8uve8pei0ak7"]
 
-[ext_resource type="Texture2D" uid="uid://bhc1huc3q0bxh" path="res://scenes/rehearsal/images/practice-room.jpg" id="1_abjjs"]
-[ext_resource type="Script" uid="uid://bdpkroltk0uem" path="res://scenes/rehearsal/rehearsal_scene.gd" id="1_ow65r"]
-[ext_resource type="Texture2D" uid="uid://b76way3ijbuia" path="res://scenes/main/arrow_left.png" id="2_xw3uf"]
+[ext_resource type="Texture2D" uid="uid://bhc1huc3q0bxh" path="res://project/scenes/rehearsal/images/practice-room.jpg" id="1_abjjs"]
+[ext_resource type="Script" uid="uid://bdpkroltk0uem" path="res://project/scenes/rehearsal/rehearsal_scene.gd" id="1_ow65r"]
+[ext_resource type="Texture2D" uid="uid://b76way3ijbuia" path="res://project/scenes/main/arrow_left.png" id="2_xw3uf"]
 
 [node name="rehearsal_scene" type="Node2D"]
 script = ExtResource("1_ow65r")
