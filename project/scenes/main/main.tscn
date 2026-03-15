@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://em05axaem0ia"]
+[gd_scene load_steps=7 format=3 uid="uid://em05axaem0ia"]
 
 [ext_resource type="Script" uid="uid://bkmekgpgq855c" path="res://project/scenes/main/main.gd" id="1_87m5t"]
 [ext_resource type="Texture2D" uid="uid://c4lvblykh1k4q" path="res://project/scenes/main/bar.jpg" id="1_hyk8p"]
-[ext_resource type="Texture2D" uid="uid://b76way3ijbuia" path="res://project/scenes/main/arrow_left.png" id="3_k2fmo"]
-[ext_resource type="Texture2D" uid="uid://rttn6ojxwk7b" path="res://project/scenes/main/arrow_right.png" id="4_l3cfh"]
+[ext_resource type="Texture2D" uid="uid://k5vrfjdrlmtm" path="res://project/scenes/main/arrow_left.png" id="3_k2fmo"]
+[ext_resource type="Texture2D" uid="uid://bamcwhpb2pfvc" path="res://project/scenes/main/arrow_right.png" id="4_l3cfh"]
+[ext_resource type="Script" uid="uid://dfl0os8qca18h" path="res://project/scenes/main/button.gd" id="5_wiwuw"]
+[ext_resource type="Script" uid="uid://d3biv27nvyji2" path="res://project/scenes/main/rehab_btn.gd" id="6_1hgs3"]
 
 [node name="main_scene" type="Node2D"]
 script = ExtResource("1_87m5t")
@@ -37,5 +39,107 @@ texture_normal = ExtResource("4_l3cfh")
 ignore_texture_size = true
 stretch_mode = 5
 
+[node name="Button" type="Button" parent="."]
+offset_left = -97.0
+offset_top = 497.0
+offset_right = 103.0
+offset_bottom = 568.0
+script = ExtResource("5_wiwuw")
+
+[node name="UILayer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -802.0
+offset_top = -626.0
+offset_right = -486.0
+offset_bottom = -565.0
+
+[node name="TopBar" type="HBoxContainer" parent="UILayer"]
+layout_mode = 0
+offset_left = -126.0
+offset_top = 101.0
+offset_right = -86.0
+offset_bottom = 141.0
+
+[node name="MoneyLabel" type="Label" parent="UILayer/TopBar"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+
+[node name="ReputaionLabel" type="Label" parent="UILayer/TopBar"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+
+[node name="ConhesionLabel" type="Label" parent="UILayer/TopBar"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+
+[node name="CreativityLabel" type="Label" parent="UILayer/TopBar"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+
+[node name="MemoryLabel" type="Label" parent="UILayer/TopBar"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+
+[node name="ActionPointLabel" type="Label" parent="UILayer/TopBar"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+
+[node name="RehabBtn" type="Button" parent="UILayer/TopBar"]
+layout_mode = 2
+text = "  进入康复中心🔜"
+
+[node name="Rehabpanel" type="Panel" parent="UILayer"]
+modulate = Color(0.8047426, 0.80474263, 0.8047426, 1)
+layout_mode = 0
+offset_left = 1002.0
+offset_top = 776.0
+offset_right = 1802.0
+offset_bottom = 1276.0
+script = ExtResource("6_1hgs3")
+
+[node name="TitleLabel" type="Label" parent="UILayer/Rehabpanel"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 174.0
+offset_bottom = 64.0
+theme_override_font_sizes/font_size = 24
+text = "康复训练中心"
+
+[node name="MemoryProgress" type="ProgressBar" parent="UILayer/Rehabpanel"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 80.0
+offset_right = 770.0
+offset_bottom = 107.0
+theme_override_colors/font_color = Color(0.9617985, 0.95734864, 0.76673377, 1)
+
+[node name="ProgressLabel" type="Label" parent="UILayer/Rehabpanel"]
+layout_mode = 0
+offset_left = 340.0
+offset_top = 110.0
+offset_right = 464.0
+offset_bottom = 133.0
+text = "记忆恢复度： 0%"
+
+[node name="StartRehabBtn" type="Button" parent="UILayer/Rehabpanel"]
+layout_mode = 0
+offset_left = 330.0
+offset_top = 150.0
+offset_right = 466.0
+offset_bottom = 181.0
+text = "开始记忆恢复训练"
+
+[node name="CloseBtn" type="Button" parent="UILayer/Rehabpanel"]
+layout_mode = 0
+offset_left = 720.0
+offset_top = 30.0
+offset_right = 770.0
+offset_bottom = 61.0
+text = "❌"
+
 [connection signal="pressed" from="ArrowLeft" to="." method="_on_texture_button_pressed"]
 [connection signal="pressed" from="ArrowRight" to="." method="_on_arrow_right_pressed"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="UILayer/TopBar/RehabBtn" to="." method="_on_rehab_trigger"]
