@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="DialogueGroup" load_steps=6 format=3 uid="uid://bk8fhvqic6dkk"]
+
+[ext_resource type="Script" uid="uid://bxirp0ad27qy4" path="res://project/scripts/managers/dialogue_group.gd" id="1_6sws5"]
+[ext_resource type="Script" uid="uid://bn72noxvbnvu5" path="res://project/scripts/managers/dialogue.gd" id="1_8dlia"]
+[ext_resource type="Texture2D" uid="uid://cn23vfrhlifju" path="res://project/scenes/main/调整图片透明背景 (1).png" id="1_lfwhb"]
+
+[sub_resource type="Resource" id="Resource_lfwhb"]
+script = ExtResource("1_8dlia")
+character_name = "老钉子"
+content = "你好，Alexi"
+avatar = ExtResource("1_lfwhb")
+show_on_left = true
+metadata/_custom_type_script = "uid://bn72noxvbnvu5"
+
+[sub_resource type="Resource" id="Resource_3b4qd"]
+script = ExtResource("1_8dlia")
+character_name = "老钉子"
+content = "1"
+avatar = ExtResource("1_lfwhb")
+show_on_left = true
+metadata/_custom_type_script = "uid://bn72noxvbnvu5"
+
+[resource]
+script = ExtResource("1_6sws5")
+dialogue_list = Array[Resource]([SubResource("Resource_lfwhb"), SubResource("Resource_3b4qd")])
+metadata/_custom_type_script = "uid://bxirp0ad27qy4"
