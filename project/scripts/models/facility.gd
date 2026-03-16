@@ -23,17 +23,17 @@ class_name Facility
 
 # 获取当前等级的升级成本
 func get_upgrade_cost() -> int:
-    if current_level >= max_level:
-        return 0
-    return int(base_upgrade_cost * pow(cost_multiplier, current_level - 1))
+	if current_level >= max_level:
+		return 0
+	return int(base_upgrade_cost * pow(cost_multiplier, current_level - 1))
 
 # 升级设施，返回是否成功
 func upgrade() -> bool:
-    if current_level >= max_level:
-        return false
-    current_level += 1
-    return true
+	if current_level >= max_level:
+		return false
+	current_level += 1
+	return true
 
 # 检查是否可升级
 func can_upgrade() -> bool:
-    return current_level < max_level
+	return current_level < max_level

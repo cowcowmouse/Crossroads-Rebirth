@@ -12,10 +12,10 @@ class_name CoreResource
 
 # 修改资源值，自动限制边界，返回实际变动值
 func modify_value(delta: int) -> int:
-    var old_value := value
-    value = clamp(value + delta, min_value, max_value)
-    return value - old_value
+	var old_value := value
+	value = clamp(value + delta, min_value, max_value)
+	return value - old_value
 
 # 获取当前值
 func get_value() -> int:
-    return value
+	return value

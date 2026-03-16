@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://em05axaem0ia"]
+[gd_scene load_steps=13 format=3 uid="uid://em05axaem0ia"]
 
 [ext_resource type="Script" uid="uid://bkmekgpgq855c" path="res://project/scenes/main/main.gd" id="1_87m5t"]
 [ext_resource type="Texture2D" uid="uid://c4lvblykh1k4q" path="res://project/scenes/main/bar.jpg" id="1_hyk8p"]
@@ -6,6 +6,12 @@
 [ext_resource type="Texture2D" uid="uid://bamcwhpb2pfvc" path="res://project/scenes/main/arrow_right.png" id="4_l3cfh"]
 [ext_resource type="Script" uid="uid://dfl0os8qca18h" path="res://project/scenes/main/button.gd" id="5_wiwuw"]
 [ext_resource type="Script" uid="uid://d3biv27nvyji2" path="res://project/scenes/main/rehab_btn.gd" id="6_1hgs3"]
+[ext_resource type="Texture2D" uid="uid://dtyvnw357ycvu" path="res://project/assets/images/ui/icons/money.png" id="6_da6bn"]
+[ext_resource type="Texture2D" uid="uid://dvoqy40o7v2ik" path="res://project/assets/images/ui/icons/Repuation.png" id="7_7hfd6"]
+[ext_resource type="Texture2D" uid="uid://cij15eq4ltmmb" path="res://project/assets/images/ui/icons/Cohesion.png" id="8_36qhc"]
+[ext_resource type="Texture2D" uid="uid://45rrp1pjqu55" path="res://project/assets/images/ui/icons/Creativity.png" id="9_nlgu0"]
+[ext_resource type="Texture2D" uid="uid://ysub1jlpwati" path="res://project/assets/images/ui/icons/Memory.png" id="10_ogan2"]
+[ext_resource type="Texture2D" uid="uid://djl65dvfn2url" path="res://project/assets/images/ui/icons/ActionPoint.png" id="11_j0ny1"]
 
 [node name="main_scene" type="Node2D"]
 script = ExtResource("1_87m5t")
@@ -49,94 +55,148 @@ script = ExtResource("5_wiwuw")
 [node name="UILayer" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -802.0
+offset_left = -811.0
 offset_top = -626.0
-offset_right = -486.0
+offset_right = -495.0
 offset_bottom = -565.0
 
 [node name="TopBar" type="HBoxContainer" parent="UILayer"]
-layout_mode = 0
-offset_left = -126.0
-offset_top = 101.0
-offset_right = -86.0
-offset_bottom = 141.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.13800001
+anchor_top = 1.0
+anchor_right = -0.13800001
+anchor_bottom = 1.0
+offset_left = -380.392
+offset_top = -263.0
+offset_right = 564.60803
+offset_bottom = -152.0
 
-[node name="MoneyLabel" type="Label" parent="UILayer/TopBar"]
+[node name="MoneyGroup" type="HBoxContainer" parent="UILayer/TopBar"]
+layout_mode = 2
+
+[node name="MoneyIcon" type="TextureRect" parent="UILayer/TopBar/MoneyGroup"]
+layout_mode = 2
+texture = ExtResource("6_da6bn")
+expand_mode = 2
+
+[node name="MoneyLabel" type="Label" parent="UILayer/TopBar/MoneyGroup"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 
-[node name="ReputaionLabel" type="Label" parent="UILayer/TopBar"]
+[node name="ReputationGroup" type="HBoxContainer" parent="UILayer/TopBar"]
+layout_mode = 2
+
+[node name="ReputationIcon" type="TextureRect" parent="UILayer/TopBar/ReputationGroup"]
+layout_mode = 2
+texture = ExtResource("7_7hfd6")
+expand_mode = 2
+
+[node name="ReputationLabel" type="Label" parent="UILayer/TopBar/ReputationGroup"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 
-[node name="ConhesionLabel" type="Label" parent="UILayer/TopBar"]
+[node name="CohesionGroup" type="HBoxContainer" parent="UILayer/TopBar"]
+layout_mode = 2
+
+[node name="CohesionIcon" type="TextureRect" parent="UILayer/TopBar/CohesionGroup"]
+layout_mode = 2
+texture = ExtResource("8_36qhc")
+expand_mode = 2
+
+[node name="CohesionLabel" type="Label" parent="UILayer/TopBar/CohesionGroup"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 
-[node name="CreativityLabel" type="Label" parent="UILayer/TopBar"]
+[node name="CreativityGroup" type="HBoxContainer" parent="UILayer/TopBar"]
+layout_mode = 2
+
+[node name="CreativityIcon" type="TextureRect" parent="UILayer/TopBar/CreativityGroup"]
+layout_mode = 2
+texture = ExtResource("9_nlgu0")
+expand_mode = 2
+
+[node name="CreativityLabel" type="Label" parent="UILayer/TopBar/CreativityGroup"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 
-[node name="MemoryLabel" type="Label" parent="UILayer/TopBar"]
+[node name="MemoryGroup" type="HBoxContainer" parent="UILayer/TopBar"]
+layout_mode = 2
+
+[node name="MemoryIcon" type="TextureRect" parent="UILayer/TopBar/MemoryGroup"]
+layout_mode = 2
+texture = ExtResource("10_ogan2")
+expand_mode = 2
+
+[node name="MemoryLabel" type="Label" parent="UILayer/TopBar/MemoryGroup"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 
-[node name="ActionPointLabel" type="Label" parent="UILayer/TopBar"]
+[node name="ActionPointGroup" type="HBoxContainer" parent="UILayer/TopBar"]
+layout_mode = 2
+
+[node name="ActionPointIcon" type="TextureRect" parent="UILayer/TopBar/ActionPointGroup"]
+layout_mode = 2
+texture = ExtResource("11_j0ny1")
+expand_mode = 2
+
+[node name="ActionPointLabel" type="Label" parent="UILayer/TopBar/ActionPointGroup"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 
 [node name="RehabBtn" type="Button" parent="UILayer/TopBar"]
 layout_mode = 2
-text = "  进入康复中心🔜"
+text = "查看个人状态🔜"
 
 [node name="Rehabpanel" type="Panel" parent="UILayer"]
+visible = false
 modulate = Color(0.8047426, 0.80474263, 0.8047426, 1)
 layout_mode = 0
-offset_left = 1002.0
-offset_top = 776.0
-offset_right = 1802.0
-offset_bottom = 1276.0
+offset_left = 43.0
+offset_top = 186.0
+offset_right = 1570.0
+offset_bottom = 1086.0
 script = ExtResource("6_1hgs3")
 
 [node name="TitleLabel" type="Label" parent="UILayer/Rehabpanel"]
 layout_mode = 0
-offset_left = 30.0
-offset_top = 30.0
-offset_right = 174.0
-offset_bottom = 64.0
+offset_left = 715.0
+offset_top = 68.0
+offset_right = 859.0
+offset_bottom = 102.0
 theme_override_font_sizes/font_size = 24
-text = "康复训练中心"
+text = "个人状态"
 
 [node name="MemoryProgress" type="ProgressBar" parent="UILayer/Rehabpanel"]
 layout_mode = 0
-offset_left = 30.0
-offset_top = 80.0
-offset_right = 770.0
-offset_bottom = 107.0
+offset_left = 397.0
+offset_top = 180.0
+offset_right = 1137.0
+offset_bottom = 207.0
 theme_override_colors/font_color = Color(0.9617985, 0.95734864, 0.76673377, 1)
 
 [node name="ProgressLabel" type="Label" parent="UILayer/Rehabpanel"]
 layout_mode = 0
-offset_left = 340.0
-offset_top = 110.0
-offset_right = 464.0
-offset_bottom = 133.0
+offset_left = 702.0
+offset_top = 130.0
+offset_right = 858.0
+offset_bottom = 179.0
 text = "记忆恢复度： 0%"
 
 [node name="StartRehabBtn" type="Button" parent="UILayer/Rehabpanel"]
 layout_mode = 0
-offset_left = 330.0
-offset_top = 150.0
-offset_right = 466.0
-offset_bottom = 181.0
+offset_left = 691.0
+offset_top = 835.0
+offset_right = 827.0
+offset_bottom = 866.0
 text = "开始记忆恢复训练"
 
 [node name="CloseBtn" type="Button" parent="UILayer/Rehabpanel"]
 layout_mode = 0
-offset_left = 720.0
-offset_top = 30.0
-offset_right = 770.0
-offset_bottom = 61.0
+offset_left = 1438.0
+offset_top = 17.0
+offset_right = 1488.0
+offset_bottom = 48.0
 text = "❌"
 
 [connection signal="pressed" from="ArrowLeft" to="." method="_on_texture_button_pressed"]

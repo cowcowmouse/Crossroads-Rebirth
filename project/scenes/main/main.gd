@@ -10,13 +10,19 @@ extends Node2D  # 核心：适配Node2D
 @onready var rehab_panel = $UILayer/Rehabpanel
 # 顶部康复触发按钮
 @onready var rehab_trigger_btn = $UILayer/TopBar/RehabBtn
-# 顶部UI状态标签（根据你的场景树补充）
-@onready var money_label = get_node_or_null("UILayer/TopBar/MoneyLabel")
-@onready var reputation_label = get_node_or_null("UILayer/TopBar/ReputationLabel")
-@onready var cohesion_label = get_node_or_null("UILayer/TopBar/CohesionLabel")
-@onready var creativity_label = get_node_or_null("UILayer/TopBar/CreativityLabel")
-@onready var memory_label = get_node_or_null("UILayer/TopBar/MemoryLabel")
-@onready var action_point_label = get_node_or_null("UILayer/TopBar/ActionPointLabel")
+# 顶部UI状态标签（这里改了文件结构，每个资源显示的UI单独开一组，方便设计单独图标）
+@onready var money_label = get_node_or_null("UILayer/TopBar/MoneyGroup/MoneyLabel")
+@onready var reputation_label = get_node_or_null("UILayer/TopBar/ReputationGroup/ReputationLabel")
+@onready var cohesion_label = get_node_or_null("UILayer/TopBar/CohesionGroup/CohesionLabel")
+@onready var creativity_label = get_node_or_null("UILayer/TopBar/CreativityGroup/CreativityLabel")
+@onready var memory_label = get_node_or_null("UILayer/TopBar/MemoryGroup/MemoryLabel")
+@onready var action_point_label = get_node_or_null("UILayer/TopBar/ActionPointGroup/ActionPointLabel")
+@onready var money_icon = get_node_or_null("UILayer/TopBar/MoneyGroup/MoneyIcon")
+@onready var reputation_icon = get_node_or_null("UILayer/TopBar/ReputationGroup/ReputationIcon")
+@onready var cohesion_icon = get_node_or_null("UILayer/TopBar/CohesionGroup/CohesionIcon")
+@onready var creativity_icon = get_node_or_null("UILayer/TopBar/CreativityGroup/CreativityIcon")
+@onready var memory_icon = get_node_or_null("UILayer/TopBar/MemoryGroup/MemoryIcon")
+@onready var action_point_icon = get_node_or_null("UILayer/TopBar/ActionPointGroup/ActionPointIcon")
 
 # ===================== 初始化 =====================
 func _ready():
@@ -81,17 +87,17 @@ func _ready():
 func init_top_ui():
 	# 初始化数值（你可以根据游戏逻辑修改）
 	if money_label:
-		money_label.text = "💰资金: 1000"
+		money_label.text = "资金: 1000"
 	if reputation_label:
-		reputation_label.text = "⭐声誉: 50"
+		reputation_label.text = "声誉: 50"
 	if cohesion_label:
-		cohesion_label.text = "🤝凝聚力: 30"
+		cohesion_label.text = "凝聚力: 30"
 	if creativity_label:
-		creativity_label.text = "🎸创造力: 40"
+		creativity_label.text = "创造力: 40"
 	if memory_label:
-		memory_label.text = "🧠记忆恢复度: 20"
+		memory_label.text = "记忆恢复度: 20"
 	if action_point_label:
-		action_point_label.text = "⚡行动点: 3/3"
+		action_point_label.text = "行动点: 3/3"
 
 # ===================== 箭头点击事件 =====================
 func _on_arrow_left_pressed():

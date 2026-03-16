@@ -26,12 +26,12 @@ class_name Member
 
 # 重置每周计数（周结算时调用）
 func reset_weekly_count():
-    weekly_chat_count = 0
+	weekly_chat_count = 0
 
 # 每日自然状态变化
 func daily_natural_change():
-    # 疲劳度自然增长
-    fatigue = clamp(fatigue + 2, 0, 100)
-    # 里奥清醒度自然下降
-    if member_id == "rio" and unlocked:
-        soberness = clamp(soberness - 10, 0, 100)
+	# 疲劳度自然增长
+	fatigue = clamp(fatigue + 2, 0, 100)
+	# 里奥清醒度自然下降
+	if member_id == "rio" and unlocked:
+		soberness = clamp(soberness - 10, 0, 100)
