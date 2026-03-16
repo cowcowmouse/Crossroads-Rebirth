@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://em05axaem0ia"]
+[gd_scene load_steps=17 format=3 uid="uid://em05axaem0ia"]
 
 [ext_resource type="Script" uid="uid://bkmekgpgq855c" path="res://project/scenes/main/main.gd" id="1_87m5t"]
 [ext_resource type="Texture2D" uid="uid://c4lvblykh1k4q" path="res://project/scenes/main/bar.jpg" id="1_hyk8p"]
@@ -12,6 +12,25 @@
 [ext_resource type="Texture2D" uid="uid://45rrp1pjqu55" path="res://project/assets/images/ui/icons/Creativity.png" id="9_nlgu0"]
 [ext_resource type="Texture2D" uid="uid://ysub1jlpwati" path="res://project/assets/images/ui/icons/Memory.png" id="10_ogan2"]
 [ext_resource type="Texture2D" uid="uid://djl65dvfn2url" path="res://project/assets/images/ui/icons/ActionPoint.png" id="11_j0ny1"]
+[ext_resource type="Texture2D" uid="uid://dolign0et7cb4" path="res://project/assets/images/ui/Individual/Bg.png" id="13_nlgu0"]
+[ext_resource type="FontFile" uid="uid://b004kl1b50uq5" path="res://project/assets/fonts/ui/new_font_file.tres" id="14_ogan2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_j0ny1"]
+line_spacing = 28.0
+paragraph_spacing = 26.0
+font = ExtResource("14_ogan2")
+font_size = 50
+font_color = Color(1, 1, 0.06666667, 1)
+outline_size = 25
+outline_color = Color(0.73730254, 0.61622345, 0.28295, 1)
+shadow_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_q5kvs"]
+font = ExtResource("14_ogan2")
+font_size = 45
+font_color = Color(0.9411765, 0.5137255, 0, 0.9372549)
+outline_size = 10
+outline_color = Color(1, 1, 0.23921569, 1)
 
 [node name="main_scene" type="Node2D"]
 script = ExtResource("1_87m5t")
@@ -158,45 +177,60 @@ offset_right = 1570.0
 offset_bottom = 1086.0
 script = ExtResource("6_1hgs3")
 
+[node name="Bg" type="TextureRect" parent="UILayer/Rehabpanel"]
+modulate = Color(1.5229772, 1.5229772, 1.5229772, 1)
+texture_filter = 2
+layout_mode = 0
+offset_left = -50.0
+offset_top = -117.0
+offset_right = 1599.0
+offset_bottom = 1050.0
+texture = ExtResource("13_nlgu0")
+
 [node name="TitleLabel" type="Label" parent="UILayer/Rehabpanel"]
 layout_mode = 0
-offset_left = 715.0
-offset_top = 68.0
-offset_right = 859.0
-offset_bottom = 102.0
+offset_left = 673.0
+offset_top = 215.0
+offset_right = 873.0
+offset_bottom = 284.0
 theme_override_font_sizes/font_size = 24
 text = "个人状态"
+label_settings = SubResource("LabelSettings_j0ny1")
 
 [node name="MemoryProgress" type="ProgressBar" parent="UILayer/Rehabpanel"]
 layout_mode = 0
-offset_left = 397.0
-offset_top = 180.0
-offset_right = 1137.0
-offset_bottom = 207.0
+offset_left = 394.0
+offset_top = 497.0
+offset_right = 1165.0
+offset_bottom = 547.0
 theme_override_colors/font_color = Color(0.9617985, 0.95734864, 0.76673377, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
 
 [node name="ProgressLabel" type="Label" parent="UILayer/Rehabpanel"]
 layout_mode = 0
-offset_left = 702.0
-offset_top = 130.0
-offset_right = 858.0
-offset_bottom = 179.0
+offset_left = 602.0
+offset_top = 342.0
+offset_right = 948.0
+offset_bottom = 405.0
 text = "记忆恢复度： 0%"
+label_settings = SubResource("LabelSettings_q5kvs")
 
 [node name="StartRehabBtn" type="Button" parent="UILayer/Rehabpanel"]
 layout_mode = 0
-offset_left = 691.0
-offset_top = 835.0
-offset_right = 827.0
-offset_bottom = 866.0
+offset_left = 645.0
+offset_top = 741.0
+offset_right = 893.0
+offset_bottom = 791.0
+theme_override_font_sizes/font_size = 30
 text = "开始记忆恢复训练"
 
 [node name="CloseBtn" type="Button" parent="UILayer/Rehabpanel"]
 layout_mode = 0
-offset_left = 1438.0
-offset_top = 17.0
-offset_right = 1488.0
-offset_bottom = 48.0
+offset_left = 1446.0
+offset_top = 28.0
+offset_right = 1533.0
+offset_bottom = 89.0
 text = "❌"
 
 [connection signal="pressed" from="ArrowLeft" to="." method="_on_texture_button_pressed"]

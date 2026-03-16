@@ -50,14 +50,18 @@ func _update_progress():
 	if memory_progress:
 		memory_progress.max_value = max_memory
 		memory_progress.value = current_memory
-	if progress_label:
-		progress_label.text = "记忆恢复度：{int(current_memory/max_memory*100)}%"
 
+	if progress_label:
+		var percent := 0
+		if max_memory > 0:
+			percent = int(float(current_memory) / max_memory * 100)
+
+		progress_label.text = "记忆恢复度：%d%%" % percent
 # 外部调用：增加记忆值（完成小游戏后调用）
 func add_memory(value: int):
 	current_memory = clamp(current_memory + value, 0, max_memory)
 	_update_progress()
-	print("📈 记忆值 +{value}，当前：{current_memory}")
+	print("记忆值 +%d，当前：%d" % [value, current_memory])
 
 # ===================== 按钮点击逻辑 =====================
 # 开始记忆化训练小游戏
