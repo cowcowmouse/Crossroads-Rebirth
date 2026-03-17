@@ -73,7 +73,6 @@ func _on_start_rehab():
 # 关闭面板
 func _on_close_panel():
 	hide_panel()
-	print("❌ 康复面板已隐藏")
 	
 	# 直接调用根场景的恢复方法
 	var main = get_tree().current_scene
