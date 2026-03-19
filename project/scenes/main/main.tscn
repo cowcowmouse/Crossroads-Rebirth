@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://bkmekgpgq855c" path="res://project/scenes/main/main.gd" id="1_87m5t"]
 [ext_resource type="Texture2D" uid="uid://c4lvblykh1k4q" path="res://project/scenes/main/bar.jpg" id="1_hyk8p"]
 [ext_resource type="PackedScene" uid="uid://dgnu5ega1avui" path="res://project/scenes/main/TutorialLayer.tscn" id="2_j0ny1"]
-[ext_resource type="Texture2D" uid="uid://k5vrfjdrlmtm" path="res://project/scenes/main/arrow_left.png" id="3_k2fmo"]
-[ext_resource type="Texture2D" uid="uid://bamcwhpb2pfvc" path="res://project/scenes/main/arrow_right.png" id="4_l3cfh"]
+[ext_resource type="Texture2D" uid="uid://k5vrfjdrlmtm" path="res://project/assets/images/ui/buttons/arrow_left.png" id="4_j0ny1"]
+[ext_resource type="Texture2D" uid="uid://bamcwhpb2pfvc" path="res://project/assets/images/ui/buttons/arrow_right.png" id="5_q5kvs"]
 [ext_resource type="Script" uid="uid://dfl0os8qca18h" path="res://project/scenes/main/button.gd" id="5_wiwuw"]
 [ext_resource type="Script" uid="uid://d3biv27nvyji2" path="res://project/scenes/main/rehab_btn.gd" id="6_1hgs3"]
 [ext_resource type="Texture2D" uid="uid://dtyvnw357ycvu" path="res://project/assets/images/ui/icons/money.png" id="6_da6bn"]
@@ -53,7 +53,7 @@ offset_left = -1271.0
 offset_top = -80.0
 offset_right = -1106.0
 offset_bottom = 74.0
-texture_normal = ExtResource("3_k2fmo")
+texture_normal = ExtResource("4_j0ny1")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -63,7 +63,7 @@ offset_left = 1095.0
 offset_top = -78.0
 offset_right = 1260.0
 offset_bottom = 76.0
-texture_normal = ExtResource("4_l3cfh")
+texture_normal = ExtResource("5_q5kvs")
 ignore_texture_size = true
 stretch_mode = 5
 

@@ -18,16 +18,46 @@
 - **版本控制**：Git + GitHub
 - **项目管理**：Scrum (2周Sprint)
 
-## 📁 项目结构
-Crossroads-Rebirth/
-├── docs/ # 项目文档
-├── project/ # Godot游戏项目
-│ ├── autoload/ # 全局单例
-│ ├── scenes/ # 场景文件
-│ ├── scripts/ # 业务脚本
-│ ├── assets/ # 美术资源
-│ └── configs/ # 配置文件
-├── tools/ # 开发工具
-└── .github/ # GitHub配置
----
-####
+# 乐队酒吧经营游戏
+
+## 项目结构
+project/
+├── assets/ # 美术资源（角色/UI/CG）
+├── audio/ # 音频文件（BGM/音效）
+├── scenes/ # 场景文件
+│ ├── main/ # 主场景
+│ ├── cutscene/ # 过场动画
+│ ├── lounge/ # 副场景1—休息室
+│ ├── rehearsal/ # 副场景2—排练室
+│ ├── facility/ # 设施模块（B负责）
+│ ├── member/ # 成员模块（C负责）
+│ ├── minigame/ # 小游戏模块（D负责）
+│ ├── event/ # 事件模块（E负责）
+│ └── shared/ # 共享组件
+├── scripts/ # 脚本文件
+│ ├── autoload/ # 全局单例（A负责）
+│ ├── modules/ # 功能模块
+│ │ ├── facility/ # 设施模块（B）
+│ │ ├── member/ # 成员模块（C）
+│ │ └── minigame/ # 小游戏模块（D）    
+│ │ └── event/ # 事件模块（E）
+│ └── utils/ # 工具脚本
+├── data/ # 配置文件
+│ ├── config/ # 游戏配置 (A)
+│ ├── facilities/ # 设施数据（B）
+│ ├── members/ # 成员数据（C）
+│ └── minigame/ # 小游戏数据（D）
+│ └── events/ # 事件数据 （E）
+└── docs/ # 文档
+└── Tests/ # 测试
+	├── Resources/
+	└── Unit/
+
+## 分工
+- **A（LXZ）**：`scripts/autoload/` - 全局单例、流程控制
+- **B（QZH）**：`scenes/facility/` + `scripts/modules/facility/` - 设施模块
+- **C（CHP）**：`scenes/member/` + `scripts/modules/member/` - 成员/UI模块
+- **D（ZYY）**：`scenes/event/MiniGame.tscn` - 小游戏模块
+- **E（LZX）**：`scenes/event/` + `scripts/modules/event/` - 事件模块
+## 接口文档
+详见 `docs/INTERFACE.md`

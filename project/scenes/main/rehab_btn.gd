@@ -85,10 +85,3 @@ func _on_close_panel():
 		if get_parent().has_method("_on_rehab_panel_closed"):
 			get_parent()._on_rehab_panel_closed()
 			print("✅ 调用父节点方法成功")
-
-## ===================== 面板交互控制 =====================
-## 阻止点击面板外区域穿透（可选）
-#func _input_event(viewport, event, shape_idx):
-	#if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		## 点击面板内才响应，点击面板外不处理
-		#pass

@@ -30,7 +30,7 @@
 &"portraits": {
 "Default": {
 "export_overrides": {
-"image": "\"res://project/scenes/main/调整图片透明背景 (1).png\""
+"image": "\"res://project/assets/character/调整图片透明背景 (1).png\""
 },
 "mirror": false,
 "offset": Vector2(0, 0),
