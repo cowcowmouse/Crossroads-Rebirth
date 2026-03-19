@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dgnu5ega1avui"]
 
 [ext_resource type="Script" uid="uid://btcr2pvau8bqy" path="res://project/scenes/main/TutorialLayer.gd" id="1_g0i27"]
-[ext_resource type="Shader" uid="uid://fdwt5jkjfidw" path="res://Shader/highlight_mask.gdshader" id="2_m0dl7"]
+[ext_resource type="Shader" uid="uid://fdwt5jkjfidw" path="res://project/assets/Shader/highlight_mask.gdshader" id="2_m0dl7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5w2yy"]
 shader = ExtResource("2_m0dl7")
