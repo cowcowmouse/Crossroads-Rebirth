@@ -60,4 +60,4 @@ project/
 - **D（ZYY）**：`scenes/event/MiniGame.tscn` - 小游戏模块
 - **E（LZX）**：`scenes/event/` + `scripts/modules/event/` - 事件模块
 ## 接口文档
-详见 `docs/INTERFACE.md`
+详见 `project/docs/INTERFACE.md`
