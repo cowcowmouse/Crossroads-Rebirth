@@ -61,3 +61,8 @@ project/
 - **E（LZX）**：`scenes/event/` + `scripts/modules/event/` - 事件模块
 ## 接口文档
 详见 `project/docs/INTERFACE.md`
+
+## Git分支规范
+- `main` - 主分支，稳定版本
+- `develop` - 开发分支
+- `feature/模块名` - 各功能分支

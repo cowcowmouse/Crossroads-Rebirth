@@ -17,11 +17,10 @@ config/features=PackedStringArray("4.5")
 
 [autoload]
 
-Constants="*res://scripts/utils/constants.gd"
-SignalBus="*res://autoload/signal_bus.gd"
-ActionPointController="*res://autoload/action_point_controller.gd"
-ResourceManager="*res://autoload/resource_manager.gd"
-WeekCycleController="*res://autoload/week_cycle_controller.gd"
+Constants="*res://project/scripts/autoload/Constants.gd"
+EventBus="*res://project/scripts/autoload/EventBus.gd"
+ResourceManager="*res://project/scripts/autoload/ResourceManager.gd"
+GameManager="*res://project/scripts/autoload/GameManager.gd"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 
 [dialogic]
