@@ -1,0 +1,64 @@
+[gd_scene load_steps=2 format=3 uid="uid://qvf8llp2hilo"]
+
+[ext_resource type="Script" uid="uid://7bt3t17i5155" path="res://project/scenes/facility/FacilityPanel.gd" id="1_u04ss"]
+
+[node name="FacilityPanel" type="Panel"]
+custom_minimum_size = Vector2(420, 260)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = -130.0
+offset_right = 322.0
+offset_bottom = 228.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u04ss")
+
+[node name="Bg" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(1, 1, 0.7294118, 1)
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 225.0
+offset_top = 6.0
+offset_right = 289.0
+offset_bottom = 29.0
+text = "设施名称"
+
+[node name="LevelLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 214.0
+offset_top = 165.0
+offset_right = 304.0
+offset_bottom = 188.0
+text = "当前等级：1"
+
+[node name="CostLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 206.0
+offset_top = 317.0
+offset_right = 314.0
+offset_bottom = 340.0
+text = "升级费用：500"
+
+[node name="UpgradeButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 244.0
+offset_top = 258.0
+offset_right = 284.0
+offset_bottom = 289.0
+text = "升级"
+
+[node name="CloseButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 495.0
+offset_top = 2.0
+offset_right = 535.0
+offset_bottom = 33.0
+text = "关闭"

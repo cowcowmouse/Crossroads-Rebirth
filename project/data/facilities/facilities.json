@@ -1,0 +1,34 @@
+{
+  "stage": {
+	"name": "舞台",
+	"level": 1,
+	"max_level": 3,
+	"costs": [0, 500, 800, 1200],
+	"weight_type": "art",
+	"weight_gain": [0, 1, 1, 2]
+  },
+  "bar": {
+	"name": "酒吧",
+	"level": 1,
+	"max_level": 3,
+	"costs": [0, 500, 800, 1200],
+	"weight_type": "business",
+	"weight_gain": [0, 1, 1, 2]
+  },
+  "rehearsal": {
+	"name": "排练室",
+	"level": 1,
+	"max_level": 3,
+	"costs": [0, 500, 800, 1200],
+	"weight_type": "art",
+	"weight_gain": [0, 1, 1, 2]
+  },
+  "lounge": {
+	"name": "休息室",
+	"level": 1,
+	"max_level": 3,
+	"costs": [0, 500, 800, 1200],
+	"weight_type": "human",
+	"weight_gain": [0, 1, 1, 2]
+  }
+}

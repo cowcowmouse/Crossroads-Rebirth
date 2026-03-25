@@ -26,6 +26,13 @@ extends Node2D  # 核心：适配Node2D
 
 @onready var tutorial_layer = $TutorialLayer
 
+@onready var action_skip_panel = $UILayer/TopBar/ActionSkipPanel
+@onready var clock_icon = $UILayer/TopBar/ClockIcon
+@onready var skip_button = $UILayer/SkipButton
+
+# 管理器引用
+@onready var week_cycle = get_node("/root/WeekCycleManager")
+@onready var skip_panel_manager = get_node("/root/SkipPanelManager")
 # 安全等待函数，避免 null 错误
 func safe_wait_frames(frame_count: int):
 	for i in range(frame_count):
@@ -90,8 +97,159 @@ func _ready():
 	
 	# 验证分组
 	check_groups()
+	
+	# 初始化周循环
+	_init_week_cycle()
+	
+	# 初始化跳过面板
+	_init_skip_panel()
+	
+	# 初始化时钟显示
+	_init_clock_display()
+	
+	# 连接信号
+	_connect_week_cycle_signals()
+	
+	# 连接跳过按钮
+	if skip_button:
+		skip_button.pressed.connect(_on_skip_button_pressed)
+		
+func _init_week_cycle():
+	if not week_cycle:
+		print("❌ WeekCycleManager 未找到")
+		return
+	
+	# 不要强制设置阶段，保持 WeekCycleManager 当前阶段
+	# week_cycle.set_phase(week_cycle.GamePhase.BEFORE_WEEK)  # 删除这行
+	
+	# 只更新显示
+	_update_action_point_display(week_cycle.get_action_points(), 3)
+	
+	# 根据当前阶段更新UI
+	match week_cycle.get_current_phase():
+		0:
+			print("当前阶段: 周前")
+		1:
+			print("当前阶段: 周中")
+			_set_operation_ui_enabled(false)
+		2:
+			print("当前阶段: 周后")
+			_set_operation_ui_enabled(false)
+			
+func _init_skip_panel():
+	if action_skip_panel and skip_panel_manager:
+		skip_panel_manager.register_panel(action_skip_panel)
+		skip_panel_manager.skip_to_next_phase.connect(_on_skip_to_next_phase)
 
+func _init_clock_display():
+	# 时钟显示已在 clock_display.gd 中处理
+	pass
 
+func _connect_week_cycle_signals():
+	if week_cycle:
+		week_cycle.phase_changed.connect(_on_game_phase_changed)
+		week_cycle.action_points_updated.connect(_on_action_points_updated)
+
+func _on_game_phase_changed(phase):
+	match phase:
+		0:  # BEFORE_WEEK
+			print("进入周前阶段 - 玩家可以操作")
+			_set_operation_ui_enabled(true)
+			if skip_panel_manager:
+				skip_panel_manager.hide_skip_panel()
+		1:  # MID_WEEK
+			print("进入周中阶段 - 触发事件")
+			_set_operation_ui_enabled(false)
+			_trigger_mid_week_event()
+		2:  # AFTER_WEEK
+			print("进入周后阶段 - 等待用户点击跳过按钮结算")
+			_set_operation_ui_enabled(false)
+			# 移除自动结算，只显示提示
+			# 让用户点击跳过按钮来触发结算
+
+func _on_action_points_updated(current: int, max: int):
+	_update_action_point_display(current, max)
+	
+	# 如果行动点为0，显示强制跳过面板
+	if current == 0:
+		if skip_panel_manager:
+			skip_panel_manager.show_skip_panel(true)
+
+func _update_action_point_display(current: int, max: int):
+	if action_point_label:
+		action_point_label.text = "行动点: %d/%d" % [current, max]
+	
+	# 行动点耗尽时改变颜色
+	if current == 0 and action_point_label:
+		action_point_label.modulate = Color.RED
+
+func _set_operation_ui_enabled(enabled: bool):
+	# 禁用/启用设施升级按钮
+	var facility_panel = $UILayer/FacilityPanel
+	if facility_panel and facility_panel.upgrade_button:
+		facility_panel.upgrade_button.disabled = not enabled
+	
+	# 禁用/启用康复按钮
+	if rehab_trigger_btn:
+		rehab_trigger_btn.disabled = not enabled
+	
+	# 禁用/启用成员对话按钮（如果有）
+	# 可以根据需要添加更多
+
+func _trigger_mid_week_event():
+	print("触发周中事件...")
+	
+	# 测试：直接加载 test_event.tscn 场景
+	get_tree().change_scene_to_file("res://project/Tests/test_event.tscn")
+
+func _execute_weekly_settlement():
+	print("执行周结算...")
+	
+	# 1. 扣除固定支出
+	var expense = ResourceManager.get_weekly_expense()
+	ResourceManager.add_money(-expense)
+	print("扣除每周支出: ", expense)
+	
+	# 2. 增加酒吧收入（暂用固定值，等设施系统完善后替换）
+	var bar_income = 1500
+	ResourceManager.add_money(bar_income)
+	print("酒吧收入: ", bar_income)
+	
+	# 3. 成员状态自然变化
+	ResourceManager.apply_member_natural_change()
+	
+	# 4. 检查游戏结束条件
+	_check_game_over()
+	
+	# 5. 结算完成，进入下一周
+	await get_tree().create_timer(3.0).timeout
+	week_cycle.complete_week_settlement()
+
+func _check_game_over():
+	var money = ResourceManager.get_resource_value(Constants.RES_MONEY)
+	var cohesion = ResourceManager.get_resource_value(Constants.RES_COHESION)
+	
+	if money <= 0:
+		print("游戏结束：资金耗尽")
+		EventBus.game_over.emit("bankrupt")
+	elif cohesion <= 0:
+		print("游戏结束：成员解散")
+		EventBus.game_over.emit("band_broken")
+
+func _on_skip_to_next_phase():
+	# 手动跳过当前阶段
+	if week_cycle.get_current_phase() == week_cycle.GamePhase.BEFORE_WEEK:
+		week_cycle.force_to_mid_week()
+	elif week_cycle.get_current_phase() == week_cycle.GamePhase.MID_WEEK:
+		week_cycle.complete_mid_week()
+	elif week_cycle.get_current_phase() == week_cycle.GamePhase.AFTER_WEEK:
+		week_cycle.complete_week_settlement()
+
+# 手动进入周中（可选：右下角按钮）
+func _on_skip_to_mid_week_pressed():
+	if week_cycle and week_cycle.get_current_phase() == week_cycle.GamePhase.BEFORE_WEEK:
+		week_cycle.force_to_mid_week()
+		
 func connect_dialogic_signals():
 	print("\n=== 连接 Dialogic 信号 ===")
 	
@@ -197,37 +355,40 @@ func start_tutorial():
 # ===================== 顶部UI初始化 =====================
 func init_top_ui():
 	# 初始化数值（你可以根据游戏逻辑修改）
-	if money_label:
-		money_label.text = "资金: 1000"
+	FacilityManager._refresh_topbar()
+
 	if reputation_label:
 		reputation_label.text = "声誉: 50"
+
 	if cohesion_label:
 		cohesion_label.text = "凝聚力: 30"
+
 	if creativity_label:
 		creativity_label.text = "创造力: 40"
+
 	if memory_label:
 		memory_label.text = "记忆恢复度: 20"
-	if action_point_label:
-		action_point_label.text = "行动点: 3/3"
 
 # ===================== 箭头点击事件 =====================
 func _on_arrow_left_pressed():
 	print("左箭头被点击")
-	
-	# 隐藏引导层
+
+	$UILayer/FacilityPanel.close_panel()
+
 	if tutorial_layer:
 		tutorial_layer.hide_all()
-	
-	# 切换场景
+
 	get_tree().change_scene_to_file("res://project/scenes/lounge/lounge_scene.tscn")
+
 
 func _on_arrow_right_pressed():
 	print("右箭头被点击")
-	
+
+	$UILayer/FacilityPanel.close_panel()
+
 	if tutorial_layer and tutorial_layer.visible:
 		tutorial_layer.on_button_clicked(arrow_right)
-	
-	# 切换场景
+
 	get_tree().change_scene_to_file("res://project/scenes/rehearsal/rehearsal_scene.tscn")
 
 # ===================== 对话按钮事件 =====================
@@ -248,7 +409,10 @@ func _on_rehab_panel_closed():
 	print("当前按钮状态 - 对话按钮: ", button.disabled if button else "不存在")
 
 	_set_ui_enabled(true)
-
+	# 消耗行动点
+	if week_cycle:
+		week_cycle.consume_action_point()
+		
 	# 再次检查设置后的状态
 	print("设置后状态 - 左箭头: ", arrow_left.disabled if arrow_left else "不存在")
 	print("设置后状态 - 右箭头: ", arrow_right.disabled if arrow_right else "不存在")
@@ -276,3 +440,25 @@ func _set_ui_enabled(enabled: bool):
 	else:
 		print("警告: button 为 null")
 	
+# ===================== 设施升级后消耗行动点 =====================
+# 在 FacilityPanel 升级成功后，需要通知主场景消耗行动点
+func on_facility_upgraded():
+	if week_cycle:
+		week_cycle.consume_action_point()
+
+func _on_skip_button_pressed():
+	print("跳过按钮被点击")
+	if week_cycle:
+		# 强制进入下一阶段
+		match week_cycle.get_current_phase():
+			week_cycle.GamePhase.BEFORE_WEEK:
+				print("强制从周前跳到周中")
+				week_cycle.force_to_mid_week()
+			week_cycle.GamePhase.MID_WEEK:
+				print("强制从周中跳到周后")
+				week_cycle.complete_mid_week()
+			week_cycle.GamePhase.AFTER_WEEK:
+				print("强制完成周结算")
+				_execute_weekly_settlement()  # 直接调用结算函数
+
+# ===================== 周中事件触发 =====================

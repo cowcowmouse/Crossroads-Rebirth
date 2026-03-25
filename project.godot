@@ -22,11 +22,15 @@ EventBus="*res://project/scripts/autoload/EventBus.gd"
 ResourceManager="*res://project/scripts/autoload/ResourceManager.gd"
 GameManager="*res://project/scripts/autoload/GameManager.gd"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
+FacilityManager="*res://project/scripts/models/facility/FacilityManager.gd"
+WeekCycleManager="*res://project/scripts/autoload/WeekCycleManager.gd"
+SkipPanelManager="*res://project/scripts/autoload/SkipPanelManager.gd"
+ClockState="*res://project/scripts/autoload/ClockState.gd"
 
 [dialogic]
 
 directories/dch_directory={
-"Resources/unit_test_character": "res://project/Tests/Resources/unit_test_character.dch",
+"unit_test_character": "res://project/Tests/Resources/unit_test_character.dch",
 "老钉子": "res://老钉子.dch"
 }
 directories/dtl_directory={

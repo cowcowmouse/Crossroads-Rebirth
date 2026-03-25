@@ -237,7 +237,8 @@ static func check_prerequisite(facility_type: String, target_level: int, current
 	if FACILITY_PREREQUISITES.has(facility_type):
 		var prereqs = FACILITY_PREREQUISITES[facility_type]
 		if prereqs.has(target_level):
-			for req_type, req_level in prereqs[target_level]:
+			for req_type: String in prereqs[target_level]:
+				var req_level: int = prereqs[target_level][req_type]
 				if current_levels.get(req_type, 0) < req_level:
 					return false
 	return true

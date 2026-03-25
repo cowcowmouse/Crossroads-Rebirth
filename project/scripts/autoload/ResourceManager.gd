@@ -280,3 +280,16 @@ func _check_resource_boundary_event(resource_name: String, new_value: int):
 			if new_value < 10:
 				print("警告：创造力过低，无法进行艺术操作！")
 				event_bus.resource_warning.emit(resource_name, new_value, "low")
+
+# ===================== 周结算相关 =====================
+
+# 每周固定支出（租金+工资）
+const WEEKLY_EXPENSE = 1500
+
+# 执行每周扣款
+func apply_weekly_expense() -> bool:
+	return add_money(-WEEKLY_EXPENSE)
+
+# 获取每周支出金额
+func get_weekly_expense() -> int:
+	return WEEKLY_EXPENSE
