@@ -31,6 +31,6 @@
 - [GDScript 参考](https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/)
 - [项目结构说明](../README.md)
 
-##关于后续所有的图片上传，png 等格式文件无法直接上传，原因是github自带的
+##关于后续所有的图片上传，png 等格式文件无法直接上传，也有可能会自动上传到main主文件里面，原因是github自带的
 插件报错，因此图片(以后尽量都用png格式文件，如果是jpg等其他格式要提前说明)
 需要先转换成文本文档再上传到github上。各位下载完的时候要转换成png后缀。
