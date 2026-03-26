@@ -113,7 +113,9 @@ func _ready():
 	# 连接跳过按钮
 	if skip_button:
 		skip_button.pressed.connect(_on_skip_button_pressed)
-		
+	
+	EventBus.minigame_finished.connect(_on_minigame_finished)
+	
 func _init_week_cycle():
 	if not week_cycle:
 		print("❌ WeekCycleManager 未找到")
@@ -164,6 +166,7 @@ func _on_game_phase_changed(phase):
 		2:  # AFTER_WEEK
 			print("进入周后阶段 - 等待用户点击跳过按钮结算")
 			_set_operation_ui_enabled(false)
+			_enter_minigame()
 			# 移除自动结算，只显示提示
 			# 让用户点击跳过按钮来触发结算
 
@@ -462,3 +465,72 @@ func _on_skip_button_pressed():
 				_execute_weekly_settlement()  # 直接调用结算函数
 
 # ===================== 周中事件触发 =====================
+# ===================== 小游戏相关 =====================
+
+func _enter_minigame():
+	"""进入小游戏场景"""
+	print("进入小游戏场景...")
+	
+	# 切换到小游戏场景
+	get_tree().change_scene_to_file("res://project/scenes/minigame/game_level.tscn")
+
+func _on_minigame_finished(score: int, rank: String):
+	"""小游戏结束回调"""
+	print("小游戏结束，得分: ", score, " 评级: ", rank)
+	
+	# 根据评级计算奖励
+	var reward = _calculate_minigame_reward(rank)
+	
+	# 应用奖励
+	if reward.money != 0:
+		ResourceManager.add_money(reward.money)
+		print("获得资金: ", reward.money)
+	if reward.cohesion != 0:
+		ResourceManager.add_cohesion(reward.cohesion)
+		print("获得凝聚力: ", reward.cohesion)
+	if reward.creativity != 0:
+		ResourceManager.add_creativity(reward.creativity)
+		print("获得创造力: ", reward.creativity)
+	
+	# 切换回主场景
+	get_tree().change_scene_to_file("res://project/scenes/main/Main.tscn")
+	
+	# 等待场景切换完成
+	await get_tree().process_frame
+	
+	# 执行周末结算
+	_execute_weekly_settlement()
+
+func _calculate_minigame_reward(rank: String) -> Dictionary:
+	"""根据评级计算奖励"""
+	var reward = {
+		"money": 0,
+		"cohesion": 0,
+		"creativity": 0
+	}
+	
+	match rank:
+		"S":
+			reward.money = 2000
+			reward.cohesion = 15
+			reward.creativity = 10
+			print("S级评价！完美通关！")
+		"A":
+			reward.money = 1500
+			reward.cohesion = 10
+			reward.creativity = 5
+			print("A级评价！表现优秀！")
+		"B":
+			reward.money = 1000
+			reward.cohesion = 5
+			print("B级评价！表现良好！")
+		"C":
+			reward.money = 500
+			reward.cohesion = 2
+			print("C级评价！继续努力！")
+		"D":
+			reward.money = 0
+			reward.cohesion = -3
+			print("D级评价！表现不佳...")
+	
+	return reward

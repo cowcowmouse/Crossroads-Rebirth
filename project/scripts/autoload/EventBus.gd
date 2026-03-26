@@ -19,7 +19,7 @@ signal event_option_chosen(event_id: String, option_index: int)
 
 # ==================== 小游戏相关信号 ====================
 signal minigame_started(game_type: String, difficulty: String)
-signal minigame_finished(game_type: String, star_rating: int, score: float)
+signal minigame_finished(score: int, rank: String)
 signal minigame_skipped(game_type: String)
 
 # ==================== 周结算相关信号 ====================

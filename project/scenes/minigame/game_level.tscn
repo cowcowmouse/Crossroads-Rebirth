@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://dhisku2uhekdl"]
+
+[ext_resource type="Texture2D" uid="uid://bqrf40aj84y62" path="res://project/assets/images/minigame/fnf-daddy-dearest-stage-background.jpg" id="1_i35hq"]
+[ext_resource type="PackedScene" uid="uid://buaq1wr5sx2dm" path="res://project/scripts/models/minigame/key_listener.tscn" id="2_odag6"]
+[ext_resource type="PackedScene" uid="uid://d0qp3tw2litvc" path="res://project/scenes/minigame/game_ui.tscn" id="3_7a2iq"]
+[ext_resource type="PackedScene" uid="uid://dejr03dgxupvd" path="res://project/scripts/models/minigame/level_editor.tscn" id="5_83jmp"]
+
+[sub_resource type="Environment" id="Environment_i5mjo"]
+background_mode = 3
+glow_enabled = true
+glow_blend_mode = 1
+
+[node name="GameLevel" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Background" type="Sprite2D" parent="."]
+scale = Vector2(0.635, 0.635)
+texture = ExtResource("1_i35hq")
+
+[node name="KeyListener" parent="." instance=ExtResource("2_odag6")]
+position = Vector2(-120, 280)
+key_name = "input_Left"
+
+[node name="KeyListener2" parent="." instance=ExtResource("2_odag6")]
+position = Vector2(-40, 280)
+frame = 1
+key_name = "input_Down"
+
+[node name="KeyListener3" parent="." instance=ExtResource("2_odag6")]
+position = Vector2(40, 280)
+frame = 2
+key_name = "input_Up"
+
+[node name="KeyListener4" parent="." instance=ExtResource("2_odag6")]
+position = Vector2(120, 280)
+frame = 3
+key_name = "input_Right"
+
+[node name="GameUI" parent="." instance=ExtResource("3_7a2iq")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_i5mjo")
+
+[node name="LevelEditor" parent="." instance=ExtResource("5_83jmp")]
