@@ -1,10 +1,10 @@
 extends Control
 
 # 评级规则（可根据你的需求修改分数阈值）
-const RANK_S: int = 18900  # 90%以上
-const RANK_A: int = 15750  # 75%以上
-const RANK_B: int = 12600  # 60%以上
-const RANK_C: int = 8400   # 40%以上
+const RANK_S: int = 12000  # 90%以上
+const RANK_A: int = 10000  # 75%以上
+const RANK_B: int = 8000  # 60%以上
+const RANK_C: int = 6000   # 40%以上
 # 低于8400为D级
 
 func _ready():
