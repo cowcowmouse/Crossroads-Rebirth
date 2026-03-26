@@ -1,11 +1,11 @@
 extends Control
 
-# 评级规则（可根据你的需求修改分数阈值）
+# 评级规则（可根据需求修改分数阈值）
 const RANK_S: int = 12000  # 90%以上
 const RANK_A: int = 10000  # 75%以上
 const RANK_B: int = 8000  # 60%以上
 const RANK_C: int = 6000   # 40%以上
-# 低于8400为D级
+# 低于6000为D级
 
 func _ready():
 	# 绑定重新开始按钮的点击事件
@@ -23,7 +23,7 @@ func show_result(final_score: int, max_combo: int):
 	var score_label = get_node_or_null("ScoreLabel")
 	var combo_label = get_node_or_null("MaxComboLabel")
 
-	# 精准报错，直接告诉你哪个节点名字错了
+	# 精准报错
 	if not is_instance_valid(rank_label):
 		print("错误：找不到RankLabel节点！请检查场景里的节点名是否完全一致")
 		return
