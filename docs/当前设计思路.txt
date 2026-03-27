@@ -1,0 +1,39 @@
+Global Data and Resource Management
+
+The data folder must contain game resource values and directional data files. These files will serve as global data, initialized with default values, and should be easily accessible and modifiable by related events/actions throughout the game. Any changes to resources should be instantly reflected in the "backend data management."
+
+Overall size adjustments: The scale of different scenes needs to be unified.
+Data integration: Needs to be completed.
+Event System
+Folder: All events should be placed in the event folder.
+Data synchronization: The values that are affected by these events should directly reflect changes in the backend data. For instance, if an event increases funds, the backend’s money value should change in real time (this should be reflected in the data files, but UI integration is not necessary at this stage).
+Event Pool Structure
+Simulation format: Initially simulate the system, where three dimensions influence event pool triggering: Art, Human, Business. These values should directly modify the current game backend values to facilitate testing.
+Event Pool Logic: The event pool will trigger events based on thresholds (e.g., below 50 in any of the dimensions triggers a pool related to that dimension). Events with different settlement probabilities need to be defined for each pool.
+Triggering Logic: The system should randomly select an event from each pool, but each event should have a unique trigger condition (e.g., low cohesion or funds).
+Weekend Settlement Panel
+The settlement panel needs to be enhanced with background images and real-time feedback on current information. A basic data display format is needed, though future revisions may include hidden or dynamic data elements.
+The fixed weekly consumption needs to be calculated during this phase and adjusted according to facility upgrades.
+Mini-game integration: The mini-game’s impact on resources must be reflected in real-time. Consider adding a "skip" button to make the mini-game enjoyable, rewarding, and meaningful.
+Character System
+Characters must have basic idle animations and specific positions on the main screens, with each character displaying at least one idle animation.
+Clicking on a character should open their data panel.
+Character Data: This data should be stored in separate files within the backend (not all in one file).
+Dialogue Options: The data panel must include dialogue options. Clicking on a dialogue option should trigger different dialogues depending on the relationship stage (e.g., Stranger, Accepted, Familiar). Initially, the first dialogue of the week should increase the relationship value, with subsequent dialogues not affecting it.
+Recruitment System
+When a character’s relationship reaches Stage 2, a "Recruit" option will be available in their panel. This will consume action points, and recruitment should be set to be successful.
+A recruited character's avatar should appear on the main screen. You may need a triangle icon to trigger the "member avatar" dropdown.
+Two Options for Member Interaction:
+Resource Impact: Set members to affect the resources of the current cycle. Different members appear in different weeks, with their probability of appearing being dependent on certain criteria. Once recruited, members appear in locations like the practice room or resting room.
+Event Collection: Assign specific events to each member. These events should be triggered during the mid-week phase.
+Each member can only trigger one personal event (core events are paused).
+Character Event Pool: Each member will have three stages of events that represent different levels of interaction.
+Test this by manually modifying the relationship value with a member and observing if the events trigger according to relationship stages.
+Business System
+Buttons should be integrated into textures to trigger corresponding panels. You need to design the resource consumption for different facility levels.
+Upgrades should take one week to take effect.
+Upgrading textures should change or include "under maintenance" indicators.
+Facilities in maintenance should calculate resources as though they were at their previous level.
+Level gains should be different for each facility. Facilities like the bar and stage should have their levels balanced, while other equipment levels should not exceed the main facilities.
+Main Character Panel: Move the memory recovery UI to the character’s status panel, reserving space for a mini-game interface. Create a basic mini-game to track memory recovery and include a CG image.
+The memory recovery UI should show the character’s portrait with differences based on their recovery level. The input should allow direct modification of the memory recovery value to observe the differences.
