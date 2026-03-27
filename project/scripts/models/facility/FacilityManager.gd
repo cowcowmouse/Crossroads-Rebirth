@@ -1,15 +1,11 @@
 extends Node
 
-var money: int = 1000
-var action_points: int = 3
 var facility_data: Dictionary = {}
-
-
 
 func _ready():
 	print("FacilityManager 的 _ready 已执行")
 	_load_facility_data()
-	_refresh_topbar()
+	ResourceManager.refresh_current_scene_topbar()
 
 func _load_facility_data():
 	var path = "res://project/data/facilities/facilities.json"
@@ -34,42 +30,29 @@ func _load_facility_data():
 	facility_data = json.data
 	print("设施数据已加载：", facility_data)
 
-func _refresh_topbar():
-	var current_scene = get_tree().current_scene
-	if not current_scene:
-		return
-
-	var money_label = current_scene.get_node_or_null("UILayer/TopBar/MoneyGroup/MoneyLabel")
-	var action_point_label = current_scene.get_node_or_null("UILayer/TopBar/ActionPointGroup/ActionPointLabel")
-
-	if money_label:
-		money_label.text = "资金: %d" % money
-
-	if action_point_label:
-		action_point_label.text = "行动点: %d/3" % action_points
-
 func get_facility_info(facility_type: String) -> Dictionary:
 	if not facility_data.has(facility_type):
 		return {}
-	return facility_data[facility_type]
+
+	var data = facility_data[facility_type].duplicate()
+	data["level"] = ResourceManager.get_facility_level(facility_type)
+	return data
 
 func get_facility_level(facility_type: String) -> int:
-	if not facility_data.has(facility_type):
-		return -1
-	return facility_data[facility_type]["level"]
+	return ResourceManager.get_facility_level(facility_type)
 
 func get_upgrade_cost(facility_type: String) -> int:
 	if not facility_data.has(facility_type):
 		return -1
 
 	var data = facility_data[facility_type]
-	var current_level: int = data["level"]
-	var max_level: int = data["max_level"]
+	var current_level: int = ResourceManager.get_facility_level(facility_type)
+	var max_level: int = int(data["max_level"])
 
 	if current_level >= max_level:
 		return -1
 
-	return data["costs"][current_level + 1]
+	return int(data["costs"][current_level + 1])
 
 func can_upgrade(facility_type: String) -> bool:
 	if not facility_data.has(facility_type):
@@ -79,10 +62,10 @@ func can_upgrade(facility_type: String) -> bool:
 	if cost < 0:
 		return false
 
-	if money < cost:
+	if ResourceManager.get_resource_value(Constants.RES_MONEY) < cost:
 		return false
 
-	if action_points <= 0:
+	if not ResourceManager.can_consume_action_points(1):
 		return false
 
 	return true
@@ -99,30 +82,41 @@ func upgrade_facility(facility_type: String) -> Dictionary:
 		return result
 
 	var data = facility_data[facility_type]
-	var current_level: int = data["level"]
-	var max_level: int = data["max_level"]
+	var current_level: int = ResourceManager.get_facility_level(facility_type)
+	var max_level: int = int(data["max_level"])
 
 	if current_level >= max_level:
 		result["reason"] = "已满级"
 		return result
 
-	var cost = data["costs"][current_level + 1]
+	var cost = int(data["costs"][current_level + 1])
 
-	if money < cost:
+	if ResourceManager.get_resource_value(Constants.RES_MONEY) < cost:
 		result["reason"] = "资金不足"
 		return result
 
-	if action_points <= 0:
+	if not ResourceManager.can_consume_action_points(1):
 		result["reason"] = "行动点不足"
 		return result
 
-	money -= cost
-	action_points -= 1
-	data["level"] = current_level + 1
-	facility_data[facility_type] = data
+	# 扣钱
+	if not ResourceManager.add_money(-cost):
+		result["reason"] = "资金不足"
+		return result
 
-	_refresh_topbar()
+	# 扣行动点
+	if not ResourceManager.consume_action_point(1):
+		ResourceManager.add_money(cost)
+		result["reason"] = "行动点不足"
+		return result
+
+	# 升级设施等级（统一写回 ResourceManager）
+	var next_level = current_level + 1
+	ResourceManager.set_facility_level(facility_type, next_level)
+
+	# 刷新当前场景顶部UI
+	ResourceManager.refresh_current_scene_topbar()
 
 	result["success"] = true
-	result["new_level"] = data["level"]
+	result["new_level"] = next_level
 	return result

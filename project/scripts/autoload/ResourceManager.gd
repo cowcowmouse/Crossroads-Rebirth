@@ -7,7 +7,8 @@ extends Node
 var core_resources: Dictionary = {}
 var ai_weights: Dictionary = {}  # 空字典声明，不赋值
 var members: Dictionary = {}
-
+var action_points: int = 3
+var facility_levels: Dictionary = {}
 # 节点就绪后自动初始化（此时 constants 已赋值）
 func _ready():
 	init_new_game()
@@ -23,6 +24,16 @@ func init_new_game():
 		constants.RES_MEMORY: {"value": 0, "min": 0, "max": 100}
 	}
 	
+	# 行动点初始化
+	action_points = 3
+		# 设施等级初始化
+	facility_levels = {
+		"stage": 1,
+		"bar": 1,
+		"lounge": 1,
+		"rehearsal": 1
+	}
+	
 	# AI权重初始化
 	ai_weights = {
 		constants.WEIGHT_ART: 0,
@@ -34,6 +45,7 @@ func init_new_game():
 	_init_default_members()
 	
 	print("核心资源初始化完成")
+	refresh_current_scene_topbar()
 
 # 初始化默认成员
 func _init_default_members():
@@ -95,19 +107,27 @@ func modify_core_resource(resource_name: String, delta: int) -> bool:
 	if not core_resources.has(resource_name):
 		print("错误：不存在的资源", resource_name)
 		return false
+	
 	var res_data = core_resources[resource_name]
-	var new_value = clamp(res_data.value + delta, res_data.min, res_data.max)
-	var actual_delta = new_value - res_data.value
+	var old_value = int(res_data["value"])
+	var new_value = clamp(old_value + delta, int(res_data["min"]), int(res_data["max"]))
+	var actual_delta = new_value - old_value
 
 	if actual_delta == 0:
 		return false
 
 	# 更新数值
-	res_data.value = new_value
+	res_data["value"] = new_value
+	core_resources[resource_name] = res_data
+	
 	# 发射信号通知UI刷新
 	event_bus.core_resource_changed.emit(resource_name, new_value, actual_delta)
+	
 	# 检查资源边界事件
 	_check_resource_boundary_event(resource_name, new_value)
+	
+	# 刷新当前场景顶部UI
+	refresh_current_scene_topbar()
 	
 	print("资源变动：", resource_name, " ", actual_delta, "，当前值：", new_value)
 	return true
@@ -115,7 +135,7 @@ func modify_core_resource(resource_name: String, delta: int) -> bool:
 # 获取资源当前值
 func get_resource_value(resource_name: String) -> int:
 	if core_resources.has(resource_name):
-		return core_resources[resource_name].value
+		return int(core_resources[resource_name]["value"])
 	return -1
 
 # ===================== 便捷资源操作方法 =====================
@@ -134,6 +154,72 @@ func add_creativity(amount: int) -> bool:
 
 func add_memory(amount: int) -> bool:
 	return modify_core_resource(constants.RES_MEMORY, amount)
+
+# ===================== 行动点接口 =====================
+
+# 获取当前行动点
+func get_action_points() -> int:
+	return action_points
+
+# 检查行动点是否足够
+func can_consume_action_points(cost: int = 1) -> bool:
+	return action_points >= cost
+
+# 消耗行动点
+func consume_action_point(cost: int = 1) -> bool:
+	if action_points < cost:
+		return false
+	
+	action_points -= cost
+	
+	# 刷新顶部UI
+	refresh_current_scene_topbar()
+	
+	# 发射行动点耗尽信号
+	if action_points <= 0 and event_bus.has_signal("action_points_exhausted"):
+		event_bus.action_points_exhausted.emit()
+	
+	print("行动点消耗：", cost, "，当前剩余：", action_points)
+	return true
+
+# 恢复行动点（每周重置时调用）
+func restore_action_points():
+	action_points = 3
+	refresh_current_scene_topbar()
+	print("行动点已恢复为：", action_points)
+
+# ===================== 顶部UI刷新 =====================
+
+# 刷新当前场景顶部资源栏
+func refresh_current_scene_topbar():
+	var current_scene = get_tree().current_scene
+	if not current_scene:
+		return
+
+	var money_label = current_scene.get_node_or_null("UILayer/TopBar/MoneyGroup/MoneyLabel")
+	var reputation_label = current_scene.get_node_or_null("UILayer/TopBar/ReputationGroup/ReputationLabel")
+	var cohesion_label = current_scene.get_node_or_null("UILayer/TopBar/CohesionGroup/CohesionLabel")
+	var creativity_label = current_scene.get_node_or_null("UILayer/TopBar/CreativityGroup/CreativityLabel")
+	var memory_label = current_scene.get_node_or_null("UILayer/TopBar/MemoryGroup/MemoryLabel")
+	var action_point_label = current_scene.get_node_or_null("UILayer/TopBar/ActionPointGroup/ActionPointLabel")
+
+	if money_label:
+		money_label.text = "资金: %d" % get_resource_value(constants.RES_MONEY)
+
+	if reputation_label:
+		reputation_label.text = "声誉: %d" % get_resource_value(constants.RES_REPUTATION)
+
+	if cohesion_label:
+		cohesion_label.text = "凝聚力: %d" % get_resource_value(constants.RES_COHESION)
+
+	if creativity_label:
+		creativity_label.text = "创造力: %d" % get_resource_value(constants.RES_CREATIVITY)
+
+	if memory_label:
+		memory_label.text = "记忆恢复度: %d" % get_resource_value(constants.RES_MEMORY)
+
+	if action_point_label:
+		action_point_label.text = "行动点: %d/3" % action_points
 
 # ===================== AI权重接口 =====================
 
@@ -293,3 +379,15 @@ func apply_weekly_expense() -> bool:
 # 获取每周支出金额
 func get_weekly_expense() -> int:
 	return WEEKLY_EXPENSE
+# ===================== 设施等级接口 =====================
+
+# 获取设施等级
+func get_facility_level(facility_type: String) -> int:
+	if facility_levels.has(facility_type):
+		return int(facility_levels[facility_type])
+	return -1
+
+# 设置设施等级
+func set_facility_level(facility_type: String, level: int):
+	facility_levels[facility_type] = level
+	print("设施等级更新：", facility_type, " -> ", level)

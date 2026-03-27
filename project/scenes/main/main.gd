@@ -124,8 +124,13 @@ func _init_week_cycle():
 	# 不要强制设置阶段，保持 WeekCycleManager 当前阶段
 	# week_cycle.set_phase(week_cycle.GamePhase.BEFORE_WEEK)  # 删除这行
 	
-	# 只更新显示
-	_update_action_point_display(week_cycle.get_action_points(), 3)
+	# 顶部UI统一从 ResourceManager 读取，避免与 week_cycle 显示冲突
+	ResourceManager.refresh_current_scene_topbar()
+	
+	# 如果当前资源管理器里的行动点已经耗尽，直接显示跳过面板
+	if ResourceManager.get_action_points() == 0:
+		if skip_panel_manager:
+			skip_panel_manager.show_skip_panel(true)
 	
 	# 根据当前阶段更新UI
 	match week_cycle.get_current_phase():
@@ -150,6 +155,7 @@ func _init_clock_display():
 func _connect_week_cycle_signals():
 	if week_cycle:
 		week_cycle.phase_changed.connect(_on_game_phase_changed)
+		# 保留行动点信号连接，但收到信号后统一同步到 ResourceManager
 		week_cycle.action_points_updated.connect(_on_action_points_updated)
 
 func _on_game_phase_changed(phase):
@@ -179,12 +185,16 @@ func _on_action_points_updated(current: int, max: int):
 			skip_panel_manager.show_skip_panel(true)
 
 func _update_action_point_display(current: int, max: int):
-	if action_point_label:
-		action_point_label.text = "行动点: %d/%d" % [current, max]
+	# 行动点显示统一同步到 ResourceManager，再由顶部UI统一刷新
+	ResourceManager.action_points = current
+	ResourceManager.refresh_current_scene_topbar()
 	
 	# 行动点耗尽时改变颜色
-	if current == 0 and action_point_label:
-		action_point_label.modulate = Color.RED
+	if action_point_label:
+		if current == 0:
+			action_point_label.modulate = Color.RED
+		else:
+			action_point_label.modulate = Color.WHITE
 
 func _set_operation_ui_enabled(enabled: bool):
 	# 禁用/启用设施升级按钮
@@ -357,20 +367,21 @@ func start_tutorial():
 	tutorial_layer.highlight_button("left_arrow", "点击左箭头切换场景")
 # ===================== 顶部UI初始化 =====================
 func init_top_ui():
-	# 初始化数值（你可以根据游戏逻辑修改）
-	FacilityManager._refresh_topbar()
+	ResourceManager.refresh_current_scene_topbar()
+	if money_label:
+		money_label.text = "资金: %d" % ResourceManager.get_resource_value(Constants.RES_MONEY)
 
 	if reputation_label:
-		reputation_label.text = "声誉: 50"
+		reputation_label.text = "声誉: %d" % ResourceManager.get_resource_value(Constants.RES_REPUTATION)
 
 	if cohesion_label:
-		cohesion_label.text = "凝聚力: 30"
+		cohesion_label.text = "凝聚力: %d" % ResourceManager.get_resource_value(Constants.RES_COHESION)
 
 	if creativity_label:
-		creativity_label.text = "创造力: 40"
+		creativity_label.text = "创造力: %d" % ResourceManager.get_resource_value(Constants.RES_CREATIVITY)
 
 	if memory_label:
-		memory_label.text = "记忆恢复度: 20"
+		memory_label.text = "记忆恢复度: %d" % ResourceManager.get_resource_value(Constants.RES_MEMORY)
 
 # ===================== 箭头点击事件 =====================
 func _on_arrow_left_pressed():
@@ -405,6 +416,7 @@ func _on_rehab_trigger():
 		# 禁用箭头/对话按钮，防止误操作
 		_set_ui_enabled(false)
 # 康复面板关闭后恢复交互
+# 康复面板关闭后恢复交互
 func _on_rehab_panel_closed():
 	print("🔔 _on_rehab_panel_closed 被调用了！")
 	print("当前按钮状态 - 左箭头: ", arrow_left.disabled if arrow_left else "不存在")
@@ -412,9 +424,13 @@ func _on_rehab_panel_closed():
 	print("当前按钮状态 - 对话按钮: ", button.disabled if button else "不存在")
 
 	_set_ui_enabled(true)
+	
 	# 消耗行动点
+	# 优先走 week_cycle，保持周循环逻辑；其信号会同步到 ResourceManager
 	if week_cycle:
 		week_cycle.consume_action_point()
+	else:
+		ResourceManager.consume_action_point(1)
 		
 	# 再次检查设置后的状态
 	print("设置后状态 - 左箭头: ", arrow_left.disabled if arrow_left else "不存在")
@@ -446,8 +462,13 @@ func _set_ui_enabled(enabled: bool):
 # ===================== 设施升级后消耗行动点 =====================
 # 在 FacilityPanel 升级成功后，需要通知主场景消耗行动点
 func on_facility_upgraded():
-	if week_cycle:
-		week_cycle.consume_action_point()
+	# 设施升级的行动点已经在 FacilityManager / ResourceManager 中扣除了
+	# 这里不要再重复扣减，只负责刷新显示与处理跳过提示
+	ResourceManager.refresh_current_scene_topbar()
+	
+	if ResourceManager.get_action_points() == 0:
+		if skip_panel_manager:
+			skip_panel_manager.show_skip_panel(true)
 
 func _on_skip_button_pressed():
 	print("跳过按钮被点击")
