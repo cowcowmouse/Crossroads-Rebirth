@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://em05axaem0ia"]
+[gd_scene load_steps=34 format=3 uid="uid://em05axaem0ia"]
 
 [ext_resource type="Script" uid="uid://bkmekgpgq855c" path="res://project/scenes/main/main.gd" id="1_87m5t"]
 [ext_resource type="Texture2D" uid="uid://c4lvblykh1k4q" path="res://project/scenes/main/bar.jpg" id="1_hyk8p"]
@@ -13,12 +13,14 @@
 [ext_resource type="Texture2D" uid="uid://45rrp1pjqu55" path="res://project/assets/images/ui/icons/Creativity.png" id="9_nlgu0"]
 [ext_resource type="Texture2D" uid="uid://ysub1jlpwati" path="res://project/assets/images/ui/icons/Memory.png" id="10_ogan2"]
 [ext_resource type="Texture2D" uid="uid://djl65dvfn2url" path="res://project/assets/images/ui/icons/ActionPoint.png" id="11_j0ny1"]
-[ext_resource type="Texture2D" uid="uid://jxlt5o66733x" path="res://project/assets/images/ui/clock/clock_before.png" id="13_c2s8q"]
+[ext_resource type="Texture2D" uid="uid://cj81w6fbmp1gf" path="res://project/assets/images/ui/clock/clock_before.png" id="13_c2s8q"]
 [ext_resource type="Script" uid="uid://dom7yaahk13u4" path="res://project/scenes/main/clock_display.gd" id="13_dniyw"]
 [ext_resource type="Texture2D" uid="uid://dolign0et7cb4" path="res://project/assets/images/ui/Individual/Bg.png" id="13_nlgu0"]
 [ext_resource type="FontFile" uid="uid://b004kl1b50uq5" path="res://project/assets/fonts/ui/new_font_file.tres" id="14_ogan2"]
 [ext_resource type="PackedScene" uid="uid://qvf8llp2hilo" path="res://project/scenes/facility/facility_panel.tscn" id="16_k7nr8"]
 [ext_resource type="Script" uid="uid://r08km7j8emn8" path="res://project/scripts/models/facility/facility_entry_button.gd" id="17_dniyw"]
+[ext_resource type="Texture2D" uid="uid://bj0xjax3adgom" path="res://project/assets/images/ui/buttons/stageup.png" id="20_oesgy"]
+[ext_resource type="Texture2D" uid="uid://d37jay72hpkji" path="res://project/assets/images/ui/buttons/barup.png" id="21_svdfk"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_j0ny1"]
 line_spacing = 28.0
@@ -37,23 +39,25 @@ font_color = Color(0.9411765, 0.5137255, 0, 0.9372549)
 outline_size = 10
 outline_color = Color(1, 1, 0.23921569, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k7nr8"]
-bg_color = Color(0.6354812, 0.6116404, 0.35361564, 0)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oesgy"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dniyw"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_svdfk"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c2s8q"]
-bg_color = Color(0.827451, 0.5058824, 0.36078432, 0)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wsoed"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oesgy"]
-bg_color = Color(0.9647059, 0.38431373, 0.30588236, 0)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gmtqm"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_svdfk"]
-bg_color = Color(0.9647059, 0.38431373, 0.30588236, 0)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pt5qx"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wsoed"]
-bg_color = Color(0.92338765, 0.4309618, 0.32245207, 0)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2myfi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ptfxj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fkgpr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_582ml"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rhwvr"]
 
 [node name="main_scene" type="Node2D"]
 script = ExtResource("1_87m5t")
@@ -283,26 +287,35 @@ grow_vertical = 1
 [node name="StageButton" type="Button" parent="UILayer"]
 custom_minimum_size = Vector2(220, 140)
 layout_mode = 0
-offset_left = 158.0
-offset_top = 348.0
-offset_right = 378.0
-offset_bottom = 488.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_k7nr8")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_dniyw")
-theme_override_styles/hover = SubResource("StyleBoxFlat_c2s8q")
-text = "舞台"
+offset_left = 46.99997
+offset_top = 265.0
+offset_right = 1583.0
+offset_bottom = 1289.0
+scale = Vector2(0.3, 0.3)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_oesgy")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_svdfk")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_wsoed")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_gmtqm")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_pt5qx")
+icon = ExtResource("20_oesgy")
+flat = true
+expand_icon = true
 script = ExtResource("17_dniyw")
 
 [node name="BarButton" type="Button" parent="UILayer"]
 layout_mode = 0
-offset_left = 1312.0
-offset_top = 327.0
-offset_right = 1510.0
-offset_bottom = 455.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_oesgy")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_svdfk")
-theme_override_styles/hover = SubResource("StyleBoxFlat_wsoed")
-text = "酒吧"
+offset_left = 1043.0
+offset_top = 30.0
+offset_right = 2579.0
+offset_bottom = 1054.0
+scale = Vector2(0.3, 0.3)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_2myfi")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ptfxj")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_fkgpr")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_582ml")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rhwvr")
+icon = ExtResource("21_svdfk")
+flat = true
 script = ExtResource("17_dniyw")
 facility_type = "bar"
 
