@@ -60,6 +60,7 @@ outline_color = Color(1, 1, 0.23921569, 1)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rhwvr"]
 
 [node name="main_scene" type="Node2D"]
+position = Vector2(4, 0)
 script = ExtResource("1_87m5t")
 
 [node name="TutorialLayer" parent="." instance=ExtResource("2_j0ny1")]
@@ -73,55 +74,50 @@ metadata/_edit_lock_ = true
 zoom = Vector2(0.755, 0.64)
 metadata/_edit_lock_ = true
 
-[node name="ArrowLeft" type="TextureButton" parent="." groups=["left_arrow"]]
+[node name="UILayer" type="CanvasLayer" parent="."]
+metadata/_edit_use_anchors_ = true
+
+[node name="ArrowLeft" type="TextureButton" parent="UILayer" groups=["left_arrow"]]
 custom_minimum_size = Vector2(0.08, 0)
-offset_left = -1271.0
-offset_top = -80.0
-offset_right = -1106.0
-offset_bottom = 74.0
+offset_left = 9.0
+offset_top = 441.0
+offset_right = 174.0
+offset_bottom = 595.0
 texture_normal = ExtResource("4_j0ny1")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="ArrowRight" type="TextureButton" parent="." groups=["right_arrow"]]
+[node name="ArrowRight" type="TextureButton" parent="UILayer" groups=["right_arrow"]]
 custom_minimum_size = Vector2(0.08, 0)
-offset_left = 1097.0
-offset_top = -83.0
-offset_right = 1262.0
-offset_bottom = 71.0
+offset_left = 1757.0
+offset_top = 474.0
+offset_right = 1922.0
+offset_bottom = 628.0
 texture_normal = ExtResource("5_q5kvs")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="TutorialLayer" parent="ArrowRight" instance=ExtResource("2_j0ny1")]
+[node name="TutorialLayer" parent="UILayer/ArrowRight" instance=ExtResource("2_j0ny1")]
 visible = false
 
-[node name="Button" type="Button" parent="."]
-offset_left = -97.0
-offset_top = 497.0
-offset_right = 103.0
-offset_bottom = 568.0
+[node name="Button" type="Button" parent="UILayer"]
+offset_left = 900.0
+offset_top = 906.0
+offset_right = 1100.0
+offset_bottom = 977.0
 script = ExtResource("5_wiwuw")
 
-[node name="UILayer" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_left = -811.0
-offset_top = -626.0
-offset_right = -495.0
-offset_bottom = -565.0
-
 [node name="TopBar" type="HBoxContainer" parent="UILayer"]
-layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.13800001
 anchor_top = 1.0
 anchor_right = -0.13800001
 anchor_bottom = 1.0
-offset_left = -380.392
-offset_top = -263.0
-offset_right = 564.60803
-offset_bottom = -152.0
+offset_left = 313.96002
+offset_top = -1041.0
+offset_right = 1632.96
+offset_bottom = -876.0
+scale = Vector2(0.7512887, 0.7441511)
 
 [node name="MoneyGroup" type="HBoxContainer" parent="UILayer/TopBar"]
 layout_mode = 2
@@ -205,13 +201,12 @@ texture = ExtResource("13_c2s8q")
 script = ExtResource("13_dniyw")
 
 [node name="Rehabpanel" type="Panel" parent="UILayer"]
-visible = false
 modulate = Color(0.8047426, 0.80474263, 0.8047426, 1)
-layout_mode = 0
-offset_left = 43.0
-offset_top = 186.0
-offset_right = 1570.0
-offset_bottom = 1086.0
+offset_left = 343.0
+offset_top = 207.00002
+offset_right = 1870.0
+offset_bottom = 1107.0
+scale = Vector2(0.6630757, 0.7223067)
 script = ExtResource("6_1hgs3")
 
 [node name="Bg" type="TextureRect" parent="UILayer/Rehabpanel"]
@@ -271,26 +266,24 @@ offset_bottom = 89.0
 text = "❌"
 
 [node name="FacilityPanel" parent="UILayer" instance=ExtResource("16_k7nr8")]
-layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 531.0
-offset_top = 484.0
-offset_right = 1078.0
-offset_bottom = 874.0
+offset_left = 724.0
+offset_top = 388.0
+offset_right = 1271.0
+offset_bottom = 778.0
 grow_horizontal = 1
 grow_vertical = 1
 
 [node name="StageButton" type="Button" parent="UILayer"]
 custom_minimum_size = Vector2(220, 140)
-layout_mode = 0
-offset_left = 46.99997
-offset_top = 265.0
-offset_right = 1583.0
-offset_bottom = 1289.0
+offset_left = 136.0
+offset_top = 279.0
+offset_right = 1672.0
+offset_bottom = 1303.0
 scale = Vector2(0.3, 0.3)
 theme_override_styles/normal = SubResource("StyleBoxEmpty_oesgy")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_svdfk")
@@ -303,11 +296,10 @@ expand_icon = true
 script = ExtResource("17_dniyw")
 
 [node name="BarButton" type="Button" parent="UILayer"]
-layout_mode = 0
-offset_left = 1043.0
-offset_top = 30.0
-offset_right = 2579.0
-offset_bottom = 1054.0
+offset_left = 1322.0
+offset_top = 128.0
+offset_right = 2858.0
+offset_bottom = 1152.0
 scale = Vector2(0.3, 0.3)
 theme_override_styles/normal = SubResource("StyleBoxEmpty_2myfi")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_ptfxj")
@@ -320,21 +312,20 @@ script = ExtResource("17_dniyw")
 facility_type = "bar"
 
 [node name="SkipButton" type="Button" parent="UILayer"]
-layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1428.0
-offset_top = 1240.0
-offset_right = 1726.0
-offset_bottom = 1337.0
+offset_left = -344.0
+offset_top = -157.0
+offset_right = -46.0
+offset_bottom = -60.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "跳过阶段"
 
-[connection signal="pressed" from="ArrowLeft" to="." method="_on_texture_button_pressed"]
-[connection signal="pressed" from="ArrowRight" to="." method="_on_arrow_right_pressed"]
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="UILayer/ArrowLeft" to="." method="_on_texture_button_pressed"]
+[connection signal="pressed" from="UILayer/ArrowRight" to="." method="_on_arrow_right_pressed"]
+[connection signal="pressed" from="UILayer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="UILayer/TopBar/RehabBtn" to="." method="_on_rehab_trigger"]

@@ -13,9 +13,11 @@ glow_blend_mode = 1
 [node name="GameLevel" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.755, 0.64)
 
 [node name="Background" type="Sprite2D" parent="."]
-scale = Vector2(0.635, 0.635)
+position = Vector2(0, -1.9999999)
+scale = Vector2(1.3160121, 1.5963922)
 texture = ExtResource("1_i35hq")
 
 [node name="KeyListener" parent="." instance=ExtResource("2_odag6")]

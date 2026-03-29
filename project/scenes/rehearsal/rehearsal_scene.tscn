@@ -36,18 +36,18 @@ metadata/_edit_lock_ = true
 zoom = Vector2(0.755, 0.64)
 metadata/_edit_lock_ = true
 
-[node name="BackButton" type="TextureButton" parent="." groups=["back_button"]]
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="BackButton" type="TextureButton" parent="UILayer" groups=["back_button"]]
 custom_minimum_size = Vector2(0.08, 0)
-offset_left = -1248.0
-offset_top = -76.0
-offset_right = -1083.0
-offset_bottom = 78.0
+offset_left = 4.0
+offset_top = 451.0
+offset_right = 169.0
+offset_bottom = 605.0
 texture_normal = ExtResource("2_xw3uf")
 ignore_texture_size = true
 stretch_mode = 5
 script = ExtResource("4_rwpb6")
-
-[node name="UILayer" type="CanvasLayer" parent="."]
 
 [node name="TopBar" type="HBoxContainer" parent="UILayer"]
 anchors_preset = 10
