@@ -9,6 +9,13 @@ var ai_weights: Dictionary = {}  # 空字典声明，不赋值
 var members: Dictionary = {}
 var action_points: int = 3
 var facility_levels: Dictionary = {}
+
+# 设施是否处于升级/维修中
+var facility_upgrading: Dictionary = {}
+
+# 设施待生效等级（升级延迟到下周生效）
+var facility_pending_levels: Dictionary = {}
+
 # 节点就绪后自动初始化（此时 constants 已赋值）
 func _ready():
 	init_new_game()
@@ -26,12 +33,29 @@ func init_new_game():
 	
 	# 行动点初始化
 	action_points = 3
-		# 设施等级初始化
+	
+	# 设施等级初始化
 	facility_levels = {
 		"stage": 1,
 		"bar": 1,
 		"lounge": 1,
 		"rehearsal": 1
+	}
+	
+	# 设施升级状态初始化（默认都不在维修中）
+	facility_upgrading = {
+		"stage": false,
+		"bar": false,
+		"lounge": false,
+		"rehearsal": false
+	}
+	
+	# 设施待生效等级初始化（0 表示没有待生效升级）
+	facility_pending_levels = {
+		"stage": 0,
+		"bar": 0,
+		"lounge": 0,
+		"rehearsal": 0
 	}
 	
 	# AI权重初始化
@@ -379,6 +403,7 @@ func apply_weekly_expense() -> bool:
 # 获取每周支出金额
 func get_weekly_expense() -> int:
 	return WEEKLY_EXPENSE
+
 # ===================== 设施等级接口 =====================
 
 # 获取设施等级
@@ -391,3 +416,37 @@ func get_facility_level(facility_type: String) -> int:
 func set_facility_level(facility_type: String, level: int):
 	facility_levels[facility_type] = level
 	print("设施等级更新：", facility_type, " -> ", level)
+
+# ===================== 设施维修状态接口 =====================
+
+# 获取设施是否处于升级/维修中
+func is_facility_upgrading(facility_type: String) -> bool:
+	return facility_upgrading.get(facility_type, false)
+
+# 设置设施升级/维修状态
+func set_facility_upgrading(facility_type: String, value: bool) -> void:
+	facility_upgrading[facility_type] = value
+	print("设施维修状态更新：", facility_type, " -> ", value)
+
+# ===================== 设施待生效等级接口 =====================
+
+# 获取设施待生效等级
+func get_facility_pending_level(facility_type: String) -> int:
+	if facility_pending_levels.has(facility_type):
+		return int(facility_pending_levels[facility_type])
+	return 0
+
+# 设置设施待生效等级
+func set_facility_pending_level(facility_type: String, level: int):
+	facility_pending_levels[facility_type] = level
+	print("设施待生效等级更新：", facility_type, " -> ", level)
+
+# 在下一周开始时应用所有待生效升级
+func apply_pending_facility_upgrades():
+	for facility_type in facility_pending_levels.keys():
+		var pending_level = int(facility_pending_levels[facility_type])
+		if pending_level > 0:
+			set_facility_level(facility_type, pending_level)
+			set_facility_pending_level(facility_type, 0)
+			set_facility_upgrading(facility_type, false)
+			print("设施升级正式生效：", facility_type, " -> ", pending_level)

@@ -19,9 +19,20 @@ func _ready():
 
 func start_new_week():
 	current_week += 1
+	
+	# 新一周开始时，应用上周待生效的设施升级
+	ResourceManager.apply_pending_facility_upgrades()
+	
 	action_points = max_action_points
 	set_phase(GamePhase.BEFORE_WEEK)
 	action_points_updated.emit(action_points, max_action_points)
+	
+	# 刷新顶部UI
+	ResourceManager.refresh_current_scene_topbar()
+	
+	# 刷新当前场景里的设施按钮维修状态
+	_refresh_all_facility_buttons()
+	
 	print("=== 第", current_week, "周开始 ===")
 
 func consume_action_point() -> bool:
@@ -80,3 +91,19 @@ func _get_phase_name(phase: GamePhase) -> String:
 		GamePhase.AFTER_WEEK:
 			return "周后"
 	return "未知"
+func _refresh_all_facility_buttons():
+	var current_scene = get_tree().current_scene
+	if not current_scene:
+		return
+
+	var button_paths = [
+		"UILayer/StageButton",
+		"UILayer/BarButton",
+		"UILayer/LoungeButton",
+		"UILayer/RehearsalButton"
+	]
+
+	for path in button_paths:
+		var facility_button = current_scene.get_node_or_null(path)
+		if facility_button and facility_button.has_method("refresh_repair_state"):
+			facility_button.refresh_repair_state()

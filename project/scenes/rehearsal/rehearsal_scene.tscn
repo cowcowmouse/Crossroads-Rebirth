@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://b8uve8pei0ak7"]
+[gd_scene load_steps=20 format=3 uid="uid://b8uve8pei0ak7"]
 
 [ext_resource type="Texture2D" uid="uid://74jorwl6hifk" path="res://project/scenes/rehearsal/images/practice-room.jpg" id="1_abjjs"]
 [ext_resource type="Script" uid="uid://bdpkroltk0uem" path="res://project/scenes/rehearsal/rehearsal_scene.gd" id="1_ow65r"]
@@ -23,6 +23,9 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k03si"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qn4nl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4jwa2"]
+bg_color = Color(0.043137256, 0.043137256, 0.043137256, 0.78431374)
 
 [node name="rehearsal_scene" type="Node2D"]
 script = ExtResource("1_ow65r")
@@ -151,3 +154,30 @@ icon = ExtResource("12_4jwa2")
 flat = true
 script = ExtResource("11_qn4nl")
 facility_type = "rehearsal"
+
+[node name="RepairMask" type="Panel" parent="UILayer/RehearsalButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4jwa2")
+
+[node name="Label" type="Label" parent="UILayer/RehearsalButton/RepairMask"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -11.5
+offset_right = 24.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 200
+text = "维修中"
+horizontal_alignment = 1
+vertical_alignment = 1

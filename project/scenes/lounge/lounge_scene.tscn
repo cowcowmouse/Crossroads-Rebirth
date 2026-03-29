@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bpd3gsxwdnfqs"]
+[gd_scene load_steps=21 format=3 uid="uid://bpd3gsxwdnfqs"]
 
 [ext_resource type="Texture2D" uid="uid://yi44n201w5d6" path="res://project/scenes/lounge/images/lounge.jpg" id="1_04c67"]
 [ext_resource type="Script" uid="uid://b1bnqa8lwnws5" path="res://project/scenes/lounge/lounge_scene.gd" id="1_wek5q"]
@@ -25,6 +25,9 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eqfy5"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y7n27"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iiqy2"]
+bg_color = Color(0.043137256, 0.043137256, 0.043137256, 0.78431374)
 
 [node name="lounge_scene" type="Node2D"]
 script = ExtResource("1_wek5q")
@@ -154,5 +157,33 @@ icon = ExtResource("11_iiqy2")
 flat = true
 script = ExtResource("5_ocngs")
 facility_type = "lounge"
+
+[node name="RepairMask" type="Panel" parent="UILayer/LoungeButton"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_iiqy2")
+
+[node name="Label" type="Label" parent="UILayer/LoungeButton/RepairMask"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -11.5
+offset_right = 24.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 200
+text = "维修中"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="FacilityPanel" parent="UILayer" instance=ExtResource("6_ocos6")]
