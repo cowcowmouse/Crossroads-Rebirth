@@ -9,14 +9,14 @@ var current_facility_type: String = ""
 @onready var close_button = $CloseButton
 @onready var facility_manager = get_node("/root/FacilityManager")
 @onready var resource_manager = get_node("/root/ResourceManager")
-@onready var event_bus = get_node("/root/EventBus")
+@onready var event_bus = get_node("/root/EventBus")  # 添加 EventBus 引用
 
 func _ready():
 	visible = false
 	upgrade_button.pressed.connect(_on_upgrade_pressed)
 	close_button.pressed.connect(_on_close_pressed)
 	
-	# 可选：监听资源变化，刷新面板显示
+	# 修改：通过 EventBus 监听资源变化
 	if event_bus:
 		event_bus.core_resource_changed.connect(_on_resource_changed)
 
@@ -39,28 +39,12 @@ func _refresh_panel():
 		return
 
 	title_label.text = str(info["name"])
-
-	var current_level = int(info["level"])
-	var pending_level = ResourceManager.get_facility_pending_level(current_facility_type)
-	var is_repairing = ResourceManager.is_facility_upgrading(current_facility_type)
-
-	if is_repairing and pending_level > current_level:
-		level_label.text = "当前等级：%d → %d" % [current_level, pending_level]
-	else:
-		level_label.text = "当前等级：%d" % current_level
+	level_label.text = "当前等级：%d" % int(info["level"])
 
 	var cost = facility_manager.get_upgrade_cost(current_facility_type)
-<<<<<<< HEAD
-	var current_money = resource_manager.get_resource_value("money")  # 使用字符串或 Constants
+	var current_money = resource_manager.get_resource_value("money")
 	
 	if cost < 0:
-=======
-
-	if is_repairing:
-		cost_label.text = "维修中（下周生效）"
-		upgrade_button.disabled = true
-	elif cost < 0:
->>>>>>> 379f595e1c8f2c27ad009e850912ccb1fd7e0d56
 		cost_label.text = "已满级"
 		upgrade_button.disabled = true
 	else:
@@ -88,7 +72,6 @@ func _refresh_panel():
 			cost_label.modulate = Color.WHITE
 
 func _on_upgrade_pressed():
-<<<<<<< HEAD
 	if not facility_manager or not resource_manager:
 		return
 	
@@ -116,20 +99,6 @@ func _on_upgrade_pressed():
 		
 		print("设施升级成功 - 类型: %s, 消耗资金: %d, 行动点: 1" % [current_facility_type, cost])
 		
-=======
-	if ResourceManager.is_facility_upgrading(current_facility_type):
-		return
-
-	var result = facility_manager.upgrade_facility(current_facility_type)
-
-	if result["success"]:
-		# 标记该设施进入维修/升级中状态
-		ResourceManager.set_facility_upgrading(current_facility_type, true)
-
-		# 立刻刷新当前场景里的对应设施按钮，不用切场景
-		_refresh_current_scene_facility_button()
-
->>>>>>> 379f595e1c8f2c27ad009e850912ccb1fd7e0d56
 		_refresh_panel()
 		
 		# 通知主场景升级完成
@@ -151,36 +120,8 @@ func _on_resource_changed(resource_name: String, new_value: int, delta: int):
 	if resource_name == "money" and visible:
 		_refresh_panel()
 
-func _refresh_current_scene_facility_button():
-	var current_scene = get_tree().current_scene
-	if not current_scene:
-		return
-
-	var button_path := ""
-
-	match current_facility_type:
-		"stage":
-			button_path = "UILayer/StageButton"
-		"bar":
-			button_path = "UILayer/BarButton"
-		"lounge":
-			button_path = "UILayer/LoungeButton"
-		"rehearsal":
-			button_path = "UILayer/RehearsalButton"
-
-	if button_path == "":
-		return
-
-	var facility_button = current_scene.get_node_or_null(button_path)
-	if facility_button and facility_button.has_method("refresh_repair_state"):
-		facility_button.refresh_repair_state()
-
 func _on_close_pressed():
 	visible = false
-<<<<<<< HEAD
 	
-=======
-
->>>>>>> 379f595e1c8f2c27ad009e850912ccb1fd7e0d56
 func close_panel():
 	visible = false
