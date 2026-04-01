@@ -14,6 +14,10 @@ func get_current_phase():
 
 func next_week():
 	current_week += 1
+	
+	# 新一周开始时，应用上周待生效的设施升级
+	ResourceManager.apply_pending_facility_upgrades()
+	
 	# 发射到 EventBus
 	EventBus.week_changed.emit(current_week)
 	check_phase_transition()

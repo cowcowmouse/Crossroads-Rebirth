@@ -58,6 +58,10 @@ func can_upgrade(facility_type: String) -> bool:
 	if not facility_data.has(facility_type):
 		return false
 
+	# 维修中时不可升级
+	if ResourceManager.is_facility_upgrading(facility_type):
+		return false
+
 	var cost = get_upgrade_cost(facility_type)
 	if cost < 0:
 		return false
@@ -79,6 +83,11 @@ func upgrade_facility(facility_type: String) -> Dictionary:
 
 	if not facility_data.has(facility_type):
 		result["reason"] = "设施不存在"
+		return result
+
+	# 维修中时不可重复升级
+	if ResourceManager.is_facility_upgrading(facility_type):
+		result["reason"] = "维修中"
 		return result
 
 	var data = facility_data[facility_type]
@@ -110,9 +119,10 @@ func upgrade_facility(facility_type: String) -> Dictionary:
 		result["reason"] = "行动点不足"
 		return result
 
-	# 升级设施等级（统一写回 ResourceManager）
+	# 不立即升级正式等级，而是写入待生效等级
 	var next_level = current_level + 1
-	ResourceManager.set_facility_level(facility_type, next_level)
+	ResourceManager.set_facility_pending_level(facility_type, next_level)
+	ResourceManager.set_facility_upgrading(facility_type, true)
 
 	# 刷新当前场景顶部UI
 	ResourceManager.refresh_current_scene_topbar()
