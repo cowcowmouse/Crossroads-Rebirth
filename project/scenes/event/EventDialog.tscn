@@ -1,74 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://cbjgt0bfu6dlb"]
+[gd_scene load_steps=3 format=3 uid="uid://cbjgt0bfu6dlb"]
 
-[ext_resource type="Script" uid="uid://8gks72l74yfw" path="res://project/scripts/models/events/event_dialog.gd" id="1_xier3"]
+[ext_resource type="Texture2D" uid="uid://cbu67rtodxxbi" path="res://project/assets/images/events/events.png" id="1_6ohw0"]
+[ext_resource type="PackedScene" uid="uid://wpouuvk6qjny" path="res://project/scenes/event/test_event.tscn" id="2_vpjb5"]
 
-[node name="EventDialog" type="Panel"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("1_xier3")
+[node name="Event" type="Node2D"]
 
-[node name="TitleLabel" type="Label" parent="."]
-layout_mode = 0
-offset_left = 4.0
-offset_top = 52.0
-offset_right = 1924.0
-offset_bottom = 126.0
-text = "事件标题"
-horizontal_alignment = 1
+[node name="Camera2D" type="Camera2D" parent="."]
+scale = Vector2(0.10345606, 0.31070295)
+zoom = Vector2(0.755, 0.64)
 
-[node name="DescLabel" type="Label" parent="."]
-layout_mode = 0
-offset_left = 4.0
-offset_top = 272.0
-offset_right = 1924.0
-offset_bottom = 572.0
-text = "事件描述内容"
-horizontal_alignment = 1
-autowrap_mode = 3
+[node name="EventBackround" type="Sprite2D" parent="."]
+scale = Vector2(2.5655203, 3.775128)
+texture = ExtResource("1_6ohw0")
 
-[node name="ButtonContainer" type="HBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 4.0
-offset_top = 669.0
-offset_right = 1924.0
-offset_bottom = 793.0
-alignment = 1
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="OptionButtonA" type="Button" parent="ButtonContainer"]
-custom_minimum_size = Vector2(200, 40)
-layout_mode = 2
-text = "选择A"
-
-[node name="OptionButtonB" type="Button" parent="ButtonContainer"]
-custom_minimum_size = Vector2(200, 40)
-layout_mode = 2
-text = "选择B"
-
-[node name="OptionButtonC" type="Button" parent="ButtonContainer"]
-custom_minimum_size = Vector2(200, 40)
-layout_mode = 2
-text = "选择C"
-
-[node name="ResultPanel" type="Panel" parent="."]
-visible = false
-custom_minimum_size = Vector2(400, 150)
-layout_mode = 0
-offset_right = 400.0
-offset_bottom = 150.0
-
-[node name="ResultLabel" type="Label" parent="ResultPanel"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="CloseButton" type="Button" parent="."]
-custom_minimum_size = Vector2(100, 40)
-layout_mode = 0
-offset_left = 3.0
-offset_top = 877.0
-offset_right = 1923.0
-offset_bottom = 1022.0
-text = "关闭"
+[node name="TestEvent" parent="CanvasLayer" instance=ExtResource("2_vpjb5")]

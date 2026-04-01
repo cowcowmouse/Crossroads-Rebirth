@@ -1,0 +1,61 @@
+[
+  {
+	"id": "low_art_001",
+	"title": "创作瓶颈",
+	"description": "乐队连续几周没有新作品，成员们感到焦虑，创作灵感似乎完全枯竭了。",
+	"trigger_conditions": {},
+	"weight": 40,
+	"options": [
+	  {
+		"text": "强迫创作，硬写一首",
+		"effects": {"creativity": -10, "cohesion": -5, "art_weight": -2},
+		"result_text": "写出来的歌很一般，大家都不满意。"
+	  },
+	  {
+		"text": "休息放松，调整状态",
+		"effects": {"creativity": 5, "cohesion": 5, "human_weight": 2},
+		"result_text": "休息后状态好转，灵感慢慢回来。"
+	  }
+	]
+  },
+  {
+	"id": "low_art_002",
+	"title": "观众反应冷淡",
+	"description": "最近的演出观众反应平平，没人记得乐队的歌。大家开始怀疑音乐方向是否正确。",
+	"trigger_conditions": {},
+	"weight": 30,
+	"options": [
+	  {
+		"text": "改进编曲，增加流行元素",
+		"effects": {"reputation": 5, "business_weight": 2, "art_weight": -1},
+		"result_text": "新编曲吸引了一些路人粉。"
+	  },
+	  {
+		"text": "坚持自我，相信艺术",
+		"effects": {"cohesion": 3, "art_weight": 1},
+		"result_text": "成员们支持你的决定，继续做自己的音乐。"
+	  }
+	]
+  },
+  {
+	"id": "low_art_003",
+	"title": "乐器损坏危机",
+	"description": "排练时主力乐器意外损坏，资金紧张让维修变得棘手。",
+	"trigger_conditions": {
+	  "money": {"max": 3000}
+	},
+	"weight": 50,
+	"options": [
+	  {
+		"text": "咬牙花钱修好",
+		"effects": {"money": -1500, "creativity": 8, "art_weight": 1},
+		"result_text": "修好后音色反而更好了，灵感回来了一些。"
+	  },
+	  {
+		"text": "借用备用乐器凑合",
+		"effects": {"creativity": -5, "cohesion": -3},
+		"result_text": "备用乐器手感不好，排练效果打了折扣。"
+	  }
+	]
+  }
+]

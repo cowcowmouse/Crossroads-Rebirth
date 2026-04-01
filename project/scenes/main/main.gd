@@ -213,7 +213,7 @@ func _trigger_mid_week_event():
 	print("触发周中事件...")
 	
 	# 测试：直接加载 test_event.tscn 场景
-	get_tree().change_scene_to_file("res://project/Tests/test_event.tscn")
+	get_tree().change_scene_to_file("res://project/scenes/event/EventDialog.tscn")
 
 func _execute_weekly_settlement():
 	print("执行周结算...")
@@ -415,7 +415,7 @@ func _on_rehab_trigger():
 		rehab_panel.show_panel()
 		# 禁用箭头/对话按钮，防止误操作
 		_set_ui_enabled(false)
-# 康复面板关闭后恢复交互
+
 # 康复面板关闭后恢复交互
 func _on_rehab_panel_closed():
 	print("🔔 _on_rehab_panel_closed 被调用了！")
@@ -485,7 +485,7 @@ func _on_skip_button_pressed():
 				print("强制完成周结算")
 				_execute_weekly_settlement()  # 直接调用结算函数
 
-# ===================== 周中事件触发 =====================
+
 # ===================== 小游戏相关 =====================
 
 func _enter_minigame():

@@ -16,6 +16,8 @@ signal facility_upgraded(facility_type: String, new_level: int)
 # ==================== 事件相关信号 ====================
 signal event_triggered(event_id: String)
 signal event_option_chosen(event_id: String, option_index: int)
+signal event_pool_determined(pool_name: String)  # ← 添加这个信号
+signal event_effects_applied(event_data: Dictionary)  # ← 添加这个信号
 
 # ==================== 小游戏相关信号 ====================
 signal minigame_started(game_type: String, difficulty: String)

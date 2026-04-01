@@ -1,0 +1,61 @@
+[
+  {
+	"id": "low_human_001",
+	"title": "成员争吵",
+	"description": "两名成员因为演出风格吵了起来，气氛非常紧张。",
+	"trigger_conditions": {},
+	"weight": 40,
+	"options": [
+	  {
+		"text": "强行制止，要求服从",
+		"effects": {"cohesion": -10, "human_weight": -3},
+		"result_text": "表面平息，但内心不满。"
+	  },
+	  {
+		"text": "耐心调解，倾听双方",
+		"effects": {"cohesion": 10, "human_weight": 5},
+		"result_text": "双方和解，团队更团结。"
+	  }
+	]
+  },
+  {
+	"id": "low_human_002",
+	"title": "成员想退出",
+	"description": "有成员觉得太累太穷，认真考虑离开乐队。",
+	"trigger_conditions": {
+	  "cohesion": {"max": 50}
+	},
+	"weight": 50,
+	"options": [
+	  {
+		"text": "加薪挽留",
+		"effects": {"money": -2000, "cohesion": 15, "human_weight": 3},
+		"result_text": "成员留下了，但资金更紧张了。"
+	  },
+	  {
+		"text": "尊重选择，好聚好散",
+		"effects": {"cohesion": -15, "human_weight": -2},
+		"result_text": "成员离开，乐队少了一人。"
+	  }
+	]
+  },
+  {
+	"id": "low_human_003",
+	"title": "老钉子的忠告",
+	"description": "老钉子看不下去了，把你拉到吧台边语重心长地谈了谈。",
+	"trigger_conditions": {},
+	"weight": 30,
+	"options": [
+	  {
+		"text": "虚心听取建议",
+		"effects": {"cohesion": 8, "human_weight": 3, "reputation": 3},
+		"result_text": "老钉子的话让你醍醐灌顶，决定多关心成员。"
+	  },
+	  {
+		"text": "敷衍了事",
+		"effects": {"cohesion": -5, "human_weight": -2},
+		"result_text": "老钉子叹了口气，摇了摇头走了。"
+	  }
+	]
+  }
+]

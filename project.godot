@@ -27,6 +27,7 @@ WeekCycleManager="*res://project/scripts/autoload/WeekCycleManager.gd"
 SkipPanelManager="*res://project/scripts/autoload/SkipPanelManager.gd"
 ClockState="*res://project/scripts/autoload/ClockState.gd"
 Signals="*res://project/scripts/autoload/signals.gd"
+EventManager="*res://project/scripts/autoload/EventManager.gd"
 
 [dialogic]
 
