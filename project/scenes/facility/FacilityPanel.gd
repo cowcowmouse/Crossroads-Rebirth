@@ -16,6 +16,10 @@ func _ready():
 	upgrade_button.pressed.connect(_on_upgrade_pressed)
 	close_button.pressed.connect(_on_close_pressed)
 	
+	# 让提示文字支持自动换行，避免长句直接溢出
+	cost_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	cost_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	
 	# 修改：通过 EventBus 监听资源变化
 	if event_bus:
 		event_bus.core_resource_changed.connect(_on_resource_changed)
@@ -35,6 +39,7 @@ func _refresh_panel():
 		title_label.text = "未知设施"
 		level_label.text = "当前等级：-"
 		cost_label.text = "升级费用：-"
+		cost_label.modulate = Color.WHITE
 		upgrade_button.disabled = true
 		return
 
@@ -44,7 +49,6 @@ func _refresh_panel():
 	var pending_level = ResourceManager.get_facility_pending_level(current_facility_type)
 	var is_repairing = ResourceManager.is_facility_upgrading(current_facility_type)
 	var cost = facility_manager.get_upgrade_cost(current_facility_type)
-	var current_money = resource_manager.get_resource_value("money")
 
 	if is_repairing and pending_level > current_level:
 		level_label.text = "当前等级：%d → %d" % [current_level, pending_level]
@@ -60,22 +64,22 @@ func _refresh_panel():
 		cost_label.modulate = Color.YELLOW
 		upgrade_button.disabled = true
 	else:
-		# 检查是否可升级（等级未满 + 资金足够 + 有行动点）
+		# 检查是否可升级（等级未满 + 资金足够 + 有行动点 + 主设施等级限制）
 		var can_upgrade = facility_manager.can_upgrade(current_facility_type)
-		var has_money = current_money >= cost
-		var has_action_points = resource_manager.get_action_points() > 0
-		
-		upgrade_button.disabled = not (can_upgrade and has_money and has_action_points)
+		upgrade_button.disabled = not can_upgrade
 		
 		# 显示提示信息
 		if not can_upgrade:
-			cost_label.text = "当前不可升级"
-			cost_label.modulate = Color.YELLOW
-		elif not has_money:
-			cost_label.text = "资金不足！需要 %d" % cost
-			cost_label.modulate = Color.RED
-		elif not has_action_points:
-			cost_label.text = "行动点不足！"
+			var fail_reason = ""
+			
+			# 优先使用 FacilityManager 返回的精确失败原因
+			if facility_manager.has_method("get_upgrade_fail_reason"):
+				fail_reason = facility_manager.get_upgrade_fail_reason(current_facility_type)
+			
+			if fail_reason == "":
+				fail_reason = "当前不可升级"
+			
+			cost_label.text = fail_reason
 			cost_label.modulate = Color.RED
 		else:
 			cost_label.text = "升级费用：%d" % cost
@@ -87,6 +91,8 @@ func _on_upgrade_pressed():
 
 	# 维修中时禁止重复点击
 	if ResourceManager.is_facility_upgrading(current_facility_type):
+		cost_label.text = "维修中（下周生效）"
+		cost_label.modulate = Color.YELLOW
 		return
 	
 	# 执行升级
@@ -111,8 +117,10 @@ func _on_upgrade_pressed():
 		await get_tree().create_timer(1.0).timeout
 		_refresh_panel()
 	else:
-		cost_label.text = result["reason"]
+		# 升级失败时显示短提示
+		cost_label.text = str(result["reason"])
 		cost_label.modulate = Color.RED
+		upgrade_button.disabled = true
 
 func _on_resource_changed(resource_name: String, new_value: int, delta: int):
 	# 当资金变化时刷新面板显示

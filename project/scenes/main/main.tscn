@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://em05axaem0ia"]
+[gd_scene load_steps=36 format=3 uid="uid://em05axaem0ia"]
 
 [ext_resource type="Script" uid="uid://bkmekgpgq855c" path="res://project/scenes/main/main.gd" id="1_87m5t"]
 [ext_resource type="Texture2D" uid="uid://c4lvblykh1k4q" path="res://project/scenes/main/bar.jpg" id="1_hyk8p"]
@@ -21,6 +21,7 @@
 [ext_resource type="Script" uid="uid://r08km7j8emn8" path="res://project/scripts/models/facility/facility_entry_button.gd" id="17_dniyw"]
 [ext_resource type="Texture2D" uid="uid://bj0xjax3adgom" path="res://project/assets/images/ui/buttons/stageup.png" id="20_oesgy"]
 [ext_resource type="Texture2D" uid="uid://d37jay72hpkji" path="res://project/assets/images/ui/buttons/barup.png" id="21_svdfk"]
+[ext_resource type="PackedScene" uid="uid://cy72tji61wjdt" path="res://project/scenes/settlement/settlement_panel.tscn" id="22_wsoed"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_j0ny1"]
 line_spacing = 28.0
@@ -274,10 +275,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 724.0
-offset_top = 388.0
-offset_right = 1271.0
-offset_bottom = 778.0
+offset_left = 630.0
+offset_top = 378.0
+offset_right = 1335.0
+offset_bottom = 809.0
 grow_horizontal = 1
 grow_vertical = 1
 
@@ -381,6 +382,9 @@ offset_bottom = -60.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "跳过阶段"
+
+[node name="SettlementPanel" parent="UILayer" instance=ExtResource("22_wsoed")]
+visible = false
 
 [connection signal="pressed" from="UILayer/ArrowLeft" to="." method="_on_texture_button_pressed"]
 [connection signal="pressed" from="UILayer/ArrowRight" to="." method="_on_arrow_right_pressed"]

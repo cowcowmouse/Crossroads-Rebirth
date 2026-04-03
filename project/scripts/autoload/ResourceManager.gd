@@ -6,9 +6,16 @@ extends Node
 # 只声明变量，不在顶层初始化
 var core_resources: Dictionary = {}
 var ai_weights: Dictionary = {}  # 空字典声明，不赋值
+
+# 本周方向值变化记录（用于周结算面板显示）
+var weekly_weight_changes: Dictionary = {}
+
 var members: Dictionary = {}
 var action_points: int = 3
 var facility_levels: Dictionary = {}
+
+# 行动点上限（统一由 ResourceManager 管理）
+const MAX_ACTION_POINTS: int = 3
 
 # 设施是否处于升级/维修中
 var facility_upgrading: Dictionary = {}
@@ -16,15 +23,29 @@ var facility_upgrading: Dictionary = {}
 # 设施待生效等级（升级延迟到下周生效）
 var facility_pending_levels: Dictionary = {}
 
+# 连续负债周数（用于失败判定）
+var debt_weeks: int = 0
+
+# 每周固定支出（租金+工资）
+const WEEKLY_EXPENSE = 1500
+
 # 节点就绪后自动初始化（此时 constants 已赋值）
 func _ready():
 	init_new_game()
 
 # 新游戏初始化
 func init_new_game():
+	# 本周方向值变化初始化
+	weekly_weight_changes = {
+		constants.WEIGHT_ART: 0,
+		constants.WEIGHT_BUSINESS: 0,
+		constants.WEIGHT_HUMAN: 0
+	}
+
 	# 初始化四类核心资源（严格对齐设计文档）
+	# 注意：资金最小值改为负数，允许出现负债状态
 	core_resources = {
-		constants.RES_MONEY: {"value": 5000, "min": 0, "max": 999999},
+		constants.RES_MONEY: {"value": 5000, "min": -999999, "max": 999999},
 		constants.RES_REPUTATION: {"value": 10, "min": 0, "max": 100},
 		constants.RES_COHESION: {"value": 60, "min": 0, "max": 100},
 		constants.RES_CREATIVITY: {"value": 30, "min": 0, "max": 100},
@@ -32,7 +53,10 @@ func init_new_game():
 	}
 	
 	# 行动点初始化
-	action_points = 3
+	action_points = MAX_ACTION_POINTS
+	
+	# 连续负债周数初始化
+	debt_weeks = 0
 	
 	# 设施等级初始化
 	facility_levels = {
@@ -179,11 +203,47 @@ func add_creativity(amount: int) -> bool:
 func add_memory(amount: int) -> bool:
 	return modify_core_resource(constants.RES_MEMORY, amount)
 
+# ===================== 资金状态接口 =====================
+
+# 是否有足够资金支付指定金额
+func can_afford(cost: int) -> bool:
+	return get_resource_value(constants.RES_MONEY) >= cost
+
+# 当前是否处于负债状态
+func is_in_debt() -> bool:
+	return get_resource_value(constants.RES_MONEY) < 0
+
+# 获取连续负债周数
+func get_debt_weeks() -> int:
+	return debt_weeks
+
+# 在每周结算后更新负债状态
+# 规则：
+# - 资金 < 0 时，连续负债周数 +1
+# - 资金 >= 0 时，连续负债周数清零
+func update_debt_status_after_settlement():
+	if is_in_debt():
+		debt_weeks += 1
+		print("连续负债周数：", debt_weeks)
+	else:
+		if debt_weeks > 0:
+			print("已脱离负债状态，连续负债周数清零")
+		debt_weeks = 0
+
+# 是否应触发负债失败
+# 当前规则：负债持续 1 周即失败
+func should_trigger_debt_game_over() -> bool:
+	return debt_weeks >= 1
+
 # ===================== 行动点接口 =====================
 
 # 获取当前行动点
 func get_action_points() -> int:
 	return action_points
+
+# 获取行动点上限
+func get_max_action_points() -> int:
+	return MAX_ACTION_POINTS
 
 # 检查行动点是否足够
 func can_consume_action_points(cost: int = 1) -> bool:
@@ -208,7 +268,7 @@ func consume_action_point(cost: int = 1) -> bool:
 
 # 恢复行动点（每周重置时调用）
 func restore_action_points():
-	action_points = 3
+	action_points = MAX_ACTION_POINTS
 	refresh_current_scene_topbar()
 	print("行动点已恢复为：", action_points)
 
@@ -228,6 +288,7 @@ func refresh_current_scene_topbar():
 	var action_point_label = current_scene.get_node_or_null("UILayer/TopBar/ActionPointGroup/ActionPointLabel")
 
 	if money_label:
+		# 资金现在允许显示负数
 		money_label.text = "资金: %d" % get_resource_value(constants.RES_MONEY)
 
 	if reputation_label:
@@ -243,13 +304,18 @@ func refresh_current_scene_topbar():
 		memory_label.text = "记忆恢复度: %d" % get_resource_value(constants.RES_MEMORY)
 
 	if action_point_label:
-		action_point_label.text = "行动点: %d/3" % action_points
+		action_point_label.text = "行动点: %d/%d" % [action_points, MAX_ACTION_POINTS]
 
 # ===================== AI权重接口 =====================
 
 func modify_ai_weight(weight_name: String, delta: int):
 	if ai_weights.has(weight_name):
 		ai_weights[weight_name] += delta
+		
+		# 记录本周方向值变化，供周结算面板显示
+		if weekly_weight_changes.has(weight_name):
+			weekly_weight_changes[weight_name] += delta
+		
 		event_bus.weight_changed.emit(weight_name, ai_weights[weight_name], delta)
 		print("权重变动：", weight_name, " ", delta, "，当前值：", ai_weights[weight_name])
 
@@ -260,6 +326,19 @@ func get_ai_weight(weight_name: String) -> int:
 
 func get_all_weights() -> Dictionary:
 	return ai_weights.duplicate()
+
+# 获取本周方向值变化记录
+func get_weekly_weight_changes() -> Dictionary:
+	return weekly_weight_changes.duplicate()
+
+# 重置本周方向值变化记录
+func reset_weekly_weight_changes():
+	weekly_weight_changes = {
+		constants.WEIGHT_ART: 0,
+		constants.WEIGHT_BUSINESS: 0,
+		constants.WEIGHT_HUMAN: 0
+	}
+	print("本周方向值变化记录已重置")
 
 # ===================== 成员数据接口 =====================
 
@@ -383,18 +462,16 @@ func _check_resource_boundary_event(resource_name: String, new_value: int):
 				print("警告：凝聚力低于30，进入危险状态！")
 				event_bus.resource_warning.emit(resource_name, new_value, "danger")
 		constants.RES_MONEY:
-			if new_value <= 0:
-				print("警告：资金耗尽，触发破产判定！")
-				event_bus.resource_warning.emit(resource_name, new_value, "critical")
+			# 资金改为允许负数，这里只保留负债警告，不直接锁死
+			if new_value < 0:
+				print("警告：资金为负，进入负债状态！")
+				event_bus.resource_warning.emit(resource_name, new_value, "debt")
 		constants.RES_CREATIVITY:
 			if new_value < 10:
 				print("警告：创造力过低，无法进行艺术操作！")
 				event_bus.resource_warning.emit(resource_name, new_value, "low")
 
 # ===================== 周结算相关 =====================
-
-# 每周固定支出（租金+工资）
-const WEEKLY_EXPENSE = 1500
 
 # 执行每周扣款
 func apply_weekly_expense() -> bool:
@@ -403,6 +480,168 @@ func apply_weekly_expense() -> bool:
 # 获取每周支出金额
 func get_weekly_expense() -> int:
 	return WEEKLY_EXPENSE
+
+# ===================== 酒吧基础收入接口 =====================
+
+# 获取酒吧每周基础收入
+# 只按“正式等级”结算，不看待生效等级
+# 这样可以和“升级下周生效”的逻辑保持一致
+func get_bar_base_income() -> int:
+	var bar_level = clamp(get_facility_level("bar"), 1, 5)
+
+	match bar_level:
+		1:
+			return 800
+		2:
+			return 1300
+		3:
+			return 2000
+		4:
+			return 2900
+		5:
+			return 4200
+
+	return 800
+
+# 应用酒吧每周基础收入
+# 返回本次实际结算的收入，方便周结算面板或日志打印
+func apply_bar_base_income() -> int:
+	var income = get_bar_base_income()
+	add_money(income)
+	print("酒吧基础收入结算：等级=", get_facility_level("bar"), " 收入=", income)
+	return income
+
+# ===================== 舞台效果接口 =====================
+
+# 获取舞台声誉加成倍率
+# 返回值示例：
+# 1.0 = 无加成
+# 1.15 = +15%
+# 1.30 = +30%
+func get_stage_reputation_multiplier() -> float:
+	var stage_level = clamp(get_facility_level("stage"), 1, 5)
+
+	match stage_level:
+		1:
+			return 1.0
+		2:
+			return 1.15
+		3:
+			return 1.30
+		4:
+			return 1.50
+		5:
+			return 1.75
+
+	return 1.0
+
+# 根据舞台等级，计算加成后的声誉收益
+func calculate_stage_reputation_gain(base_reputation_gain: int) -> int:
+	var multiplier = get_stage_reputation_multiplier()
+	return int(round(base_reputation_gain * multiplier))
+
+func debug_print_stage_bonus():
+	print("当前舞台等级：", get_facility_level("stage"))
+	print("当前舞台声誉倍率：", get_stage_reputation_multiplier())
+	print("基础声誉10 -> 实际声誉：", calculate_stage_reputation_gain(10))
+
+# ===================== 排练室效果接口 =====================
+
+# 获取排练室对创造力消耗的减免比例
+# 返回值示例：
+# 0.0 = 无减免
+# 0.1 = -10%
+# 0.2 = -20%
+func get_rehearsal_creativity_discount() -> float:
+	var rehearsal_level = clamp(get_facility_level("rehearsal"), 1, 5)
+
+	match rehearsal_level:
+		1:
+			return 0.0
+		2:
+			return 0.10
+		3:
+			return 0.20
+		4:
+			return 0.30
+		5:
+			return 0.45
+
+	return 0.0
+
+# 根据排练室等级，计算折扣后的创造力消耗
+# 至少消耗 1 点，避免出现 0 消耗
+func calculate_rehearsal_creativity_cost(base_cost: int) -> int:
+	var discount = get_rehearsal_creativity_discount()
+	var final_cost = int(round(base_cost * (1.0 - discount)))
+	return max(1, final_cost)
+
+# ===================== 休息室效果接口 =====================
+
+# 获取休息室每周结算时提供的凝聚力恢复值
+func get_lounge_cohesion_bonus() -> int:
+	var lounge_level = clamp(get_facility_level("lounge"), 1, 5)
+
+	match lounge_level:
+		1:
+			return 0
+		2:
+			return 3
+		3:
+			return 6
+		4:
+			return 10
+		5:
+			return 15
+
+	return 0
+
+# 获取休息室每周结算时提供的成员疲劳恢复值
+func get_lounge_fatigue_recovery() -> int:
+	var lounge_level = clamp(get_facility_level("lounge"), 1, 5)
+
+	match lounge_level:
+		1:
+			return 0
+		2:
+			return 4
+		3:
+			return 8
+		4:
+			return 12
+		5:
+			return 18
+
+	return 0
+
+# 应用休息室在周结算时的恢复效果
+# 1. 给全体成员降低疲劳
+# 2. 给核心资源增加凝聚力
+func apply_lounge_weekly_bonus():
+	var fatigue_recovery = get_lounge_fatigue_recovery()
+	var cohesion_bonus = get_lounge_cohesion_bonus()
+
+	# 恢复全体成员疲劳
+	if fatigue_recovery > 0:
+		for member_id in members.keys():
+			modify_member_stat(member_id, "fatigue", -fatigue_recovery)
+
+	# 恢复凝聚力
+	if cohesion_bonus > 0:
+		add_cohesion(cohesion_bonus)
+
+	print("休息室周结算加成：疲劳恢复=", fatigue_recovery, " 凝聚力+", cohesion_bonus)
+
+# ===================== 设施效果调试接口 =====================
+
+# 打印当前所有设施效果，方便调试
+func debug_print_facility_effects():
+	print("===== 当前设施效果调试信息 =====")
+	print("酒吧等级：", get_facility_level("bar"), " -> 每周收入：", get_bar_base_income())
+	print("舞台等级：", get_facility_level("stage"), " -> 声誉倍率：", get_stage_reputation_multiplier())
+	print("排练室等级：", get_facility_level("rehearsal"), " -> 创造力减免：", get_rehearsal_creativity_discount())
+	print("休息室等级：", get_facility_level("lounge"), " -> 疲劳恢复：", get_lounge_fatigue_recovery(), " / 凝聚力恢复：", get_lounge_cohesion_bonus())
+	print("============================")
 
 # ===================== 设施等级接口 =====================
 
@@ -446,7 +685,16 @@ func apply_pending_facility_upgrades():
 	for facility_type in facility_pending_levels.keys():
 		var pending_level = int(facility_pending_levels[facility_type])
 		if pending_level > 0:
+			# 1. 正式写入设施等级
 			set_facility_level(facility_type, pending_level)
+
+			# 2. 在设施正式生效时，应用对应方向值加成
+			# 只对副设施生效，具体逻辑由 FacilityManager 内部控制
+			if FacilityManager and FacilityManager.has_method("apply_facility_weight_gain_on_activation"):
+				FacilityManager.apply_facility_weight_gain_on_activation(facility_type, pending_level)
+
+			# 3. 清除待生效状态与维修状态
 			set_facility_pending_level(facility_type, 0)
 			set_facility_upgrading(facility_type, false)
+
 			print("设施升级正式生效：", facility_type, " -> ", pending_level)

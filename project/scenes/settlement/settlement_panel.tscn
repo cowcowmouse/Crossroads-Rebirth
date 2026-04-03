@@ -1,0 +1,120 @@
+[gd_scene load_steps=2 format=3 uid="uid://cy72tji61wjdt"]
+
+[ext_resource type="Script" uid="uid://npd2qxorse83" path="res://project/scripts/autoload/SettlementPanel.gd" id="1_0ms0e"]
+
+[node name="SettlementPanel" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0ms0e")
+
+[node name="Bg" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true
+
+[node name="WeekLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -26.5
+offset_right = 26.5
+offset_bottom = 23.0
+grow_horizontal = 2
+text = " 周结算"
+
+[node name="ExpenseLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.48541668
+anchor_top = 0.6111111
+anchor_right = 0.528125
+anchor_bottom = 0.6111111
+offset_right = 40.0
+offset_bottom = 23.0
+text = "固定支出：-1500"
+metadata/_edit_use_anchors_ = true
+
+[node name="IncomeLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.484375
+anchor_top = 0.5
+anchor_right = 0.52916664
+anchor_bottom = 0.5
+offset_right = 40.0
+offset_bottom = 23.0
+text = "酒吧收入：+1300"
+metadata/_edit_use_anchors_ = true
+
+[node name="NetChangeLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.48125
+anchor_top = 0.39259258
+anchor_right = 0.52760416
+anchor_bottom = 0.39259258
+offset_right = 40.0
+offset_bottom = 23.0
+text = "本周净变化：-200"
+metadata/_edit_use_anchors_ = true
+
+[node name="MoneyAfterLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.47083333
+anchor_top = 0.083333336
+anchor_right = 0.5171875
+anchor_bottom = 0.083333336
+offset_right = 40.0
+offset_bottom = 23.0
+text = "结算后资金：-200"
+metadata/_edit_use_anchors_ = true
+
+[node name="LoungeBonusLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4453125
+anchor_top = 0.16944444
+anchor_right = 0.54114586
+anchor_bottom = 0.16944444
+offset_right = 40.0
+offset_bottom = 23.0
+text = "休息室恢复：疲劳-4 / 凝聚力+3"
+metadata/_edit_use_anchors_ = true
+
+[node name="WeightChangeLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4359375
+anchor_top = 0.65833336
+anchor_right = 0.565625
+anchor_bottom = 0.65833336
+offset_right = 40.0
+offset_bottom = 23.0
+text = "方向值变化：商业 +2 / 艺术 +0 / 人情 +3"
+metadata/_edit_use_anchors_ = true
+
+[node name="DebtStatusLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.46979168
+anchor_top = 0.2851852
+anchor_right = 0.52916664
+anchor_bottom = 0.2851852
+offset_right = 40.0
+offset_bottom = 23.0
+text = "负债状态：是（1周）"
+metadata/_edit_use_anchors_ = true
+
+[node name="ConfirmButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 962.0
+offset_top = 828.0
+offset_right = 1002.0
+offset_bottom = 859.0
+text = "确认"

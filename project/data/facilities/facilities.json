@@ -2,33 +2,33 @@
   "stage": {
 	"name": "舞台",
 	"level": 1,
-	"max_level": 3,
-	"costs": [0, 500, 800, 1200],
-	"weight_type": "art",
-	"weight_gain": [0, 1, 1, 2]
+	"max_level": 5,
+	"costs": [0, 0, 1800, 3200, 5000, 7200],
+	"weight_type": "business",
+	"weight_gain": [0, 0, 2, 3, 4, 5]
   },
   "bar": {
 	"name": "酒吧",
 	"level": 1,
-	"max_level": 3,
-	"costs": [0, 500, 800, 1200],
+	"max_level": 5,
+	"costs": [0, 0, 2000, 3600, 5600, 8000],
 	"weight_type": "business",
-	"weight_gain": [0, 1, 1, 2]
+	"weight_gain": [0, 0, 2, 3, 4, 5]
   },
   "rehearsal": {
 	"name": "排练室",
 	"level": 1,
-	"max_level": 3,
-	"costs": [0, 500, 800, 1200],
+	"max_level": 5,
+	"costs": [0, 0, 1600, 3000, 4600, 6800],
 	"weight_type": "art",
-	"weight_gain": [0, 1, 1, 2]
+	"weight_gain": [0, 0, 2, 2, 3, 4]
   },
   "lounge": {
 	"name": "休息室",
 	"level": 1,
-	"max_level": 3,
-	"costs": [0, 500, 800, 1200],
+	"max_level": 5,
+	"costs": [0, 0, 1600, 3000, 4600, 6800],
 	"weight_type": "human",
-	"weight_gain": [0, 1, 1, 2]
+	"weight_gain": [0, 0, 2, 3, 4, 5]
   }
 }
