@@ -6,6 +6,8 @@ var current_facility_type: String = ""
 @onready var level_label = $LevelLabel
 @onready var cost_label = $CostLabel
 @onready var upgrade_button = $UpgradeButton
+@onready var action_info_label = $ActionInfoLabel
+@onready var action_button = $ActionButton
 @onready var close_button = $CloseButton
 @onready var facility_manager = get_node("/root/FacilityManager")
 @onready var resource_manager = get_node("/root/ResourceManager")
@@ -14,11 +16,15 @@ var current_facility_type: String = ""
 func _ready():
 	visible = false
 	upgrade_button.pressed.connect(_on_upgrade_pressed)
+	action_button.pressed.connect(_on_action_pressed)
 	close_button.pressed.connect(_on_close_pressed)
 	
 	# 让提示文字支持自动换行，避免长句直接溢出
 	cost_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	cost_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	
+	action_info_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	action_info_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	
 	# 修改：通过 EventBus 监听资源变化
 	if event_bus:
@@ -41,6 +47,11 @@ func _refresh_panel():
 		cost_label.text = "升级费用：-"
 		cost_label.modulate = Color.WHITE
 		upgrade_button.disabled = true
+		
+		action_info_label.text = "互动信息：-"
+		action_info_label.modulate = Color.WHITE
+		action_button.text = "互动未开放"
+		action_button.disabled = true
 		return
 
 	title_label.text = str(info["name"])
@@ -55,6 +66,7 @@ func _refresh_panel():
 	else:
 		level_label.text = "当前等级：%d" % current_level
 
+	# ===================== 升级区域刷新 =====================
 	if is_repairing:
 		cost_label.text = "维修中（下周生效）"
 		cost_label.modulate = Color.YELLOW
@@ -84,6 +96,44 @@ func _refresh_panel():
 		else:
 			cost_label.text = "升级费用：%d" % cost
 			cost_label.modulate = Color.WHITE
+
+	# ===================== 互动区域刷新 =====================
+	_refresh_action_area()
+
+func _refresh_action_area():
+	if not facility_manager.has_method("get_facility_action_info"):
+		action_info_label.text = "互动信息：未开放"
+		action_info_label.modulate = Color.GRAY
+		action_button.text = "互动未开放"
+		action_button.disabled = true
+		return
+
+	var action_info = facility_manager.get_facility_action_info(current_facility_type)
+
+	var action_name = str(action_info.get("action_name", "未开放"))
+	var cost_text = str(action_info.get("cost_text", ""))
+	var reward_text = str(action_info.get("reward_text", ""))
+	var enabled = bool(action_info.get("enabled", false))
+	var reason = str(action_info.get("reason", ""))
+
+	action_button.text = action_name
+
+	if action_name == "未开放":
+		action_info_label.text = "互动信息：未开放"
+		action_info_label.modulate = Color.GRAY
+		action_button.disabled = true
+		return
+
+	if enabled:
+		action_info_label.text = "%s\n%s" % [cost_text, reward_text]
+		action_info_label.modulate = Color.WHITE
+		action_button.disabled = false
+	else:
+		if reason == "":
+			reason = "当前无法执行"
+		action_info_label.text = "%s\n%s\n%s" % [cost_text, reward_text, reason]
+		action_info_label.modulate = Color.YELLOW
+		action_button.disabled = true
 
 func _on_upgrade_pressed():
 	if not facility_manager or not resource_manager:
@@ -122,9 +172,65 @@ func _on_upgrade_pressed():
 		cost_label.modulate = Color.RED
 		upgrade_button.disabled = true
 
+func _on_action_pressed():
+	if not facility_manager or not resource_manager:
+		return
+
+	if not facility_manager.has_method("perform_facility_action"):
+		action_info_label.text = "互动功能未接入"
+		action_info_label.modulate = Color.RED
+		return
+
+	var result = facility_manager.perform_facility_action(current_facility_type)
+
+	if result.get("success", false):
+		var changes = result.get("changes", {})
+		var tips := []
+
+		if changes.has("money"):
+			var money_change = int(changes["money"])
+			tips.append("资金 %+d" % money_change)
+
+		if changes.has("creativity"):
+			var creativity_change = int(changes["creativity"])
+			tips.append("创造力 %+d" % creativity_change)
+
+		if changes.has("cohesion"):
+			var cohesion_change = int(changes["cohesion"])
+			tips.append("凝聚力 %+d" % cohesion_change)
+
+		if changes.has("reputation"):
+			var reputation_change = int(changes["reputation"])
+			tips.append("声誉 %+d" % reputation_change)
+
+		if changes.has("fatigue_recovery"):
+			var fatigue_recovery = int(changes["fatigue_recovery"])
+			tips.append("全员疲劳 -%d" % fatigue_recovery)
+
+		if tips.is_empty():
+			action_info_label.text = "互动执行成功！"
+		else:
+			action_info_label.text = "互动成功：\n" + "\n".join(tips)
+
+		action_info_label.modulate = Color.GREEN
+		action_button.disabled = true
+		upgrade_button.disabled = true
+
+		await get_tree().create_timer(1.0).timeout
+		_refresh_panel()
+	else:
+		action_info_label.text = str(result.get("reason", "互动失败"))
+		action_info_label.modulate = Color.RED
+		action_button.disabled = true
+
 func _on_resource_changed(resource_name: String, new_value: int, delta: int):
-	# 当资金变化时刷新面板显示
-	if resource_name == "money" and visible:
+	# 当核心资源变化时刷新面板显示
+	if visible and (
+		resource_name == "money" or
+		resource_name == "creativity" or
+		resource_name == "cohesion" or
+		resource_name == "reputation"
+	):
 		_refresh_panel()
 
 func _refresh_current_scene_facility_button():

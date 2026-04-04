@@ -632,6 +632,395 @@ func apply_lounge_weekly_bonus():
 
 	print("休息室周结算加成：疲劳恢复=", fatigue_recovery, " 凝聚力+", cohesion_bonus)
 
+# ===================== 设施互动接口 =====================
+
+# 获取设施互动是否可执行
+# 已实现：
+# - 酒吧：营业推广
+# - 舞台：安排演出
+# - 排练室：集中排练
+# - 休息室：团队休整
+func can_perform_facility_action(facility_type: String) -> Dictionary:
+	var result := {
+		"success": true,
+		"reason": ""
+	}
+
+	# 设施维修中不可互动
+	if is_facility_upgrading(facility_type):
+		result["success"] = false
+		result["reason"] = "设施维修中"
+		return result
+
+	# 所有设施互动统一先检查行动点
+	if not can_consume_action_points(1):
+		result["success"] = false
+		result["reason"] = "行动点不足"
+		return result
+
+	match facility_type:
+		"bar":
+			var bar_cohesion_cost = get_bar_action_cohesion_cost()
+			var bar_creativity_cost = get_bar_action_creativity_cost()
+
+			if get_resource_value(constants.RES_COHESION) < bar_cohesion_cost:
+				result["success"] = false
+				result["reason"] = "凝聚力不足\n需要：%d" % bar_cohesion_cost
+				return result
+
+			if get_resource_value(constants.RES_CREATIVITY) < bar_creativity_cost:
+				result["success"] = false
+				result["reason"] = "创造力不足\n需要：%d" % bar_creativity_cost
+				return result
+
+		"stage":
+			var stage_creativity_cost = get_stage_action_creativity_cost()
+			var stage_cohesion_cost = get_stage_action_cohesion_cost()
+
+			if get_resource_value(constants.RES_CREATIVITY) < stage_creativity_cost:
+				result["success"] = false
+				result["reason"] = "创造力不足\n需要：%d" % stage_creativity_cost
+				return result
+
+			if get_resource_value(constants.RES_COHESION) < stage_cohesion_cost:
+				result["success"] = false
+				result["reason"] = "凝聚力不足\n需要：%d" % stage_cohesion_cost
+				return result
+
+		"rehearsal":
+			var rehearsal_money_cost = get_rehearsal_action_money_cost()
+			if not can_afford(rehearsal_money_cost):
+				result["success"] = false
+				result["reason"] = "资金不足\n需要：%d" % rehearsal_money_cost
+				return result
+
+		"lounge":
+			var lounge_money_cost = get_lounge_action_money_cost()
+			if not can_afford(lounge_money_cost):
+				result["success"] = false
+				result["reason"] = "资金不足\n需要：%d" % lounge_money_cost
+				return result
+
+		_:
+			result["success"] = false
+			result["reason"] = "该设施互动尚未开放"
+			return result
+
+	return result
+
+
+# 执行设施互动
+# 返回格式：
+# {
+#   "success": true/false,
+#   "reason": "",
+#   "changes": {
+#       "money": -120,
+#       "creativity": +4
+#   }
+# }
+func perform_facility_action(facility_type: String) -> Dictionary:
+	var result := {
+		"success": false,
+		"reason": "",
+		"changes": {}
+	}
+
+	var check_result = can_perform_facility_action(facility_type)
+	if not check_result["success"]:
+		result["reason"] = check_result["reason"]
+		return result
+
+	match facility_type:
+		"bar":
+			var bar_cohesion_cost = get_bar_action_cohesion_cost()
+			var bar_creativity_cost = get_bar_action_creativity_cost()
+			var bar_money_gain = get_bar_action_money_gain()
+
+			# 先扣资源，再扣行动点，最后发收益
+			add_cohesion(-bar_cohesion_cost)
+			add_creativity(-bar_creativity_cost)
+
+			if not consume_action_point(1):
+				add_cohesion(bar_cohesion_cost)
+				add_creativity(bar_creativity_cost)
+				result["reason"] = "行动点不足"
+				return result
+
+			add_money(bar_money_gain)
+
+			result["success"] = true
+			result["changes"] = {
+				"cohesion": -bar_cohesion_cost,
+				"creativity": -bar_creativity_cost,
+				"money": bar_money_gain
+			}
+
+			print("设施互动执行成功：酒吧 -> 营业推广，凝聚力", -bar_cohesion_cost, " 创造力", -bar_creativity_cost, " 资金+", bar_money_gain)
+			return result
+
+		"stage":
+			var stage_creativity_cost = get_stage_action_creativity_cost()
+			var stage_cohesion_cost = get_stage_action_cohesion_cost()
+			var stage_money_gain = get_stage_action_money_gain()
+			var stage_reputation_gain = get_stage_action_reputation_gain()
+
+			add_creativity(-stage_creativity_cost)
+			add_cohesion(-stage_cohesion_cost)
+
+			if not consume_action_point(1):
+				add_creativity(stage_creativity_cost)
+				add_cohesion(stage_cohesion_cost)
+				result["reason"] = "行动点不足"
+				return result
+
+			add_money(stage_money_gain)
+			add_reputation(stage_reputation_gain)
+
+			result["success"] = true
+			result["changes"] = {
+				"creativity": -stage_creativity_cost,
+				"cohesion": -stage_cohesion_cost,
+				"money": stage_money_gain,
+				"reputation": stage_reputation_gain
+			}
+
+			print("设施互动执行成功：舞台 -> 安排演出，创造力", -stage_creativity_cost, " 凝聚力", -stage_cohesion_cost, " 资金+", stage_money_gain, " 声誉+", stage_reputation_gain)
+			return result
+
+		"rehearsal":
+			var rehearsal_money_cost = get_rehearsal_action_money_cost()
+			var rehearsal_creativity_gain = get_rehearsal_action_creativity_gain()
+
+			# 先扣钱
+			if not add_money(-rehearsal_money_cost):
+				result["reason"] = "资金不足\n需要：%d" % rehearsal_money_cost
+				return result
+
+			# 再扣行动点
+			if not consume_action_point(1):
+				# 如果行动点扣除失败，把钱补回去
+				add_money(rehearsal_money_cost)
+				result["reason"] = "行动点不足"
+				return result
+
+			# 最后加创造力
+			add_creativity(rehearsal_creativity_gain)
+
+			result["success"] = true
+			result["changes"] = {
+				"money": -rehearsal_money_cost,
+				"creativity": rehearsal_creativity_gain
+			}
+
+			print("设施互动执行成功：排练室 -> 集中排练，资金", -rehearsal_money_cost, " 创造力+", rehearsal_creativity_gain)
+			return result
+
+		"lounge":
+			var lounge_money_cost = get_lounge_action_money_cost()
+			var lounge_cohesion_gain = get_lounge_action_cohesion_gain()
+			var lounge_fatigue_recovery = get_lounge_action_fatigue_recovery()
+
+			if not add_money(-lounge_money_cost):
+				result["reason"] = "资金不足\n需要：%d" % lounge_money_cost
+				return result
+
+			if not consume_action_point(1):
+				add_money(lounge_money_cost)
+				result["reason"] = "行动点不足"
+				return result
+
+			add_cohesion(lounge_cohesion_gain)
+
+			for member_id in members.keys():
+				modify_member_stat(member_id, "fatigue", -lounge_fatigue_recovery)
+
+			result["success"] = true
+			result["changes"] = {
+				"money": -lounge_money_cost,
+				"cohesion": lounge_cohesion_gain,
+				"fatigue_recovery": lounge_fatigue_recovery
+			}
+
+			print("设施互动执行成功：休息室 -> 团队休整，资金", -lounge_money_cost, " 凝聚力+", lounge_cohesion_gain, " 全员疲劳-", lounge_fatigue_recovery)
+			return result
+
+		_:
+			result["reason"] = "该设施互动尚未开放"
+			return result
+
+
+# ===================== 酒吧互动数值接口 =====================
+
+# 获取酒吧互动：凝聚力消耗
+func get_bar_action_cohesion_cost() -> int:
+	return 2
+
+# 获取酒吧互动：创造力消耗
+func get_bar_action_creativity_cost() -> int:
+	return 1
+
+# 获取酒吧互动：资金收益
+func get_bar_action_money_gain() -> int:
+	var level = clamp(get_facility_level("bar"), 1, 5)
+
+	match level:
+		1:
+			return 250
+		2:
+			return 400
+		3:
+			return 600
+		4:
+			return 850
+		5:
+			return 1200
+
+	return 250
+
+
+# ===================== 舞台互动数值接口 =====================
+
+# 获取舞台互动：创造力消耗
+func get_stage_action_creativity_cost() -> int:
+	return 5
+
+# 获取舞台互动：凝聚力消耗
+func get_stage_action_cohesion_cost() -> int:
+	return 1
+
+# 获取舞台互动：资金收益
+func get_stage_action_money_gain() -> int:
+	var level = clamp(get_facility_level("stage"), 1, 5)
+
+	match level:
+		1:
+			return 200
+		2:
+			return 350
+		3:
+			return 550
+		4:
+			return 800
+		5:
+			return 1100
+
+	return 200
+
+# 获取舞台互动：声誉收益
+func get_stage_action_reputation_gain() -> int:
+	var level = clamp(get_facility_level("stage"), 1, 5)
+
+	match level:
+		1:
+			return 2
+		2:
+			return 3
+		3:
+			return 5
+		4:
+			return 7
+		5:
+			return 10
+
+	return 2
+
+
+# ===================== 排练室互动数值接口 =====================
+
+# 获取排练室互动：资金消耗
+func get_rehearsal_action_money_cost() -> int:
+	var level = clamp(get_facility_level("rehearsal"), 1, 5)
+
+	match level:
+		1:
+			return 120
+		2:
+			return 180
+		3:
+			return 260
+		4:
+			return 360
+		5:
+			return 500
+
+	return 120
+
+# 获取排练室互动：创造力收益
+func get_rehearsal_action_creativity_gain() -> int:
+	var level = clamp(get_facility_level("rehearsal"), 1, 5)
+
+	match level:
+		1:
+			return 4
+		2:
+			return 7
+		3:
+			return 11
+		4:
+			return 16
+		5:
+			return 22
+
+	return 4
+
+
+# ===================== 休息室互动数值接口 =====================
+
+# 获取休息室互动：资金消耗
+func get_lounge_action_money_cost() -> int:
+	var level = clamp(get_facility_level("lounge"), 1, 5)
+
+	match level:
+		1:
+			return 100
+		2:
+			return 150
+		3:
+			return 220
+		4:
+			return 320
+		5:
+			return 450
+
+	return 100
+
+# 获取休息室互动：凝聚力收益
+func get_lounge_action_cohesion_gain() -> int:
+	var level = clamp(get_facility_level("lounge"), 1, 5)
+
+	match level:
+		1:
+			return 3
+		2:
+			return 5
+		3:
+			return 8
+		4:
+			return 11
+		5:
+			return 15
+
+	return 3
+
+# 获取休息室互动：全员疲劳恢复
+func get_lounge_action_fatigue_recovery() -> int:
+	var level = clamp(get_facility_level("lounge"), 1, 5)
+
+	match level:
+		1:
+			return 1
+		2:
+			return 2
+		3:
+			return 3
+		4:
+			return 5
+		5:
+			return 7
+
+	return 1
+
 # ===================== 设施效果调试接口 =====================
 
 # 打印当前所有设施效果，方便调试

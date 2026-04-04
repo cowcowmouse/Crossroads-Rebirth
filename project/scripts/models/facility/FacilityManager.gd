@@ -257,3 +257,78 @@ func apply_facility_weight_gain_on_activation(facility_type: String, target_leve
 			ResourceManager.modify_ai_weight(Constants.WEIGHT_HUMAN, gain)
 
 	print("设施正式生效，方向值加成：", facility_type, " -> ", weight_type, " +", gain)
+
+# ===================== 设施互动接口 =====================
+
+# 获取设施互动说明（给面板显示用）
+func get_facility_action_info(facility_type: String) -> Dictionary:
+	var result := {
+		"action_name": "",
+		"cost_text": "",
+		"reward_text": "",
+		"enabled": false,
+		"reason": ""
+	}
+
+	var check_result = ResourceManager.can_perform_facility_action(facility_type)
+
+	match facility_type:
+		"bar":
+			var cohesion_cost = ResourceManager.get_bar_action_cohesion_cost()
+			var creativity_cost = ResourceManager.get_bar_action_creativity_cost()
+			var money_gain = ResourceManager.get_bar_action_money_gain()
+
+			result["action_name"] = "营业推广"
+			result["cost_text"] = "消耗：行动点1 / 凝聚力%d / 创造力%d" % [cohesion_cost, creativity_cost]
+			result["reward_text"] = "收益：资金 +%d" % money_gain
+			result["enabled"] = check_result["success"]
+			result["reason"] = check_result["reason"]
+			return result
+
+		"stage":
+			var stage_creativity_cost = ResourceManager.get_stage_action_creativity_cost()
+			var stage_cohesion_cost = ResourceManager.get_stage_action_cohesion_cost()
+			var stage_money_gain = ResourceManager.get_stage_action_money_gain()
+			var stage_reputation_gain = ResourceManager.get_stage_action_reputation_gain()
+
+			result["action_name"] = "安排演出"
+			result["cost_text"] = "消耗：行动点1 / 创造力%d / 凝聚力%d" % [stage_creativity_cost, stage_cohesion_cost]
+			result["reward_text"] = "收益：资金 +%d / 声誉 +%d" % [stage_money_gain, stage_reputation_gain]
+			result["enabled"] = check_result["success"]
+			result["reason"] = check_result["reason"]
+			return result
+
+		"rehearsal":
+			var money_cost = ResourceManager.get_rehearsal_action_money_cost()
+			var creativity_gain = ResourceManager.get_rehearsal_action_creativity_gain()
+
+			result["action_name"] = "集中排练"
+			result["cost_text"] = "消耗：行动点1 / 资金%d" % money_cost
+			result["reward_text"] = "收益：创造力 +%d" % creativity_gain
+			result["enabled"] = check_result["success"]
+			result["reason"] = check_result["reason"]
+			return result
+
+		"lounge":
+			var lounge_money_cost = ResourceManager.get_lounge_action_money_cost()
+			var lounge_cohesion_gain = ResourceManager.get_lounge_action_cohesion_gain()
+			var lounge_fatigue_recovery = ResourceManager.get_lounge_action_fatigue_recovery()
+
+			result["action_name"] = "团队休整"
+			result["cost_text"] = "消耗：行动点1 / 资金%d" % lounge_money_cost
+			result["reward_text"] = "收益：凝聚力 +%d / 全员疲劳 -%d" % [lounge_cohesion_gain, lounge_fatigue_recovery]
+			result["enabled"] = check_result["success"]
+			result["reason"] = check_result["reason"]
+			return result
+
+		_:
+			result["action_name"] = "未开放"
+			result["cost_text"] = ""
+			result["reward_text"] = ""
+			result["enabled"] = false
+			result["reason"] = "该设施互动尚未开放"
+			return result
+
+# 执行设施互动（给面板按钮调用）
+func perform_facility_action(facility_type: String) -> Dictionary:
+	return ResourceManager.perform_facility_action(facility_type)
