@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://em05axaem0ia"]
+[gd_scene load_steps=39 format=3 uid="uid://em05axaem0ia"]
 
 [ext_resource type="Script" uid="uid://bkmekgpgq855c" path="res://project/scenes/main/main.gd" id="1_87m5t"]
 [ext_resource type="Texture2D" uid="uid://c4lvblykh1k4q" path="res://project/scenes/main/bar.jpg" id="1_hyk8p"]
@@ -22,6 +22,9 @@
 [ext_resource type="Texture2D" uid="uid://bj0xjax3adgom" path="res://project/assets/images/ui/buttons/stageup.png" id="20_oesgy"]
 [ext_resource type="Texture2D" uid="uid://d37jay72hpkji" path="res://project/assets/images/ui/buttons/barup.png" id="21_svdfk"]
 [ext_resource type="PackedScene" uid="uid://cy72tji61wjdt" path="res://project/scenes/settlement/settlement_panel.tscn" id="22_wsoed"]
+[ext_resource type="PackedScene" uid="uid://bpfjlk8a6mk23" path="res://project/scenes/member/MemberStanding.tscn" id="23_gmtqm"]
+[ext_resource type="PackedScene" uid="uid://dfbwrjpx5x318" path="res://project/scenes/main/talk_system.tscn" id="24_2myfi"]
+[ext_resource type="PackedScene" uid="uid://4y42wmkxig7p" path="res://project/scenes/member/MemberTeamUI.tscn" id="25_ptfxj"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_j0ny1"]
 line_spacing = 28.0
@@ -102,7 +105,6 @@ ignore_texture_size = true
 stretch_mode = 5
 
 [node name="TutorialLayer" parent="UILayer/ArrowRight" instance=ExtResource("2_j0ny1")]
-visible = false
 
 [node name="Button" type="Button" parent="UILayer"]
 offset_left = 900.0
@@ -385,6 +387,19 @@ text = "跳过阶段"
 
 [node name="SettlementPanel" parent="UILayer" instance=ExtResource("22_wsoed")]
 visible = false
+
+[node name="MemberStanding_tscn" parent="." instance=ExtResource("23_gmtqm")]
+position = Vector2(423, 157)
+
+[node name="TalkSystem" parent="." instance=ExtResource("24_2myfi")]
+position = Vector2(347, 232)
+
+[node name="MemberTeamUi" parent="." instance=ExtResource("25_ptfxj")]
+offset_left = 27.0
+offset_top = 377.0
+offset_right = 27.0
+offset_bottom = 377.0
+metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="UILayer/ArrowLeft" to="." method="_on_texture_button_pressed"]
 [connection signal="pressed" from="UILayer/ArrowRight" to="." method="_on_arrow_right_pressed"]
