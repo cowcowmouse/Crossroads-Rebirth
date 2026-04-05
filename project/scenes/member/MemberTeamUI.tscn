@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://4y42wmkxig7p"]
+
+[ext_resource type="Texture2D" uid="uid://b33h6yd8jib34" path="res://project/assets/character/调整图片透明背景 (1).png" id="1_0cd3d"]
+[ext_resource type="Texture2D" uid="uid://c11s8d3qi27eb" path="res://project/scenes/main/AH-Header.jpg" id="2_gt763"]
+
+[node name="MemberTeamUi" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Btn_Toggle" type="Button" parent="."]
+layout_mode = 0
+offset_right = 15.0
+offset_bottom = 15.0
+
+[node name="AvatarContainer" type="HBoxContainer" parent="."]
+visible = false
+layout_mode = 0
+offset_top = 1.0
+offset_right = 40.0
+offset_bottom = 41.0
+
+[node name="old_nail" type="TextureButton" parent="AvatarContainer"]
+layout_mode = 2
+texture_normal = ExtResource("1_0cd3d")
+
+[node name="Keira" type="TextureButton" parent="AvatarContainer"]
+layout_mode = 2
+texture_normal = ExtResource("2_gt763")

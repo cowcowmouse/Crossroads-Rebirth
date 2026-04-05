@@ -36,7 +36,10 @@ directories/dch_directory={
 "老钉子": "res://老钉子.dch"
 }
 directories/dtl_directory={
-"old_nail": "res://old_nail.dtl"
+"old_nail": "res://old_nail.dtl",
+"stage_1": "res://addons/dialogic/characters/old_nail/stage_1.dtl",
+"stage_2": "res://addons/dialogic/characters/old_nail/stage_2.dtl",
+"stage_3": "res://addons/dialogic/characters/old_nail/stage_3.dtl"
 }
 layout/style_directory={
 "": "res://New_File.tres",
