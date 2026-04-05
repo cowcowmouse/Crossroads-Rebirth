@@ -411,7 +411,13 @@ func _on_button_pressed():
 	
 # 点击顶部按钮显示康复面板
 func _on_rehab_trigger():
-	if rehab_panel:
+	if not rehab_panel:
+		return
+
+	if rehab_panel.visible:
+		rehab_panel.hide_panel()
+		_set_ui_enabled(true)
+	else:
 		rehab_panel.show_panel()
 		# 禁用箭头/对话按钮，防止误操作
 		_set_ui_enabled(false)
@@ -424,15 +430,15 @@ func _on_rehab_panel_closed():
 	print("当前按钮状态 - 对话按钮: ", button.disabled if button else "不存在")
 
 	_set_ui_enabled(true)
-	
-	# 消耗行动点
-	# 优先走 week_cycle，保持周循环逻辑；其信号会同步到 ResourceManager
-	if week_cycle:
-		week_cycle.consume_action_point()
-	else:
-		ResourceManager.consume_action_point(1)
-		
-	# 再次检查设置后的状态
+
+	# 这里只恢复 UI，不再扣行动点
+	# 行动点已经在 Rehabpanel._on_start_rehab() 中扣除
+	ResourceManager.refresh_current_scene_topbar()
+
+	if ResourceManager.get_action_points() == 0:
+		if skip_panel_manager:
+			skip_panel_manager.show_skip_panel(true)
+
 	print("设置后状态 - 左箭头: ", arrow_left.disabled if arrow_left else "不存在")
 	print("设置后状态 - 右箭头: ", arrow_right.disabled if arrow_right else "不存在")
 	print("设置后状态 - 对话按钮: ", button.disabled if button else "不存在")

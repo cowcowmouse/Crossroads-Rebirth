@@ -203,6 +203,67 @@ func add_creativity(amount: int) -> bool:
 func add_memory(amount: int) -> bool:
 	return modify_core_resource(constants.RES_MEMORY, amount)
 
+# ===================== 康复训练接口 =====================
+
+# 检查是否可以执行康复训练
+func can_do_rehab_training() -> Dictionary:
+	var result := {
+		"success": true,
+		"reason": ""
+	}
+
+	if not can_consume_action_points(1):
+		result["success"] = false
+		result["reason"] = "行动点不足"
+		return result
+
+	# 记忆恢复度满了就不给继续练
+	if get_resource_value(constants.RES_MEMORY) >= 100:
+		result["success"] = false
+		result["reason"] = "记忆恢复度已满"
+		return result
+
+	return result
+
+
+# 执行一次占位版康复训练
+# 当前先写成：消耗1行动点，记忆恢复度+5
+# 后续接小游戏时，把 add_memory(5) 改成按小游戏结果结算
+func perform_rehab_training() -> Dictionary:
+	var result := {
+		"success": false,
+		"reason": "",
+		"changes": {}
+	}
+
+	var check_result = can_do_rehab_training()
+	if not check_result["success"]:
+		result["reason"] = check_result["reason"]
+		return result
+
+	# 先扣行动点
+	if not consume_action_point(1):
+		result["reason"] = "行动点不足"
+		return result
+
+	var memory_gain := 5
+
+	# 再加记忆恢复度
+	if not add_memory(memory_gain):
+		# 理论上这里基本不会失败；失败则把行动点补回去
+		action_points += 1
+		refresh_current_scene_topbar()
+		result["reason"] = "记忆恢复度增加失败"
+		return result
+
+	result["success"] = true
+	result["changes"] = {
+		"memory": memory_gain,
+		"action_point": -1
+	}
+
+	print("康复训练执行成功：行动点-1 记忆恢复度+", memory_gain)
+	return result
 # ===================== 资金状态接口 =====================
 
 # 是否有足够资金支付指定金额
