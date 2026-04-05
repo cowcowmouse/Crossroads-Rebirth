@@ -1,9 +1,9 @@
 # 行动点控制器，严格遵循设计文档：3点/周，仅周前操作消耗
 extends Node
 
-@onready var signal_bus = SignalBus
-
+@onready var signal_bus = EventBus
 @onready var constants: Node = Constants
+
 # 当前行动点，带setter自动触发UI刷新与边界校验
 var current_ap: int:
 	set(value):
@@ -14,6 +14,8 @@ var current_ap: int:
 		# 行动点耗尽时触发信号
 		if current_ap == 0 and old_value > 0:
 			signal_bus.action_point_depleted.emit()
+			if signal_bus.has_signal("action_points_exhausted"):
+				signal_bus.action_points_exhausted.emit()
 
 # 节点就绪时初始化（@onready变量此时已完成赋值，不会再是Nil）
 func _ready():
@@ -31,13 +33,13 @@ func consume_action_point(consume_count: int = 1) -> bool:
 		print("行动点不足，无法执行操作")
 		return false
 	current_ap -= consume_count
-	print("消耗{consume_count}点行动点，剩余{current_ap}点")
+	print("消耗%d点行动点，剩余%d点" % [consume_count, current_ap])
 	return true
 
 # 恢复行动点（每周结算后调用）
 func restore_action_point():
 	current_ap = constants.MAX_ACTION_POINT
-	print("行动点已恢复至上限{constants.MAX_ACTION_POINT}")
+	print("行动点已恢复至上限%d" % constants.MAX_ACTION_POINT)
 
 # 检查是否可执行操作
 func can_execute_action(consume_count: int = 1) -> bool:

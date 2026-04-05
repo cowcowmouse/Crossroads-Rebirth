@@ -15,7 +15,7 @@ var current_stage: int = 0
 func _ready():
 	# 从根节点获取所有全局单例
 	constants = get_node("/root/Constants")
-	signal_bus = get_node("/root/SignalBus")
+	signal_bus = get_node("/root/EventBus")
 	action_point_controller = get_node("/root/ActionPointController")
 	resource_manager = get_node("/root/ResourceManager")
 	

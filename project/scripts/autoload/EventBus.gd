@@ -28,11 +28,17 @@ signal minigame_skipped(game_type: String)
 signal weekly_settlement_started(week: int)
 signal weekly_settlement_finished(week: int)
 signal action_points_exhausted()
+signal action_point_changed(current: int, max: int)
+signal action_point_depleted()
 
 # ==================== 游戏流程相关信号 ====================
 signal game_over(reason: String)
 signal week_changed(week: int)
 signal phase_changed(phase: String)
+signal pre_week_start()
+signal mid_week_start()
+signal weekend_start()
+signal week_end(week_num: int)
 
 # ==================== UI相关信号 ====================
 signal ui_refresh_requested(target: String)

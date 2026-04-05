@@ -20,6 +20,15 @@ const PHASE_EARLY: String = "early"
 const PHASE_MID: String = "mid"
 const PHASE_LATE: String = "late"
 
+const MAX_ACTION_POINT: int = 3
+
+enum WeekCycleStage {
+	PRE_WEEK,
+	MID_WEEK,
+	WEEKEND,
+	WEEK_END
+}
+
 # ==================== 设施类型ID ====================
 
 const FACILITY_STAGE: String = "stage"
