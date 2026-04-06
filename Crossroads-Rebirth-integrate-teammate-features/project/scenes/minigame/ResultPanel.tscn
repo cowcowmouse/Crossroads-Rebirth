@@ -1,0 +1,80 @@
+[gd_scene load_steps=5 format=3 uid="uid://visc7sby28kw"]
+
+[ext_resource type="Script" uid="uid://tw7waw6tck2x" path="res://project/scenes/minigame/result_panel.gd" id="1_u42m0"]
+[ext_resource type="Texture2D" uid="uid://c4612f3in22l5" path="res://project/assets/images/minigame/result_bg.png" id="2_nrqo3"]
+[ext_resource type="FontFile" uid="uid://bjex3ljxpkfkg" path="res://project/assets/images/minigame/Atop-R99O3.ttf" id="3_enmco"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_co1os"]
+font = ExtResource("3_enmco")
+font_size = 60
+font_color = Color(0, 0, 0, 1)
+outline_color = Color(0.01, 0.01, 0.01, 1)
+
+[node name="ResultPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -698.0
+offset_top = -379.0
+offset_right = -698.0
+offset_bottom = -379.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u42m0")
+
+[node name="BgImage" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.166
+anchor_bottom = 1.069
+offset_left = -23.0
+offset_top = -20.0
+offset_right = -808.72
+offset_bottom = -380.52002
+texture = ExtResource("2_nrqo3")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="RankLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 541.0
+offset_top = 218.0
+offset_right = 749.0
+offset_bottom = 324.0
+label_settings = SubResource("LabelSettings_co1os")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 461.0
+offset_top = 289.0
+offset_right = 875.0
+offset_bottom = 381.0
+label_settings = SubResource("LabelSettings_co1os")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MaxComboLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 461.0
+offset_top = 310.0
+offset_right = 892.0
+offset_bottom = 443.0
+label_settings = SubResource("LabelSettings_co1os")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RestartButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 621.0
+offset_top = 484.0
+offset_right = 702.0
+offset_bottom = 553.0
+text = "重新开始"
+icon_alignment = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(687, 405)
+zoom = Vector2(0.755, 0.64)

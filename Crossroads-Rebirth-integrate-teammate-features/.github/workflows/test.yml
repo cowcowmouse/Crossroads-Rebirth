@@ -1,0 +1,27 @@
+name: Run Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  gdscript-tests:
+    runs-on: ubuntu-latest
+    name: GDScript Tests
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Godot
+        uses: chickensoft-games/setup-godot@v1
+        with:
+          version: 4.5.1
+          
+      - name: Run Unit Tests
+        run: |
+          godot --headless --script tests/run_tests.gd
+          
+      - name: Validate JSON Configs
+        run: |
+          python tools/json_validator.py configs/

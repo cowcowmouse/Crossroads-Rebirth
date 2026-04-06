@@ -1,0 +1,24 @@
+[
+  {
+	"event_id": "tv_show_invitation",
+	"trigger_week": 8,
+	"trigger_conditions": {"reputation": 50},
+	"dialog": "电视台发来选秀邀请，参加可以获得大量曝光，但需要改编音乐迎合大众口味。",
+	"options": [
+	  {
+		"text": "接受邀请，赚钱最重要",
+		"effects": {"business_weight": 20, "reputation": 30}
+	  },
+	  {
+		"text": "拒绝并抨击选秀，坚持艺术",
+		"effects": {"art_weight": 20, "reputation": -10}
+	  },
+	  {
+		"text": "尝试融合改编，平衡两者",
+		"effects": {"business_weight": 5, "art_weight": 5, "human_weight": 5},
+		"require_minigame": "music_adaptation",
+		"require_memory": 40
+	  }
+	]
+  }
+]

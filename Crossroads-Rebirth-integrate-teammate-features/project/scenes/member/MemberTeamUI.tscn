@@ -1,0 +1,56 @@
+[gd_scene load_steps=2 format=3 uid="uid://4y42wmkxig7p"]
+
+[ext_resource type="Script" uid="uid://bs7rglm3lh7ti" path="res://project/scripts/utils/MemberTeamUI.gd" id="1_33qr7"]
+
+[node name="MemberTeamUi" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_33qr7")
+metadata/_edit_vertical_guides_ = [-64.0]
+
+[node name="Btn_ToggleTeam" type="Button" parent="."]
+layout_mode = 0
+offset_left = 868.0
+offset_top = 152.0
+offset_right = 913.0
+offset_bottom = 217.0
+text = ">"
+
+[node name="Panel_Team" type="GridContainer" parent="."]
+layout_mode = 0
+offset_left = 925.0
+offset_top = 13.0
+offset_right = 1143.0
+offset_bottom = 619.0
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+
+[node name="Slot_1" type="ColorRect" parent="Panel_Team"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+
+[node name="Slot_2" type="ColorRect" parent="Panel_Team"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+color = Color(0.12156863, 1, 1, 1)
+
+[node name="Slot_3" type="ColorRect" parent="Panel_Team"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+color = Color(1, 1, 0.23137255, 1)
+
+[node name="Slot_4" type="ColorRect" parent="Panel_Team"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+color = Color(1, 0.7294118, 1, 1)
+
+[node name="Btn_Close" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1063.0
+offset_top = 109.0
+offset_right = 1093.0
+offset_bottom = 140.0
+text = "❌"
+
+[connection signal="pressed" from="Btn_ToggleTeam" to="." method="_on_btn_toggle_team_pressed"]
+[connection signal="pressed" from="Btn_Close" to="." method="_on_btn_close_pressed"]

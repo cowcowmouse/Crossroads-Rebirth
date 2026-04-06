@@ -1,0 +1,61 @@
+[
+  {
+	"id": "high_art_001",
+	"title": "音乐节邀请",
+	"description": "知名音乐节邀请乐队参加，这是展示艺术实力的好机会！全场目光都将聚焦在你们身上。",
+	"trigger_conditions": {},
+	"weight": 35,
+	"options": [
+	  {
+		"text": "全力准备，惊艳全场",
+		"effects": {"reputation": 20, "creativity": 15, "art_weight": 5},
+		"result_text": "演出大获成功，乐队名声大噪！"
+	  },
+	  {
+		"text": "保守演出，安全第一",
+		"effects": {"reputation": 5, "money": 2000, "business_weight": 2},
+		"result_text": "演出平稳，赚了些钱。"
+	  }
+	]
+  },
+  {
+	"id": "high_art_002",
+	"title": "艺术评论",
+	"description": "知名乐评人写了一篇关于乐队的文章，评价褒贬不一。",
+	"trigger_conditions": {},
+	"weight": 30,
+	"options": [
+	  {
+		"text": "虚心接受建议",
+		"effects": {"creativity": 10, "reputation": 10, "art_weight": 3},
+		"result_text": "乐评人的推荐让更多人关注你们。"
+	  },
+	  {
+		"text": "不屑一顾",
+		"effects": {"cohesion": 5, "art_weight": -1},
+		"result_text": "成员们觉得你有点固执。"
+	  }
+	]
+  },
+  {
+	"id": "high_art_003",
+	"title": "创作灵感爆发但资金吃紧",
+	"description": "乐队迸发出前所未有的创作灵感，但录制需要租用专业录音棚，当前资金捉襟见肘。",
+	"trigger_conditions": {
+	  "money": {"max": 4000}
+	},
+	"weight": 50,
+	"options": [
+	  {
+		"text": "借钱租录音棚，抓住灵感",
+		"effects": {"money": -2000, "creativity": 20, "reputation": 10, "art_weight": 4},
+		"result_text": "录出来的作品质量极高，但经济压力骤增。"
+	  },
+	  {
+		"text": "在排练室简陋录制",
+		"effects": {"creativity": 5, "art_weight": 1},
+		"result_text": "效果一般，但至少把灵感留住了。"
+	  }
+	]
+  }
+]

@@ -1,0 +1,61 @@
+[
+  {
+	"id": "high_human_001",
+	"title": "社区义演",
+	"description": "社区邀请乐队为孩子们演出，这是一次展现温情的机会。",
+	"trigger_conditions": {},
+	"weight": 35,
+	"options": [
+	  {
+		"text": "免费演出，回馈社区",
+		"effects": {"reputation": 15, "cohesion": 10, "human_weight": 5},
+		"result_text": "演出很温暖，社区非常感激。"
+	  },
+	  {
+		"text": "象征性收费",
+		"effects": {"money": 1000, "reputation": 5, "human_weight": 1},
+		"result_text": "收了点钱，但没那么感动了。"
+	  }
+	]
+  },
+  {
+	"id": "high_human_002",
+	"title": "成员生日",
+	"description": "今天是某成员的生日，大家都在期待你怎么做。",
+	"trigger_conditions": {},
+	"weight": 30,
+	"options": [
+	  {
+		"text": "组织惊喜派对",
+		"effects": {"cohesion": 15, "human_weight": 4, "money": -500},
+		"result_text": "成员很感动，团队氛围超好！"
+	  },
+	  {
+		"text": "简单祝福一下",
+		"effects": {"cohesion": 5, "human_weight": 1},
+		"result_text": "成员觉得还算有心。"
+	  }
+	]
+  },
+  {
+	"id": "high_human_003",
+	"title": "粉丝求助",
+	"description": "一位忠实粉丝遇到困难向乐队求助，希望能在他的公益活动上演出。",
+	"trigger_conditions": {
+	  "money": {"max": 4000}
+	},
+	"weight": 50,
+	"options": [
+	  {
+		"text": "义不容辞，免费帮忙",
+		"effects": {"money": -800, "reputation": 12, "cohesion": 8, "human_weight": 5},
+		"result_text": "粉丝极其感动，在社交媒体上大力宣传，但乐队开销增加了。"
+	  },
+	  {
+		"text": "婉拒，推荐其他乐队",
+		"effects": {"human_weight": -1, "reputation": -3},
+		"result_text": "粉丝虽然理解，但有些失望。"
+	  }
+	]
+  }
+]
