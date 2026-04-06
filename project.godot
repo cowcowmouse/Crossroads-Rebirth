@@ -32,11 +32,20 @@ EventManager="*res://project/scripts/autoload/EventManager.gd"
 [dialogic]
 
 directories/dch_directory={
+"Crossroads-Rebirth-integrate-teammate-features/老钉子": "res://Crossroads-Rebirth-integrate-teammate-features/老钉子.dch",
+"Resources/unit_test_character": "res://Crossroads-Rebirth-integrate-teammate-features/project/Tests/Resources/unit_test_character.dch",
 "unit_test_character": "res://project/Tests/Resources/unit_test_character.dch",
 "老钉子": "res://老钉子.dch"
 }
 directories/dtl_directory={
-"old_nail": "res://old_nail.dtl"
+"Crossroads-Rebirth-integrate-teammate-features/old_nail": "res://Crossroads-Rebirth-integrate-teammate-features/old_nail.dtl",
+"old_nail": "res://old_nail.dtl",
+"old_nail/stage_1": "res://Crossroads-Rebirth-integrate-teammate-features/addons/dialogic/characters/old_nail/stage_1.dtl",
+"old_nail/stage_2": "res://Crossroads-Rebirth-integrate-teammate-features/addons/dialogic/characters/old_nail/stage_2.dtl",
+"old_nail/stage_3": "res://Crossroads-Rebirth-integrate-teammate-features/addons/dialogic/characters/old_nail/stage_3.dtl",
+"stage_1": "res://addons/dialogic/characters/old_nail/stage_1.dtl",
+"stage_2": "res://addons/dialogic/characters/old_nail/stage_2.dtl",
+"stage_3": "res://addons/dialogic/characters/old_nail/stage_3.dtl"
 }
 layout/style_directory={
 "": "res://New_File.tres",

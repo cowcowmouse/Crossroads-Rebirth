@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dhy51rait6skp"]
+
+[ext_resource type="Script" uid="uid://bsofh2h3v53ni" path="res://project/scripts/models/facility/FacilityButton.gd" id="1_5s5xu"]
+
+[node name="FacilityButton" type="Node2D"]
+script = ExtResource("1_5s5xu")

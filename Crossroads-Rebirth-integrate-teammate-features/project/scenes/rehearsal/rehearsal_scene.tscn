@@ -1,0 +1,183 @@
+[gd_scene load_steps=20 format=3 uid="uid://b8uve8pei0ak7"]
+
+[ext_resource type="Texture2D" uid="uid://74jorwl6hifk" path="res://project/scenes/rehearsal/images/practice-room.jpg" id="1_abjjs"]
+[ext_resource type="Script" uid="uid://bdpkroltk0uem" path="res://project/scenes/rehearsal/rehearsal_scene.gd" id="1_ow65r"]
+[ext_resource type="Texture2D" uid="uid://c081ycqu7klpj" path="res://project/assets/images/ui/buttons/arrow_left.png" id="2_xw3uf"]
+[ext_resource type="Script" uid="uid://uk1adtanru31" path="res://project/scenes/rehearsal/back_button.gd" id="4_rwpb6"]
+[ext_resource type="Texture2D" uid="uid://dtyvnw357ycvu" path="res://project/assets/images/ui/icons/money.png" id="5_rw2xq"]
+[ext_resource type="Texture2D" uid="uid://dvoqy40o7v2ik" path="res://project/assets/images/ui/icons/Repuation.png" id="6_4jwa2"]
+[ext_resource type="Texture2D" uid="uid://cij15eq4ltmmb" path="res://project/assets/images/ui/icons/Cohesion.png" id="7_6q26r"]
+[ext_resource type="Texture2D" uid="uid://45rrp1pjqu55" path="res://project/assets/images/ui/icons/Creativity.png" id="8_rn2sn"]
+[ext_resource type="Texture2D" uid="uid://ysub1jlpwati" path="res://project/assets/images/ui/icons/Memory.png" id="9_o8wsl"]
+[ext_resource type="Texture2D" uid="uid://djl65dvfn2url" path="res://project/assets/images/ui/icons/ActionPoint.png" id="10_k03si"]
+[ext_resource type="Script" uid="uid://r08km7j8emn8" path="res://project/scripts/models/facility/facility_entry_button.gd" id="11_qn4nl"]
+[ext_resource type="Texture2D" uid="uid://buo3p1nfqnovn" path="res://project/assets/images/ui/buttons/rehearsalup.png" id="12_4jwa2"]
+[ext_resource type="PackedScene" uid="uid://qvf8llp2hilo" path="res://project/scenes/facility/facility_panel.tscn" id="12_e6c5m"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6q26r"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rn2sn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o8wsl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k03si"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qn4nl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4jwa2"]
+bg_color = Color(0.043137256, 0.043137256, 0.043137256, 0.78431374)
+
+[node name="rehearsal_scene" type="Node2D"]
+script = ExtResource("1_ow65r")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.657, 1.647)
+texture = ExtResource("1_abjjs")
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.755, 0.64)
+metadata/_edit_lock_ = true
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="BackButton" type="TextureButton" parent="UILayer" groups=["back_button"]]
+custom_minimum_size = Vector2(0.08, 0)
+offset_left = 4.0
+offset_top = 451.0
+offset_right = 169.0
+offset_bottom = 605.0
+texture_normal = ExtResource("2_xw3uf")
+ignore_texture_size = true
+stretch_mode = 5
+script = ExtResource("4_rwpb6")
+
+[node name="TopBar" type="HBoxContainer" parent="UILayer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 392.0
+offset_top = 19.0
+offset_right = -748.0
+offset_bottom = 119.0
+grow_horizontal = 2
+
+[node name="MoneyGroup" type="HBoxContainer" parent="UILayer/TopBar"]
+layout_mode = 2
+
+[node name="MoneyIcon" type="TextureRect" parent="UILayer/TopBar/MoneyGroup"]
+layout_mode = 2
+texture = ExtResource("5_rw2xq")
+expand_mode = 2
+
+[node name="MoneyLabel" type="Label" parent="UILayer/TopBar/MoneyGroup"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+
+[node name="ReputationGroup" type="HBoxContainer" parent="UILayer/TopBar"]
+layout_mode = 2
+
+[node name="ReputationIcon" type="TextureRect" parent="UILayer/TopBar/ReputationGroup"]
+layout_mode = 2
+texture = ExtResource("6_4jwa2")
+expand_mode = 2
+
+[node name="ReputationLabel" type="Label" parent="UILayer/TopBar/ReputationGroup"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+
+[node name="CohesionGroup" type="HBoxContainer" parent="UILayer/TopBar"]
+layout_mode = 2
+
+[node name="CohesionIcon" type="TextureRect" parent="UILayer/TopBar/CohesionGroup"]
+layout_mode = 2
+texture = ExtResource("7_6q26r")
+expand_mode = 2
+
+[node name="CohesionLabel" type="Label" parent="UILayer/TopBar/CohesionGroup"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+
+[node name="CreativityGroup" type="HBoxContainer" parent="UILayer/TopBar"]
+layout_mode = 2
+
+[node name="CreativityIcon" type="TextureRect" parent="UILayer/TopBar/CreativityGroup"]
+layout_mode = 2
+texture = ExtResource("8_rn2sn")
+expand_mode = 2
+
+[node name="CreativityLabel" type="Label" parent="UILayer/TopBar/CreativityGroup"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+
+[node name="MemoryGroup" type="HBoxContainer" parent="UILayer/TopBar"]
+layout_mode = 2
+
+[node name="MemoryIcon" type="TextureRect" parent="UILayer/TopBar/MemoryGroup"]
+layout_mode = 2
+texture = ExtResource("9_o8wsl")
+expand_mode = 2
+
+[node name="MemoryLabel" type="Label" parent="UILayer/TopBar/MemoryGroup"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+
+[node name="ActionPointGroup" type="HBoxContainer" parent="UILayer/TopBar"]
+layout_mode = 2
+
+[node name="ActionPointIcon" type="TextureRect" parent="UILayer/TopBar/ActionPointGroup"]
+layout_mode = 2
+texture = ExtResource("10_k03si")
+expand_mode = 2
+
+[node name="ActionPointLabel" type="Label" parent="UILayer/TopBar/ActionPointGroup"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+
+[node name="RehabBtn" type="Button" parent="UILayer/TopBar"]
+layout_mode = 2
+text = "查看个人状态🔜"
+
+[node name="FacilityPanel" parent="UILayer" instance=ExtResource("12_e6c5m")]
+
+[node name="RehearsalButton" type="Button" parent="UILayer"]
+offset_left = 419.0
+offset_top = 533.0
+offset_right = 1904.0
+offset_bottom = 1458.0
+scale = Vector2(0.2, 0.2)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_6q26r")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_rn2sn")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_o8wsl")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_k03si")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_qn4nl")
+icon = ExtResource("12_4jwa2")
+flat = true
+script = ExtResource("11_qn4nl")
+facility_type = "rehearsal"
+
+[node name="RepairMask" type="Panel" parent="UILayer/RehearsalButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4jwa2")
+
+[node name="Label" type="Label" parent="UILayer/RehearsalButton/RepairMask"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -11.5
+offset_right = 24.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 200
+text = "维修中"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=3 uid="uid://c64gj0q27n4ew"]
+
+[ext_resource type="Script" uid="uid://dppddvklix8ij" path="res://project/data/members/MemberPanel.gd" id="1_cypao"]
+
+[node name="MemberPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_cypao")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_top = 3.0
+offset_right = 244.0
+offset_bottom = 129.0
+color = Color(0.3888, 0.42832, 0.48, 1)
+
+[node name="Lbl_Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 8.0
+offset_right = 103.0
+offset_bottom = 31.0
+text = "角色信息:"
+
+[node name="Lbl_Relation" type="Label" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 35.0
+offset_right = 104.0
+offset_bottom = 58.0
+text = "关系度："
+
+[node name="Btn_Recruit" type="Button" parent="."]
+layout_mode = 0
+offset_left = 41.0
+offset_top = 65.0
+offset_right = 81.0
+offset_bottom = 96.0
+text = "招募"

@@ -28,53 +28,50 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.166
 anchor_bottom = 1.069
-offset_left = -23.0
-offset_top = -20.0
-offset_right = -808.72
-offset_bottom = -380.52002
+offset_left = -219.0
+offset_top = -26.0
+offset_right = -157.71997
+offset_bottom = 56.47998
 texture = ExtResource("2_nrqo3")
 expand_mode = 1
 stretch_mode = 6
 
 [node name="RankLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 541.0
-offset_top = 218.0
-offset_right = 749.0
-offset_bottom = 324.0
+offset_left = 827.0
+offset_top = 323.0
+offset_right = 1088.0
+offset_bottom = 467.0
 label_settings = SubResource("LabelSettings_co1os")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ScoreLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 461.0
-offset_top = 289.0
-offset_right = 875.0
-offset_bottom = 381.0
+offset_left = 636.0
+offset_top = 408.0
+offset_right = 1050.0
+offset_bottom = 529.0
 label_settings = SubResource("LabelSettings_co1os")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MaxComboLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 461.0
-offset_top = 310.0
-offset_right = 892.0
-offset_bottom = 443.0
+offset_left = 636.0
+offset_top = 487.0
+offset_right = 1067.0
+offset_bottom = 620.0
 label_settings = SubResource("LabelSettings_co1os")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="RestartButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 621.0
-offset_top = 484.0
-offset_right = 702.0
-offset_bottom = 553.0
+offset_left = 871.0
+offset_top = 629.0
+offset_right = 1060.0
+offset_bottom = 777.0
+theme_override_font_sizes/font_size = 60
 text = "重新开始"
 icon_alignment = 1
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(687, 405)
-zoom = Vector2(0.755, 0.64)

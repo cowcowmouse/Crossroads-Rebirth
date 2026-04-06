@@ -116,6 +116,36 @@ func _ready():
 	
 	EventBus.minigame_finished.connect(_on_minigame_finished)
 	
+	# 创建调试面板
+	_create_debug_panel()
+	
+	# 注册调试快捷键
+	_register_debug_input()
+
+func _register_debug_input():
+	# 确保调试动作存在
+	if not InputMap.has_action("toggle_debug"):
+		InputMap.add_action("toggle_debug")
+	
+	# 添加 F12 键位（避免重复添加）
+	var key_event = InputEventKey.new()
+	key_event.keycode = KEY_F12
+	
+	# 检查是否已经添加过这个事件
+	var existing_events = InputMap.action_get_events("toggle_debug")
+	var already_exists = false
+	for event in existing_events:
+		if event is InputEventKey and event.keycode == KEY_F12:
+			already_exists = true
+			break
+	
+	if not already_exists:
+		InputMap.action_add_event("toggle_debug", key_event)
+
+func _input(event):
+	if event.is_action_pressed("toggle_debug"):
+		_toggle_debug_panel()
+
 func _init_week_cycle():
 	if not week_cycle:
 		print("❌ WeekCycleManager 未找到")
@@ -126,7 +156,7 @@ func _init_week_cycle():
 	
 	# 顶部UI统一从 ResourceManager 读取，避免与 week_cycle 显示冲突
 	ResourceManager.refresh_current_scene_topbar()
-	
+		  
 	# 如果当前资源管理器里的行动点已经耗尽，直接显示跳过面板
 	if ResourceManager.get_action_points() == 0:
 		if skip_panel_manager:
@@ -154,23 +184,31 @@ func _init_clock_display():
 
 func _connect_week_cycle_signals():
 	if week_cycle:
-		week_cycle.phase_changed.connect(_on_game_phase_changed)
-		# 保留行动点信号连接，但收到信号后统一同步到 ResourceManager
 		week_cycle.action_points_updated.connect(_on_action_points_updated)
+	
+	# 连接每周阶段变化信号（用于时钟）
+	EventBus.week_phase_changed.connect(_on_week_phase_changed)
 
-func _on_game_phase_changed(phase):
+func _on_week_phase_changed(phase: int):
+	# phase: 0=周前, 1=周中, 2=周后
 	match phase:
-		0:  # BEFORE_WEEK
+		0:
 			print("进入周前阶段 - 玩家可以操作")
+			if week_cycle:
+				week_cycle.set_phase(week_cycle.GamePhase.BEFORE_WEEK)
 			_set_operation_ui_enabled(true)
 			if skip_panel_manager:
 				skip_panel_manager.hide_skip_panel()
-		1:  # MID_WEEK
+		1:
 			print("进入周中阶段 - 触发事件")
+			if week_cycle:
+				week_cycle.set_phase(week_cycle.GamePhase.MID_WEEK)
 			_set_operation_ui_enabled(false)
 			_trigger_mid_week_event()
-		2:  # AFTER_WEEK
+		2:
 			print("进入周后阶段 - 等待用户点击跳过按钮结算")
+			if week_cycle:
+				week_cycle.set_phase(week_cycle.GamePhase.AFTER_WEEK)
 			_set_operation_ui_enabled(false)
 			_enter_minigame()
 			# 移除自动结算，只显示提示
@@ -215,28 +253,12 @@ func _trigger_mid_week_event():
 	# 测试：直接加载 test_event.tscn 场景
 	get_tree().change_scene_to_file("res://project/scenes/event/EventDialog.tscn")
 
-func _execute_weekly_settlement():
-	print("执行周结算...")
-	
-	# 1. 扣除固定支出
-	var expense = ResourceManager.get_weekly_expense()
-	ResourceManager.add_money(-expense)
-	print("扣除每周支出: ", expense)
-	
-	# 2. 增加酒吧收入（暂用固定值，等设施系统完善后替换）
-	var bar_income = 1500
-	ResourceManager.add_money(bar_income)
-	print("酒吧收入: ", bar_income)
-	
-	# 3. 成员状态自然变化
-	ResourceManager.apply_member_natural_change()
-	
-	# 4. 检查游戏结束条件
-	_check_game_over()
-	
-	# 5. 结算完成，进入下一周
-	await get_tree().create_timer(3.0).timeout
-	week_cycle.complete_week_settlement()
+		
+func _safe_wait(seconds: float):
+	if is_inside_tree() and get_tree():
+		await get_tree().create_timer(seconds).timeout
+	else:
+		await Engine.get_main_loop().create_timer(seconds).timeout
 
 func _check_game_over():
 	var money = ResourceManager.get_resource_value(Constants.RES_MONEY)
@@ -411,7 +433,13 @@ func _on_button_pressed():
 	
 # 点击顶部按钮显示康复面板
 func _on_rehab_trigger():
-	if rehab_panel:
+	if not rehab_panel:
+		return
+
+	if rehab_panel.visible:
+		rehab_panel.hide_panel()
+		_set_ui_enabled(true)
+	else:
 		rehab_panel.show_panel()
 		# 禁用箭头/对话按钮，防止误操作
 		_set_ui_enabled(false)
@@ -424,15 +452,15 @@ func _on_rehab_panel_closed():
 	print("当前按钮状态 - 对话按钮: ", button.disabled if button else "不存在")
 
 	_set_ui_enabled(true)
-	
-	# 消耗行动点
-	# 优先走 week_cycle，保持周循环逻辑；其信号会同步到 ResourceManager
-	if week_cycle:
-		week_cycle.consume_action_point()
-	else:
-		ResourceManager.consume_action_point(1)
-		
-	# 再次检查设置后的状态
+
+	# 这里只恢复 UI，不再扣行动点
+	# 行动点已经在 Rehabpanel._on_start_rehab() 中扣除
+	ResourceManager.refresh_current_scene_topbar()
+
+	if ResourceManager.get_action_points() == 0:
+		if skip_panel_manager:
+			skip_panel_manager.show_skip_panel(true)
+
 	print("设置后状态 - 左箭头: ", arrow_left.disabled if arrow_left else "不存在")
 	print("设置后状态 - 右箭头: ", arrow_right.disabled if arrow_right else "不存在")
 	print("设置后状态 - 对话按钮: ", button.disabled if button else "不存在")
@@ -473,7 +501,6 @@ func on_facility_upgraded():
 func _on_skip_button_pressed():
 	print("跳过按钮被点击")
 	if week_cycle:
-		# 强制进入下一阶段
 		match week_cycle.get_current_phase():
 			week_cycle.GamePhase.BEFORE_WEEK:
 				print("强制从周前跳到周中")
@@ -482,9 +509,8 @@ func _on_skip_button_pressed():
 				print("强制从周中跳到周后")
 				week_cycle.complete_mid_week()
 			week_cycle.GamePhase.AFTER_WEEK:
-				print("强制完成周结算")
-				_execute_weekly_settlement()  # 直接调用结算函数
-
+				print("执行周末结算")
+				GameManager.weekly_settlement()
 
 # ===================== 小游戏相关 =====================
 
@@ -514,13 +540,13 @@ func _on_minigame_finished(score: int, rank: String):
 		print("获得创造力: ", reward.creativity)
 	
 	# 切换回主场景
-	get_tree().change_scene_to_file("res://project/scenes/main/Main.tscn")
+	get_tree().change_scene_to_file("res://project/scenes/main/main.tscn")
 	
 	# 等待场景切换完成
 	await get_tree().process_frame
 	
 	# 执行周末结算
-	_execute_weekly_settlement()
+	GameManager.weekly_settlement()
 
 func _calculate_minigame_reward(rank: String) -> Dictionary:
 	"""根据评级计算奖励"""
@@ -555,3 +581,158 @@ func _calculate_minigame_reward(rank: String) -> Dictionary:
 			print("D级评价！表现不佳...")
 	
 	return reward
+
+# ===================== 调试面板 =====================
+
+var debug_panel: Panel = null
+var week_input: LineEdit = null
+var jump_button: Button = null
+
+func _create_debug_panel():
+	# 创建调试面板
+	debug_panel = Panel.new()
+	debug_panel.size = Vector2(220, 120)
+	debug_panel.position = Vector2(10, 200)
+	
+	# 设置面板样式 - 浅灰色半透明
+	var panel_style = StyleBoxFlat.new()
+	panel_style.bg_color = Color(0.85, 0.85, 0.85, 0.9)  # 浅灰色，透明度0.9
+	panel_style.set_corner_radius_all(8)  # 圆角
+	debug_panel.add_theme_stylebox_override("panel", panel_style)
+	
+	# 创建输入框
+	week_input = LineEdit.new()
+	week_input.size = Vector2(80, 30)
+	week_input.position = Vector2(10, 10)
+	week_input.placeholder_text = "周数(1-18)"
+	week_input.add_theme_color_override("font_color", Color(1, 1, 1))  # 白色文字
+	week_input.add_theme_color_override("placeholder_color", Color(0.3, 0.3, 0.3))
+	
+	# 创建跳转按钮
+	jump_button = Button.new()
+	jump_button.size = Vector2(80, 30)
+	jump_button.position = Vector2(100, 10)
+	jump_button.text = "跳转"
+	jump_button.add_theme_color_override("font_color", Color(1, 1, 1))
+	var button_style = StyleBoxFlat.new()
+	button_style.bg_color = Color(0.3, 0.5, 0.8)
+	button_style.set_corner_radius_all(4)
+	jump_button.add_theme_stylebox_override("normal", button_style)
+	jump_button.pressed.connect(_on_debug_jump_pressed)
+	
+	# 添加关闭按钮
+	var close_btn = Button.new()
+	close_btn.size = Vector2(30, 30)
+	close_btn.position = Vector2(180, 10)
+	close_btn.text = "X"
+	close_btn.add_theme_color_override("font_color", Color(1, 1, 1))
+	var close_style = StyleBoxFlat.new()
+	close_style.bg_color = Color(0.8, 0.3, 0.3)
+	close_style.set_corner_radius_all(4)
+	close_btn.add_theme_stylebox_override("normal", close_style)
+	close_btn.pressed.connect(_toggle_debug_panel)
+	
+	# 添加提示标签
+	var tip_label = Label.new()
+	tip_label.text = "按 F12 隐藏/显示"
+	tip_label.position = Vector2(10, 50)
+	tip_label.size = Vector2(200, 20)
+	tip_label.add_theme_color_override("font_color", Color(0.2, 0.2, 0.2))  # 深灰色文字
+	
+	debug_panel.add_child(week_input)
+	debug_panel.add_child(jump_button)
+	debug_panel.add_child(close_btn)
+	debug_panel.add_child(tip_label)
+	
+	# 默认打开
+	debug_panel.visible = true
+	add_child(debug_panel)
+
+func _toggle_debug_panel():
+	if debug_panel:
+		debug_panel.visible = !debug_panel.visible
+
+func _on_debug_jump_pressed():
+	if not week_input:
+		return
+	
+	var input_text = week_input.text.strip_edges()
+	if input_text.is_empty():
+		print("输入为空")
+		return
+	
+	var target_week = input_text.to_int()
+	if target_week < 1:
+		target_week = 1
+	if target_week > 18:
+		target_week = 18
+	
+	print("调试：准备跳转到第", target_week, "周")
+	
+	# 调用 GameManager 的跳转方法
+	if GameManager and GameManager.has_method("jump_to_week"):
+		var success = GameManager.jump_to_week(target_week)
+		if success:
+			print("跳转成功")
+			# 刷新当前场景的 UI
+			refresh_ui()
+			
+			# 可选：显示提示
+			_show_jump_notification(target_week)
+		else:
+			print("跳转失败")
+	else:
+		print("GameManager 不存在或没有 jump_to_week 方法")
+
+func _show_jump_notification(week: int):
+	# 显示一个短暂的提示（简化版）
+	var notification = Label.new()
+	notification.text = "已跳转到第 %d 周" % week
+	notification.position = Vector2(get_viewport().size.x / 2 - 100, 50)
+	notification.size = Vector2(200, 30)
+	notification.add_theme_color_override("font_color", Color(1, 1, 0))
+	notification.add_theme_color_override("font_outline_color", Color(0, 0, 0))
+	
+	add_child(notification)
+	
+	# 2秒后自动删除
+	await get_tree().create_timer(2.0).timeout
+	if is_instance_valid(notification):
+		notification.queue_free()
+
+func _refresh_resource_display():
+	if money_label:
+		money_label.text = str(ResourceManager.get_resource_value(Constants.RES_MONEY))
+	if reputation_label:
+		reputation_label.text = str(ResourceManager.get_resource_value(Constants.RES_REPUTATION))
+	if cohesion_label:
+		cohesion_label.text = str(ResourceManager.get_resource_value(Constants.RES_COHESION))
+	if creativity_label:
+		creativity_label.text = str(ResourceManager.get_resource_value(Constants.RES_CREATIVITY))
+
+# 刷新整个 UI（供 GameManager 调用）
+func refresh_ui():
+	print("刷新主场景 UI")
+	
+	# 刷新资源显示
+	_refresh_resource_display()
+	
+	# 刷新行动点显示
+	var current_points = ResourceManager.get_action_points() if ResourceManager else 3
+	var max_points = ResourceManager.get_max_action_points() if ResourceManager else 3
+	_update_action_point_display(current_points, max_points)
+	
+	# 刷新设施面板（如果打开）
+	var facility_panel = $UILayer/FacilityPanel
+	if facility_panel and facility_panel.visible:
+		facility_panel._refresh_panel()
+	
+	# 刷新阶段显示
+	if week_cycle:
+		match week_cycle.get_current_phase():
+			0:
+				print("当前阶段: 周前")
+			1:
+				print("当前阶段: 周中")
+			2:
+				print("当前阶段: 周后")

@@ -1,0 +1,25 @@
+name: Godot CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  export-windows:
+    runs-on: ubuntu-latest
+    name: Windows Export
+    steps:
+      - uses: actions/checkout@v3
+      - uses: chickensoft-games/setup-godot@v1
+        with:
+          version: 4.5.1
+      - name: Export Windows
+        run: |
+          mkdir -p exports/windows
+          godot --headless --export-debug "Windows Desktop" exports/windows/game.exe
+      - uses: actions/upload-artifact@v3
+        with:
+          name: windows-build
+          path: exports/windows/

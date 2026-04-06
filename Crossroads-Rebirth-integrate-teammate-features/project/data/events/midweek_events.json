@@ -1,0 +1,58 @@
+[
+  {
+	"event_id": "event_001",
+	"title": "设备故障",
+	"description": "排练室的音响突然坏了，维修需要一笔钱，但成员们提议干脆借机升级设备。",
+	"options": [
+	  {
+		"text": "花钱维修，省一点是一点",
+		"effects": {"money": -500, "cohesion": 5, "human_weight": 2},
+		"result_text": "你花钱修好了音响，成员们觉得你很靠谱。"
+	  },
+	  {
+		"text": "趁机升级，一步到位",
+		"effects": {"money": -2000, "creativity": 10, "art_weight": 3},
+		"result_text": "新设备让排练效率大增，创作灵感迸发！"
+	  },
+	  {
+		"text": "先用旧设备凑合",
+		"effects": {"cohesion": -5, "human_weight": -2},
+		"result_text": "成员们有些不满，但至少没花钱。"
+	  }
+	]
+  },
+  {
+	"event_id": "event_002",
+	"title": "商业合作机会",
+	"description": "一家本地企业想赞助乐队，条件是演出时展示他们的Logo。",
+	"options": [
+	  {
+		"text": "接受赞助，赚钱重要",
+		"effects": {"money": 3000, "reputation": -5, "business_weight": 5},
+		"result_text": "演出多了些广告，部分老观众不太高兴。"
+	  },
+	  {
+		"text": "拒绝赞助，保持纯粹",
+		"effects": {"money": 0, "reputation": 10, "art_weight": 5},
+		"result_text": "你坚守艺术底线，赢得了观众的尊重。"
+	  }
+	]
+  },
+  {
+	"event_id": "event_003",
+	"title": "成员矛盾",
+	"description": "吉他手和鼓手因为音乐理念不同吵了起来，气氛很紧张。",
+	"options": [
+	  {
+		"text": "出面调解，让大家冷静",
+		"effects": {"cohesion": 10, "human_weight": 3},
+		"result_text": "经过你的调解，两人握手言和，团队更团结了。"
+	  },
+	  {
+		"text": "让她们自己解决",
+		"effects": {"cohesion": -8, "human_weight": -2},
+		"result_text": "矛盾升级，乐队氛围变得很差。"
+	  }
+	]
+  }
+]

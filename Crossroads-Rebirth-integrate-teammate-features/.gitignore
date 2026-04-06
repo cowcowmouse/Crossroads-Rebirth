@@ -1,0 +1,41 @@
+# Godot
+/.godot/
+*.import
+*.translation
+export_presets.cfg
+project/binary/
+project/.mono/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temp
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Backups
+*.backup
+*.old
+*~
+
+# Builds
+/build/
+/dist/
+/exports/
+
+# Project specific
+project/user://
+project/.godot/

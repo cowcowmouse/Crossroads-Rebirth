@@ -50,15 +50,34 @@ func force_to_mid_week():
 func set_phase(phase: GamePhase):
 	if current_phase != phase:
 		current_phase = phase
-		phase_changed.emit(current_phase)
-		print("游戏阶段变化: ", _get_phase_name(current_phase))
-
+		_update_clock_state(phase)
+		EventBus.week_phase_changed.emit(current_phase)  # 发射每周内阶段信号
+		print("每周阶段变化: ", _get_phase_name(current_phase))
+		
+func _update_clock_state(phase: GamePhase):
+	var clock_state = get_node("/root/ClockState")
+	if not clock_state:
+		return
+	
+	match phase:
+		GamePhase.BEFORE_WEEK:
+			clock_state.set_phase(clock_state.ClockPhase.BEFORE_WEEK)
+		GamePhase.MID_WEEK:
+			clock_state.set_phase(clock_state.ClockPhase.MID_WEEK)
+		GamePhase.AFTER_WEEK:
+			clock_state.set_phase(clock_state.ClockPhase.AFTER_WEEK)
+			
 func complete_mid_week():
 	if current_phase == GamePhase.MID_WEEK:
 		set_phase(GamePhase.AFTER_WEEK)
 
 # 执行周后结算
 func _execute_week_settlement():
+	# 从 GameManager 获取正确的周数
+	var game_manager = get_node("/root/GameManager")
+	if game_manager:
+		current_week = game_manager.get_current_week()
+	
 	print("=== 第", current_week, "周结算开始 ===")
 	
 	# 记录结算前资金（用于计算净变化）
@@ -196,3 +215,8 @@ func _refresh_all_facility_buttons():
 		var facility_button = current_scene.get_node_or_null(path)
 		if facility_button and facility_button.has_method("refresh_repair_state"):
 			facility_button.refresh_repair_state()
+
+# 设置当前周数（用于跳转后同步）
+func set_current_week(week: int):
+	current_week = week
+	print("WeekCycleManager 周数已同步: ", current_week)

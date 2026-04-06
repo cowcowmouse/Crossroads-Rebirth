@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://d0qp3tw2litvc"]
+
+[ext_resource type="Script" uid="uid://j8ro2wnt81q5" path="res://project/scenes/minigame/game_ui.gd" id="1_r4ish"]
+[ext_resource type="FontFile" uid="uid://bjex3ljxpkfkg" path="res://project/assets/images/minigame/Atop-R99O3.ttf" id="2_k3tfm"]
+
+[node name="GameUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -768.0
+offset_bottom = -432.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_r4ish")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ScoreLabel" type="RichTextLabel" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 18.0
+offset_top = 18.0
+offset_right = 360.0
+offset_bottom = 71.0
+theme_override_constants/outline_size = 14
+theme_override_fonts/normal_font = ExtResource("2_k3tfm")
+theme_override_font_sizes/normal_font_size = 41
+text = " 0 pts"
+scroll_active = false
+
+[node name="ComboLabel" type="RichTextLabel" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 18.0
+offset_top = 72.0
+offset_right = 360.0
+offset_bottom = 125.0
+theme_override_constants/outline_size = 14
+theme_override_fonts/normal_font = ExtResource("2_k3tfm")
+theme_override_font_sizes/normal_font_size = 41
+text = " 0x combo "
+scroll_active = false

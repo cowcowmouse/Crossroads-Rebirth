@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://x6k4dkbr08l"]
+
+[ext_resource type="Script" uid="uid://cdi8gglhv8xhu" path="res://week_settlement.gd" id="1_8nim7"]
+
+[node name="WeekSettlement" type="Node2D"]
+script = ExtResource("1_8nim7")
+
+[node name="Label_Title" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "周结算"
+
+[node name="Label_Result" type="Label" parent="."]
+offset_left = 1.0
+offset_top = 20.0
+offset_right = 97.0
+offset_bottom = 43.0
+text = "本周对话次数"
+
+[node name="Button_Back" type="Button" parent="."]
+offset_left = 1.0
+offset_top = 45.0
+offset_right = 67.0
+offset_bottom = 75.0
+text = "返回"

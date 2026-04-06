@@ -19,7 +19,7 @@ func show_main_scene():
 	"""显示主场景"""
 	var scene = get_tree().current_scene
 	if scene and scene.name != "Main":
-		get_tree().change_scene_to_file("res://scenes/main/Main.tscn")
+		get_tree().change_scene_to_file("res://scenes/main/ain.tscn")
 
 func show_sub_scene(scene_path: String):
 	"""显示子场景（覆盖在当前场景上）"""

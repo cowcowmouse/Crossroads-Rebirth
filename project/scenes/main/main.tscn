@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://em05axaem0ia"]
+[gd_scene load_steps=39 format=3 uid="uid://em05axaem0ia"]
 
 [ext_resource type="Script" uid="uid://bkmekgpgq855c" path="res://project/scenes/main/main.gd" id="1_87m5t"]
 [ext_resource type="Texture2D" uid="uid://c4lvblykh1k4q" path="res://project/scenes/main/bar.jpg" id="1_hyk8p"]
@@ -22,6 +22,9 @@
 [ext_resource type="Texture2D" uid="uid://bj0xjax3adgom" path="res://project/assets/images/ui/buttons/stageup.png" id="20_oesgy"]
 [ext_resource type="Texture2D" uid="uid://d37jay72hpkji" path="res://project/assets/images/ui/buttons/barup.png" id="21_svdfk"]
 [ext_resource type="PackedScene" uid="uid://cy72tji61wjdt" path="res://project/scenes/settlement/settlement_panel.tscn" id="22_wsoed"]
+[ext_resource type="PackedScene" uid="uid://bpfjlk8a6mk23" path="res://project/scenes/member/MemberStanding.tscn" id="23_gmtqm"]
+[ext_resource type="PackedScene" uid="uid://dfbwrjpx5x318" path="res://project/scenes/main/talk_system.tscn" id="24_2myfi"]
+[ext_resource type="PackedScene" uid="uid://4y42wmkxig7p" path="res://project/scenes/member/MemberTeamUI.tscn" id="25_ptfxj"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_j0ny1"]
 line_spacing = 28.0
@@ -82,6 +85,7 @@ metadata/_edit_lock_ = true
 metadata/_edit_use_anchors_ = true
 
 [node name="ArrowLeft" type="TextureButton" parent="UILayer" groups=["left_arrow"]]
+visible = false
 custom_minimum_size = Vector2(0.08, 0)
 offset_left = 9.0
 offset_top = 441.0
@@ -92,6 +96,7 @@ ignore_texture_size = true
 stretch_mode = 5
 
 [node name="ArrowRight" type="TextureButton" parent="UILayer" groups=["right_arrow"]]
+visible = false
 custom_minimum_size = Vector2(0.08, 0)
 offset_left = 1757.0
 offset_top = 474.0
@@ -105,6 +110,7 @@ stretch_mode = 5
 visible = false
 
 [node name="Button" type="Button" parent="UILayer"]
+visible = false
 offset_left = 900.0
 offset_top = 906.0
 offset_right = 1100.0
@@ -235,20 +241,20 @@ label_settings = SubResource("LabelSettings_j0ny1")
 
 [node name="MemoryProgress" type="ProgressBar" parent="UILayer/Rehabpanel"]
 layout_mode = 0
-offset_left = 394.0
-offset_top = 497.0
-offset_right = 1165.0
-offset_bottom = 547.0
+offset_left = 384.57147
+offset_top = 643.7708
+offset_right = 1155.5715
+offset_bottom = 693.7708
 theme_override_colors/font_color = Color(0.9617985, 0.95734864, 0.76673377, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 30
 
 [node name="ProgressLabel" type="Label" parent="UILayer/Rehabpanel"]
 layout_mode = 0
-offset_left = 602.0
-offset_top = 342.0
-offset_right = 948.0
-offset_bottom = 405.0
+offset_left = 604.7575
+offset_top = 301.8108
+offset_right = 954.7575
+offset_bottom = 364.8108
 text = "记忆恢复度： 0%"
 label_settings = SubResource("LabelSettings_q5kvs")
 
@@ -270,6 +276,7 @@ offset_bottom = 89.0
 text = "❌"
 
 [node name="FacilityPanel" parent="UILayer" instance=ExtResource("16_k7nr8")]
+visible = false
 anchors_preset = 0
 anchor_left = 0.0
 anchor_top = 0.0
@@ -385,6 +392,19 @@ text = "跳过阶段"
 
 [node name="SettlementPanel" parent="UILayer" instance=ExtResource("22_wsoed")]
 visible = false
+
+[node name="MemberStanding_tscn" parent="." instance=ExtResource("23_gmtqm")]
+position = Vector2(423, 157)
+
+[node name="TalkSystem" parent="." instance=ExtResource("24_2myfi")]
+position = Vector2(347, 232)
+
+[node name="MemberTeamUi" parent="." instance=ExtResource("25_ptfxj")]
+offset_left = 27.0
+offset_top = 377.0
+offset_right = 27.0
+offset_bottom = 377.0
+metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="UILayer/ArrowLeft" to="." method="_on_texture_button_pressed"]
 [connection signal="pressed" from="UILayer/ArrowRight" to="." method="_on_arrow_right_pressed"]
