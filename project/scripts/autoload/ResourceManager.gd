@@ -1148,3 +1148,42 @@ func apply_pending_facility_upgrades():
 			set_facility_upgrading(facility_type, false)
 
 			print("设施升级正式生效：", facility_type, " -> ", pending_level)
+
+# ===================== 人物系统接口 =====================
+
+var character_data: Node = null
+
+func _init_character_system():
+	character_data = load("res://project/data/members/MemberData.gd").new()
+	add_child(character_data)
+
+func get_character(char_id: String) -> Dictionary:
+	if character_data:
+		return character_data.get_character(char_id)
+	return {}
+
+func get_all_characters() -> Array:
+	if character_data:
+		var list = []
+		for char_id in character_data.characters:
+			list.append(character_data.characters[char_id])
+		return list
+	return []
+
+func add_relationship(char_id: String, delta: int):
+	if character_data:
+		var new_rel = character_data.add_relationship(char_id, delta)
+		# 发射信号更新UI
+		EventBus.relationship_changed.emit(char_id, new_rel)
+		return new_rel
+	return 0
+
+func get_relationship(char_id: String) -> int:
+	if character_data and character_data.characters.has(char_id):
+		return character_data.characters[char_id]["relationship"]
+	return 0
+
+func get_character_stage(char_id: String) -> int:
+	if character_data and character_data.characters.has(char_id):
+		return character_data.characters[char_id].get("current_stage", 1)
+	return 1
