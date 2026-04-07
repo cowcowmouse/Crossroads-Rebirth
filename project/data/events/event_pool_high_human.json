@@ -1,61 +1,187 @@
 [
   {
-	"id": "high_human_001",
-	"title": "社区义演",
-	"description": "社区邀请乐队为孩子们演出，这是一次展现温情的机会。",
-	"trigger_conditions": {},
-	"weight": 35,
-	"options": [
-	  {
-		"text": "免费演出，回馈社区",
-		"effects": {"reputation": 15, "cohesion": 10, "human_weight": 5},
-		"result_text": "演出很温暖，社区非常感激。"
-	  },
-	  {
-		"text": "象征性收费",
-		"effects": {"money": 1000, "reputation": 5, "human_weight": 1},
-		"result_text": "收了点钱，但没那么感动了。"
-	  }
-	]
+    "id": "high_human_001",
+    "title": "社区义演",
+    "description": "社区邀请乐队为孩子们演出，这是一次展现温情的机会。",
+    "trigger_conditions": {},
+    "weight": 35,
+    "options": [
+      {
+        "text": "免费演出，回馈社区",
+        "effects": {"reputation": 12, "cohesion": 8, "human_weight": 5},
+        "result_text": "演出很温暖，社区非常感激。"
+      },
+      {
+        "text": "象征性收费",
+        "effects": {"money": 1000, "reputation": 5, "human_weight": 1},
+        "result_text": "收了点钱，但没那么感动了。"
+      }
+    ]
   },
   {
-	"id": "high_human_002",
-	"title": "成员生日",
-	"description": "今天是某成员的生日，大家都在期待你怎么做。",
-	"trigger_conditions": {},
-	"weight": 30,
-	"options": [
-	  {
-		"text": "组织惊喜派对",
-		"effects": {"cohesion": 15, "human_weight": 4, "money": -500},
-		"result_text": "成员很感动，团队氛围超好！"
-	  },
-	  {
-		"text": "简单祝福一下",
-		"effects": {"cohesion": 5, "human_weight": 1},
-		"result_text": "成员觉得还算有心。"
-	  }
-	]
+    "id": "high_human_002",
+    "title": "成员生日",
+    "description": "今天是某成员的生日，大家都在期待你怎么做。",
+    "trigger_conditions": {},
+    "weight": 30,
+    "options": [
+      {
+        "text": "组织惊喜派对",
+        "effects": {"cohesion": 12, "human_weight": 4, "money": -500},
+        "result_text": "成员很感动，团队氛围超好！"
+      },
+      {
+        "text": "简单祝福一下",
+        "effects": {"cohesion": 5, "human_weight": 1},
+        "result_text": "成员觉得还算有心。"
+      }
+    ]
   },
   {
-	"id": "high_human_003",
-	"title": "粉丝求助",
-	"description": "一位忠实粉丝遇到困难向乐队求助，希望能在他的公益活动上演出。",
-	"trigger_conditions": {
-	  "money": {"max": 4000}
-	},
-	"weight": 50,
-	"options": [
-	  {
-		"text": "义不容辞，免费帮忙",
-		"effects": {"money": -800, "reputation": 12, "cohesion": 8, "human_weight": 5},
-		"result_text": "粉丝极其感动，在社交媒体上大力宣传，但乐队开销增加了。"
-	  },
-	  {
-		"text": "婉拒，推荐其他乐队",
-		"effects": {"human_weight": -1, "reputation": -3},
-		"result_text": "粉丝虽然理解，但有些失望。"
-	  }
-	]
+    "id": "high_human_003",
+    "title": "粉丝求助",
+    "description": "一位忠实粉丝遇到困难向乐队求助，希望能在他的公益活动上演出。",
+    "trigger_conditions": {
+      "money": {"max": 4000}
+    },
+    "weight": 50,
+    "options": [
+      {
+        "text": "义不容辞，免费帮忙",
+        "effects": {"money": -800, "reputation": 12, "cohesion": 8, "human_weight": 5},
+        "result_text": "粉丝极其感动，在社交媒体上大力宣传。"
+      },
+      {
+        "text": "婉拒，推荐其他乐队",
+        "effects": {"human_weight": -1, "reputation": -3},
+        "result_text": "粉丝虽然理解，但有些失望。"
+      }
+    ]
+  },
+  {
+    "id": "high_human_004",
+    "title": "凝聚力低落时的谈心",
+    "description": "你注意到团队氛围有些沉闷，几个成员之间似乎有些隔阂。也许该找时间好好聊聊了。",
+    "trigger_conditions": {
+      "cohesion": {"max": 35}
+    },
+    "weight": 50,
+    "options": [
+      {
+        "text": "组织一次深夜谈心",
+        "effects": {"cohesion": 18, "human_weight": 5, "creativity": 3},
+        "result_text": "大家把心里话都说了出来，感情明显加深了。"
+      },
+      {
+        "text": "给每个人一些私人空间",
+        "effects": {"cohesion": 5, "human_weight": 1},
+        "result_text": "时间会慢慢愈合一切。"
+      }
+    ]
+  },
+  {
+    "id": "high_human_005",
+    "title": "凝聚力高涨的团队之夜",
+    "description": "大家最近相处特别融洽，有成员提议搞一次'乐队之夜'，一起做饭、聊天、弹琴。",
+    "trigger_conditions": {
+      "cohesion": {"min": 70}
+    },
+    "weight": 35,
+    "options": [
+      {
+        "text": "举办乐队之夜",
+        "effects": {"cohesion": 10, "creativity": 8, "human_weight": 4, "money": -300},
+        "result_text": "这是大家记忆中最美好的夜晚之一。"
+      },
+      {
+        "text": "安排轻松的团队活动",
+        "effects": {"cohesion": 5, "human_weight": 2},
+        "result_text": "简单的活动也挺开心的。"
+      }
+    ]
+  },
+  {
+    "id": "high_human_006",
+    "title": "老成员的困境",
+    "description": "乐队中一位老成员家里出了急事，需要一笔不小的钱应急。他不好意思开口，但你看得出来。",
+    "trigger_conditions": {
+      "money": {"min": 5000}
+    },
+    "weight": 40,
+    "stage": 2,
+    "options": [
+      {
+        "text": "主动借给他钱",
+        "effects": {"money": -3000, "cohesion": 15, "human_weight": 6},
+        "result_text": "他红着眼眶说一定会还，团队的信任感达到了新高度。"
+      },
+      {
+        "text": "装作没看到",
+        "effects": {"cohesion": -8, "human_weight": -3},
+        "result_text": "他自己想办法解决了，但你们之间多了一层隔阂。"
+      }
+    ]
+  },
+  {
+    "id": "high_human_007",
+    "title": "粉丝组织的感恩活动",
+    "description": "一群核心粉丝自发组织了一场'感恩乐队'的小型活动，邀请你们参加。他们为你们准备了手工礼物。",
+    "trigger_conditions": {
+      "reputation": {"min": 50}
+    },
+    "weight": 35,
+    "stage": 3,
+    "options": [
+      {
+        "text": "全员出席，真心感谢",
+        "effects": {"reputation": 20, "cohesion": 12, "human_weight": 8, "creativity": 5},
+        "result_text": "这是一次充满爱的活动，所有人都被感动了。粉丝群体空前团结。"
+      },
+      {
+        "text": "派代表参加",
+        "effects": {"reputation": 8, "human_weight": 3},
+        "result_text": "粉丝虽然理解大家很忙，但还是有些遗憾。"
+      }
+    ]
+  },
+  {
+    "id": "high_human_008",
+    "title": "社区矛盾调解",
+    "description": "酒馆附近的居民对夜间排练噪音不满，有人写了投诉信。",
+    "trigger_conditions": {},
+    "weight": 30,
+    "stage": 2,
+    "options": [
+      {
+        "text": "登门道歉，邀请他们来看演出",
+        "effects": {"reputation": 10, "human_weight": 5, "money": -500},
+        "result_text": "居民们被你的诚意打动，还成了常客。"
+      },
+      {
+        "text": "调整排练时间，减少噪音",
+        "effects": {"creativity": -5, "human_weight": 2},
+        "result_text": "排练时间变短了，但邻里关系改善了。"
+      }
+    ]
+  },
+  {
+    "id": "high_human_repeatable_01",
+    "title": "酒馆门口的流浪汉",
+    "description": "那个常在酒馆门口晃悠的流浪汉又来了。他没有恶意，但有些客人不太舒服。",
+    "trigger_conditions": {},
+    "weight": 15,
+    "repeatable": true,
+    "options": [
+      {
+        "text": "给他一杯热饮和一份简餐",
+        "effects": {"money": -50, "human_weight": 2, "cohesion": 1},
+        "result_text": "他感激地点点头，安静地坐在角落喝完就走了。"
+      },
+      {
+        "text": "礼貌地请他离开",
+        "effects": {"reputation": 1},
+        "result_text": "他默默走了，你心里有些不是滋味。"
+      }
+    ]
   }
 ]

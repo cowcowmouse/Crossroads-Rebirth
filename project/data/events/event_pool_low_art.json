@@ -1,61 +1,163 @@
 [
   {
-	"id": "low_art_001",
-	"title": "创作瓶颈",
-	"description": "乐队连续几周没有新作品，成员们感到焦虑，创作灵感似乎完全枯竭了。",
-	"trigger_conditions": {},
-	"weight": 40,
-	"options": [
-	  {
-		"text": "强迫创作，硬写一首",
-		"effects": {"creativity": -10, "cohesion": -5, "art_weight": -2},
-		"result_text": "写出来的歌很一般，大家都不满意。"
-	  },
-	  {
-		"text": "休息放松，调整状态",
-		"effects": {"creativity": 5, "cohesion": 5, "human_weight": 2},
-		"result_text": "休息后状态好转，灵感慢慢回来。"
-	  }
-	]
+    "id": "low_art_001",
+    "title": "创作瓶颈",
+    "description": "乐队连续几周没有新作品，成员们感到焦虑，创作灵感似乎完全枯竭了。",
+    "trigger_conditions": {},
+    "weight": 40,
+    "options": [
+      {
+        "text": "强迫创作，硬写一首",
+        "effects": {"creativity": -8, "cohesion": -5, "art_weight": -2},
+        "result_text": "写出来的歌很一般，大家都不满意。"
+      },
+      {
+        "text": "休息放松，调整状态",
+        "effects": {"creativity": 5, "cohesion": 5, "human_weight": 2},
+        "result_text": "休息后状态好转，灵感慢慢回来。"
+      }
+    ]
   },
   {
-	"id": "low_art_002",
-	"title": "观众反应冷淡",
-	"description": "最近的演出观众反应平平，没人记得乐队的歌。大家开始怀疑音乐方向是否正确。",
-	"trigger_conditions": {},
-	"weight": 30,
-	"options": [
-	  {
-		"text": "改进编曲，增加流行元素",
-		"effects": {"reputation": 5, "business_weight": 2, "art_weight": -1},
-		"result_text": "新编曲吸引了一些路人粉。"
-	  },
-	  {
-		"text": "坚持自我，相信艺术",
-		"effects": {"cohesion": 3, "art_weight": 1},
-		"result_text": "成员们支持你的决定，继续做自己的音乐。"
-	  }
-	]
+    "id": "low_art_002",
+    "title": "观众反应冷淡",
+    "description": "最近的演出观众反应平平，没人记得乐队的歌。大家开始怀疑音乐方向是否正确。",
+    "trigger_conditions": {},
+    "weight": 30,
+    "options": [
+      {
+        "text": "改进编曲，增加流行元素",
+        "effects": {"reputation": 5, "business_weight": 2, "art_weight": -1},
+        "result_text": "新编曲吸引了一些路人粉。"
+      },
+      {
+        "text": "坚持自我，相信艺术",
+        "effects": {"cohesion": 3, "art_weight": 1},
+        "result_text": "成员们支持你的决定。"
+      }
+    ]
   },
   {
-	"id": "low_art_003",
-	"title": "乐器损坏危机",
-	"description": "排练时主力乐器意外损坏，资金紧张让维修变得棘手。",
-	"trigger_conditions": {
-	  "money": {"max": 3000}
-	},
-	"weight": 50,
-	"options": [
-	  {
-		"text": "咬牙花钱修好",
-		"effects": {"money": -1500, "creativity": 8, "art_weight": 1},
-		"result_text": "修好后音色反而更好了，灵感回来了一些。"
-	  },
-	  {
-		"text": "借用备用乐器凑合",
-		"effects": {"creativity": -5, "cohesion": -3},
-		"result_text": "备用乐器手感不好，排练效果打了折扣。"
-	  }
-	]
+    "id": "low_art_003",
+    "title": "乐器损坏危机",
+    "description": "排练时主力乐器意外损坏，资金紧张让维修变得棘手。",
+    "trigger_conditions": {
+      "money": {"max": 3000}
+    },
+    "weight": 50,
+    "options": [
+      {
+        "text": "咬牙花钱修好",
+        "effects": {"money": -1500, "creativity": 8, "art_weight": 1},
+        "result_text": "修好后音色反而更好了。"
+      },
+      {
+        "text": "借用备用乐器凑合",
+        "effects": {"creativity": -5, "cohesion": -3},
+        "result_text": "备用乐器手感不好，排练效果打了折扣。"
+      }
+    ]
+  },
+  {
+    "id": "low_art_004",
+    "title": "地下音乐圈的新机遇",
+    "description": "一个地下音乐厂牌注意到了你们，想免费帮你们做一张Demo，但风格偏实验性。",
+    "trigger_conditions": {
+      "creativity": {"min": 40}
+    },
+    "weight": 35,
+    "options": [
+      {
+        "text": "合作做实验Demo",
+        "effects": {"creativity": 12, "art_weight": 4, "reputation": 5},
+        "result_text": "Demo在地下音乐圈引起了不小的反响。"
+      },
+      {
+        "text": "谢绝，专注自己的风格",
+        "effects": {"art_weight": 1, "cohesion": 3},
+        "result_text": "大家觉得保持自我也很重要。"
+      }
+    ]
+  },
+  {
+    "id": "low_art_005",
+    "title": "创造力极低时的迷茫",
+    "description": "排练室里死气沉沉，连最简单的和弦都弹得心不在焉。大家脸上写满了迷茫。",
+    "trigger_conditions": {
+      "creativity": {"max": 25}
+    },
+    "weight": 50,
+    "options": [
+      {
+        "text": "全队出去散心一天",
+        "effects": {"creativity": 12, "cohesion": 8, "money": -500, "human_weight": 2},
+        "result_text": "到了户外才发现天空这么蓝，大家的心情好了很多。"
+      },
+      {
+        "text": "咬牙继续练",
+        "effects": {"creativity": 3, "cohesion": -5},
+        "result_text": "练是练了，但大家更烦躁了。"
+      }
+    ]
+  },
+  {
+    "id": "low_art_006",
+    "title": "音乐教学邀请",
+    "description": "社区中心邀请乐队给青少年做一次音乐工作坊，报酬不多但很有意义。",
+    "trigger_conditions": {},
+    "weight": 30,
+    "stage": 2,
+    "options": [
+      {
+        "text": "接受邀请，教孩子们音乐",
+        "effects": {"creativity": 8, "reputation": 10, "human_weight": 4, "money": 500},
+        "result_text": "孩子们的热情让成员们重新找到了音乐的初心。"
+      },
+      {
+        "text": "没时间，婉拒",
+        "effects": {"reputation": -3},
+        "result_text": "错过了一次好机会。"
+      }
+    ]
+  },
+  {
+    "id": "low_art_007",
+    "title": "音乐风格的重大抉择",
+    "description": "乐队走到了一个岔路口。继续小众路线可能永远无法出头，但改变风格又怕失去自我。这次的选择可能影响深远。",
+    "trigger_conditions": {},
+    "weight": 35,
+    "stage": 3,
+    "options": [
+      {
+        "text": "大胆转型，拥抱大众市场",
+        "effects": {"money": 3000, "reputation": 20, "business_weight": 8, "art_weight": -6, "creativity": -10},
+        "result_text": "转型阵痛期不短，但确实触及了更多听众。老粉的失望也很明显。"
+      },
+      {
+        "text": "坚守初心，深耕小众",
+        "effects": {"art_weight": 8, "creativity": 15, "cohesion": 10},
+        "result_text": "虽然路更窄了，但走得更坚定了。"
+      }
+    ]
+  },
+  {
+    "id": "low_art_repeatable_01",
+    "title": "无事发生",
+    "description": "平平无奇的一天，酒馆里几个老客人照常来喝酒听歌，一切如常。",
+    "trigger_conditions": {},
+    "weight": 15,
+    "repeatable": true,
+    "options": [
+      {
+        "text": "和老客人聊聊天",
+        "effects": {"human_weight": 1, "reputation": 1},
+        "result_text": "老客人说他最喜欢你们上次弹的那首歌。"
+      },
+      {
+        "text": "安静地待着",
+        "effects": {"creativity": 1},
+        "result_text": "安静也是一种力量。"
+      }
+    ]
   }
 ]

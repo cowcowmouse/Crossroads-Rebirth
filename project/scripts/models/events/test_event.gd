@@ -1,5 +1,6 @@
-# 周中事件系统测试场景
+# 周中事件系统测试场景（独立功能测试面板）
 # 功能：输入方向值 → 展示当前事件池 → 触发事件 → 弹出选项对话框 → 验证后台数据变动
+# 新增：阶段设置、连锁事件追踪、已触发/已解锁事件列表
 extends Control
 
 # UI引用
@@ -8,19 +9,26 @@ var business_input: LineEdit
 var human_input: LineEdit
 var cohesion_input: LineEdit
 var money_input: LineEdit
+var creativity_input: LineEdit
 var log_label: RichTextLabel
 var resource_panel_labels: Dictionary = {}
 var pool_info_label: Label
+var stage_option: OptionButton
+var triggered_list_label: RichTextLabel
+var unlocked_list_label: RichTextLabel
 
 # 事件对话框相关
-var event_dialog_overlay: ColorRect  # 遮罩层
-var event_dialog_panel: PanelContainer  # 对话框面板
+var event_dialog_overlay: ColorRect
+var event_dialog_panel: PanelContainer
 var event_title_label: Label
 var event_desc_label: Label
 var event_options_container: VBoxContainer
 var event_result_label: Label
 var event_close_btn: Button
 var current_event_data: Dictionary = {}
+
+# 连锁事件测试
+var chain_event_selector: OptionButton
 
 
 
@@ -134,6 +142,7 @@ func _build_ui():
 	
 	cohesion_input = _add_grid_input(res_grid, "🤝 凝聚力:", "60")
 	money_input = _add_grid_input(res_grid, "💰 资  金:", "5000")
+	creativity_input = _add_grid_input(res_grid, "🎨 创造力:", "50")
 	
 	var set_res_btn = Button.new()
 	set_res_btn.text = "✅ 应用资源值"
@@ -141,6 +150,30 @@ func _build_ui():
 	set_res_btn.custom_minimum_size.y = 36
 	set_res_btn.pressed.connect(_on_set_resources_pressed)
 	left_vbox.add_child(set_res_btn)
+	
+	# --- 阶段设置区 ---
+	var stage_header = Label.new()
+	stage_header.text = "【阶段设置】影响事件影响程度"
+	stage_header.add_theme_font_size_override("font_size", 16)
+	stage_header.add_theme_color_override("font_color", Color(0.85, 0.6, 1.0))
+	left_vbox.add_child(stage_header)
+	
+	var stage_hbox = HBoxContainer.new()
+	stage_hbox.add_theme_constant_override("separation", 8)
+	left_vbox.add_child(stage_hbox)
+	
+	var stage_lbl = Label.new()
+	stage_lbl.text = "阶段:"
+	stage_lbl.add_theme_font_size_override("font_size", 16)
+	stage_hbox.add_child(stage_lbl)
+	
+	stage_option = OptionButton.new()
+	stage_option.add_item("阶段1 (前期)", 1)
+	stage_option.add_item("阶段2 (中期)", 2)
+	stage_option.add_item("阶段3 (后期)", 3)
+	stage_option.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	stage_option.item_selected.connect(_on_stage_selected)
+	stage_hbox.add_child(stage_option)
 	
 	# --- 快捷按钮 ---
 	var quick_header = Label.new()
@@ -159,6 +192,67 @@ func _build_ui():
 	_add_quick_btn(quick_grid, "凝聚力→70", func(): _quick_set_resource("cohesion", 70))
 	_add_quick_btn(quick_grid, "资金→1000", func(): _quick_set_resource("money", 1000))
 	_add_quick_btn(quick_grid, "资金→8000", func(): _quick_set_resource("money", 8000))
+	_add_quick_btn(quick_grid, "创造力→20", func(): _quick_set_resource("creativity", 20))
+	_add_quick_btn(quick_grid, "创造力→80", func(): _quick_set_resource("creativity", 80))
+	
+	left_vbox.add_child(HSeparator.new())
+	
+	# --- 连锁/重置按钮 ---
+	var chain_header = Label.new()
+	chain_header.text = "【连锁事件测试】"
+	chain_header.add_theme_font_size_override("font_size", 14)
+	chain_header.add_theme_color_override("font_color", Color(1.0, 0.6, 0.6))
+	left_vbox.add_child(chain_header)
+	
+	# 连锁事件下拉选择 + 触发按钮
+	var chain_test_hbox = HBoxContainer.new()
+	chain_test_hbox.add_theme_constant_override("separation", 6)
+	left_vbox.add_child(chain_test_hbox)
+	
+	chain_event_selector = OptionButton.new()
+	chain_event_selector.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	chain_event_selector.custom_minimum_size.y = 32
+	chain_test_hbox.add_child(chain_event_selector)
+	_populate_chain_selector()
+	
+	var chain_trigger_btn = Button.new()
+	chain_trigger_btn.text = "🔗 触发"
+	chain_trigger_btn.custom_minimum_size = Vector2(80, 32)
+	chain_trigger_btn.pressed.connect(_on_trigger_chain_pressed)
+	chain_test_hbox.add_child(chain_trigger_btn)
+	
+	# 解锁全部前置 + 逐步推进按钮
+	var chain_btn_grid = GridContainer.new()
+	chain_btn_grid.columns = 2
+	chain_btn_grid.add_theme_constant_override("h_separation", 6)
+	chain_btn_grid.add_theme_constant_override("v_separation", 4)
+	left_vbox.add_child(chain_btn_grid)
+	
+	var unlock_all_btn = Button.new()
+	unlock_all_btn.text = "🔓 解锁全部前置"
+	unlock_all_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	unlock_all_btn.custom_minimum_size.y = 30
+	unlock_all_btn.pressed.connect(_on_unlock_all_chain_prereqs)
+	chain_btn_grid.add_child(unlock_all_btn)
+	
+	var walk_chain_btn = Button.new()
+	walk_chain_btn.text = "⏩ 逐步走完整条链"
+	walk_chain_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	walk_chain_btn.custom_minimum_size.y = 30
+	walk_chain_btn.pressed.connect(_on_walk_chain_pressed)
+	chain_btn_grid.add_child(walk_chain_btn)
+	
+	var reset_btn = Button.new()
+	reset_btn.text = "🔄 重置已触发事件记录"
+	reset_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	reset_btn.custom_minimum_size.y = 32
+	reset_btn.pressed.connect(func():
+		EventManager.reset_triggered_events()
+		_update_chain_display()
+		_populate_chain_selector()
+		_log("[color=red]已重置所有事件触发记录！[/color]")
+	)
+	left_vbox.add_child(reset_btn)
 	
 	left_vbox.add_child(HSeparator.new())
 	
@@ -277,9 +371,57 @@ func _build_ui():
 	
 	log_label = RichTextLabel.new()
 	log_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	log_label.size_flags_stretch_ratio = 0.6
 	log_label.bbcode_enabled = true
 	log_label.scroll_following = true
 	right_vbox.add_child(log_label)
+	
+	# --- 连锁事件追踪面板 ---
+	var chain_panel = PanelContainer.new()
+	chain_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	chain_panel.size_flags_stretch_ratio = 0.4
+	right_vbox.add_child(chain_panel)
+	
+	var chain_margin = MarginContainer.new()
+	chain_margin.add_theme_constant_override("margin_left", 10)
+	chain_margin.add_theme_constant_override("margin_right", 10)
+	chain_margin.add_theme_constant_override("margin_top", 6)
+	chain_margin.add_theme_constant_override("margin_bottom", 6)
+	chain_panel.add_child(chain_margin)
+	
+	var chain_vbox = VBoxContainer.new()
+	chain_vbox.add_theme_constant_override("separation", 4)
+	chain_margin.add_child(chain_vbox)
+	
+	var chain_title = Label.new()
+	chain_title.text = "🔗 连锁事件追踪"
+	chain_title.add_theme_font_size_override("font_size", 15)
+	chain_title.add_theme_color_override("font_color", Color(1.0, 0.7, 0.5))
+	chain_vbox.add_child(chain_title)
+	
+	var triggered_header = Label.new()
+	triggered_header.text = "已触发事件:"
+	triggered_header.add_theme_font_size_override("font_size", 13)
+	chain_vbox.add_child(triggered_header)
+	
+	triggered_list_label = RichTextLabel.new()
+	triggered_list_label.bbcode_enabled = true
+	triggered_list_label.fit_content = true
+	triggered_list_label.custom_minimum_size = Vector2(0, 30)
+	triggered_list_label.add_theme_font_size_override("normal_font_size", 12)
+	chain_vbox.add_child(triggered_list_label)
+	
+	var unlocked_header = Label.new()
+	unlocked_header.text = "已解锁后续事件:"
+	unlocked_header.add_theme_font_size_override("font_size", 13)
+	chain_vbox.add_child(unlocked_header)
+	
+	unlocked_list_label = RichTextLabel.new()
+	unlocked_list_label.bbcode_enabled = true
+	unlocked_list_label.fit_content = true
+	unlocked_list_label.custom_minimum_size = Vector2(0, 30)
+	unlocked_list_label.add_theme_font_size_override("normal_font_size", 12)
+	chain_vbox.add_child(unlocked_list_label)
 	
 	# --- 返回按钮---
 	var back_button = Button.new()
@@ -399,15 +541,16 @@ func _show_event_dialog(event_data: Dictionary):
 		btn.add_theme_font_size_override("font_size", 16)
 		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		
-		# 在按钮上显示效果预览
-		var effects = opt.get("effects", {})
-		var effect_strs = []
-		for key in effects:
-			var val = effects[key]
-			var display_name = _get_effect_display_name(key)
-			effect_strs.append("%s %+d" % [display_name, val])
-		if effect_strs.size() > 0:
-			btn.tooltip_text = "效果: " + ", ".join(effect_strs)
+		# 阶段2及以后不显示效果数值预览
+		if EventManager.get_current_stage() < 2:
+			var effects = opt.get("effects", {})
+			var effect_strs = []
+			for key in effects:
+				var val = effects[key]
+				var display_name = _get_effect_display_name(key)
+				effect_strs.append("%s %+d" % [display_name, val])
+			if effect_strs.size() > 0:
+				btn.tooltip_text = "效果: " + ", ".join(effect_strs)
 		
 		btn.pressed.connect(_on_event_option_chosen.bind(i))
 		event_options_container.add_child(btn)
@@ -466,7 +609,13 @@ func _on_event_option_chosen(option_index: int):
 	for line in change_lines:
 		_log("[color=lime]%s[/color]" % line)
 	
+	# 显示解锁信息
+	var unlocks = chosen.get("unlocks", [])
+	for uid in unlocks:
+		_log("[color=orange]🔗 解锁连锁事件: %s[/color]" % str(uid))
+	
 	_update_resource_display()
+	_update_chain_display()
 
 func _on_event_dialog_close():
 	event_dialog_overlay.visible = false
@@ -529,12 +678,14 @@ func _on_set_direction_pressed():
 func _on_set_resources_pressed():
 	var cohesion_val = int(cohesion_input.text)
 	var money_val = int(money_input.text)
+	var creativity_val = int(creativity_input.text)
 	
 	EventManager.set_resource_value("cohesion", cohesion_val)
 	EventManager.set_resource_value("money", money_val)
+	EventManager.set_resource_value("creativity", creativity_val)
 	_update_resource_display()
 	
-	_log("[color=yellow]资源值已设置: 凝聚力=%d 资金=%d[/color]" % [cohesion_val, money_val])
+	_log("[color=yellow]资源值已设置: 凝聚力=%d 资金=%d 创造力=%d[/color]" % [cohesion_val, money_val, creativity_val])
 
 func _quick_set_resource(res_name: String, value: int):
 	EventManager.set_resource_value(res_name, value)
@@ -542,7 +693,7 @@ func _quick_set_resource(res_name: String, value: int):
 	_log("[color=yellow]快捷设置: %s → %d[/color]" % [_get_effect_display_name(res_name), value])
 
 func _on_trigger_event_pressed():
-	_log("\n[color=white]══════ 触发周中事件 ══════[/color]")
+	_log("\n[color=white]══════ 触发周中事件 (阶段:%d) ══════[/color]" % EventManager.get_current_stage())
 	
 	var event_data = EventManager.trigger_midweek_event()
 	
@@ -556,9 +707,19 @@ func _on_trigger_event_pressed():
 	for evt in EventManager.last_eligible_events:
 		var cond = evt.get("trigger_conditions", {})
 		var cond_str = "无条件" if cond.is_empty() else str(cond)
-		_log("  • %s (权重:%d) %s" % [evt.get("title", "?"), evt.get("weight", 0), cond_str])
+		var req = evt.get("requires_event", "")
+		var req_str = "" if req == "" else " [需前置:%s]" % req
+		var stage_str = ""
+		if evt.get("stage", 0) > 0:
+			stage_str = " [限阶段%d]" % evt.get("stage")
+		elif evt.get("min_stage", 0) > 0 or evt.get("max_stage", 0) > 0:
+			stage_str = " [阶段%d-%d]" % [evt.get("min_stage", 1), evt.get("max_stage", 3)]
+		var repeat_str = " [可重复]" if evt.get("repeatable", false) else ""
+		_log("  • %s (权重:%d) %s%s%s%s" % [evt.get("title", "?"), evt.get("weight", 0), cond_str, req_str, stage_str, repeat_str])
 	
 	_log("[color=orange]>>> 触发: 【%s】%s[/color]" % [event_data.get("id", "?"), event_data.get("title", "?")])
+	
+	_update_chain_display()
 	
 	# 弹出事件对话框让玩家选择
 	_show_event_dialog(event_data)
@@ -583,6 +744,105 @@ func _on_trigger_multi_pressed():
 		_log("[color=cyan]✅ 随机性验证通过（触发了不同事件）[/color]")
 	else:
 		_log("[color=yellow]⚠ 仅触发了1种事件，可多试几次[/color]")
+
+# ===================== 连锁事件测试 =====================
+
+func _populate_chain_selector():
+	if not chain_event_selector:
+		return
+	chain_event_selector.clear()
+	var chain_events = EventManager.get_all_chain_events()
+	for evt in chain_events:
+		var eid = evt.get("id", "?")
+		var title = evt.get("title", "?")
+		var req = evt.get("requires_event", "")
+		var status = ""
+		if EventManager.is_event_triggered(eid):
+			status = " ✅"
+		elif req != "" and not EventManager.is_event_unlocked(eid):
+			status = " 🔒"
+		else:
+			status = " ⬜"
+		chain_event_selector.add_item("%s%s [%s]" % [title, status, eid])
+		chain_event_selector.set_item_metadata(chain_event_selector.item_count - 1, eid)
+
+func _on_trigger_chain_pressed():
+	if chain_event_selector.selected < 0:
+		_log("[color=red]请先选择一个连锁事件[/color]")
+		return
+	
+	var event_id = chain_event_selector.get_item_metadata(chain_event_selector.selected)
+	_log("\n[color=orange]══════ 测试触发连锁事件 ══════[/color]")
+	
+	# 自动解锁前置（测试模式）
+	var chain_events = EventManager.get_all_chain_events()
+	for evt in chain_events:
+		if evt.get("id", "") == event_id:
+			var req = evt.get("requires_event", "")
+			if req != "" and not EventManager.is_event_unlocked(event_id):
+				EventManager.force_unlock_event(event_id)
+				_log("[color=yellow]自动解锁前置: %s[/color]" % req)
+			break
+	
+	var event_data = EventManager.trigger_chain_event_by_id(event_id)
+	if event_data.is_empty():
+		_log("[color=red]❌ 未找到连锁事件: %s[/color]" % event_id)
+		return
+	
+	_log("[color=lime]🔗 触发连锁事件: 【%s】%s[/color]" % [event_id, event_data.get("title", "?")])
+	_log("[color=lime]   描述: %s[/color]" % event_data.get("description", ""))
+	
+	_update_chain_display()
+	_populate_chain_selector()
+	_show_event_dialog(event_data)
+
+func _on_unlock_all_chain_prereqs():
+	_log("\n[color=orange]══════ 解锁全部连锁前置 ══════[/color]")
+	var chain_events = EventManager.get_all_chain_events()
+	for evt in chain_events:
+		var eid = evt.get("id", "")
+		# 解锁每个连锁事件
+		EventManager.force_unlock_event(eid)
+		_log("[color=yellow]解锁: %s (%s)[/color]" % [evt.get("title", "?"), eid])
+		# 同时标记前置事件中普通池的事件为已触发
+		var req = evt.get("requires_event", "")
+		if req != "":
+			if not EventManager.is_event_triggered(req):
+				EventManager.triggered_event_ids[req] = true
+				_log("[color=yellow]标记前置已触发: %s[/color]" % req)
+	
+	_update_chain_display()
+	_populate_chain_selector()
+	_log("[color=lime]✅ 所有连锁事件的前置已解锁[/color]")
+
+func _on_walk_chain_pressed():
+	_log("\n[color=orange]══════ 逐步走完连锁链 ══════[/color]")
+	var chain_events = EventManager.get_all_chain_events()
+	
+	# 找出当前可以触发的下一个连锁事件（前置已解锁且自身未触发）
+	var next_event = null
+	for evt in chain_events:
+		var eid = evt.get("id", "")
+		if EventManager.is_event_triggered(eid):
+			continue
+		var req = evt.get("requires_event", "")
+		if req == "" or EventManager.is_event_unlocked(eid):
+			next_event = evt
+			break
+	
+	if next_event == null:
+		_log("[color=yellow]没有可推进的连锁事件了（全部已触发或前置未解锁）[/color]")
+		_log("[color=yellow]提示: 先点「解锁全部前置」再试[/color]")
+		return
+	
+	var eid = next_event.get("id", "")
+	_log("[color=lime]🔗 推进连锁: 【%s】%s[/color]" % [eid, next_event.get("title", "?")])
+	
+	var event_data = EventManager.trigger_chain_event_by_id(eid)
+	if not event_data.is_empty():
+		_update_chain_display()
+		_populate_chain_selector()
+		_show_event_dialog(event_data)
 
 # ===================== 信号回调 =====================
 
@@ -629,6 +889,29 @@ func _log(text: String):
 	for tag in ["cyan", "green", "orange", "yellow", "red", "white", "lime"]:
 		clean = clean.replace("[color=%s]" % tag, "").replace("[/color]", "")
 	print(clean)
+
+# ===================== 阶段/连锁 =====================
+
+func _on_stage_selected(index: int):
+	var stage = index + 1
+	EventManager.set_stage(stage)
+	_log("[color=cyan]阶段设置为: %d[/color]" % stage)
+	_update_chain_display()
+
+func _update_chain_display():
+	if triggered_list_label:
+		var triggered = EventManager.get_triggered_event_ids()
+		if triggered.is_empty():
+			triggered_list_label.text = "[color=gray]（无）[/color]"
+		else:
+			triggered_list_label.text = "[color=lime]" + ", ".join(triggered) + "[/color]"
+	
+	if unlocked_list_label:
+		var unlocked = EventManager.get_unlocked_event_ids()
+		if unlocked.is_empty():
+			unlocked_list_label.text = "[color=gray]（无）[/color]"
+		else:
+			unlocked_list_label.text = "[color=orange]" + ", ".join(unlocked) + "[/color]"
 	
 func _on_back_button_pressed():
 	print("返回按钮被点击！尝试切换到主场景...")

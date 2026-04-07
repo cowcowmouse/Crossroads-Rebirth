@@ -1,61 +1,187 @@
 [
   {
-	"id": "low_business_001",
-	"title": "资金紧张",
-	"description": "账上资金所剩无几，下个月租金可能付不起，乐队面临生存危机。",
-	"trigger_conditions": {
-	  "money": {"max": 3000}
-	},
-	"weight": 50,
-	"options": [
-	  {
-		"text": "接一场商演救急",
-		"effects": {"money": 3000, "reputation": -5, "business_weight": 3},
-		"result_text": "赚到钱了，但口碑有点下滑。"
-	  },
-	  {
-		"text": "找朋友借钱周转",
-		"effects": {"money": 2000, "human_weight": -1},
-		"result_text": "借到了钱，但欠了人情。"
-	  }
-	]
+    "id": "low_biz_001",
+    "title": "资金紧张",
+    "description": "账上资金所剩无几，下个月租金可能付不起，乐队面临生存危机。",
+    "trigger_conditions": {
+      "money": {"max": 3000}
+    },
+    "weight": 50,
+    "options": [
+      {
+        "text": "接一场商演救急",
+        "effects": {"money": 3000, "reputation": -5, "business_weight": 3},
+        "result_text": "赚到钱了，但口碑有点下滑。"
+      },
+      {
+        "text": "找朋友借钱周转",
+        "effects": {"money": 2000, "human_weight": -1},
+        "result_text": "借到了钱，但欠了人情。"
+      }
+    ]
   },
   {
-	"id": "low_business_002",
-	"title": "设备老旧",
-	"description": "排练设备太旧影响效率，成员们抱怨不断。",
-	"trigger_conditions": {},
-	"weight": 35,
-	"options": [
-	  {
-		"text": "贷款买新设备",
-		"effects": {"money": -2000, "creativity": 15, "business_weight": 1},
-		"result_text": "新设备很棒，但背上债务。"
-	  },
-	  {
-		"text": "继续凑合用",
-		"effects": {"cohesion": -3, "creativity": -5},
-		"result_text": "效率低下，成员有些抱怨。"
-	  }
-	]
+    "id": "low_biz_002",
+    "title": "设备老旧",
+    "description": "排练设备太旧影响效率，成员们抱怨不断。",
+    "trigger_conditions": {},
+    "weight": 35,
+    "options": [
+      {
+        "text": "贷款买新设备",
+        "effects": {"money": -2000, "creativity": 12, "business_weight": 1},
+        "result_text": "新设备很棒，但背上债务。"
+      },
+      {
+        "text": "继续凑合用",
+        "effects": {"cohesion": -3, "creativity": -5},
+        "result_text": "效率低下，成员有些抱怨。"
+      }
+    ]
   },
   {
-	"id": "low_business_003",
-	"title": "酒吧经营困难",
-	"description": "酒吧客流量持续下降，老钉子建议搞些促销活动。",
-	"trigger_conditions": {},
-	"weight": 30,
-	"options": [
-	  {
-		"text": "办打折促销活动",
-		"effects": {"money": -500, "reputation": 5, "business_weight": 2},
-		"result_text": "促销吸引了一些新客人，但利润很薄。"
-	  },
-	  {
-		"text": "维持现状，节省开支",
-		"effects": {"cohesion": -2, "reputation": -3},
-		"result_text": "客流继续下滑，气氛有些低落。"
-	  }
-	]
+    "id": "low_biz_003",
+    "title": "酒吧经营困难",
+    "description": "酒吧客流量持续下降，老钉子建议搞些促销活动。",
+    "trigger_conditions": {},
+    "weight": 30,
+    "options": [
+      {
+        "text": "办打折促销活动",
+        "effects": {"money": -500, "reputation": 5, "business_weight": 2},
+        "result_text": "促销吸引了一些新客人，但利润很薄。"
+      },
+      {
+        "text": "维持现状，节省开支",
+        "effects": {"cohesion": -2, "reputation": -3},
+        "result_text": "客流继续下滑，气氛有些低落。"
+      }
+    ]
+  },
+  {
+    "id": "low_biz_004",
+    "title": "资金充裕时的投资机会",
+    "description": "一个朋友介绍了一个小型投资机会，风险不大，可能有不错的回报。",
+    "trigger_conditions": {
+      "money": {"min": 6000}
+    },
+    "weight": 35,
+    "options": [
+      {
+        "text": "投一笔试试",
+        "effects": {"money": -2000, "business_weight": 3},
+        "result_text": "投资回报还要等一阵子才能看到。"
+      },
+      {
+        "text": "不冒险，钱放着更安心",
+        "effects": {},
+        "result_text": "稳妥起见，还是存着吧。"
+      }
+    ]
+  },
+  {
+    "id": "low_biz_005",
+    "title": "凝聚力低落时的商业分歧",
+    "description": "成员们对接下来的商业方向意见不合，有人想多接商演赚钱，有人想安心做音乐。",
+    "trigger_conditions": {
+      "cohesion": {"max": 40}
+    },
+    "weight": 45,
+    "options": [
+      {
+        "text": "民主投票决定方向",
+        "effects": {"cohesion": 10, "human_weight": 3},
+        "result_text": "投票结果大家都能接受，至少过程是公平的。"
+      },
+      {
+        "text": "你来拍板，不再讨论",
+        "effects": {"cohesion": -8, "business_weight": 2},
+        "result_text": "效率是高了，但成员心里不太舒服。"
+      }
+    ]
+  },
+  {
+    "id": "low_biz_006",
+    "title": "小型创业贷款",
+    "description": "政府有一批扶持文化产业的小额贷款，条件优惠，但需要提交繁琐的申请材料。",
+    "trigger_conditions": {
+      "money": {"max": 4000}
+    },
+    "weight": 35,
+    "stage": 2,
+    "options": [
+      {
+        "text": "花时间申请贷款",
+        "effects": {"money": 4000, "business_weight": 3, "creativity": -5},
+        "result_text": "贷款下来了！虽然填表格浪费了不少排练时间。"
+      },
+      {
+        "text": "太麻烦了，算了",
+        "effects": {"cohesion": 2},
+        "result_text": "大家松了口气，回去练琴了。"
+      }
+    ]
+  },
+  {
+    "id": "low_biz_007",
+    "title": "商业帝国的崩塌危机",
+    "description": "乐队的商业合作伙伴突然宣布破产，之前签好的合同全部作废，一大笔预期收入化为泡影。",
+    "trigger_conditions": {},
+    "weight": 30,
+    "stage": 3,
+    "options": [
+      {
+        "text": "立刻开拓新的商业合作",
+        "effects": {"money": -2000, "business_weight": 6, "reputation": 8},
+        "result_text": "危机也是转机，新合作伙伴条件更好了。"
+      },
+      {
+        "text": "暂停商业活动，回归音乐",
+        "effects": {"art_weight": 5, "creativity": 12, "business_weight": -3},
+        "result_text": "没了商业的束缚，音乐反而更纯粹了。"
+      }
+    ]
+  },
+  {
+    "id": "low_biz_008",
+    "title": "高创造力带来的跨界机会",
+    "description": "一个独立电影导演注意到了你们的音乐创造力，想邀请你们为他的新片做配乐。",
+    "trigger_conditions": {
+      "creativity": {"min": 60}
+    },
+    "weight": 35,
+    "stage": 2,
+    "options": [
+      {
+        "text": "接受配乐邀请",
+        "effects": {"money": 2500, "creativity": 8, "art_weight": 3, "reputation": 8},
+        "result_text": "电影上映后你们的配乐广受好评！"
+      },
+      {
+        "text": "时间不够，只能婉拒",
+        "effects": {"reputation": -2},
+        "result_text": "导演转找了别的乐队，有点可惜。"
+      }
+    ]
+  },
+  {
+    "id": "low_biz_repeatable_01",
+    "title": "酒馆日常",
+    "description": "今晚酒馆客人不多不少，老钉子照常在吧台忙活，偶尔有客人聊几句。",
+    "trigger_conditions": {},
+    "weight": 15,
+    "repeatable": true,
+    "options": [
+      {
+        "text": "去前台帮忙招呼客人",
+        "effects": {"business_weight": 1, "reputation": 1},
+        "result_text": "客人对你的热情招待很满意。"
+      },
+      {
+        "text": "在后台整理设备",
+        "effects": {"creativity": 1},
+        "result_text": "设备都收拾整齐了，心情也跟着清爽了。"
+      }
+    ]
   }
 ]

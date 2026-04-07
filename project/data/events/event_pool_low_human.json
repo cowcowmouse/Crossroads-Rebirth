@@ -1,61 +1,186 @@
 [
   {
-	"id": "low_human_001",
-	"title": "成员争吵",
-	"description": "两名成员因为演出风格吵了起来，气氛非常紧张。",
-	"trigger_conditions": {},
-	"weight": 40,
-	"options": [
-	  {
-		"text": "强行制止，要求服从",
-		"effects": {"cohesion": -10, "human_weight": -3},
-		"result_text": "表面平息，但内心不满。"
-	  },
-	  {
-		"text": "耐心调解，倾听双方",
-		"effects": {"cohesion": 10, "human_weight": 5},
-		"result_text": "双方和解，团队更团结。"
-	  }
-	]
+    "id": "low_human_001",
+    "title": "成员争吵",
+    "description": "两名成员因为演出风格吵了起来，气氛非常紧张。",
+    "trigger_conditions": {},
+    "weight": 40,
+    "options": [
+      {
+        "text": "强行制止，要求服从",
+        "effects": {"cohesion": -8, "human_weight": -3},
+        "result_text": "表面平息，但内心不满。"
+      },
+      {
+        "text": "耐心调解，倾听双方",
+        "effects": {"cohesion": 10, "human_weight": 5},
+        "result_text": "双方和解，团队更团结。"
+      }
+    ]
   },
   {
-	"id": "low_human_002",
-	"title": "成员想退出",
-	"description": "有成员觉得太累太穷，认真考虑离开乐队。",
-	"trigger_conditions": {
-	  "cohesion": {"max": 50}
-	},
-	"weight": 50,
-	"options": [
-	  {
-		"text": "加薪挽留",
-		"effects": {"money": -2000, "cohesion": 15, "human_weight": 3},
-		"result_text": "成员留下了，但资金更紧张了。"
-	  },
-	  {
-		"text": "尊重选择，好聚好散",
-		"effects": {"cohesion": -15, "human_weight": -2},
-		"result_text": "成员离开，乐队少了一人。"
-	  }
-	]
+    "id": "low_human_002",
+    "title": "成员想退出",
+    "description": "有成员觉得太累太穷，认真考虑离开乐队。",
+    "trigger_conditions": {
+      "cohesion": {"max": 35}
+    },
+    "weight": 50,
+    "options": [
+      {
+        "text": "加薪挽留",
+        "effects": {"money": -2000, "cohesion": 15, "human_weight": 3},
+        "result_text": "成员留下了，但资金更紧张了。"
+      },
+      {
+        "text": "尊重选择，好聚好散",
+        "effects": {"cohesion": -12, "human_weight": -2},
+        "result_text": "成员离开了，大家都有些难过。"
+      }
+    ]
   },
   {
-	"id": "low_human_003",
-	"title": "老钉子的忠告",
-	"description": "老钉子看不下去了，把你拉到吧台边语重心长地谈了谈。",
-	"trigger_conditions": {},
-	"weight": 30,
-	"options": [
-	  {
-		"text": "虚心听取建议",
-		"effects": {"cohesion": 8, "human_weight": 3, "reputation": 3},
-		"result_text": "老钉子的话让你醍醐灌顶，决定多关心成员。"
-	  },
-	  {
-		"text": "敷衍了事",
-		"effects": {"cohesion": -5, "human_weight": -2},
-		"result_text": "老钉子叹了口气，摇了摇头走了。"
-	  }
-	]
+    "id": "low_human_003",
+    "title": "老钉子的忠告",
+    "description": "老钉子看不下去了，把你拉到吧台边语重心长地谈了谈。",
+    "trigger_conditions": {},
+    "weight": 30,
+    "options": [
+      {
+        "text": "虚心听取建议",
+        "effects": {"cohesion": 8, "human_weight": 3, "reputation": 3},
+        "result_text": "老钉子的话让你醍醐灌顶。"
+      },
+      {
+        "text": "敷衍了事",
+        "effects": {"cohesion": -5, "human_weight": -2},
+        "result_text": "老钉子叹了口气，摇了摇头走了。"
+      }
+    ]
+  },
+  {
+    "id": "low_human_004",
+    "title": "资金紧张时的人际考验",
+    "description": "乐队穷得叮当响，一个老朋友问你能不能借点钱给他。",
+    "trigger_conditions": {
+      "money": {"max": 3000}
+    },
+    "weight": 45,
+    "options": [
+      {
+        "text": "自己都困难还借给他",
+        "effects": {"money": -500, "human_weight": 5, "cohesion": 3},
+        "result_text": "朋友很感动，答应有机会一定帮你们。"
+      },
+      {
+        "text": "实话实说，现在真没钱",
+        "effects": {"human_weight": -1},
+        "result_text": "朋友理解你的处境，没有怪你。"
+      }
+    ]
+  },
+  {
+    "id": "low_human_005",
+    "title": "凝聚力高时的默契合作",
+    "description": "大家最近配合默契，有成员提议趁势写一首歌纪念这段时光。",
+    "trigger_conditions": {
+      "cohesion": {"min": 65}
+    },
+    "weight": 35,
+    "options": [
+      {
+        "text": "一起合作写歌",
+        "effects": {"creativity": 12, "cohesion": 8, "art_weight": 3, "human_weight": 3},
+        "result_text": "这首歌成了乐队的心灵之作。"
+      },
+      {
+        "text": "先不急，继续保持这个状态",
+        "effects": {"cohesion": 3, "human_weight": 1},
+        "result_text": "好状态值得好好享受。"
+      }
+    ]
+  },
+  {
+    "id": "low_human_006",
+    "title": "成员的私人困扰",
+    "description": "一位成员最近心事重重，排练时经常走神，但他不愿意说是什么事。",
+    "trigger_conditions": {},
+    "weight": 35,
+    "stage": 2,
+    "options": [
+      {
+        "text": "私下找他谈心，表达关心",
+        "effects": {"cohesion": 12, "human_weight": 5, "creativity": -3},
+        "result_text": "他终于打开心扉，说了压在心里的事。"
+      },
+      {
+        "text": "给他空间，等他自己调整",
+        "effects": {"cohesion": -3, "creativity": -5},
+        "result_text": "他还在消化情绪，排练效果继续受影响。"
+      }
+    ]
+  },
+  {
+    "id": "low_human_007",
+    "title": "乐队存亡的关键时刻",
+    "description": "所有矛盾在这一刻集中爆发了。成员们齐聚排练室，气氛凝重。每个人都在等你说些什么。这一刻，乐队的命运握在你手里。",
+    "trigger_conditions": {
+      "cohesion": {"max": 25}
+    },
+    "weight": 40,
+    "stage": 3,
+    "options": [
+      {
+        "text": "发表一场真挚的演说，重振信心",
+        "effects": {"cohesion": 25, "human_weight": 10, "creativity": 8},
+        "result_text": "你的话点燃了所有人心中的火焰，大家含着泪水决定继续走下去。"
+      },
+      {
+        "text": "提议各自冷静一周再说",
+        "effects": {"cohesion": 5, "human_weight": 2},
+        "result_text": "紧张的氛围暂时缓和了，但问题并没有真正解决。"
+      }
+    ]
+  },
+  {
+    "id": "low_human_008",
+    "title": "意外的创造力带来的团队活力",
+    "description": "虽然团队关系不太好，但某天排练时竟然碰撞出了意想不到的火花。",
+    "trigger_conditions": {
+      "creativity": {"min": 55}
+    },
+    "weight": 35,
+    "options": [
+      {
+        "text": "趁热打铁，把这份感觉录下来",
+        "effects": {"creativity": 10, "cohesion": 8, "art_weight": 3},
+        "result_text": "音乐果然是最好的沟通语言。"
+      },
+      {
+        "text": "先解决人际问题再说",
+        "effects": {"cohesion": 5, "human_weight": 3},
+        "result_text": "方向对了，但灵感可能就这么溜走了。"
+      }
+    ]
+  },
+  {
+    "id": "low_human_repeatable_01",
+    "title": "酒馆门口的流浪猫",
+    "description": "那只流浪猫又来了，蹲在酒馆门口眯着眼睛晒太阳。几个成员围过来逗它玩。",
+    "trigger_conditions": {},
+    "weight": 15,
+    "repeatable": true,
+    "options": [
+      {
+        "text": "给猫咪喂点吃的",
+        "effects": {"cohesion": 2, "human_weight": 1},
+        "result_text": "猫咪很亲人，蹭了蹭你的腿。大家都笑了。"
+      },
+      {
+        "text": "让它自由自在吧",
+        "effects": {"creativity": 1},
+        "result_text": "看着猫咪悠闲的样子，好像也没那么焦虑了。"
+      }
+    ]
   }
 ]
