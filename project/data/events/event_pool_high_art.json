@@ -1,192 +1,192 @@
 [
   {
-    "id": "high_art_001",
-    "title": "音乐节邀请",
-    "description": "知名音乐节邀请乐队参加，这是展示艺术实力的好机会！全场目光都将聚焦在你们身上。",
-    "trigger_conditions": {},
-    "weight": 35,
-    "min_stage": 1,
-    "max_stage": 2,
-    "options": [
-      {
-        "text": "全力准备，惊艳全场",
-        "effects": {"reputation": 15, "creativity": 10, "art_weight": 4},
-        "result_text": "演出大获成功，乐队名声大噪！"
-      },
-      {
-        "text": "保守演出，安全第一",
-        "effects": {"reputation": 5, "money": 2000, "business_weight": 2},
-        "result_text": "演出平稳，赚了些钱。"
-      }
-    ]
+	"id": "high_art_001",
+	"title": "音乐节邀请",
+	"description": "知名音乐节邀请乐队参加，这是展示艺术实力的好机会！全场目光都将聚焦在你们身上。",
+	"trigger_conditions": {},
+	"weight": 35,
+	"min_stage": 1,
+	"max_stage": 2,
+	"options": [
+	  {
+		"text": "全力准备，惊艳全场",
+		"effects": {"reputation": 15, "creativity": 10, "art_weight": 4},
+		"result_text": "演出大获成功，乐队名声大噪！"
+	  },
+	  {
+		"text": "保守演出，安全第一",
+		"effects": {"reputation": 5, "money": 2000, "business_weight": 2},
+		"result_text": "演出平稳，赚了些钱。"
+	  }
+	]
   },
   {
-    "id": "high_art_002",
-    "title": "艺术评论",
-    "description": "知名乐评人写了一篇关于乐队的文章，评价褒贬不一。",
-    "trigger_conditions": {},
-    "weight": 30,
-    "options": [
-      {
-        "text": "虚心接受建议",
-        "effects": {"creativity": 8, "reputation": 8, "art_weight": 3},
-        "result_text": "乐评人的推荐让更多人关注你们。"
-      },
-      {
-        "text": "不屑一顾",
-        "effects": {"cohesion": 5, "art_weight": -1},
-        "result_text": "成员们觉得你有点固执。"
-      }
-    ]
+	"id": "high_art_002",
+	"title": "艺术评论",
+	"description": "知名乐评人写了一篇关于乐队的文章，评价褒贬不一。",
+	"trigger_conditions": {},
+	"weight": 30,
+	"options": [
+	  {
+		"text": "虚心接受建议",
+		"effects": {"creativity": 8, "reputation": 8, "art_weight": 3},
+		"result_text": "乐评人的推荐让更多人关注你们。"
+	  },
+	  {
+		"text": "不屑一顾",
+		"effects": {"cohesion": 5, "art_weight": -1},
+		"result_text": "成员们觉得你有点固执。"
+	  }
+	]
   },
   {
-    "id": "high_art_003",
-    "title": "创作灵感爆发但资金吃紧",
-    "description": "乐队迸发出前所未有的创作灵感，但录制需要租用专业录音棚，当前资金捉襟见肘。",
-    "trigger_conditions": {
-      "money": {"max": 4000}
-    },
-    "weight": 50,
-    "options": [
-      {
-        "text": "借钱租录音棚，抓住灵感",
-        "effects": {"money": -2000, "creativity": 15, "reputation": 8, "art_weight": 4},
-        "result_text": "录出来的作品质量极高，但经济压力骤增。"
-      },
-      {
-        "text": "在排练室简陋录制",
-        "effects": {"creativity": 5, "art_weight": 1},
-        "result_text": "效果一般，但至少把灵感留住了。"
-      }
-    ]
+	"id": "high_art_003",
+	"title": "创作灵感爆发但资金吃紧",
+	"description": "乐队迸发出前所未有的创作灵感，但录制需要租用专业录音棚，当前资金捉襟见肘。",
+	"trigger_conditions": {
+	  "money": {"max": 4000}
+	},
+	"weight": 50,
+	"options": [
+	  {
+		"text": "借钱租录音棚，抓住灵感",
+		"effects": {"money": -2000, "creativity": 15, "reputation": 8, "art_weight": 4},
+		"result_text": "录出来的作品质量极高，但经济压力骤增。"
+	  },
+	  {
+		"text": "在排练室简陋录制",
+		"effects": {"creativity": 5, "art_weight": 1},
+		"result_text": "效果一般，但至少把灵感留住了。"
+	  }
+	]
   },
   {
-    "id": "high_art_004",
-    "title": "创造力匮乏时的突破",
-    "description": "最近排练总是在重复老曲目，成员们感觉创造力严重不足。有人提议去看一场前卫实验音乐演出找灵感。",
-    "trigger_conditions": {
-      "creativity": {"max": 35}
-    },
-    "weight": 45,
-    "options": [
-      {
-        "text": "一起去看实验音乐",
-        "effects": {"creativity": 15, "money": -800, "art_weight": 3},
-        "result_text": "虽然听得一头雾水，但大家确实被刺激到了。"
-      },
-      {
-        "text": "闭门苦练基本功",
-        "effects": {"creativity": 5, "cohesion": 3},
-        "result_text": "基本功扎实了些，但灵感还是没来。"
-      }
-    ]
+	"id": "high_art_004",
+	"title": "创造力匮乏时的突破",
+	"description": "最近排练总是在重复老曲目，成员们感觉创造力严重不足。有人提议去看一场前卫实验音乐演出找灵感。",
+	"trigger_conditions": {
+	  "creativity": {"max": 35}
+	},
+	"weight": 45,
+	"options": [
+	  {
+		"text": "一起去看实验音乐",
+		"effects": {"creativity": 15, "money": -800, "art_weight": 3},
+		"result_text": "虽然听得一头雾水，但大家确实被刺激到了。"
+	  },
+	  {
+		"text": "闭门苦练基本功",
+		"effects": {"creativity": 5, "cohesion": 3},
+		"result_text": "基本功扎实了些，但灵感还是没来。"
+	  }
+	]
   },
   {
-    "id": "high_art_005",
-    "title": "创造力爆棚的即兴之夜",
-    "description": "成员们状态火热，有人提议今晚搞一场即兴创作之夜，可能诞生传世之作。",
-    "trigger_conditions": {
-      "creativity": {"min": 70}
-    },
-    "weight": 40,
-    "options": [
-      {
-        "text": "放手一搏，即兴到底",
-        "effects": {"creativity": 12, "reputation": 10, "art_weight": 5, "cohesion": 5},
-        "result_text": "今晚的即兴录音简直是神来之笔！"
-      },
-      {
-        "text": "理性规划，按部就班",
-        "effects": {"creativity": 3, "business_weight": 2},
-        "result_text": "稳扎稳打，没有惊喜也没有失误。"
-      }
-    ]
+	"id": "high_art_005",
+	"title": "创造力爆棚的即兴之夜",
+	"description": "成员们状态火热，有人提议今晚搞一场即兴创作之夜，可能诞生传世之作。",
+	"trigger_conditions": {
+	  "creativity": {"min": 70}
+	},
+	"weight": 40,
+	"options": [
+	  {
+		"text": "放手一搏，即兴到底",
+		"effects": {"creativity": 12, "reputation": 10, "art_weight": 5, "cohesion": 5},
+		"result_text": "今晚的即兴录音简直是神来之笔！"
+	  },
+	  {
+		"text": "理性规划，按部就班",
+		"effects": {"creativity": 3, "business_weight": 2},
+		"result_text": "稳扎稳打，没有惊喜也没有失误。"
+	  }
+	]
   },
   {
-    "id": "high_art_006",
-    "title": "唱片公司的艺术分歧",
-    "description": "唱片公司对乐队新专辑的方向有不同看法，他们希望加入更多商业元素。",
-    "trigger_conditions": {
-      "reputation": {"min": 40}
-    },
-    "weight": 35,
-    "stage": 2,
-    "options": [
-      {
-        "text": "坚持艺术理念，拒绝妥协",
-        "effects": {"art_weight": 6, "creativity": 12, "money": -1500, "reputation": -5},
-        "result_text": "唱片公司减少了投入，但你们的音乐更纯粹了。"
-      },
-      {
-        "text": "适当融合，寻找平衡",
-        "effects": {"art_weight": 2, "business_weight": 3, "money": 3000, "reputation": 10},
-        "result_text": "新专辑兼顾了艺术与商业，反响不错。"
-      }
-    ]
+	"id": "high_art_006",
+	"title": "唱片公司的艺术分歧",
+	"description": "唱片公司对乐队新专辑的方向有不同看法，他们希望加入更多商业元素。",
+	"trigger_conditions": {
+	  "reputation": {"min": 40}
+	},
+	"weight": 35,
+	"stage": 2,
+	"options": [
+	  {
+		"text": "坚持艺术理念，拒绝妥协",
+		"effects": {"art_weight": 6, "creativity": 12, "money": -1500, "reputation": -5},
+		"result_text": "唱片公司减少了投入，但你们的音乐更纯粹了。"
+	  },
+	  {
+		"text": "适当融合，寻找平衡",
+		"effects": {"art_weight": 2, "business_weight": 3, "money": 3000, "reputation": 10},
+		"result_text": "新专辑兼顾了艺术与商业，反响不错。"
+	  }
+	]
   },
   {
-    "id": "high_art_007",
-    "title": "国际音乐节重磅邀约",
-    "description": "一个国际知名音乐节向你们发出正式邀约！这是走向更大舞台的机会，但准备工作需要大量投入。",
-    "trigger_conditions": {
-      "reputation": {"min": 50},
-      "money": {"min": 5000}
-    },
-    "weight": 40,
-    "stage": 3,
-    "options": [
-      {
-        "text": "全力以赴，冲击国际舞台",
-        "effects": {"money": -5000, "reputation": 30, "creativity": 20, "art_weight": 8},
-        "result_text": "演出震撼了国际观众，乐队声名远扬！"
-      },
-      {
-        "text": "婉拒邀请，继续深耕本地",
-        "effects": {"cohesion": 8, "art_weight": 2},
-        "result_text": "团队觉得打好基础更重要。"
-      }
-    ]
+	"id": "high_art_007",
+	"title": "国际音乐节重磅邀约",
+	"description": "一个国际知名音乐节向你们发出正式邀约！这是走向更大舞台的机会，但准备工作需要大量投入。",
+	"trigger_conditions": {
+	  "reputation": {"min": 50},
+	  "money": {"min": 5000}
+	},
+	"weight": 40,
+	"stage": 3,
+	"options": [
+	  {
+		"text": "全力以赴，冲击国际舞台",
+		"effects": {"money": -5000, "reputation": 30, "creativity": 20, "art_weight": 8},
+		"result_text": "演出震撼了国际观众，乐队声名远扬！"
+	  },
+	  {
+		"text": "婉拒邀请，继续深耕本地",
+		"effects": {"cohesion": 8, "art_weight": 2},
+		"result_text": "团队觉得打好基础更重要。"
+	  }
+	]
   },
   {
-    "id": "high_art_008",
-    "title": "资金充裕时的录音室升级",
-    "description": "手头资金充裕，有人提议升级录音设备，能大幅提升作品质量。",
-    "trigger_conditions": {
-      "money": {"min": 8000}
-    },
-    "weight": 30,
-    "stage": 2,
-    "options": [
-      {
-        "text": "投资顶级录音设备",
-        "effects": {"money": -4000, "creativity": 18, "art_weight": 5, "reputation": 10},
-        "result_text": "新设备让录音质量飞跃式提升！"
-      },
-      {
-        "text": "把钱留着应急",
-        "effects": {"business_weight": 2},
-        "result_text": "稳妥起见，还是留着钱比较安心。"
-      }
-    ]
+	"id": "high_art_008",
+	"title": "资金充裕时的录音室升级",
+	"description": "手头资金充裕，有人提议升级录音设备，能大幅提升作品质量。",
+	"trigger_conditions": {
+	  "money": {"min": 8000}
+	},
+	"weight": 30,
+	"stage": 2,
+	"options": [
+	  {
+		"text": "投资顶级录音设备",
+		"effects": {"money": -4000, "creativity": 18, "art_weight": 5, "reputation": 10},
+		"result_text": "新设备让录音质量飞跃式提升！"
+	  },
+	  {
+		"text": "把钱留着应急",
+		"effects": {"business_weight": 2},
+		"result_text": "稳妥起见，还是留着钱比较安心。"
+	  }
+	]
   },
   {
-    "id": "high_art_repeatable_01",
-    "title": "日常排练",
-    "description": "又到了例行排练的时间，没什么特别的事，但坚持练习总是好的。",
-    "trigger_conditions": {},
-    "weight": 15,
-    "repeatable": true,
-    "options": [
-      {
-        "text": "认真排练一整天",
-        "effects": {"creativity": 3, "art_weight": 1},
-        "result_text": "扎实的排练让大家状态保持得不错。"
-      },
-      {
-        "text": "随便练练就收工",
-        "effects": {"cohesion": 2},
-        "result_text": "轻松的一天，大家心情还行。"
-      }
-    ]
+	"id": "high_art_repeatable_01",
+	"title": "日常排练",
+	"description": "又到了例行排练的时间，没什么特别的事，但坚持练习总是好的。",
+	"trigger_conditions": {},
+	"weight": 15,
+	"repeatable": true,
+	"options": [
+	  {
+		"text": "认真排练一整天",
+		"effects": {"creativity": 3, "art_weight": 1},
+		"result_text": "扎实的排练让大家状态保持得不错。"
+	  },
+	  {
+		"text": "随便练练就收工",
+		"effects": {"cohesion": 2},
+		"result_text": "轻松的一天，大家心情还行。"
+	  }
+	]
   }
 ]
