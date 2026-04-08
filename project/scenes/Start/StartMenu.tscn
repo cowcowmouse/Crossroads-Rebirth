@@ -1,0 +1,88 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgap11f7n537n"]
+
+[ext_resource type="Script" uid="uid://b4cfn8lmuc3rt" path="res://project/scripts/models/StartMenu/start_menu.gd" id="1_e38bf"]
+[ext_resource type="Texture2D" uid="uid://t0h76rhl8xhs" path="res://project/assets/images/ui/Start/start_cover.png" id="2_4kogk"]
+
+[node name="StartMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_e38bf")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_4kogk")
+
+[node name="SettingsPanel" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VolumeLabel" type="Label" parent="SettingsPanel"]
+layout_mode = 0
+offset_left = 1212.0001
+offset_top = 893.0
+offset_right = 1312.0001
+offset_bottom = 916.0
+scale = Vector2(1.3202837, 1.6714369)
+text = "BGM Volume"
+
+[node name="VolumeSlider" type="HSlider" parent="SettingsPanel"]
+layout_mode = 0
+offset_left = 1354.0
+offset_top = 907.0
+offset_right = 1478.0
+offset_bottom = 923.0
+max_value = 1.0
+step = 0.05
+value = 0.7
+
+[node name="CloseButton" type="Button" parent="SettingsPanel"]
+layout_mode = 0
+offset_left = 1213.0
+offset_top = 865.0
+offset_right = 1231.0
+offset_bottom = 896.0
+text = "X"
+
+[node name="StartButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1415.0
+offset_top = 481.0
+offset_right = 1461.0
+offset_bottom = 512.0
+scale = Vector2(5.5807304, 4.8689537)
+text = "Start"
+
+[node name="SettingsButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -122.0
+offset_top = -119.00012
+offset_right = -92.0
+offset_bottom = -88.00012
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(4.0437303, 3.897308)
+text = "⚙"
+
+[node name="QuitButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1441.0
+offset_top = 647.0
+offset_right = 1483.0
+offset_bottom = 678.0
+scale = Vector2(5.3634763, 4.0525436)
+text = "Quit"
