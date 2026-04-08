@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Crossroads Rebirth"
 config/description="A band management narrative game"
-run/main_scene="uid://bcm016hjvaobv"
+run/main_scene="uid://dgap11f7n537n"
 config/features=PackedStringArray("4.5")
 
 [autoload]
@@ -28,21 +28,16 @@ SkipPanelManager="*res://project/scripts/autoload/SkipPanelManager.gd"
 ClockState="*res://project/scripts/autoload/ClockState.gd"
 Signals="*res://project/scripts/autoload/signals.gd"
 EventManager="*res://project/scripts/autoload/EventManager.gd"
+AudioManager="*res://project/scripts/autoload/AudioManager.gd"
 
 [dialogic]
 
 directories/dch_directory={
-"Crossroads-Rebirth-integrate-teammate-features/老钉子": "res://Crossroads-Rebirth-integrate-teammate-features/老钉子.dch",
-"Resources/unit_test_character": "res://Crossroads-Rebirth-integrate-teammate-features/project/Tests/Resources/unit_test_character.dch",
 "unit_test_character": "res://project/Tests/Resources/unit_test_character.dch",
 "老钉子": "res://老钉子.dch"
 }
 directories/dtl_directory={
-"Crossroads-Rebirth-integrate-teammate-features/old_nail": "res://Crossroads-Rebirth-integrate-teammate-features/old_nail.dtl",
 "old_nail": "res://old_nail.dtl",
-"old_nail/stage_1": "res://Crossroads-Rebirth-integrate-teammate-features/addons/dialogic/characters/old_nail/stage_1.dtl",
-"old_nail/stage_2": "res://Crossroads-Rebirth-integrate-teammate-features/addons/dialogic/characters/old_nail/stage_2.dtl",
-"old_nail/stage_3": "res://Crossroads-Rebirth-integrate-teammate-features/addons/dialogic/characters/old_nail/stage_3.dtl",
 "stage_1": "res://addons/dialogic/characters/old_nail/stage_1.dtl",
 "stage_2": "res://addons/dialogic/characters/old_nail/stage_2.dtl",
 "stage_3": "res://addons/dialogic/characters/old_nail/stage_3.dtl"
@@ -133,3 +128,7 @@ input_Right={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194321,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
+
+[rendering]
+
+rendering_device/fallback_to_vulkan=false
