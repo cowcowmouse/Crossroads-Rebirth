@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://dd5aeyl4tflxn" path="res://Char_OldNail.gd" id="1_nnkky"]
 [ext_resource type="Texture2D" uid="uid://bvxctpyviqeht" path="res://人物.png" id="2_5i6sk"]
 
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_dniyw"]
 atlas = ExtResource("2_5i6sk")
 region = Rect2(0, 0, 208, 298)
@@ -79,6 +78,7 @@ animations = [{
 size = Vector2(184.11281, 247.18324)
 
 [node name="MemberStanding_tscn" type="Node2D"]
+visible = false
 
 [node name="Char_OldNail" type="CharacterBody2D" parent="."]
 scale = Vector2(1.6565933, 1.646552)
