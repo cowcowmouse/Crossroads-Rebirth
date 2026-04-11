@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://em05axaem0ia"]
+[gd_scene load_steps=40 format=3 uid="uid://em05axaem0ia"]
 
 [ext_resource type="Script" uid="uid://bkmekgpgq855c" path="res://project/scenes/main/main.gd" id="1_87m5t"]
 [ext_resource type="Texture2D" uid="uid://c4lvblykh1k4q" path="res://project/scenes/main/bar.jpg" id="1_hyk8p"]
@@ -25,6 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://bpfjlk8a6mk23" path="res://project/scenes/member/MemberStanding.tscn" id="23_gmtqm"]
 [ext_resource type="PackedScene" uid="uid://dfbwrjpx5x318" path="res://project/scenes/main/talk_system.tscn" id="24_2myfi"]
 [ext_resource type="PackedScene" uid="uid://4y42wmkxig7p" path="res://project/scenes/member/MemberTeamUI.tscn" id="25_ptfxj"]
+[ext_resource type="Script" uid="uid://crjiynby4n5vw" path="res://project/scenes/member/MemberTeamui.gd" id="26_ptfxj"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_j0ny1"]
 line_spacing = 28.0
@@ -393,17 +394,18 @@ text = "跳过阶段"
 [node name="SettlementPanel" parent="UILayer" instance=ExtResource("22_wsoed")]
 visible = false
 
-[node name="MemberStanding_tscn" parent="." instance=ExtResource("23_gmtqm")]
-position = Vector2(423, 157)
+[node name="MemberStanding_tscn" parent="UILayer" instance=ExtResource("23_gmtqm")]
+position = Vector2(1101, 497)
 
-[node name="TalkSystem" parent="." instance=ExtResource("24_2myfi")]
-position = Vector2(347, 232)
+[node name="TalkSystem" parent="UILayer" instance=ExtResource("24_2myfi")]
+position = Vector2(1031, 574)
 
-[node name="MemberTeamUi" parent="." instance=ExtResource("25_ptfxj")]
-offset_left = 27.0
-offset_top = 377.0
-offset_right = 27.0
-offset_bottom = 377.0
+[node name="MemberTeamUi" parent="UILayer" instance=ExtResource("25_ptfxj")]
+offset_left = 607.0
+offset_top = 418.0
+offset_right = 607.0
+offset_bottom = 418.0
+script = ExtResource("26_ptfxj")
 metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="UILayer/ArrowLeft" to="." method="_on_texture_button_pressed"]
