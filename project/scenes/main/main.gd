@@ -33,10 +33,12 @@ extends Node2D  # 核心：适配Node2D
 # 管理器引用
 @onready var week_cycle = get_node("/root/WeekCycleManager")
 @onready var skip_panel_manager = get_node("/root/SkipPanelManager")
+
 # 安全等待函数，避免 null 错误
 func safe_wait_frames(frame_count: int):
 	for i in range(frame_count):
 		await Engine.get_main_loop().process_frame
+
 # ===================== 初始化 =====================
 func _ready():
 	connect_dialogic_signals()
@@ -88,7 +90,6 @@ func _ready():
 	else:
 		print("右箭头未找到")
 	
-	
 	# 等待所有节点就绪
 	await get_tree().process_frame
 	
@@ -118,6 +119,12 @@ func _ready():
 	
 	# 创建调试面板
 	_create_debug_panel()
+
+	# 读取记忆事件配置
+	_load_memory_event_data()
+	
+	# 创建记忆阶段事件面板
+	_create_memory_event_panel()
 	
 	# 注册调试快捷键
 	_register_debug_input()
@@ -253,7 +260,6 @@ func _trigger_mid_week_event():
 	# 测试：直接加载 test_event.tscn 场景
 	get_tree().change_scene_to_file("res://project/scenes/event/EventDialog.tscn")
 
-		
 func _safe_wait(seconds: float):
 	if is_inside_tree() and get_tree():
 		await get_tree().create_timer(seconds).timeout
@@ -362,6 +368,7 @@ func check_groups():
 		
 func _on_timeline_started(timeline_name: String):
 	print("📢 对话开始：", timeline_name)
+
 func _on_timeline_ended(timeline_name: String):
 	print("📢 对话结束：", timeline_name)
 	
@@ -387,6 +394,7 @@ func start_tutorial():
 	# 第一步：高亮左箭头
 	# 注意：这里不需要 await，因为 highlight_button 内部会处理等待
 	tutorial_layer.highlight_button("left_arrow", "点击左箭头切换场景")
+
 # ===================== 顶部UI初始化 =====================
 func init_top_ui():
 	ResourceManager.refresh_current_scene_topbar()
@@ -415,7 +423,6 @@ func _on_arrow_left_pressed():
 		tutorial_layer.hide_all()
 
 	get_tree().change_scene_to_file("res://project/scenes/lounge/lounge_scene.tscn")
-
 
 func _on_arrow_right_pressed():
 	print("右箭头被点击")
@@ -469,19 +476,19 @@ func _set_ui_enabled(enabled: bool):
 	print("设置UI可用性: ", enabled)
 
 	# 使用 @onready 变量而不是 $
-	if arrow_left: 
+	if arrow_left:
 		arrow_left.disabled = not enabled
 		print("左箭头设置 disabled = ", arrow_left.disabled)
 	else:
 		print("警告: arrow_left 为 null")
 
-	if arrow_right: 
+	if arrow_right:
 		arrow_right.disabled = not enabled
 		print("右箭头设置 disabled = ", arrow_right.disabled)
 	else:
 		print("警告: arrow_right 为 null")
 
-	if button: 
+	if button:
 		button.disabled = not enabled
 		print("对话按钮设置 disabled = ", button.disabled)
 	else:
@@ -587,6 +594,23 @@ func _calculate_minigame_reward(rank: String) -> Dictionary:
 var debug_panel: Panel = null
 var week_input: LineEdit = null
 var jump_button: Button = null
+
+# ===================== 记忆阶段事件系统 =====================
+
+var memory_event_overlay: Control = null
+var memory_event_backdrop: ColorRect = null
+var memory_event_panel: Panel = null
+var memory_event_image_box: ColorRect = null
+var memory_event_image_label: Label = null
+var memory_event_title_label: Label = null
+var memory_event_text_label: Label = null
+var memory_event_choice_container: VBoxContainer = null
+
+var current_memory_event_id: String = ""
+var current_memory_event_selected_option: Dictionary = {}
+
+# 记忆事件数据改为从 JSON 文件读取
+var memory_event_data: Dictionary = {}
 
 func _create_debug_panel():
 	# 创建调试面板
@@ -736,3 +760,294 @@ func refresh_ui():
 				print("当前阶段: 周中")
 			2:
 				print("当前阶段: 周后")
+# ===================== 记忆事件数据读取 =====================
+
+func _load_memory_event_data():
+	var path = "res://project/data/story/memory_events.json"
+
+	if not FileAccess.file_exists(path):
+		push_error("找不到记忆事件配置文件: " + path)
+		memory_event_data = {}
+		return
+
+	var file = FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		push_error("无法打开记忆事件配置文件: " + path)
+		memory_event_data = {}
+		return
+
+	var text = file.get_as_text()
+
+	var json = JSON.new()
+	var err = json.parse(text)
+
+	if err != OK:
+		push_error("memory_events.json 解析失败，错误码: %d" % err)
+		memory_event_data = {}
+		return
+
+	if typeof(json.data) != TYPE_DICTIONARY:
+		push_error("memory_events.json 顶层不是 Dictionary")
+		memory_event_data = {}
+		return
+
+	memory_event_data = json.data
+	print("✅ 记忆事件数据加载完成: ", memory_event_data.keys())
+# ===================== 记忆阶段事件系统 =====================
+
+# 创建记忆阶段事件面板（运行时创建，当前先用占位图 + 文本演出）
+func _create_memory_event_panel():
+	var ui_layer = get_node_or_null("UILayer")
+	if not ui_layer:
+		print("❌ 未找到 UILayer，无法创建记忆事件面板")
+		return
+
+	# 避免重复创建
+	if memory_event_overlay and is_instance_valid(memory_event_overlay):
+		return
+
+	# 全屏遮罩
+	memory_event_overlay = Control.new()
+	memory_event_overlay.name = "MemoryEventOverlay"
+	memory_event_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
+	memory_event_overlay.visible = false
+	ui_layer.add_child(memory_event_overlay)
+
+	# 半透明背景
+	memory_event_backdrop = ColorRect.new()
+	memory_event_backdrop.set_anchors_preset(Control.PRESET_FULL_RECT)
+	memory_event_backdrop.color = Color(0, 0, 0, 0.72)
+	memory_event_overlay.add_child(memory_event_backdrop)
+
+	# 中央面板
+	memory_event_panel = Panel.new()
+	memory_event_panel.size = Vector2(900, 620)
+	memory_event_panel.position = Vector2(510, 180)
+
+	var panel_style = StyleBoxFlat.new()
+	panel_style.bg_color = Color(0.10, 0.08, 0.06, 0.95)
+	panel_style.border_width_left = 4
+	panel_style.border_width_top = 4
+	panel_style.border_width_right = 4
+	panel_style.border_width_bottom = 4
+	panel_style.border_color = Color(0.85, 0.68, 0.32, 1.0)
+	panel_style.set_corner_radius_all(16)
+	memory_event_panel.add_theme_stylebox_override("panel", panel_style)
+	memory_event_overlay.add_child(memory_event_panel)
+
+	# 标题
+	memory_event_title_label = Label.new()
+	memory_event_title_label.position = Vector2(40, 25)
+	memory_event_title_label.size = Vector2(820, 40)
+	memory_event_title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	memory_event_title_label.add_theme_font_size_override("font_size", 30)
+	memory_event_title_label.add_theme_color_override("font_color", Color(0.95, 0.84, 0.52))
+	memory_event_panel.add_child(memory_event_title_label)
+
+	# 占位图区域
+	memory_event_image_box = ColorRect.new()
+	memory_event_image_box.position = Vector2(110, 85)
+	memory_event_image_box.size = Vector2(680, 180)
+	memory_event_image_box.color = Color(0.24, 0.18, 0.14, 1.0)
+	memory_event_panel.add_child(memory_event_image_box)
+
+	memory_event_image_label = Label.new()
+	memory_event_image_label.position = Vector2(20, 20)
+	memory_event_image_label.size = Vector2(640, 140)
+	memory_event_image_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	memory_event_image_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	memory_event_image_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	memory_event_image_label.add_theme_font_size_override("font_size", 22)
+	memory_event_image_label.add_theme_color_override("font_color", Color(0.90, 0.90, 0.90))
+	memory_event_image_box.add_child(memory_event_image_label)
+
+	# 正文文本
+	memory_event_text_label = Label.new()
+	memory_event_text_label.position = Vector2(85, 290)
+	memory_event_text_label.size = Vector2(730, 120)
+	memory_event_text_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	memory_event_text_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	memory_event_text_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	memory_event_text_label.add_theme_font_size_override("font_size", 24)
+	memory_event_text_label.add_theme_color_override("font_color", Color(0.96, 0.92, 0.84))
+	memory_event_panel.add_child(memory_event_text_label)
+
+	# 选项按钮容器
+	memory_event_choice_container = VBoxContainer.new()
+	memory_event_choice_container.position = Vector2(180, 440)
+	memory_event_choice_container.size = Vector2(540, 135)
+	memory_event_choice_container.alignment = BoxContainer.ALIGNMENT_CENTER
+	memory_event_choice_container.add_theme_constant_override("separation", 12)
+	memory_event_panel.add_child(memory_event_choice_container)
+
+	print("✅ 记忆阶段事件面板创建完成")
+
+# 触发记忆阶段事件
+# 由 Rehabpanel.gd 中的“触发关键事件”按钮调用
+func start_memory_stage_event(event_id: String):
+	if not memory_event_data.has(event_id):
+		print("❌ 未找到记忆阶段事件：", event_id)
+		return
+
+	if not memory_event_overlay or not is_instance_valid(memory_event_overlay):
+		_create_memory_event_panel()
+
+	current_memory_event_id = event_id
+	current_memory_event_selected_option = {}
+
+	# 确保康复面板关闭
+	if rehab_panel and rehab_panel.visible:
+		rehab_panel.hide_panel()
+
+	# 锁定普通交互
+	_set_ui_enabled(false)
+
+	# 显示当前事件
+	_show_memory_stage_event(event_id)
+
+# 显示记忆阶段事件内容
+func _show_memory_stage_event(event_id: String):
+	if not memory_event_data.has(event_id):
+		return
+
+	var event_data = memory_event_data[event_id]
+
+	if memory_event_overlay:
+		memory_event_overlay.visible = true
+
+	if memory_event_title_label:
+		memory_event_title_label.text = str(event_data.get("title", "关键事件"))
+
+	if memory_event_image_label:
+		memory_event_image_label.text = str(event_data.get("image_hint", "临时占位图"))
+
+	if memory_event_text_label:
+		memory_event_text_label.text = str(event_data.get("intro_text", ""))
+
+	_clear_memory_event_choices()
+
+	var options = event_data.get("options", [])
+	for option in options:
+		var choice_button = _create_memory_choice_button(option)
+		memory_event_choice_container.add_child(choice_button)
+
+	print("✅ 已显示记忆阶段事件：", event_id)
+
+# 创建单个选项按钮
+func _create_memory_choice_button(option: Dictionary) -> Button:
+	var choice_button = Button.new()
+	choice_button.custom_minimum_size = Vector2(520, 36)
+	choice_button.text = str(option.get("text", "继续"))
+
+	var button_style = StyleBoxFlat.new()
+	button_style.bg_color = Color(0.35, 0.26, 0.14, 0.95)
+	button_style.border_width_left = 2
+	button_style.border_width_top = 2
+	button_style.border_width_right = 2
+	button_style.border_width_bottom = 2
+	button_style.border_color = Color(0.92, 0.75, 0.38, 1.0)
+	button_style.set_corner_radius_all(8)
+	choice_button.add_theme_stylebox_override("normal", button_style)
+	choice_button.add_theme_stylebox_override("hover", button_style)
+	choice_button.add_theme_stylebox_override("pressed", button_style)
+	choice_button.add_theme_font_size_override("font_size", 20)
+	choice_button.add_theme_color_override("font_color", Color(1, 1, 1))
+
+	choice_button.pressed.connect(_on_memory_event_choice_selected.bind(option))
+	return choice_button
+
+# 清空当前事件选项
+func _clear_memory_event_choices():
+	if not memory_event_choice_container:
+		return
+
+	for child in memory_event_choice_container.get_children():
+		child.queue_free()
+
+# 玩家选中一个剧情选项
+func _on_memory_event_choice_selected(option: Dictionary):
+	current_memory_event_selected_option = option
+
+	if memory_event_text_label:
+		memory_event_text_label.text = str(option.get("result_text", "记忆的碎片重新浮现。"))
+
+	_clear_memory_event_choices()
+
+	var continue_button = Button.new()
+	continue_button.custom_minimum_size = Vector2(240, 40)
+	continue_button.text = "继续"
+
+	var button_style = StyleBoxFlat.new()
+	button_style.bg_color = Color(0.48, 0.34, 0.16, 0.98)
+	button_style.border_width_left = 2
+	button_style.border_width_top = 2
+	button_style.border_width_right = 2
+	button_style.border_width_bottom = 2
+	button_style.border_color = Color(0.95, 0.80, 0.42, 1.0)
+	button_style.set_corner_radius_all(8)
+	continue_button.add_theme_stylebox_override("normal", button_style)
+	continue_button.add_theme_stylebox_override("hover", button_style)
+	continue_button.add_theme_stylebox_override("pressed", button_style)
+	continue_button.add_theme_font_size_override("font_size", 22)
+	continue_button.add_theme_color_override("font_color", Color(1, 1, 1))
+
+	continue_button.pressed.connect(_finish_memory_stage_event)
+	memory_event_choice_container.add_child(continue_button)
+
+# 应用当前选项带来的方向值 / 记忆值变化
+func _apply_memory_stage_choice(option: Dictionary):
+	if option.is_empty():
+		return
+
+	var weights = option.get("weights", {})
+	if weights is Dictionary:
+		if weights.has("art"):
+			ResourceManager.modify_ai_weight(Constants.WEIGHT_ART, int(weights["art"]))
+		if weights.has("human"):
+			ResourceManager.modify_ai_weight(Constants.WEIGHT_HUMAN, int(weights["human"]))
+		if weights.has("business"):
+			ResourceManager.modify_ai_weight(Constants.WEIGHT_BUSINESS, int(weights["business"]))
+
+	var memory_delta = int(option.get("memory_delta", 0))
+	if memory_delta != 0:
+		ResourceManager.add_memory(memory_delta)
+
+# 完成当前记忆阶段事件
+# 作用：
+# 1. 正式调用 ResourceManager 完成阶段提升
+# 2. 结算当前选项带来的方向值 / 记忆值变化
+# 3. 关闭剧情面板，回到康复面板
+func _finish_memory_stage_event():
+	if current_memory_event_id == "":
+		return
+
+	# 先完成阶段提升
+	if ResourceManager and ResourceManager.has_method("complete_memory_stage_event"):
+		var complete_result = ResourceManager.complete_memory_stage_event()
+		if not complete_result.get("success", false):
+			print("❌ 记忆阶段事件完成失败：", complete_result.get("reason", "未知错误"))
+			if memory_event_text_label:
+				memory_event_text_label.text = "阶段事件完成失败：%s" % str(complete_result.get("reason", "未知错误"))
+			return
+
+	# 再应用选项收益
+	_apply_memory_stage_choice(current_memory_event_selected_option)
+
+	# 关闭事件面板
+	if memory_event_overlay:
+		memory_event_overlay.visible = false
+
+	print("✅ 记忆阶段事件完成：", current_memory_event_id)
+
+	current_memory_event_id = ""
+	current_memory_event_selected_option = {}
+
+	# 刷新顶部资源显示
+	ResourceManager.refresh_current_scene_topbar()
+
+	# 事件结束后重新打开康复面板，方便继续查看当前恢复阶段
+	if rehab_panel and rehab_panel.has_method("show_panel"):
+		rehab_panel.show_panel()
+		_set_ui_enabled(false)
+	else:
+		_set_ui_enabled(true)

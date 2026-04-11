@@ -25,7 +25,7 @@ func _ready():
 
 	# 如果是直接打开这个场景（F6单独运行），自动显示预览
 	if get_tree().current_scene == self:
-		show_result(5000, 50)  # 预览分数
+		show_result(5000, 0)  # 预览分数
 	else:
 		visible = false  # 正常游戏时默认隐藏
 
