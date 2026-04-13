@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://b8uve8pei0ak7"]
+[gd_scene load_steps=22 format=3 uid="uid://b8uve8pei0ak7"]
 
 [ext_resource type="Texture2D" uid="uid://74jorwl6hifk" path="res://project/scenes/rehearsal/images/practice-room.jpg" id="1_abjjs"]
 [ext_resource type="Script" uid="uid://bdpkroltk0uem" path="res://project/scenes/rehearsal/rehearsal_scene.gd" id="1_ow65r"]
@@ -12,7 +12,13 @@
 [ext_resource type="Texture2D" uid="uid://djl65dvfn2url" path="res://project/assets/images/ui/icons/ActionPoint.png" id="10_k03si"]
 [ext_resource type="Script" uid="uid://r08km7j8emn8" path="res://project/scripts/models/facility/facility_entry_button.gd" id="11_qn4nl"]
 [ext_resource type="Texture2D" uid="uid://buo3p1nfqnovn" path="res://project/assets/images/ui/buttons/rehearsalup.png" id="12_4jwa2"]
+[ext_resource type="Shader" uid="uid://g7r7lx8ad3m" path="res://project/scenes/rehearsal/outline_rehearsal.gdshader" id="12_6q26r"]
 [ext_resource type="PackedScene" uid="uid://qvf8llp2hilo" path="res://project/scenes/facility/facility_panel.tscn" id="12_e6c5m"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rn2sn"]
+shader = ExtResource("12_6q26r")
+shader_parameter/line_thickness = 20.0
+shader_parameter/line_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6q26r"]
 
@@ -140,6 +146,7 @@ text = "查看个人状态🔜"
 [node name="FacilityPanel" parent="UILayer" instance=ExtResource("12_e6c5m")]
 
 [node name="RehearsalButton" type="Button" parent="UILayer"]
+material = SubResource("ShaderMaterial_rn2sn")
 offset_left = 419.0
 offset_top = 533.0
 offset_right = 1904.0
@@ -156,6 +163,7 @@ script = ExtResource("11_qn4nl")
 facility_type = "rehearsal"
 
 [node name="RepairMask" type="Panel" parent="UILayer/RehearsalButton"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

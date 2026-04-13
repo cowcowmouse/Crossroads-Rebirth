@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bpd3gsxwdnfqs"]
+[gd_scene load_steps=23 format=3 uid="uid://bpd3gsxwdnfqs"]
 
 [ext_resource type="Texture2D" uid="uid://yi44n201w5d6" path="res://project/scenes/lounge/images/lounge.jpg" id="1_04c67"]
 [ext_resource type="Script" uid="uid://b1bnqa8lwnws5" path="res://project/scenes/lounge/lounge_scene.gd" id="1_wek5q"]
@@ -12,7 +12,13 @@
 [ext_resource type="Texture2D" uid="uid://45rrp1pjqu55" path="res://project/assets/images/ui/icons/Creativity.png" id="8_v2elt"]
 [ext_resource type="Texture2D" uid="uid://ysub1jlpwati" path="res://project/assets/images/ui/icons/Memory.png" id="9_5gkc5"]
 [ext_resource type="Texture2D" uid="uid://djl65dvfn2url" path="res://project/assets/images/ui/icons/ActionPoint.png" id="10_mt33l"]
+[ext_resource type="Shader" uid="uid://d0i6cdvlqd2pd" path="res://project/scenes/lounge/outline.gdshader" id="11_by5hv"]
 [ext_resource type="Texture2D" uid="uid://1850iqivpu1r" path="res://project/assets/images/ui/buttons/loungeup.png" id="11_iiqy2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v2elt"]
+shader = ExtResource("11_by5hv")
+shader_parameter/line_thickness = 20.0
+shader_parameter/line_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_by5hv"]
 
@@ -140,6 +146,7 @@ layout_mode = 2
 text = "查看个人状态🔜"
 
 [node name="LoungeButton" type="Button" parent="UILayer"]
+material = SubResource("ShaderMaterial_v2elt")
 custom_minimum_size = Vector2(160, 60)
 offset_left = 264.0
 offset_top = 281.00003

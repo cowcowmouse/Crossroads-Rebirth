@@ -8,6 +8,8 @@ var normal_scale: Vector2
 var pressed_scale := Vector2(0.94, 0.94)
 
 func _ready():
+	mouse_entered.connect(_on_mouse_entered)
+	mouse_exited.connect(_on_mouse_exited)
 	normal_scale = scale
 	focus_mode = Control.FOCUS_NONE
 	button_down.connect(_on_button_down)
@@ -29,6 +31,9 @@ func _on_button_up():
 	scale = normal_scale
 
 func _on_mouse_exited():
+	# 鼠标离开，光圈变回 0（消失）
+	var t = create_tween()
+	t.tween_property(material, "shader_parameter/line_thickness", 0.0, 0.1)
 	scale = normal_scale
 
 func _pressed():
@@ -36,3 +41,9 @@ func _pressed():
 		return
 	scale = normal_scale
 	$"../FacilityPanel".open_panel(facility_type)
+	
+func _on_mouse_entered():
+	# 如果设施没在升级，就让光圈变粗（显示出来）
+	if not ResourceManager.is_facility_upgrading(facility_type):
+		var t = create_tween()
+		t.tween_property(material, "shader_parameter/line_thickness", 20.0, 0.1)
