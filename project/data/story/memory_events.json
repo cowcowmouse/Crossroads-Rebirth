@@ -1,87 +1,933 @@
 {
   "memory_stage_0_to_1": {
-	"title": "关键事件：手部康复",
-	"image_hint": "临时占位图：昏黄酒吧 / 旧吉他 / 缠着绷带的右手",
-	"intro_text": "你坐在酒吧角落，右手的旧伤隐隐作痛。桌上的吉他离你很近，近得像是在逼你重新承认：你还没有彻底失去它。疼痛没有消失，但你第一次感觉到，自己或许可以重新控制这只手。",
-	"options": [
+	"title": "关键事件：重建手感",
+	"pages": [
 	  {
-		"id": "art",
-		"text": "拿起吉他，试着弹出那段已经断裂的旋律。",
-		"memory_delta": 2,
-		"weights": { "art": 3 },
-		"result_text": "你忍着指尖的刺痛弹下第一个音。旋律依旧残缺，但它像一道裂缝，把你重新拉回了音乐本身。"
+		"title": "关键事件：重建手感",
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "narration",
+			"text": "深夜的酒吧已经打烊，灯光压得很低，舞台边只剩你和那把吉他。"
+		  },
+		  {
+			"speaker": "narration",
+			"text": "右手旧伤还在隐隐作痛，指尖落在琴弦上时，僵硬感和迟疑一起浮了上来。"
+		  }
+		]
 	  },
 	  {
-		"id": "human",
-		"text": "先去和老钉子聊聊，让自己稳下来。",
-		"memory_delta": 1,
-		"weights": { "human": 3 },
-		"result_text": "你没有逞强，而是先把混乱说出口。有人愿意听你说话的时候，疼痛似乎也变得没那么难熬。"
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "narration",
+			"text": "你坐在酒吧角落，右手旧伤隐隐作痛。桌上的吉他离你很近，近得像是在逼你重新承认：你还没有彻底失去它。"
+		  },
+		  {
+			"speaker": "narration",
+			"text": "你抬起手，试着按住琴弦，最基础的音阶在脑子里熟得发烫，可真正要弹出来时，手却像不是自己的一样。"
+		  }
+		]
 	  },
 	  {
-		"id": "business",
-		"text": "评估手伤对演出和经营的影响，先考虑怎样继续撑下去。",
-		"memory_delta": 1,
-		"weights": { "business": 3 },
-		"result_text": "你逼自己冷静下来，把伤痛当成一个必须处理的问题。情绪没有消失，但你先学会了管理它。"
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi_inner",
+			"text": "手伤是好了……可一抬起来，还是会僵。力量、稳定性、拨弦感……全都回不来。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "就连最简单的A和声小调，我都弹不利索。换把卡顿，指尖没力气，音都是虚的。"
+		  },
+		  {
+			"speaker": "alexi",
+			"text": "我以前可是靠速弹吃饭的。现在连一条基础音阶都弹不完整。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "old_nail",
+			"text": "弹不了整段，就先弹两小节。弹不了快，就先弹慢。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "我连最基础的东西都做不到……还有意义吗？"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "old_nail",
+			"text": "你听过Tony Iommi吧。当年工厂事故，指尖被切掉，只能戴自制护指弹琴。所有人都说他再也上不了台。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "……Tony那代的金属……根本都弹不快。我跟他的路子不一样。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "old_nail",
+			"text": "好。那我说一个你真正服气的。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "……谁。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "old_nail",
+			"text": "Yngwie Malmsteen。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "他……"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "old_nail",
+			"text": "车祸，颈椎骨折、手臂神经重创。医生直接判他：再也不能速弹。"
+		  },
+		  {
+			"speaker": "old_nail",
+			"text": "可他复健的第一步，就是你现在弹的这个——和声小调音阶。"
+		  },
+		  {
+			"speaker": "old_nail",
+			"text": "他没有放弃，反而趁着复健，把和声小调练到更极致，还把经济拨弦打磨到前所未有的精准高效……车祸之后，他反而更强。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "他也经历过……我这种绝望？"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "old_nail",
+			"text": "别人觉得传奇就该一步登天。可真正走出来的人，都从最笨、最基础、最不起眼的地方重新站起。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "我以为我再也回不去了。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "old_nail",
+			"text": "你不是回去。你是重新建立你的手、你的音乐、你自己。"
+		  }
+		],
+		"choices": [
+		  {
+			"id": "art",
+			"text": "继续盯着音阶和拨弦本身，把注意力全部放回音乐。",
+			"memory_delta": 2,
+			"weights": {
+			  "art": 3
+			},
+			"result_dialogues": [
+			  {
+				"speaker": "alexi_inner",
+				"text": "速度不重要，过去也不重要，你只想先把每一个音弹实。"
+			  }
+			],
+			"next_page": 17
+		  },
+		  {
+			"id": "human",
+			"text": "先把心里的恐惧说出来，承认自己现在真的很怕。",
+			"memory_delta": 1,
+			"weights": {
+			  "human": 3
+			},
+			"result_dialogues": [
+			  {
+				"speaker": "alexi_inner",
+				"text": "把这句话说出口的瞬间，胸口那种压着的东西终于松动了一点。"
+			  }
+			],
+			"next_page": 20
+		  },
+		  {
+			"id": "business",
+			"text": "把这次练习当成一次复健任务，先恢复最基础的控制力。",
+			"memory_delta": 1,
+			"weights": {
+			  "business": 3
+			},
+			"result_dialogues": [
+			  {
+				"speaker": "alexi_inner",
+				"text": "只要能把控制力一点点找回来，后面的事就还有得谈。"
+			  }
+			],
+			"next_page": 23
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "……我再试一次。就弹和声小调，慢慢弹，把拨弦弹稳。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "narration",
+			"text": "你弹下去的第一个音还有些犹豫，第二个音开始变稳，第三个音终于不再发虚。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi_inner",
+			"text": "我不是在证明自己还能不能回到从前。我是在重新把音乐一点点抓回来。"
+		  }
+		],
+		"choices": [
+		  {
+			"text": "继续",
+			"next_page": 24
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "我不是不想弹。我只是怕一碰到琴，就确认自己真的废了。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "old_nail",
+			"text": "怕很正常。可你现在不是在比赛，也不是在上台，你只是在学着重新把自己接回来。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "narration",
+			"text": "你听着这句话，终于不再把“恢复”当成一场必须立刻赢下来的胜负。"
+		  }
+		],
+		"choices": [
+		  {
+			"text": "继续",
+			"next_page": 24
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "narration",
+			"text": "你把琴放正，像对待一台需要重新校准的机器一样，对每根手指、每次拨弦逐一确认。"
+		  },
+		  {
+			"speaker": "narration",
+			"text": "力量还不够，速度也没有回来，但你第一次感觉到这只手并不是完全失控的。"
+		  }
+		],
+		"choices": [
+		  {
+			"text": "继续",
+			"next_page": 24
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "……成了。虽然慢，但……音是实的。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "old_nail",
+			"text": "你看。一步一步，就能走回去。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi_inner",
+			"text": "我不是破碎。我是重建。"
+		  }
+		]
 	  }
 	]
   },
-
   "memory_stage_1_to_2": {
-	"title": "关键事件：碎片浮现",
-	"image_hint": "临时占位图：车窗反光 / 舞台灯光 / 断裂的记忆碎片",
-	"intro_text": "几段混乱的画面突然从脑海深处翻涌上来：刺眼的车灯，舞台后的争执，玻璃碎裂的声音。你知道自己正在想起什么，但那些片段还远远拼不成完整的真相。",
-	"options": [
+	"title": "关键事件：找回控制",
+	"pages": [
 	  {
-		"id": "art",
-		"text": "顺着脑中的旋律回想，试图从音乐里找到答案。",
-		"memory_delta": 3,
-		"weights": { "art": 4 },
-		"result_text": "你闭上眼，把碎片化的旋律一点点拼回来。某些记忆没有画面，只有声音，但已经足够让你确信它们曾真实发生过。"
+		"title": "关键事件：找回控制",
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "narration",
+			"text": "酒吧的午后格外安静，右手旧伤还带着几分浅浅的酸胀，却不妨碍你指尖轻搭琴弦。"
+		  },
+		  {
+			"speaker": "narration",
+			"text": "身旁的吉他陪着你，没有刻意的提醒，只是那份熟悉的质感，让你心底的犹豫渐渐消散。"
+		  }
+		]
 	  },
 	  {
-		"id": "human",
-		"text": "去想那天和队友、朋友说过的话，试着抓住人与人之间的细节。",
-		"memory_delta": 2,
-		"weights": { "human": 4 },
-		"result_text": "你记起的不是事故本身，而是事故发生前那些来不及说完的话。记忆开始不再只是画面，而是情感留下的重量。"
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi_inner",
+			"text": "最近练琴，僵硬感少了很多。拨弦更稳，换把更顺，力气也慢慢回来了。"
+		  }
+		]
 	  },
 	  {
-		"id": "business",
-		"text": "先梳理事故前后的时间线，逼自己一步步还原经过。",
-		"memory_delta": 2,
-		"weights": { "business": 4 },
-		"result_text": "你把混乱的片段按顺序排开，像在整理一份残缺的报告。真相还不完整，但已经不再只是模糊的噩梦。"
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "……好像……真的在变好。"
+		  },
+		  {
+			"speaker": "alexi",
+			"text": "有些乐句，不用想，手自己就动了。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "指板上的位置、和弦的走向……像是肌肉记得比脑子还清楚。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "finn",
+			"text": "你的手……似乎回来了。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "我还是不敢弹快，离你还差得远。但至少，我能把音乐说清楚了。只是……有些指板位置，还是会恍惚，像是第一次见一样。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "finn",
+			"text": "车祸之后，我以为你再也碰不了琴。现在我信了，你真的能回来。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "有时候弹到某些乐句，头会有点晕。像是有画面在闪……"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "finn",
+			"text": "那不是坏事。是你的记忆，在跟着你的手一起醒过来。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "我怕想起那天。怕想起车祸，怕想起我失去的一切，怕再也找不回以前在指板飞驰的感觉……"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "old_nail",
+			"text": "我给你说个你也许没听过的人。一个爵士吉他手，叫Pat Martino。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "爵士？我不会弹啊。我可不会给观众演奏那些复杂的和弦。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "old_nail",
+			"text": "他在巅峰期，因为严重的脑动脉瘤，差点死掉。术后，他彻底失去了所有指板记忆、乐句记忆，甚至认不出自己弹了一辈子的曲子。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "他……他怎么回来的？连指板都忘了，还能弹琴？"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "old_nail",
+			"text": "他从最基础的C大调音阶、三和弦开始，一条指板、一个乐句、一个和弦，重新把自己的音乐记忆“刻”回手里。"
+		  },
+		  {
+			"speaker": "old_nail",
+			"text": "用了整整三年，不仅完全恢复，还把自己的乐句体系、指板逻辑，练到了比巅峰期更通透、更极致的境界。"
+		  },
+		  {
+			"speaker": "old_nail",
+			"text": "他说过一句话：“失去记忆，不是失去音乐，是给了你一次重新理解音乐的机会。”"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "原来……就算指板记忆全丢了，也能找回来。甚至能找得更透彻。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "finn",
+			"text": "说个不好听的话，现在的指板体系和原来你那种老派弹法完全不一样了。"
+		  },
+		  {
+			"speaker": "finn",
+			"text": "现在网上教程也很多，找一个体系就能把指板慢慢熟悉回来。"
+		  }
+		],
+		"choices": [
+		  {
+			"id": "art",
+			"text": "继续顺着乐句和旋律往下追，把“想起来”交给音乐本身。",
+			"memory_delta": 3,
+			"weights": {
+			  "art": 4
+			},
+			"result_dialogues": [
+			  {
+				"speaker": "alexi_inner",
+				"text": "如果音乐能把记忆唤醒，那你就干脆让它带你把那些东西一并找回来。"
+			  }
+			],
+			"next_page": 17
+		  },
+		  {
+			"id": "human",
+			"text": "先接受自己在害怕，也接受有人正在把你一点点拉回来。",
+			"memory_delta": 2,
+			"weights": {
+			  "human": 4
+			},
+			"result_dialogues": [
+			  {
+				"speaker": "alexi_inner",
+				"text": "也许恢复从来不只是你和琴之间的事，它同样和那些没有离开你的人有关。"
+			  }
+			],
+			"next_page": 20
+		  },
+		  {
+			"id": "business",
+			"text": "从现在开始重新整理一套自己的指板和练习体系。",
+			"memory_delta": 2,
+			"weights": {
+			  "business": 4
+			},
+			"result_dialogues": [
+			  {
+				"speaker": "alexi_inner",
+				"text": "如果要真正回来，你得重新建立一套更清楚、更有效的演奏体系。"
+			  }
+			],
+			"next_page": 21
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "好。那我就继续弹。弹到指板彻底熟悉，弹到记忆完整，弹到手感彻底回来。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "narration",
+			"text": "你再次弹起短句，某些音的位置突然变得异常清晰，像是它们从来就没有离开过。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi_inner",
+			"text": "手感在恢复。记忆在苏醒。我正在……把自己一片一片拼回来。"
+		  }
+		],
+		"choices": [
+		  {
+			"text": "继续",
+			"next_page": 23
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "narration",
+			"text": "你没有再躲着那种恍惚的感觉，而是承认它和恐惧一样，都是恢复的一部分。"
+		  },
+		  {
+			"speaker": "narration",
+			"text": "老钉子和芬恩都没有替你走路，但他们让你第一次相信：你不是一个人在把这些碎片拼回来。"
+		  }
+		],
+		"choices": [
+		  {
+			"text": "继续",
+			"next_page": 23
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "narration",
+			"text": "你开始认真思考芬恩说的话，把指板位置、连接方式和练习逻辑一条条重新整理。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi_inner",
+			"text": "失去并不意味着结束，有时候它反而逼着你建立起比过去更清晰的控制。"
+		  }
+		],
+		"choices": [
+		  {
+			"text": "继续",
+			"next_page": 23
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "narration",
+			"text": "午后的安静没有把你拖回停滞，反而让你听见了自己正在慢慢回来的声音。"
+		  },
+		  {
+			"speaker": "narration",
+			"text": "这一次，恢复不再只是把手练回来，而是连同记忆、理解和控制一起苏醒。"
+		  }
+		]
 	  }
 	]
   },
-
   "memory_stage_2_to_3": {
-	"title": "关键事件：真相回声",
-	"image_hint": "临时占位图：事故现场残影 / 舞台背影 / 记忆回收终点",
-	"intro_text": "这一次，所有碎片终于逼近同一个答案。你不再只是想起某个片刻，而是在逼自己完整面对那一夜、那场事故，以及事故之后你拼命逃开的所有细节。你知道，选了这一步，就再也回不到什么都不知道的时候了。",
-	"options": [
+	"title": "关键事件：完全重生",
+	"pages": [
 	  {
-		"id": "art",
-		"text": "接受痛苦，把它写进音乐里，让真相成为作品的一部分。",
-		"memory_delta": 3,
-		"weights": { "art": 5 },
-		"result_text": "你没有再躲开那些最刺痛的片段。它们最终没有摧毁你，反而被你一点点炼成了可以发声的东西。"
+		"title": "关键事件：完全重生",
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "narration",
+			"text": "舞台的灯光落在琴身，右手旧伤早已没了往日的刺痛，只剩一道淡淡的印记。"
+		  },
+		  {
+			"speaker": "narration",
+			"text": "它不再像一道伤口，更像一条留在身体上的注释，提醒你曾经怎样跌下去，又怎样一点点站回来。"
+		  }
+		]
 	  },
 	  {
-		"id": "human",
-		"text": "先承认自己亏欠过的人和情感，让记忆回到人与人的关系里。",
-		"memory_delta": 2,
-		"weights": { "human": 5 },
-		"result_text": "你终于不再只是面对事故本身，而是面对那些被你忽视、被你伤害、也曾支撑过你的人。记忆完整了，你也终于能重新看见他们。"
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "narration",
+			"text": "你抱着吉他，指尖抚过琴弦，它不再是束缚，而是与你并肩同行的伙伴，见证着你破茧重生的每一刻。"
+		  },
+		  {
+			"speaker": "narration",
+			"text": "这一次，你没有试探，也没有犹豫，手在琴上稳定得像从未出过错。"
+		  }
+		]
 	  },
 	  {
-		"id": "business",
-		"text": "直面真相，把过去当成代价，决定以后该怎样继续活下去。",
-		"memory_delta": 2,
-		"weights": { "business": 5 },
-		"result_text": "你不再试图美化过去，也不再沉溺其中。真相成了代价，也成了你今后每一步都必须承担的现实。"
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "手……彻底听话了。力量、速度、控制，全都回来了。"
+		  },
+		  {
+			"speaker": "alexi",
+			"text": "（稳定、清晰、自信地演奏主题旋律）"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi_inner",
+			"text": "没有僵硬，没有虚音，没有恐惧。这才是我弹琴的样子。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "old_nail",
+			"text": "都想起来了？"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "全都想起来了。父亲、乐队、签约、车祸、你拦着我……一切。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "old_nail",
+			"text": "恨过我吗？"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "我康复时甚至不记得是谁在阻拦我了……但现在看来，你当时是在救我。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "我曾经以为，弹琴是为了名气、为了签约、为了证明自己。现在我才明白，音乐是为了救自己。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "old_nail",
+			"text": "你父亲要是看到，会很欣慰。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "Yngwie车祸重伤，把经济拨弦推向了极致。至少和Shawn Lane、Allan Holdsworth这些已经离世的怪物相比，我还活着。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "活着，就还有机会往前走。康复这段时间，我没有死抱着过去的弹法。"
+		  },
+		  {
+			"speaker": "alexi",
+			"text": "我把传统的底子，和现代的思路彻底融在了一起。"
+		  },
+		  {
+			"speaker": "alexi",
+			"text": "比以前更快、更稳、更干净，也更懂怎么用音乐说话。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "old_nail",
+			"text": "看来你反而变得更强了。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi",
+			"text": "我回来了。不是作为曾经的天才。而是作为重生的、拥有自己体系的乐手。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "old_nail",
+			"text": "欢迎回来，Alexi。"
+		  }
+		],
+		"choices": [
+		  {
+			"id": "art",
+			"text": "把这段重生写进音乐里，让它成为你新的声音。",
+			"memory_delta": 3,
+			"weights": {
+			  "art": 5
+			},
+			"result_dialogues": [
+			  {
+				"speaker": "alexi_inner",
+				"text": "那些差点摧毁你的东西，最后反而变成了你最不能被取代的声音。"
+			  }
+			],
+			"next_page": 15
+		  },
+		  {
+			"id": "human",
+			"text": "先承认自己能回来，不只是因为天赋，也因为有人一直没有放弃你。",
+			"memory_delta": 2,
+			"weights": {
+			  "human": 5
+			},
+			"result_dialogues": [
+			  {
+				"speaker": "alexi_inner",
+				"text": "那些劝你、等你、没有在你最低谷时离开的人，也成为了你重生的一部分。"
+			  }
+			],
+			"next_page": 16
+		  },
+		  {
+			"id": "business",
+			"text": "把过去的失败和代价都纳入自己的体系，决定以后怎样继续走下去。",
+			"memory_delta": 2,
+			"weights": {
+			  "business": 5
+			},
+			"result_dialogues": [
+			  {
+				"speaker": "alexi_inner",
+				"text": "天赋、事故、康复、体系，所有东西都必须被组织成你往前走的现实。"
+			  }
+			],
+			"next_page": 17
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi_inner",
+			"text": "如果这次重生必须留下一个结果，那它不该只是“恢复原状”。"
+		  },
+		  {
+			"speaker": "alexi_inner",
+			"text": "你要的是一套真正属于自己的语言，一套经历过失去之后，仍然能继续发声的音乐。"
+		  }
+		],
+		"choices": [
+		  {
+			"text": "继续",
+			"next_page": 18
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi_inner",
+			"text": "重生并不只是把自己从废墟里拉出来，也是在终于能站稳之后，重新看见那些曾经托住过你的人。"
+		  }
+		],
+		"choices": [
+		  {
+			"text": "继续",
+			"next_page": 18
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi_inner",
+			"text": "你知道过去不会因为想起来就变轻，也不会因为重建成功就自动被原谅。"
+		  },
+		  {
+			"speaker": "alexi_inner",
+			"text": "但你至少已经有能力把它们纳入自己的体系，而不是继续被它们追着跑。"
+		  }
+		],
+		"choices": [
+		  {
+			"text": "继续",
+			"next_page": 18
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "alexi_inner",
+			"text": "音乐回来了。我……重生了。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "",
+		"dialogues": [
+		  {
+			"speaker": "narration",
+			"text": "这不再是回到从前，而是真正走向一个比从前更完整、更清醒、也更强的自己。"
+		  }
+		]
 	  }
 	]
   }

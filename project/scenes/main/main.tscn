@@ -453,7 +453,6 @@ position = Vector2(1101, 497)
 position = Vector2(1031, 574)
 =======
 [node name="MemberStanding_tscn" parent="." instance=ExtResource("23_gmtqm")]
-visible = false
 position = Vector2(434, 158)
 
 [node name="TalkSystem" parent="." instance=ExtResource("24_2myfi")]
