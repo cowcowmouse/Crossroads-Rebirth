@@ -122,3 +122,23 @@ func save() -> void:
 		character_names = [%Character.current_value]
 	ref_manager.add_ref_change(%Old.text, %New.text, %Type.selected, %Where.selected, character_names, %WholeWords.button_pressed, %MatchCase.button_pressed, previous)
 	hide()
+
+# 在 ResourceManager.gd 中添加或替换这个函数
+
+# ==================== 声誉阶段系统（周末小游戏规模） ====================
+const REPUTATION_STAGES = {
+	"small":  {"min": 0,   "max": 39,  "name": "小型表演", "scale": 0.6, "desc": "小型酒吧驻唱，观众不多，但很亲切。"},
+	"medium": {"min": 40,  "max": 79,  "name": "中型表演", "scale": 1.0, "desc": "中型场地演出，观众明显增多，氛围热烈。"},
+	"large":  {"min": 80,  "max": 999, "name": "大型表演", "scale": 1.5, "desc": "大型舞台表演，观众爆满，影响力显著提升！"}
+}
+
+func get_reputation_stage() -> Dictionary:
+	# 注意：这里用你项目中实际获取声誉的方式
+	var rep = get_resource_value("reputation")   # ← 如果这个也不行，告诉我你实际用什么函数
+	
+	for stage_name in REPUTATION_STAGES:
+		var stage = REPUTATION_STAGES[stage_name]
+		if rep >= stage.min and rep <= stage.max:
+			return stage
+	
+	return REPUTATION_STAGES["small"]

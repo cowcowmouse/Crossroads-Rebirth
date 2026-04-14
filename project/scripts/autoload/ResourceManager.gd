@@ -1347,3 +1347,86 @@ func get_character_stage(char_id: String) -> int:
 	if character_data and character_data.characters.has(char_id):
 		return character_data.characters[char_id].get("current_stage", 1)
 	return 1
+# ===================== 声誉阶段系统（周末小游戏规模） ====================
+const REPUTATION_STAGES = {
+	"small":  {"min": 0,   "max": 39,  "name": "小型表演", "scale": 0.6, "desc": "小型酒吧驻唱，观众不多，但很亲切。"},
+	"medium": {"min": 40,  "max": 79,  "name": "中型表演", "scale": 1.0, "desc": "中型场地演出，观众明显增多，氛围热烈。"},
+	"large":  {"min": 80,  "max": 999, "name": "大型表演", "scale": 1.5, "desc": "大型舞台表演，观众爆满，影响力显著提升！"}
+}
+# 声誉阶段判断
+func get_reputation_stage() -> Dictionary:
+	var rep = get_resource_value("reputation")
+	
+	for stage_name in REPUTATION_STAGES:
+		var stage = REPUTATION_STAGES[stage_name]
+		if rep >= stage.min and rep <= stage.max:
+			return stage
+	
+	return REPUTATION_STAGES["small"]
+
+
+# ===================== 小游戏结果结算 =====================
+
+func apply_minigame_result(score: int, max_combo: int = 0):
+	var stage = get_reputation_stage()
+	var performance_level = ""
+	var rep_gain = 0
+	var cohesion_gain = 0
+	var money_gain = 0
+	
+	# 根据得分判断表演质量
+	if score >= 11000:
+		performance_level = "完美演出！"
+		rep_gain = 28
+		cohesion_gain = 15
+		money_gain = 1500
+	elif score >= 9000:
+		performance_level = "优秀演出"
+		rep_gain = 20
+		cohesion_gain = 10
+		money_gain = 1000
+	elif score >= 7000:
+		performance_level = "良好演出"
+		rep_gain = 14
+		cohesion_gain = 7
+		money_gain = 700
+	elif score >= 5000:
+		performance_level = "普通演出"
+		rep_gain = 8
+		cohesion_gain = 4
+		money_gain = 400
+	else:
+		performance_level = "发挥一般"
+		rep_gain = 3
+		cohesion_gain = 2
+		money_gain = 150
+	
+	# 应用规模系数加成
+	rep_gain = int(rep_gain * stage.scale)
+	cohesion_gain = int(cohesion_gain * stage.scale)
+	money_gain = int(money_gain * stage.scale)
+	
+	# 更新资源
+	add_reputation(rep_gain)
+	add_cohesion(cohesion_gain)
+	add_money(money_gain)
+	
+	print("小游戏结算完成 | 阶段:", stage.name, " | 表现:", performance_level, 
+		  " | 声誉+", rep_gain, " | 凝聚力+", cohesion_gain, " | 资金+", money_gain)
+
+# 第一次触发某阶段时显示说明弹窗
+func show_first_time_minigame_description(stage_name: String):
+	var dialog = AcceptDialog.new()
+	dialog.title = "本周表演说明"
+	dialog.dialog_text = """
+	当前声誉阶段：%s
+	
+	%s
+	
+	注意：
+	- 规模越大，奖励越高，但失败惩罚也越大
+	- 努力争取完美演出吧！
+	""" % [stage_name, get_reputation_stage().desc]
+	
+	get_tree().current_scene.add_child(dialog)
+	dialog.popup_centered()

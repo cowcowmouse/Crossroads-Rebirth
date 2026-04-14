@@ -1,122 +1,149 @@
 extends Control
 
 # 评级规则（可根据需求修改分数阈值）
-const RANK_S: int = 12000  # 90%以上
-const RANK_A: int = 10000  # 75%以上
-const RANK_B: int = 8000   # 60%以上
-const RANK_C: int = 6000   # 40%以上
-# 低于6000为D级
+const RANK_S: int = 12000
+const RANK_A: int = 10000
+const RANK_B: int = 8000
+const RANK_C: int = 6000
 
 # 存储最终得分和星级
 var final_score: int = 0
 var final_star_rating: int = 0
 
+# ===================== 修复：无论从哪里打开都强制显示 =====================
 func _ready():
-	# 绑定重新开始按钮的点击事件
-	var restart_button = get_node_or_null("RestartButton")
-	if is_instance_valid(restart_button):
-		restart_button.pressed.connect(_on_restart_pressed)
-
-	# ===================== 【修复1：单独运行场景自动显示，F5运行也不冲突】 =====================
-	# 无论从哪里打开，都先强制设置最高层级，绝对不被挡住
 	z_index = 999
 	z_as_relative = false
 	move_to_front()
 
-	# 如果是直接打开这个场景（F6单独运行），自动显示预览
+	# 如果是单独运行这个场景（F6），自动显示预览
 	if get_tree().current_scene == self:
-		show_result(5000, 0)  # 预览分数
+		show_result(8500, 45)   # 测试用预览分数
 	else:
-		visible = false  # 正常游戏时默认隐藏
+		visible = false         # 正常游戏时默认隐藏
 
-# 外部调用：显示结算面板，传入最终数据
-func show_result(final_score: int, max_combo: int):
-	self.final_score = final_score
-	# ========== 逐个获取节点，精准定位哪个节点找不到 ==========
+# ===================== 主函数：显示结算面板 =====================
+func show_result(score: int, max_combo: int):
+	self.final_score = score
+	
+	# 获取节点
 	var rank_label = get_node_or_null("RankLabel")
 	var score_label = get_node_or_null("ScoreLabel")
 	var combo_label = get_node_or_null("MaxComboLabel")
-
-	# 精准报错
-	if not is_instance_valid(rank_label):
-		print("错误：找不到RankLabel节点！请检查场景里的节点名是否完全一致")
+	
+	if not is_instance_valid(rank_label) or not is_instance_valid(score_label) or not is_instance_valid(combo_label):
+		print("错误：结算面板节点未找到！请检查节点名称是否正确")
 		return
-	if not is_instance_valid(score_label):
-		print("错误：找不到ScoreLabel节点！请检查场景里的节点名是否完全一致")
-		return
-	if not is_instance_valid(combo_label):
-		print("错误：找不到MaxComboLabel节点！请检查场景里的节点名是否完全一致")
-		return
-
-	# 1. 显示得分和连击
-	score_label.text = "最终得分：%s PTS" % final_score
-	combo_label.text = "最高连击：%s COMBO" % max_combo
-
-	# 2. 计算并显示评级
-	var rank_text: String = "D"
-	var rank_color: Color = Color("5a5758") # 默认D级灰色
-
-	if final_score >= RANK_S:
+	
+	# 显示得分和连击
+	score_label.text = "最终得分：%d PTS" % score
+	combo_label.text = "最高连击：%d COMBO" % max_combo
+	
+	# 计算评级
+	var rank_text = "D"
+	var rank_color = Color("5a5758")
+	if score >= RANK_S:
 		rank_text = "S"
-		rank_color = Color("ffbe00") # 金色
-	elif final_score >= RANK_A:
+		rank_color = Color("ffbe00")
+	elif score >= RANK_A:
 		rank_text = "A"
-		rank_color = Color("32cd32") # 亮绿色
-	elif final_score >= RANK_B:
+		rank_color = Color("32cd32")
+	elif score >= RANK_B:
 		rank_text = "B"
-		rank_color = Color("e2dd25") # 黄绿色
-	elif final_score >= RANK_C:
+		rank_color = Color("e2dd25")
+	elif score >= RANK_C:
 		rank_text = "C"
-		rank_color = Color("8dbfc7") # 浅蓝色
-	else:
-		rank_text = "D"
-		rank_color = Color("5a5758") # 灰色
-
+		rank_color = Color("8dbfc7")
+	
 	rank_label.text = rank_text
 	rank_label.add_theme_color_override("font_color", rank_color)
-
 	
-	# 3. 显示面板（【修复2：强制层级+居中，F5运行也绝对可见】）
+	# ===================== 新增：声誉阶段 + 数值结算 =====================
+	var stage_info = ResourceManager.get_reputation_stage()
+	var performance_level = ""
+	var rep_gain = 0
+	var cohesion_gain = 0
+	var money_gain = 0
+	
+	# 根据得分判断表演质量
+	if score >= 11000:
+		performance_level = "完美演出！"
+		rep_gain = 28
+		cohesion_gain = 15
+		money_gain = 1500
+	elif score >= 9000:
+		performance_level = "优秀演出"
+		rep_gain = 20
+		cohesion_gain = 10
+		money_gain = 1000
+	elif score >= 7000:
+		performance_level = "良好演出"
+		rep_gain = 14
+		cohesion_gain = 7
+		money_gain = 700
+	elif score >= 5000:
+		performance_level = "普通演出"
+		rep_gain = 8
+		cohesion_gain = 4
+		money_gain = 400
+	else:
+		performance_level = "发挥一般"
+		rep_gain = 3
+		cohesion_gain = 2
+		money_gain = 150
+	
+	# 应用声誉阶段规模加成
+	rep_gain = int(rep_gain * stage_info.scale)
+	cohesion_gain = int(cohesion_gain * stage_info.scale)
+	money_gain = int(money_gain * stage_info.scale)
+	
+	# 更新后台资源
+	ResourceManager.add_reputation(rep_gain)
+	ResourceManager.add_cohesion(cohesion_gain)
+	ResourceManager.add_money(money_gain)
+	
+	# 显示结果说明
+	show_performance_summary(performance_level, rep_gain, cohesion_gain, money_gain, stage_info.name)
+	
+	# 显示面板
 	visible = true
 	z_index = 999
-	z_as_relative = false
 	move_to_front()
-	# 强制面板居中，解决位置偏移
 	position = (get_viewport().get_visible_rect().size - size) / 2
-	print("结算面板已正常弹出！层级：", z_index, " | 位置：", position)
 
-# 重新开始游戏
+# ===================== 显示表演总结 =====================
+func show_performance_summary(level: String, rep: int, cohesion: int, money: int, stage_name: String):
+	var summary = """
+    当前表演规模：%s
+    
+    表演表现：%s
+    
+    获得奖励：
+    声誉 +%d
+    凝聚力 +%d
+    资金 +%d
+	""" % [stage_name, level, rep, cohesion, money]
+	
+	# 你可以改成 AcceptDialog、RichTextLabel 或自定义弹窗
+	var dialog = AcceptDialog.new()
+	dialog.title = "本周表演总结"
+	dialog.dialog_text = summary
+	add_child(dialog)
+	dialog.popup_centered()
+
+# ===================== 重新开始 / 返回 =====================
 func _on_restart_pressed():
 	_close_panel_and_return()
 
-# ===================== 新增：小游戏结束返回主场景 =====================
-
-# 重新开始按钮的替代处理（如果需要返回主场景）
-func _on_back_to_main_pressed():
-	print("返回主场景")
-	_close_panel_and_return()
-
-# 关闭面板并返回主场景
 func _close_panel_and_return():
-	# 隐藏面板
 	visible = false
+	# 发射信号给其他系统（可选）
+	if EventBus.has_signal("minigame_finished"):
+		EventBus.minigame_finished.emit(final_score, _get_current_rank())
 	
-	# 获取当前评级
-	var rank = _get_current_rank()
-	
-	# 发射小游戏结束信号（传递得分和评级）
-	if Engine.has_singleton("EventBus"):
-		EventBus.minigame_finished.emit(final_score, rank)
-	
-	# 延迟一点，确保信号发送完成
 	await get_tree().create_timer(0.1).timeout
-	
-	# 切换回主场景
 	get_tree().change_scene_to_file("res://project/scenes/main/Main.tscn")
 
-# 获取当前评级
 func _get_current_rank() -> String:
 	var rank_label = get_node_or_null("RankLabel")
-	if not is_instance_valid(rank_label):
-		return "D"
-	return rank_label.text
+	return rank_label.text if is_instance_valid(rank_label) else "D"
