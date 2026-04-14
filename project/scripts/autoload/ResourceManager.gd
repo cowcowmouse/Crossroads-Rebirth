@@ -29,6 +29,25 @@ var debt_weeks: int = 0
 # 每周固定支出（租金+工资）
 const WEEKLY_EXPENSE = 1500
 
+# ===================== 记忆恢复阶段状态 =====================
+
+# 记忆恢复阶段：
+# 0 = 初始阶段
+# 1 = 手伤痊愈
+# 2 = 记忆基本恢复
+# 3 = 记忆完全恢复
+var memory_stage: int = 0
+
+# 三个关键阶段事件的完成标记
+# - stage_0_to_1_done：0 -> 1 已完成
+# - stage_1_to_2_done：1 -> 2 已完成
+# - stage_2_to_3_done：2 -> 3 已完成
+var memory_stage_event_flags := {
+	"stage_0_to_1_done": false,
+	"stage_1_to_2_done": false,
+	"stage_2_to_3_done": false
+}
+
 # 节点就绪后自动初始化（此时 constants 已赋值）
 func _ready():
 	init_new_game()
@@ -57,7 +76,13 @@ func init_new_game():
 	
 	# 连续负债周数初始化
 	debt_weeks = 0
-	
+	# 记忆恢复阶段初始化
+	memory_stage = 0
+	memory_stage_event_flags = {
+		"stage_0_to_1_done": false,
+		"stage_1_to_2_done": false,
+		"stage_2_to_3_done": false
+	}
 	# 设施等级初始化
 	facility_levels = {
 		"stage": 1,
@@ -205,7 +230,59 @@ func add_memory(amount: int) -> bool:
 
 # ===================== 康复训练接口 =====================
 
+# 获取当前记忆恢复阶段
+func get_memory_stage() -> int:
+	return memory_stage
+
+# 获取当前阶段的恢复度上限
+# 当前规则：
+# - 0阶段上限：30（达到后可触发 0 -> 1 关键事件）
+# - 1阶段上限：60（达到后可触发 1 -> 2 关键事件）
+# - 2阶段上限：90（达到后可触发 2 -> 3 关键事件）
+# - 3阶段上限：100（最终满值）
+func get_memory_stage_cap() -> int:
+	match memory_stage:
+		0:
+			return 30
+		1:
+			return 60
+		2:
+			return 90
+		3:
+			return 100
+
+	return 100
+
+# 获取当前阶段对应的关键事件 ID
+# 后续 EventManager / 面板按钮可直接用这个 ID 去触发剧情演出
+func get_memory_stage_event_id() -> String:
+	match memory_stage:
+		0:
+			return "memory_stage_0_to_1"
+		1:
+			return "memory_stage_1_to_2"
+		2:
+			return "memory_stage_2_to_3"
+
+	return ""
+
+# 获取当前阶段事件对应的标记 key
+func _get_memory_stage_flag_key() -> String:
+	match memory_stage:
+		0:
+			return "stage_0_to_1_done"
+		1:
+			return "stage_1_to_2_done"
+		2:
+			return "stage_2_to_3_done"
+
+	return ""
+
 # 检查是否可以执行康复训练
+# 当前规则：
+# - 需要 1 点行动点
+# - 只能恢复到“当前阶段上限”
+# - 达到当前阶段上限后，不再通过按钮继续恢复
 func can_do_rehab_training() -> Dictionary:
 	var result := {
 		"success": true,
@@ -217,18 +294,57 @@ func can_do_rehab_training() -> Dictionary:
 		result["reason"] = "行动点不足"
 		return result
 
-	# 记忆恢复度满了就不给继续练
-	if get_resource_value(constants.RES_MEMORY) >= 100:
-		result["success"] = false
-		result["reason"] = "记忆恢复度已满"
+	var current_memory = get_resource_value(constants.RES_MEMORY)
+	var stage_cap = get_memory_stage_cap()
+
+	# 先判断阶段上限，再判断最终满值
+	if current_memory >= stage_cap:
+		if memory_stage >= 3 and current_memory >= 100:
+			result["success"] = false
+			result["reason"] = "记忆恢复度已满"
+		else:
+			result["success"] = false
+			result["reason"] = "当前阶段恢复已达上限"
 		return result
 
 	return result
 
+# 检查是否可以触发“当前阶段”的关键事件
+# 当前规则：
+# - 当前记忆恢复度必须达到当前阶段上限
+# - 当前阶段必须还存在可触发的下一阶段事件
+func can_trigger_memory_stage_event() -> Dictionary:
+	var result := {
+		"success": false,
+		"reason": ""
+	}
 
-# 执行一次占位版康复训练
-# 当前先写成：消耗1行动点，记忆恢复度+5
-# 后续接小游戏时，把 add_memory(5) 改成按小游戏结果结算
+	# 已经是最终阶段，不能再触发转阶段事件
+	if memory_stage >= 3:
+		result["reason"] = "已达到最终恢复阶段"
+		return result
+
+	var current_memory = get_resource_value(constants.RES_MEMORY)
+	var stage_cap = get_memory_stage_cap()
+
+	if current_memory < stage_cap:
+		result["reason"] = "恢复度未达到本阶段目标"
+		return result
+
+	var flag_key = _get_memory_stage_flag_key()
+	if flag_key != "" and memory_stage_event_flags.get(flag_key, false):
+		result["reason"] = "当前阶段事件已完成"
+		return result
+
+	result["success"] = true
+	return result
+
+# 执行一次康复训练（面板上的日常恢复按钮）
+# 当前规则：
+# - 消耗 1 点行动点
+# - 恢复记忆值 +5
+# - 但不会超过“当前阶段上限”
+# 后续如果接剧情表现或小游戏，只需要保留这层“数值收口”
 func perform_rehab_training() -> Dictionary:
 	var result := {
 		"success": false,
@@ -241,12 +357,23 @@ func perform_rehab_training() -> Dictionary:
 		result["reason"] = check_result["reason"]
 		return result
 
+	var current_memory = get_resource_value(constants.RES_MEMORY)
+	var stage_cap = get_memory_stage_cap()
+
+	# 当前一次训练的基础恢复值
+	var base_memory_gain := 5
+
+	# 实际恢复值不能超过本阶段上限
+	var memory_gain = min(base_memory_gain, stage_cap - current_memory)
+
+	if memory_gain <= 0:
+		result["reason"] = "当前阶段恢复已达上限"
+		return result
+
 	# 先扣行动点
 	if not consume_action_point(1):
 		result["reason"] = "行动点不足"
 		return result
-
-	var memory_gain := 5
 
 	# 再加记忆恢复度
 	if not add_memory(memory_gain):
@@ -262,7 +389,40 @@ func perform_rehab_training() -> Dictionary:
 		"action_point": -1
 	}
 
-	print("康复训练执行成功：行动点-1 记忆恢复度+", memory_gain)
+	print("康复训练执行成功：行动点-1 记忆恢复度+", memory_gain, "（当前阶段上限：", stage_cap, "）")
+	return result
+
+# 完成当前阶段关键事件
+# 用法：
+# - 当 0 -> 1 关键事件演出结束后调用一次
+# - 当 1 -> 2 关键事件演出结束后调用一次
+# - 当 2 -> 3 关键事件演出结束后调用一次
+# 作用：
+# - 标记当前阶段事件完成
+# - 解锁下一恢复阶段
+func complete_memory_stage_event() -> Dictionary:
+	var result := {
+		"success": false,
+		"reason": "",
+		"new_stage": memory_stage
+	}
+
+	var check_result = can_trigger_memory_stage_event()
+	if not check_result["success"]:
+		result["reason"] = check_result["reason"]
+		return result
+
+	var flag_key = _get_memory_stage_flag_key()
+	if flag_key != "":
+		memory_stage_event_flags[flag_key] = true
+
+	if memory_stage < 3:
+		memory_stage += 1
+
+	result["success"] = true
+	result["new_stage"] = memory_stage
+
+	print("记忆恢复阶段提升到：", memory_stage)
 	return result
 # ===================== 资金状态接口 =====================
 
