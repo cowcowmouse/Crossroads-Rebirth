@@ -33,12 +33,10 @@ extends Node2D  # 核心：适配Node2D
 # 管理器引用
 @onready var week_cycle = get_node("/root/WeekCycleManager")
 @onready var skip_panel_manager = get_node("/root/SkipPanelManager")
-
 # 安全等待函数，避免 null 错误
 func safe_wait_frames(frame_count: int):
 	for i in range(frame_count):
 		await Engine.get_main_loop().process_frame
-
 # ===================== 初始化 =====================
 func _ready():
 	connect_dialogic_signals()
@@ -90,6 +88,7 @@ func _ready():
 	else:
 		print("右箭头未找到")
 	
+	
 	# 等待所有节点就绪
 	await get_tree().process_frame
 	
@@ -119,12 +118,6 @@ func _ready():
 	
 	# 创建调试面板
 	_create_debug_panel()
-
-	# 读取记忆事件配置
-	_load_memory_event_data()
-	
-	# 创建记忆阶段事件面板
-	_create_memory_event_panel()
 	
 	# 注册调试快捷键
 	_register_debug_input()
@@ -260,6 +253,7 @@ func _trigger_mid_week_event():
 	# 测试：直接加载 test_event.tscn 场景
 	get_tree().change_scene_to_file("res://project/scenes/event/EventDialog.tscn")
 
+		
 func _safe_wait(seconds: float):
 	if is_inside_tree() and get_tree():
 		await get_tree().create_timer(seconds).timeout
@@ -368,7 +362,6 @@ func check_groups():
 		
 func _on_timeline_started(timeline_name: String):
 	print("📢 对话开始：", timeline_name)
-
 func _on_timeline_ended(timeline_name: String):
 	print("📢 对话结束：", timeline_name)
 	
@@ -394,7 +387,6 @@ func start_tutorial():
 	# 第一步：高亮左箭头
 	# 注意：这里不需要 await，因为 highlight_button 内部会处理等待
 	tutorial_layer.highlight_button("left_arrow", "点击左箭头切换场景")
-
 # ===================== 顶部UI初始化 =====================
 func init_top_ui():
 	ResourceManager.refresh_current_scene_topbar()
@@ -423,6 +415,7 @@ func _on_arrow_left_pressed():
 		tutorial_layer.hide_all()
 
 	get_tree().change_scene_to_file("res://project/scenes/lounge/lounge_scene.tscn")
+
 
 func _on_arrow_right_pressed():
 	print("右箭头被点击")
@@ -476,19 +469,19 @@ func _set_ui_enabled(enabled: bool):
 	print("设置UI可用性: ", enabled)
 
 	# 使用 @onready 变量而不是 $
-	if arrow_left:
+	if arrow_left: 
 		arrow_left.disabled = not enabled
 		print("左箭头设置 disabled = ", arrow_left.disabled)
 	else:
 		print("警告: arrow_left 为 null")
 
-	if arrow_right:
+	if arrow_right: 
 		arrow_right.disabled = not enabled
 		print("右箭头设置 disabled = ", arrow_right.disabled)
 	else:
 		print("警告: arrow_right 为 null")
 
-	if button:
+	if button: 
 		button.disabled = not enabled
 		print("对话按钮设置 disabled = ", button.disabled)
 	else:
@@ -745,637 +738,3 @@ func refresh_ui():
 				print("当前阶段: 周中")
 			2:
 				print("当前阶段: 周后")
-
-# ===================== 记忆阶段事件系统 =====================
-
-var memory_event_overlay: Control = null
-var memory_event_backdrop: TextureRect = null
-var memory_event_panel: Panel = null
-var memory_event_image_box: Control = null
-var memory_event_image_texture: TextureRect = null
-var memory_event_image_label: Label = null
-var memory_event_title_label: Label = null
-var memory_event_text_label: RichTextLabel = null
-var memory_event_choice_container: VBoxContainer = null
-
-var current_memory_event_id: String = ""
-var current_memory_event_selected_option: Dictionary = {}
-var current_memory_event_pages: Array = []
-var current_memory_event_page_index: int = 0
-
-# 记忆事件数据改为从 JSON 文件读取
-var memory_event_data: Dictionary = {}
-
-const MEMORY_DIALOG_SPEAKER_COLORS := {
-	"narration": "#F2E6D2",
-	"alexi": "#D6B36A",
-	"alexi_inner": "#E8D2A3",
-	"old_nail": "#8FB7D9",
-	"finn": "#B8A0E8"
-}
-
-const MEMORY_DIALOG_SPEAKER_NAMES := {
-	"narration": "",
-	"alexi": "你",
-	"alexi_inner": "你（内心）",
-	"old_nail": "老钉子",
-	"finn": "芬恩"
-}
-
-# ===================== 记忆事件数据读取 =====================
-
-func _load_memory_event_data():
-	var path = "res://project/data/story/memory_events.json"
-
-	if not FileAccess.file_exists(path):
-		push_error("找不到记忆事件配置文件: " + path)
-		memory_event_data = {}
-		return
-
-	var file = FileAccess.open(path, FileAccess.READ)
-	if file == null:
-		push_error("无法打开记忆事件配置文件: " + path)
-		memory_event_data = {}
-		return
-
-	var text = file.get_as_text()
-
-	var json = JSON.new()
-	var err = json.parse(text)
-
-	if err != OK:
-		push_error("memory_events.json 解析失败，错误码: %d" % err)
-		memory_event_data = {}
-		return
-
-	if typeof(json.data) != TYPE_DICTIONARY:
-		push_error("memory_events.json 顶层不是 Dictionary")
-		memory_event_data = {}
-		return
-
-	memory_event_data = json.data
-	print("✅ 记忆事件数据加载完成: ", memory_event_data.keys())
-
-# ===================== 记忆事件显示辅助 =====================
-
-# 把 JSON 里的多行文本数组拼成面板可显示的字符串
-func _build_event_text(lines_data) -> String:
-	# Godot 4 的静态类型检查下，直接 return str(null) 可能被判定为返回 null，
-	# 这里显式兜底为空字符串，避免 “Cannot return value of type null” 报错
-	if lines_data == null:
-		return ""
-
-	if lines_data is Array:
-		var result := ""
-		for i in range(lines_data.size()):
-			if i > 0:
-				result += "\n\n"
-			result += "%s" % lines_data[i]
-		return result
-
-	return "%s" % lines_data
-
-func _escape_memory_bbcode_text(text: String) -> String:
-	return text.replace("[", "[lb]").replace("]", "[rb]")
-
-func _build_event_rich_text(dialogues_data) -> String:
-	if dialogues_data == null:
-		return ""
-
-	var result := ""
-
-	if dialogues_data is Array:
-		var last_speaker := ""
-
-		for i in range(dialogues_data.size()):
-			var entry = dialogues_data[i]
-			if not (entry is Dictionary):
-				continue
-
-			var speaker := str(entry.get("speaker", "narration"))
-			var raw_text := str(entry.get("text", ""))
-			var text := _escape_memory_bbcode_text(raw_text)
-
-			if text == "":
-				continue
-
-			var color := str(MEMORY_DIALOG_SPEAKER_COLORS.get(speaker, "#F2E6D2"))
-			var speaker_name := str(MEMORY_DIALOG_SPEAKER_NAMES.get(speaker, ""))
-
-			# 旁白：始终不显示名字
-			if speaker == "narration":
-				result += "[color=%s]%s[/color]\n\n" % [color, text]
-			else:
-				# 同一页里，同一个说话人只在第一句显示名字
-				if speaker != last_speaker:
-					result += "[color=%s]【%s】%s[/color]\n\n" % [color, speaker_name, text]
-				else:
-					result += "[color=%s]%s[/color]\n\n" % [color, text]
-
-			last_speaker = speaker
-
-		return result.strip_edges()
-
-	return "[color=#F2E6D2]%s[/color]" % _escape_memory_bbcode_text(str(dialogues_data))
-
-# 兼容旧结构：如果还没改成 pages，就自动转成单页结构
-func _build_memory_event_pages(event_data: Dictionary) -> Array:
-	var pages: Array = []
-
-	if event_data.has("pages") and event_data["pages"] is Array and event_data["pages"].size() > 0:
-		return event_data["pages"]
-
-	var first_page := {
-		"title": event_data.get("title", "关键事件"),
-		"image_path": event_data.get("image_path", ""),
-		"dialogues": event_data.get("dialogues", []),
-		"lines": event_data.get("intro_lines", [event_data.get("intro_text", "")]),
-		"choices": event_data.get("options", [])
-	}
-	pages.append(first_page)
-	return pages
-
-# 切换背景图，给后续插图留好位置
-func _switch_memory_event_background(image_path: String):
-	if memory_event_backdrop == null:
-		return
-
-	if image_path != "" and ResourceLoader.exists(image_path):
-		var texture = load(image_path)
-		if texture:
-			memory_event_backdrop.texture = texture
-			memory_event_backdrop.visible = true
-			if memory_event_image_label:
-				memory_event_image_label.visible = false
-			return
-
-	# 没图时只显示简短占位文字，不再显示整段路径
-	memory_event_backdrop.texture = null
-	memory_event_backdrop.visible = false
-
-	if memory_event_image_label:
-		memory_event_image_label.text = "暂无事件插图"
-		memory_event_image_label.visible = true
-
-# 根据 image_path 显示图片；如果图片不存在，则回退显示文字提示
-func _set_memory_event_image(event_data: Dictionary):
-	var image_path = str(event_data.get("image_path", ""))
-	_switch_memory_event_background(image_path)
-
-# 让当前页标题、正文、按钮渐变出现
-func _animate_memory_event_page():
-	if memory_event_title_label:
-		memory_event_title_label.modulate = Color(1, 1, 1, 0)
-
-	if memory_event_text_label:
-		memory_event_text_label.modulate = Color(1, 1, 1, 0)
-
-	var tween = create_tween()
-	tween.set_parallel(true)
-
-	if memory_event_title_label:
-		tween.tween_property(memory_event_title_label, "modulate", Color(1, 1, 1, 1), 0.20)
-
-	if memory_event_text_label:
-		tween.tween_property(memory_event_text_label, "modulate", Color(1, 1, 1, 1), 0.28)
-
-	call_deferred("_animate_memory_event_choices")
-
-# 选项按钮依次淡入
-func _animate_memory_event_choices():
-	if not memory_event_choice_container:
-		return
-
-	var delay := 0.0
-	for child in memory_event_choice_container.get_children():
-		if child is Control:
-			child.modulate = Color(1, 1, 1, 0)
-
-			var tween = create_tween()
-			tween.tween_interval(delay)
-			tween.tween_property(child, "modulate", Color(1, 1, 1, 1), 0.18)
-			delay += 0.06
-
-# ===================== 记忆阶段事件系统 =====================
-
-# 创建记忆阶段事件面板（运行时创建，改为全屏演出式事件）
-func _create_memory_event_panel():
-	var ui_layer = get_node_or_null("UILayer")
-	if not ui_layer:
-		print("❌ 未找到 UILayer，无法创建记忆事件面板")
-		return
-
-	# 避免重复创建
-	if memory_event_overlay and is_instance_valid(memory_event_overlay):
-		return
-
-	# 全屏根节点
-	memory_event_overlay = Control.new()
-	memory_event_overlay.name = "MemoryEventOverlay"
-	memory_event_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
-	memory_event_overlay.mouse_filter = Control.MOUSE_FILTER_STOP
-	memory_event_overlay.z_index = 999
-	memory_event_overlay.visible = false
-	ui_layer.add_child(memory_event_overlay)
-
-	# 全屏背景图（后续每一页都可以切）
-	memory_event_backdrop = TextureRect.new()
-	memory_event_backdrop.name = "Backdrop"
-	memory_event_backdrop.set_anchors_preset(Control.PRESET_FULL_RECT)
-	memory_event_backdrop.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	memory_event_backdrop.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-	memory_event_backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	memory_event_overlay.add_child(memory_event_backdrop)
-
-	# 保留占位层，无图时显示提示
-	memory_event_image_box = Control.new()
-	memory_event_image_box.name = "FallbackLayer"
-	memory_event_image_box.set_anchors_preset(Control.PRESET_FULL_RECT)
-	memory_event_image_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	memory_event_overlay.add_child(memory_event_image_box)
-
-	memory_event_image_texture = TextureRect.new()
-	memory_event_image_texture.name = "FullScreenBackground"
-	memory_event_image_texture.set_anchors_preset(Control.PRESET_FULL_RECT)
-	memory_event_image_texture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	memory_event_image_texture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-	memory_event_image_texture.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	memory_event_image_texture.visible = false
-	memory_event_overlay.add_child(memory_event_image_texture)
-
-	# 无图时的占位文字
-	memory_event_image_label = Label.new()
-	memory_event_image_label.name = "FallbackLabel"
-	memory_event_image_label.anchor_left = 0.30
-	memory_event_image_label.anchor_top = 0.22
-	memory_event_image_label.anchor_right = 0.70
-	memory_event_image_label.anchor_bottom = 0.30
-	memory_event_image_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	memory_event_image_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	memory_event_image_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	memory_event_image_label.add_theme_font_size_override("font_size", 18)
-	memory_event_image_label.add_theme_color_override("font_color", Color(0.90, 0.90, 0.90))
-	memory_event_image_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.85))
-	memory_event_image_label.add_theme_constant_override("outline_size", 6)
-	memory_event_image_box.add_child(memory_event_image_label)
-
-	# 暗层遮罩（全屏）
-	var dark_mask = ColorRect.new()
-	dark_mask.name = "DarkMask"
-	dark_mask.set_anchors_preset(Control.PRESET_FULL_RECT)
-	dark_mask.color = Color(0, 0, 0, 0.42)
-	dark_mask.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	memory_event_overlay.add_child(dark_mask)
-
-	# 顶部标题
-	memory_event_title_label = Label.new()
-	memory_event_title_label.name = "TitleLabel"
-	memory_event_title_label.anchor_left = 0.08
-	memory_event_title_label.anchor_top = 0.09
-	memory_event_title_label.anchor_right = 0.92
-	memory_event_title_label.anchor_bottom = 0.16
-	memory_event_title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	memory_event_title_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	memory_event_title_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	memory_event_title_label.add_theme_font_size_override("font_size", 34)
-	memory_event_title_label.add_theme_color_override("font_color", Color(0.96, 0.87, 0.58))
-	memory_event_title_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.9))
-	memory_event_title_label.add_theme_constant_override("outline_size", 8)
-	memory_event_overlay.add_child(memory_event_title_label)
-
-	# 底部大对话框
-	memory_event_panel = Panel.new()
-	memory_event_panel.name = "DialogPanel"
-	memory_event_panel.anchor_left = 0.04
-	memory_event_panel.anchor_top = 0.70
-	memory_event_panel.anchor_right = 0.96
-	memory_event_panel.anchor_bottom = 0.97
-
-	var panel_style = StyleBoxFlat.new()
-	panel_style.bg_color = Color(0.07, 0.05, 0.04, 0.90)
-	panel_style.border_width_left = 3
-	panel_style.border_width_top = 3
-	panel_style.border_width_right = 3
-	panel_style.border_width_bottom = 3
-	panel_style.border_color = Color(0.85, 0.68, 0.32, 0.95)
-	panel_style.set_corner_radius_all(18)
-	panel_style.shadow_color = Color(0, 0, 0, 0.45)
-	panel_style.shadow_size = 10
-	memory_event_panel.add_theme_stylebox_override("panel", panel_style)
-	memory_event_overlay.add_child(memory_event_panel)
-
-	# 正文文本
-	memory_event_text_label = RichTextLabel.new()
-	memory_event_text_label.name = "TextLabel"
-	memory_event_text_label.anchor_left = 0.04
-	memory_event_text_label.anchor_top = 0.11
-	memory_event_text_label.anchor_right = 0.96
-	memory_event_text_label.anchor_bottom = 0.86
-	memory_event_text_label.bbcode_enabled = true
-	memory_event_text_label.fit_content = false
-	memory_event_text_label.scroll_active = true
-	memory_event_text_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	memory_event_text_label.add_theme_font_size_override("normal_font_size", 22)
-	memory_event_text_label.selection_enabled = false
-	memory_event_panel.add_child(memory_event_text_label)
-
-	# 选项按钮容器：放到屏幕中央 / 偏上区域，不再压在底部对话框上
-	memory_event_choice_container = VBoxContainer.new()
-	memory_event_choice_container.name = "ChoiceContainer"
-	memory_event_choice_container.anchor_left = 0.18
-	memory_event_choice_container.anchor_top = 0.43
-	memory_event_choice_container.anchor_right = 0.82
-	memory_event_choice_container.anchor_bottom = 0.64
-	memory_event_choice_container.alignment = BoxContainer.ALIGNMENT_CENTER
-	memory_event_choice_container.add_theme_constant_override("separation", 12)
-	memory_event_choice_container.mouse_filter = Control.MOUSE_FILTER_STOP
-	memory_event_overlay.add_child(memory_event_choice_container)
-
-	print("✅ 全屏记忆阶段事件面板创建完成")
-
-# 触发记忆阶段事件
-# 由 Rehabpanel.gd 中的“触发关键事件”按钮调用
-func start_memory_stage_event(event_id: String):
-	if not memory_event_data.has(event_id):
-		print("❌ 未找到记忆阶段事件：", event_id)
-		return
-
-	if not memory_event_overlay or not is_instance_valid(memory_event_overlay):
-		_create_memory_event_panel()
-
-	current_memory_event_id = event_id
-	current_memory_event_selected_option = {}
-	current_memory_event_pages = _build_memory_event_pages(memory_event_data[event_id])
-	current_memory_event_page_index = 0
-
-	# 确保康复面板关闭
-	if rehab_panel and rehab_panel.visible:
-		rehab_panel.hide_panel()
-
-	# 锁定普通交互
-	_set_ui_enabled(false)
-
-	# 显示遮罩并淡入
-	if memory_event_overlay:
-		memory_event_overlay.visible = true
-		memory_event_overlay.modulate = Color(1, 1, 1, 0)
-		var tween = create_tween()
-		tween.tween_property(memory_event_overlay, "modulate", Color(1, 1, 1, 1), 0.25)
-
-	# 显示第一页
-	_show_memory_event_page(current_memory_event_page_index)
-
-# 显示当前页
-func _show_memory_event_page(page_index: int):
-	if page_index < 0 or page_index >= current_memory_event_pages.size():
-		print("❌ 记忆事件页索引超出范围: ", page_index)
-		_finish_memory_stage_event()
-		return
-
-	current_memory_event_page_index = page_index
-	var event_data: Dictionary = memory_event_data.get(current_memory_event_id, {})
-	var page_data: Dictionary = current_memory_event_pages[page_index]
-
-	# 标题：页标题优先，没有就用事件标题
-	if memory_event_title_label:
-		memory_event_title_label.text = str(page_data.get("title", event_data.get("title", "关键事件")))
-
-	# 背景：页 image_path 优先，没有就回退事件 image_path
-	var page_image_path := str(page_data.get("image_path", event_data.get("image_path", "")))
-	_switch_memory_event_background(page_image_path)
-
-	# 正文
-	if memory_event_text_label:
-		memory_event_text_label.clear()
-
-		if page_data.has("dialogues"):
-			memory_event_text_label.append_text(_build_event_rich_text(page_data.get("dialogues", [])))
-		elif page_data.has("lines"):
-			memory_event_text_label.append_text("[color=#F2E6D2]%s[/color]" % _escape_memory_bbcode_text(_build_event_text(page_data.get("lines", []))))
-		elif page_data.has("intro_lines"):
-			memory_event_text_label.append_text("[color=#F2E6D2]%s[/color]" % _escape_memory_bbcode_text(_build_event_text(page_data.get("intro_lines", []))))
-		else:
-			memory_event_text_label.append_text("[color=#F2E6D2]%s[/color]" % _escape_memory_bbcode_text(str(page_data.get("text", ""))))
-
-	# 清空旧按钮
-	_clear_memory_event_choices()
-
-	# 构建当前页按钮
-	var choices = page_data.get("choices", [])
-
-	# 有 choices 就按 choices 生成；没有就给一个“继续”
-	if choices is Array and choices.size() > 0:
-		for option_data in choices:
-			if option_data is Dictionary:
-				var choice_button = _create_memory_choice_button(option_data)
-				memory_event_choice_container.add_child(choice_button)
-	else:
-		var continue_button = _create_memory_continue_button("继续")
-		continue_button.pressed.connect(_on_memory_event_continue_pressed)
-		memory_event_choice_container.add_child(continue_button)
-
-	# 当前页内容渐变出现
-	_animate_memory_event_page()
-
-	print("✅ 已显示记忆事件页：", page_index)
-
-# 创建单个选项按钮
-func _create_memory_choice_button(option: Dictionary) -> Button:
-	var choice_button = Button.new()
-	choice_button.custom_minimum_size = Vector2(0, 46)
-	choice_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	choice_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	choice_button.text = str(option.get("text", "继续"))
-
-	var normal_style = StyleBoxFlat.new()
-	normal_style.bg_color = Color(0.32, 0.22, 0.12, 0.94)
-	normal_style.border_width_left = 2
-	normal_style.border_width_top = 2
-	normal_style.border_width_right = 2
-	normal_style.border_width_bottom = 2
-	normal_style.border_color = Color(0.90, 0.74, 0.38, 0.95)
-	normal_style.set_corner_radius_all(10)
-
-	var hover_style = normal_style.duplicate()
-	hover_style.bg_color = Color(0.44, 0.30, 0.16, 1.0)
-	hover_style.border_color = Color(1.00, 0.85, 0.48, 1.0)
-
-	var pressed_style = normal_style.duplicate()
-	pressed_style.bg_color = Color(0.58, 0.38, 0.18, 1.0)
-	pressed_style.border_color = Color(1.00, 0.92, 0.60, 1.0)
-
-	choice_button.add_theme_stylebox_override("normal", normal_style)
-	choice_button.add_theme_stylebox_override("hover", hover_style)
-	choice_button.add_theme_stylebox_override("pressed", pressed_style)
-	choice_button.add_theme_font_size_override("font_size", 18)
-	choice_button.add_theme_color_override("font_color", Color(1, 1, 1))
-
-	choice_button.pressed.connect(_on_memory_event_choice_selected.bind(option))
-	return choice_button
-
-# 创建继续按钮
-func _create_memory_continue_button(button_text: String) -> Button:
-	var continue_button = Button.new()
-	continue_button.custom_minimum_size = Vector2(0, 46)
-	continue_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	continue_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	continue_button.text = button_text
-
-	var normal_style = StyleBoxFlat.new()
-	normal_style.bg_color = Color(0.42, 0.28, 0.14, 0.96)
-	normal_style.border_width_left = 2
-	normal_style.border_width_top = 2
-	normal_style.border_width_right = 2
-	normal_style.border_width_bottom = 2
-	normal_style.border_color = Color(0.95, 0.80, 0.42, 1.0)
-	normal_style.set_corner_radius_all(10)
-
-	var hover_style = normal_style.duplicate()
-	hover_style.bg_color = Color(0.54, 0.36, 0.18, 1.0)
-
-	var pressed_style = normal_style.duplicate()
-	pressed_style.bg_color = Color(0.66, 0.44, 0.20, 1.0)
-
-	continue_button.add_theme_stylebox_override("normal", normal_style)
-	continue_button.add_theme_stylebox_override("hover", hover_style)
-	continue_button.add_theme_stylebox_override("pressed", pressed_style)
-	continue_button.add_theme_font_size_override("font_size", 18)
-	continue_button.add_theme_color_override("font_color", Color(1, 1, 1))
-
-	return continue_button
-
-# 清空当前事件选项
-func _clear_memory_event_choices():
-	if not memory_event_choice_container:
-		return
-
-	for child in memory_event_choice_container.get_children():
-		child.queue_free()
-
-# 点击“继续”时推进到下一页
-func _on_memory_event_continue_pressed():
-	if current_memory_event_page_index < current_memory_event_pages.size() - 1:
-		_show_memory_event_page(current_memory_event_page_index + 1)
-	else:
-		_finish_memory_stage_event()
-
-# 玩家选中一个选项
-func _on_memory_event_choice_selected(option: Dictionary):
-	current_memory_event_selected_option = option
-
-	# 如果这个选项带结果文本，先显示结果文本，再让玩家继续
-	if option.has("result_dialogues") or option.has("result_lines") or option.has("result_text"):
-		if memory_event_text_label:
-			memory_event_text_label.clear()
-
-			if option.has("result_dialogues"):
-				memory_event_text_label.append_text(_build_event_rich_text(option.get("result_dialogues", [])))
-			elif option.has("result_lines"):
-				memory_event_text_label.append_text("[color=#F2E6D2]%s[/color]" % _escape_memory_bbcode_text(_build_event_text(option.get("result_lines", []))))
-			else:
-				memory_event_text_label.append_text("[color=#F2E6D2]%s[/color]" % _escape_memory_bbcode_text(str(option.get("result_text", "记忆的碎片重新浮现。"))))
-
-		# 如果结果页也有背景图，先切一次
-		var result_image_path := str(option.get("result_image_path", ""))
-		if result_image_path != "":
-			_switch_memory_event_background(result_image_path)
-
-		_clear_memory_event_choices()
-
-		var continue_button = _create_memory_continue_button("继续")
-		continue_button.pressed.connect(_on_memory_event_choice_result_continue.bind(option))
-		memory_event_choice_container.add_child(continue_button)
-
-		_animate_memory_event_page()
-		return
-
-	# 没有结果文本就直接推进
-	_on_memory_event_choice_result_continue(option)
-
-# 选项结果页点击继续后推进
-func _on_memory_event_choice_result_continue(option: Dictionary):
-	# 先应用选项效果
-	_apply_memory_stage_choice(option)
-
-	# 可跳转到指定页；没有指定就默认下一页；最后一页就结束
-	if option.get("end_event", false):
-		_finish_memory_stage_event()
-		return
-
-	var next_page = int(option.get("next_page", -1))
-	if next_page >= 0:
-		_show_memory_event_page(next_page)
-		return
-
-	if current_memory_event_page_index < current_memory_event_pages.size() - 1:
-		_show_memory_event_page(current_memory_event_page_index + 1)
-	else:
-		_finish_memory_stage_event()
-
-# 应用当前选项带来的方向值 / 记忆值变化
-func _apply_memory_stage_choice(option: Dictionary):
-	if option.is_empty():
-		return
-
-	var weights = option.get("weights", {})
-	if weights is Dictionary:
-		if weights.has("art"):
-			ResourceManager.modify_ai_weight(Constants.WEIGHT_ART, int(weights["art"]))
-		if weights.has("human"):
-			ResourceManager.modify_ai_weight(Constants.WEIGHT_HUMAN, int(weights["human"]))
-		if weights.has("business"):
-			ResourceManager.modify_ai_weight(Constants.WEIGHT_BUSINESS, int(weights["business"]))
-
-	var memory_delta = int(option.get("memory_delta", 0))
-	if memory_delta != 0:
-		ResourceManager.add_memory(memory_delta)
-
-# 完成当前记忆阶段事件
-# 作用：
-# 1. 正式调用 ResourceManager 完成阶段提升
-# 2. 结算当前选项带来的方向值 / 记忆值变化
-# 3. 关闭剧情面板，回到康复面板
-func _finish_memory_stage_event():
-	if current_memory_event_id == "":
-		return
-
-	# 先完成阶段提升
-	if ResourceManager and ResourceManager.has_method("complete_memory_stage_event"):
-		var complete_result = ResourceManager.complete_memory_stage_event()
-		if not complete_result.get("success", false):
-			print("❌ 记忆阶段事件完成失败：", complete_result.get("reason", "未知错误"))
-			if memory_event_text_label:
-				memory_event_text_label.clear()
-				memory_event_text_label.append_text("[color=#F2E6D2]%s[/color]" % _escape_memory_bbcode_text("阶段事件完成失败：%s" % str(complete_result.get("reason", "未知错误"))))
-			return
-
-	# 如果当前选项还没结算过，并且没有通过结果继续页推进，这里补一次
-	# 只在确实有选项且 end_event 直接结束时需要兜底
-	if not current_memory_event_selected_option.is_empty():
-		# 这里不重复加数值，因为正常流程已在 _on_memory_event_choice_result_continue 中应用
-		pass
-
-	# 淡出关闭事件面板
-	if memory_event_overlay:
-		var tween = create_tween()
-		tween.tween_property(memory_event_overlay, "modulate", Color(1, 1, 1, 0), 0.20)
-		await tween.finished
-		memory_event_overlay.visible = false
-		memory_event_overlay.modulate = Color(1, 1, 1, 1)
-
-	print("✅ 记忆阶段事件完成：", current_memory_event_id)
-
-	current_memory_event_id = ""
-	current_memory_event_selected_option = {}
-	current_memory_event_pages = []
-	current_memory_event_page_index = 0
-
-	# 刷新顶部资源显示
-	ResourceManager.refresh_current_scene_topbar()
-
-	# 事件结束后重新打开康复面板，方便继续查看当前恢复阶段
-	if rehab_panel and rehab_panel.has_method("show_panel"):
-		rehab_panel.show_panel()
-		_set_ui_enabled(false)
-	else:
-		_set_ui_enabled(true)
