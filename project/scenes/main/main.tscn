@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://em05axaem0ia"]
+[gd_scene load_steps=43 format=3 uid="uid://em05axaem0ia"]
 
 [ext_resource type="Script" uid="uid://bkmekgpgq855c" path="res://project/scenes/main/main.gd" id="1_87m5t"]
 [ext_resource type="Texture2D" uid="uid://c4lvblykh1k4q" path="res://project/scenes/main/bar.jpg" id="1_hyk8p"]
@@ -19,8 +19,10 @@
 [ext_resource type="FontFile" uid="uid://b004kl1b50uq5" path="res://project/assets/fonts/ui/new_font_file.tres" id="14_ogan2"]
 [ext_resource type="PackedScene" uid="uid://qvf8llp2hilo" path="res://project/scenes/facility/facility_panel.tscn" id="16_k7nr8"]
 [ext_resource type="Script" uid="uid://r08km7j8emn8" path="res://project/scripts/models/facility/facility_entry_button.gd" id="17_dniyw"]
+[ext_resource type="Shader" uid="uid://d0i6cdvlqd2pd" path="res://project/scenes/lounge/outline.gdshader" id="19_ptfxj"]
 [ext_resource type="Texture2D" uid="uid://bj0xjax3adgom" path="res://project/assets/images/ui/buttons/stageup.png" id="20_oesgy"]
 [ext_resource type="Texture2D" uid="uid://d37jay72hpkji" path="res://project/assets/images/ui/buttons/barup.png" id="21_svdfk"]
+[ext_resource type="Shader" uid="uid://ce8lsaeamn455" path="res://project/scenes/main/outlinebar.gdshader" id="22_fkgpr"]
 [ext_resource type="PackedScene" uid="uid://cy72tji61wjdt" path="res://project/scenes/settlement/settlement_panel.tscn" id="22_wsoed"]
 [ext_resource type="PackedScene" uid="uid://bpfjlk8a6mk23" path="res://project/scenes/member/MemberStanding.tscn" id="23_gmtqm"]
 [ext_resource type="PackedScene" uid="uid://dfbwrjpx5x318" path="res://project/scenes/main/talk_system.tscn" id="24_2myfi"]
@@ -43,6 +45,11 @@ font_color = Color(0.9411765, 0.5137255, 0, 0.9372549)
 outline_size = 10
 outline_color = Color(1, 1, 0.23921569, 1)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fkgpr"]
+shader = ExtResource("19_ptfxj")
+shader_parameter/line_thickness = 7.930000376675
+shader_parameter/line_color = Color(1, 1, 1, 1)
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oesgy"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_svdfk"]
@@ -55,6 +62,11 @@ outline_color = Color(1, 1, 0.23921569, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_svdfk"]
 bg_color = Color(0.043137256, 0.043137256, 0.043137256, 0.78431374)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_582ml"]
+shader = ExtResource("22_fkgpr")
+shader_parameter/line_thickness = 7.3530003492675
+shader_parameter/line_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2myfi"]
 
@@ -341,11 +353,12 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [node name="StageButton" type="Button" parent="UILayer"]
+material = SubResource("ShaderMaterial_fkgpr")
 custom_minimum_size = Vector2(220, 140)
-offset_left = 136.0
-offset_top = 279.0
-offset_right = 1672.0
-offset_bottom = 1303.0
+offset_left = -1.0
+offset_top = 115.0
+offset_right = 1172.3334
+offset_bottom = 865.0
 scale = Vector2(0.3, 0.3)
 theme_override_styles/normal = SubResource("StyleBoxEmpty_oesgy")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_svdfk")
@@ -358,6 +371,7 @@ expand_icon = true
 script = ExtResource("17_dniyw")
 
 [node name="RepairMask" type="Panel" parent="UILayer/StageButton"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -385,10 +399,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="BarButton" type="Button" parent="UILayer"]
-offset_left = 1322.0
-offset_top = 128.0
-offset_right = 2858.0
-offset_bottom = 1152.0
+material = SubResource("ShaderMaterial_582ml")
+offset_left = 1435.0
+offset_top = 102.0
+offset_right = 2971.0
+offset_bottom = 1126.0
 scale = Vector2(0.3, 0.3)
 theme_override_styles/normal = SubResource("StyleBoxEmpty_2myfi")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_ptfxj")
@@ -401,6 +416,7 @@ script = ExtResource("17_dniyw")
 facility_type = "bar"
 
 [node name="RepairMask" type="Panel" parent="UILayer/BarButton"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
