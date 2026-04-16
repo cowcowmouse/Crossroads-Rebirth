@@ -78,7 +78,6 @@ animations = [{
 size = Vector2(184.11281, 247.18324)
 
 [node name="MemberStanding_tscn" type="Node2D"]
-visible = false
 
 [node name="Char_OldNail" type="CharacterBody2D" parent="."]
 scale = Vector2(1.6565933, 1.646552)

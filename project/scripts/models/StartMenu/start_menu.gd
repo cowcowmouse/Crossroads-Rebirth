@@ -1,8 +1,8 @@
 extends Control
 
 @onready var start_button = $StartButton
-@onready var settings_button = $SettingsButton
 @onready var quit_button = $QuitButton
+@onready var settings_button = $SettingsButton
 @onready var settings_panel = $SettingsPanel
 @onready var volume_slider = $SettingsPanel/VolumeSlider
 @onready var close_button = $SettingsPanel/CloseButton
@@ -10,8 +10,8 @@ extends Control
 func _ready():
 	# 连接按钮信号
 	start_button.pressed.connect(_on_start_pressed)
-	settings_button.pressed.connect(_on_settings_pressed)
 	quit_button.pressed.connect(_on_quit_pressed)
+	settings_button.pressed.connect(_on_settings_pressed)
 	close_button.pressed.connect(_on_close_settings_pressed)
 	volume_slider.value_changed.connect(_on_volume_changed)
 	
@@ -24,7 +24,11 @@ func _ready():
 func _on_start_pressed():
 	print("开始游戏")
 	get_tree().change_scene_to_file("res://project/scenes/cutscene/opening_scene.tscn")
-
+	
+func _on_quit_pressed():
+	print("退出游戏")
+	get_tree().quit()
+	
 func _on_settings_pressed():
 	print("打开设置面板")
 	settings_panel.visible = true
@@ -32,10 +36,6 @@ func _on_settings_pressed():
 func _on_close_settings_pressed():
 	print("关闭设置面板")
 	settings_panel.visible = false
-
-func _on_quit_pressed():
-	print("退出游戏")
-	get_tree().quit()
 
 func _on_volume_changed(value: float):
 	print("音量变化: ", value)

@@ -29,6 +29,10 @@ extends Node2D  # 核心：适配Node2D
 @onready var action_skip_panel = $UILayer/TopBar/ActionSkipPanel
 @onready var clock_icon = $UILayer/TopBar/ClockIcon
 @onready var skip_button = $UILayer/SkipButton
+@onready var settings_button = $UILayer/SettingsButton
+@onready var settings_panel = $UILayer/SettingsPanel
+@onready var volume_slider = $UILayer/SettingsPanel/VolumeSlider
+@onready var close_button = $UILayer/SettingsPanel/CloseButton
 
 # 管理器引用
 @onready var week_cycle = get_node("/root/WeekCycleManager")
@@ -128,6 +132,44 @@ func _ready():
 	
 	# 注册调试快捷键
 	_register_debug_input()
+
+	settings_button.pressed.connect(_on_settings_pressed)
+	close_button.pressed.connect(_on_close_settings_pressed)
+	volume_slider.value_changed.connect(_on_volume_changed)
+	
+	# 初始隐藏设置面板
+	settings_panel.visible = false
+	
+	# 加载保存的音量设置
+	_load_volume_setting()
+	
+func _on_settings_pressed():
+	print("打开设置面板")
+	settings_panel.visible = true
+
+func _on_close_settings_pressed():
+	print("关闭设置面板")
+	settings_panel.visible = false
+
+func _on_volume_changed(value: float):
+	print("音量变化: ", value)
+	AudioManager.set_bgm_volume(value)
+	_save_volume_setting(value)
+
+func _save_volume_setting(value: float):
+	var config = ConfigFile.new()
+	config.set_value("audio", "bgm_volume", value)
+	config.save("user://settings.cfg")
+
+func _load_volume_setting():
+	var config = ConfigFile.new()
+	if config.load("user://settings.cfg") == OK:
+		var volume = config.get_value("audio", "bgm_volume", 0.8)
+		volume_slider.value = volume
+		AudioManager.set_bgm_volume(volume)
+	else:
+		volume_slider.value = 0.8
+		AudioManager.set_bgm_volume(0.8)
 
 func _register_debug_input():
 	# 确保调试动作存在

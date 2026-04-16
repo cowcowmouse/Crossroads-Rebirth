@@ -1,0 +1,50 @@
+[gd_resource type="Resource" script_class="CharacterBase" load_steps=2 format=3 uid="uid://dbdisu3ob0gac"]
+
+[ext_resource type="Script" uid="uid://dfr3i02a2qnew" path="res://project/scripts/models/member/character_base.gd" id="1_aews2"]
+
+[resource]
+script = ExtResource("1_aews2")
+id = "finn"
+name = "芬恩"
+role = "吉他手"
+personality = "旧友宿敌"
+unlocked = false
+morale = 55
+fatigue = 40
+skill = 95
+charm = 35
+special_stats = {
+"bitterness": 70,
+"teaching_willingness": 20
+}
+stage3_condition = {
+"event": "car_accident_reveal",
+"relationship": 60
+}
+unlock_condition = {
+"cohesion": 40,
+"reputation": 50
+}
+join_income = {
+"cohesion": -5,
+"creativity": 10,
+"money": 0,
+"reputation": 0
+}
+join_effect_text = "入队后创造力+10，凝聚力-5"
+special_ability = {
+"description": "消耗100资金，提升指定成员技巧",
+"effect": {
+"cost_action": 1,
+"cost_money": 100,
+"delta": 5,
+"target_member": "selected",
+"target_stat": "skill"
+},
+"icon_path": "",
+"name": "技术指导"
+}
+resource_effects = {
+"cohesion": -0.3,
+"skill_boost": 1.2
+}

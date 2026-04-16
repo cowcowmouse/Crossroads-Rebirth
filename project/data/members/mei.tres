@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="CharacterBase" load_steps=2 format=3 uid="uid://ciq6jgy6mfs2r"]
+
+[ext_resource type="Script" uid="uid://dfr3i02a2qnew" path="res://project/scripts/models/member/character_base.gd" id="1_f0p57"]
+
+[resource]
+script = ExtResource("1_f0p57")
+id = "mei"
+name = "梅"
+role = "贝斯手"
+personality = "团队粘合剂"
+morale = 75
+fatigue = 25
+health = 90
+skill = 65
+charm = 70
+special_stats = {
+"mediation_skill": 80
+}
+join_income = {
+"cohesion": 8,
+"creativity": 0,
+"money": 0,
+"reputation": 0
+}
+join_effect_text = "入队后凝聚力+8"
+special_ability = {
+"description": "消耗1行动点，尝试调解队内矛盾",
+"effect": {
+"cost_action": 1,
+"cost_money": 0,
+"delta": 0,
+"special_effect": "resolve_conflict",
+"target_stat": "mediation_skill"
+},
+"icon_path": "",
+"name": "调解矛盾"
+}
+resource_effects = {
+"cohesion": 0.8
+}

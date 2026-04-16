@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="CharacterBase" load_steps=2 format=3 uid="uid://d2vbvh4iyih05"]
+
+[ext_resource type="Script" uid="uid://dfr3i02a2qnew" path="res://project/scripts/models/member/character_base.gd" id="1_0vrvk"]
+
+[resource]
+script = ExtResource("1_0vrvk")
+id = "rio"
+name = "里奥"
+role = "鼓手"
+personality = "酒精心魔"
+health = 75
+skill = 70
+charm = 40
+special_stats = {
+"alcohol_level": 60,
+"performance_anxiety": 70
+}
+special_ability = {
+"description": "消耗80资金，降低酒精度，提升心情",
+"effect": {
+"cost_action": 1,
+"cost_money": 80,
+"delta": -10,
+"secondary_delta": 5,
+"secondary_stat": "morale",
+"target_stat": "alcohol_level"
+},
+"icon_path": "",
+"name": "戒酒鼓励"
+}
+resource_effects = {
+"cohesion": 0.5,
+"creativity": 0.3
+}

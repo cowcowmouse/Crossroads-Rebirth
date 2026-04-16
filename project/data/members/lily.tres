@@ -1,0 +1,52 @@
+[gd_resource type="Resource" script_class="CharacterBase" load_steps=2 format=3 uid="uid://qdpjl0fsghb7"]
+
+[ext_resource type="Script" uid="uid://dfr3i02a2qnew" path="res://project/scripts/models/member/character_base.gd" id="1_wb53d"]
+
+[resource]
+script = ExtResource("1_wb53d")
+id = "lily"
+name = "莉莉"
+role = "小提琴手"
+personality = "古典叛逃"
+unlocked = false
+health = 85
+skill = 85
+charm = 55
+special_stats = {
+"improvisation_freedom": 10,
+"perfectionism": 85
+}
+stage2_condition = {
+"relationship": 35
+}
+stage3_condition = {
+"relationship": 65
+}
+unlock_condition = {
+"creativity": 50,
+"reputation": 40
+}
+join_income = {
+"cohesion": 3,
+"creativity": 8,
+"money": 0,
+"reputation": 0
+}
+join_effect_text = "入队后创造力+8，凝聚力+3"
+special_ability = {
+"description": "消耗1行动点，提升即兴自由度",
+"effect": {
+"cost_action": 1,
+"cost_money": 0,
+"delta": 5,
+"secondary_delta": -3,
+"secondary_stat": "perfectionism",
+"target_stat": "improvisation_freedom"
+},
+"icon_path": "",
+"name": "即兴训练"
+}
+resource_effects = {
+"cohesion": 0.2,
+"creativity": 0.4
+}

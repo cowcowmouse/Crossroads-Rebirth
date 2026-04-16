@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="CharacterBase" load_steps=2 format=3 uid="uid://dp2vmwpc6448k"]
+
+[ext_resource type="Script" uid="uid://dfr3i02a2qnew" path="res://project/scripts/models/member/character_base.gd" id="1_mk7ou"]
+
+[resource]
+script = ExtResource("1_mk7ou")
+id = "old_nail"
+name = "老钉子"
+role = "酒吧守护者"
+personality = "守护者"
+morale = 100
+fatigue = 10
+health = 85
+skill = 80
+charm = 70
+special_stats = {
+"hidden_knowledge": 0,
+"protection_pledge": 100
+}
+stage3_condition = {
+"memory": 50,
+"relationship": 60
+}
+special_ability = {
+"description": "消耗1行动点，了解过去的真相",
+"effect": {
+"cost_action": 1,
+"cost_money": 0,
+"delta": 10,
+"special_effect": "reveal_truth",
+"target_stat": "hidden_knowledge"
+},
+"icon_path": "",
+"name": "往事回忆"
+}
+resource_effects = {
+"hidden_bonus": 1.0,
+"stability": 0.9
+}

@@ -50,3 +50,5 @@ signal character_stage_changed(char_id: String, new_stage: int)
 signal character_unlocked(char_id: String)
 
 signal game_reset()  # 游戏重置信号
+
+signal show_notification(text: String)

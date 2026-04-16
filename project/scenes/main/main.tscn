@@ -460,6 +460,56 @@ text = "跳过阶段"
 [node name="SettlementPanel" parent="UILayer" instance=ExtResource("22_wsoed")]
 visible = false
 
+[node name="SettingsPanel" type="Control" parent="UILayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -34.0
+offset_top = 67.0
+offset_right = 6.0
+offset_bottom = 107.0
+
+[node name="VolumeLabel" type="Label" parent="UILayer/SettingsPanel"]
+layout_mode = 0
+offset_left = 1212.0001
+offset_top = 893.0
+offset_right = 1312.0001
+offset_bottom = 916.0
+scale = Vector2(1.3202837, 1.6714369)
+text = "BGM Volume"
+
+[node name="VolumeSlider" type="HSlider" parent="UILayer/SettingsPanel"]
+layout_mode = 0
+offset_left = 1354.0
+offset_top = 907.0
+offset_right = 1478.0
+offset_bottom = 923.0
+max_value = 1.0
+step = 0.05
+value = 0.7
+
+[node name="CloseButton" type="Button" parent="UILayer/SettingsPanel"]
+layout_mode = 0
+offset_left = 1213.0
+offset_top = 865.0
+offset_right = 1231.0
+offset_bottom = 896.0
+text = "X"
+
+[node name="SettingsButton" type="Button" parent="UILayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -463.99988
+offset_top = -123.00006
+offset_right = -433.99988
+offset_bottom = -92.00006
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(4.0437303, 3.897308)
+text = "⚙"
+
 [node name="MemberStanding_tscn" parent="." instance=ExtResource("23_gmtqm")]
 position = Vector2(423, 157)
 
