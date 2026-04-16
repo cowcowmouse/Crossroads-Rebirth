@@ -300,6 +300,9 @@ func weekly_settlement():
 	# 否则进入下一周
 	_delayed_next_week()
 	
+	# 每周结算后检查结局
+	# EndingManager.check_ending()
+	
 func _show_settlement_panel(settlement_data: Dictionary):
 	var current_scene = get_tree().current_scene
 	if not current_scene:

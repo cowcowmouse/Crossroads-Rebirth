@@ -14,6 +14,11 @@ offset_right = 244.0
 offset_bottom = 129.0
 color = Color(0.3888, 0.42832, 0.48, 1)
 
+[node name="Avatar" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
 [node name="Lbl_Title" type="Label" parent="."]
 layout_mode = 0
 offset_left = 39.0
@@ -21,6 +26,45 @@ offset_top = 8.0
 offset_right = 103.0
 offset_bottom = 31.0
 text = "角色信息:"
+
+[node name="NameLabel" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="RoleLabel" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="StatsContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MoraleBar" type="ProgressBar" parent="StatsContainer"]
+layout_mode = 2
+
+[node name="FatigueBar" type="ProgressBar" parent="StatsContainer"]
+layout_mode = 2
+
+[node name="HealthBar" type="ProgressBar" parent="StatsContainer"]
+layout_mode = 2
+
+[node name="RelationshipLabel" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="SpecialButton" type="Button" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="CloseButton" type="Button" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
 
 [node name="Lbl_Relation" type="Label" parent="."]
 layout_mode = 0

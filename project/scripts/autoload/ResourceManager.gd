@@ -227,6 +227,7 @@ func add_creativity(amount: int) -> bool:
 
 func add_memory(amount: int) -> bool:
 	return modify_core_resource(constants.RES_MEMORY, amount)
+	# BackgroundManager.update_memory_filter(get_memory())
 
 # ===================== 康复训练接口 =====================
 
