@@ -218,6 +218,47 @@ layout_mode = 2
 texture = ExtResource("13_c2s8q")
 script = ExtResource("13_dniyw")
 
+[node name="WeekPhaseGroup" type="HBoxContainer" parent="UILayer/TopBar"]
+layout_mode = 2
+
+[node name="WeekLabel" type="Label" parent="UILayer/TopBar/WeekPhaseGroup"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "第几周"
+
+[node name="DividerLabel" type="Label" parent="UILayer/TopBar/WeekPhaseGroup"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "|"
+
+[node name="PhaseLabel" type="Label" parent="UILayer/TopBar/WeekPhaseGroup"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "周初"
+
+[node name="PhaseDotContainer" type="HBoxContainer" parent="UILayer/TopBar/WeekPhaseGroup"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="BeforeDot" type="ColorRect" parent="UILayer/TopBar/WeekPhaseGroup/PhaseDotContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+color = Color(1, 1, 0.7411765, 1)
+
+[node name="MidDot" type="ColorRect" parent="UILayer/TopBar/WeekPhaseGroup/PhaseDotContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_vertical = 4
+color = Color(1, 0.5254902, 1, 1)
+
+[node name="AfterDot" type="ColorRect" parent="UILayer/TopBar/WeekPhaseGroup/PhaseDotContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_vertical = 4
+color = Color(0.44705883, 1, 1, 1)
+
 [node name="Rehabpanel" type="Panel" parent="UILayer"]
 modulate = Color(0.8047426, 0.80474263, 0.8047426, 1)
 offset_left = 343.0

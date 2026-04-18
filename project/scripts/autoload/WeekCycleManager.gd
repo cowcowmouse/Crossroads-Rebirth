@@ -14,6 +14,14 @@ var current_week: int = 1
 
 func _ready():
 	process_mode = PROCESS_MODE_ALWAYS
+	call_deferred("_emit_initial_week_state")
+
+# 初次进入场景时，主动把当前周数和阶段推给 UI
+func _emit_initial_week_state():
+	if EventBus.has_signal("week_changed"):
+		EventBus.week_changed.emit(current_week)
+	if EventBus.has_signal("week_phase_changed"):
+		EventBus.week_phase_changed.emit(current_phase)
 
 func start_new_week():
 	current_week += 1
@@ -40,6 +48,10 @@ func start_new_week():
 	_refresh_all_facility_buttons()
 	
 	set_phase(GamePhase.BEFORE_WEEK)
+	
+	# 关键：新周开始时立刻通知 UI 更新周数
+	if EventBus.has_signal("week_changed"):
+		EventBus.week_changed.emit(current_week)
 	
 	print("=== 第", current_week, "周开始 ===")
 
@@ -192,11 +204,11 @@ func get_current_week() -> int:
 func _get_phase_name(phase: GamePhase) -> String:
 	match phase:
 		GamePhase.BEFORE_WEEK:
-			return "周前"
+			return "周初"
 		GamePhase.MID_WEEK:
 			return "周中"
 		GamePhase.AFTER_WEEK:
-			return "周后"
+			return "周末"
 	return "未知"
 
 func _refresh_all_facility_buttons():
@@ -219,4 +231,9 @@ func _refresh_all_facility_buttons():
 # 设置当前周数（用于跳转后同步）
 func set_current_week(week: int):
 	current_week = week
+	
+	# 关键：外部同步周数后，也立刻通知 UI
+	if EventBus.has_signal("week_changed"):
+		EventBus.week_changed.emit(current_week)
+	
 	print("WeekCycleManager 周数已同步: ", current_week)
