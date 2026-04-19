@@ -393,7 +393,20 @@ func _on_skip_button_mouse_exited():
 
 func _on_week_changed(week: int):
 	_refresh_week_phase_ui()
+	_refresh_all_facility_buttons()
 
+func _refresh_all_facility_buttons():
+	var button_paths = [
+		"UILayer/StageButton",
+		"UILayer/BarButton",
+		"UILayer/LoungeButton",
+		"UILayer/RehearsalButton"
+	]
+
+	for path in button_paths:
+		var btn = get_node_or_null(path)
+		if btn and btn.has_method("refresh_repair_state"):
+			btn.refresh_repair_state()
 
 func _get_week_phase_display_name(phase: int) -> String:
 	match phase:
