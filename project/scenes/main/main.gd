@@ -1496,7 +1496,7 @@ func _build_memory_event_pages(event_data: Dictionary) -> Array:
 
 
 # 切换背景图，给后续插图留好位置
-func _switch_memory_event_background(image_path: String):
+func _switch_memory_event_background(image_path: String, image_hint: String = ""):
 	if memory_event_backdrop == null:
 		return
 
@@ -1509,12 +1509,15 @@ func _switch_memory_event_background(image_path: String):
 				memory_event_image_label.visible = false
 			return
 
-	# 没图时只显示简短占位文字，不再显示整段路径
+	# 没图时显示提示文案
 	memory_event_backdrop.texture = null
 	memory_event_backdrop.visible = false
 
 	if memory_event_image_label:
-		memory_event_image_label.text = "暂无事件插图"
+		if image_hint.strip_edges() != "":
+			memory_event_image_label.text = "背景图需求：\n" + image_hint
+		else:
+			memory_event_image_label.text = "暂无事件插图"
 		memory_event_image_label.visible = true
 
 
@@ -1610,14 +1613,14 @@ func _create_memory_event_panel():
 	# 无图时的占位文字
 	memory_event_image_label = Label.new()
 	memory_event_image_label.name = "FallbackLabel"
-	memory_event_image_label.anchor_left = 0.30
-	memory_event_image_label.anchor_top = 0.22
-	memory_event_image_label.anchor_right = 0.70
-	memory_event_image_label.anchor_bottom = 0.30
+	memory_event_image_label.anchor_left = 0.20
+	memory_event_image_label.anchor_top = 0.18
+	memory_event_image_label.anchor_right = 0.80
+	memory_event_image_label.anchor_bottom = 0.42
 	memory_event_image_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	memory_event_image_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	memory_event_image_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	memory_event_image_label.add_theme_font_size_override("font_size", 18)
+	memory_event_image_label.add_theme_font_size_override("font_size", 20)
 	memory_event_image_label.add_theme_color_override("font_color", Color(0.90, 0.90, 0.90))
 	memory_event_image_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.85))
 	memory_event_image_label.add_theme_constant_override("outline_size", 6)
@@ -1748,7 +1751,8 @@ func _show_memory_event_page(page_index: int):
 
 	# 背景：页 image_path 优先，没有就回退事件 image_path
 	var page_image_path := str(page_data.get("image_path", event_data.get("image_path", "")))
-	_switch_memory_event_background(page_image_path)
+	var page_image_hint := str(page_data.get("image_hint", event_data.get("image_hint", "")))
+	_switch_memory_event_background(page_image_path, page_image_hint)
 
 	# 正文
 	if memory_event_text_label:
@@ -1892,8 +1896,10 @@ func _on_memory_event_choice_selected(option: Dictionary):
 
 		# 如果结果页也有背景图，先切一次
 		var result_image_path := str(option.get("result_image_path", ""))
-		if result_image_path != "":
-			_switch_memory_event_background(result_image_path)
+		var result_image_hint := str(option.get("result_image_hint", ""))
+
+		if result_image_path != "" or result_image_hint != "":
+			_switch_memory_event_background(result_image_path, result_image_hint)
 
 		_clear_memory_event_choices()
 
