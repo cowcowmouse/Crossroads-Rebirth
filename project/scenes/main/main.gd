@@ -62,6 +62,7 @@ const CLOCK_ICON_DIM_COLOR := Color(0.65, 0.65, 0.65, 1.0)
 
 # 周阶段切换演出脚本
 const WEEK_TRANSITION_OVERLAY_SCRIPT = preload("res://project/scripts/ui/WeekTransitionOverlay.gd")
+const MEMBER_EVENT_DIALOG_SCENE = preload("res://project/scenes/event/MemberEventDialog.tscn")
 
 # SkipButton 防连点状态
 var is_skip_button_processing: bool = false
@@ -197,7 +198,22 @@ func _ready():
 
 	# 加载保存的音量设置
 	_load_volume_setting()
+	call_deferred("_maybe_show_post_midweek_member_event")
 
+
+func _maybe_show_post_midweek_member_event():
+	if not MemberEventManager.has_post_midweek_return_events():
+		return
+	MemberEventManager.consume_post_midweek_return_flag()
+	var dialog = MEMBER_EVENT_DIALOG_SCENE.instantiate()
+	if dialog == null:
+		return
+	dialog.close_when_finished = true
+	var ui_host = get_node_or_null("UILayer")
+	if ui_host:
+		ui_host.add_child(dialog)
+	else:
+		add_child(dialog)
 
 func _on_settings_pressed():
 	_play_ui_click_sound()

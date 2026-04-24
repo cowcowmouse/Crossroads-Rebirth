@@ -164,6 +164,145 @@
     ]
   },
   {
+    "id": "low_human_009",
+    "title": "误会的短信",
+    "description": "你在群里发的一句'最近排练效率太低'被某位成员理解成针对他个人。对方整晚没说话，散场后直接离开，连平时会打的招呼都省了。",
+    "trigger_conditions": {},
+    "weight": 34,
+    "min_stage": 1,
+    "max_stage": 2,
+    "options": [
+      {
+        "text": "当面解释，先把话说开",
+        "effects": {"cohesion": 8, "human_weight": 3},
+        "result_text": "你主动道歉并解释原意，对方沉默了一会儿后点了点头：'下次直接说我名字。'误会解除。"
+      },
+      {
+        "text": "先冷处理，等他自己消气",
+        "effects": {"cohesion": -4, "human_weight": -2},
+        "result_text": "你们表面照常排练，但彼此之间多了一层隔阂。"
+      }
+    ]
+  },
+  {
+    "id": "low_human_010",
+    "title": "家属来访",
+    "description": "一位成员的家人突然来到酒吧，委婉地表示希望他'找份正经工作'。成员情绪明显受影响，连调音都出了好几次错。",
+    "trigger_conditions": {},
+    "weight": 30,
+    "stage": 2,
+    "options": [
+      {
+        "text": "你出面沟通，替成员承担压力",
+        "effects": {"cohesion": 10, "human_weight": 4, "reputation": 2},
+        "result_text": "你耐心和家属谈了半小时，虽然没完全说服，但至少让对方明白这不是一时冲动。"
+      },
+      {
+        "text": "让成员自己处理",
+        "effects": {"cohesion": -3, "human_weight": 1},
+        "result_text": "成员表面说没事，但接下来几天都明显心不在焉。"
+      }
+    ]
+  },
+  {
+    "id": "low_human_011",
+    "title": "排练室值日制度",
+    "description": "排练室越来越乱，谁来收拾成了新的矛盾点。有人抱怨总是自己在拖地和搬设备。",
+    "trigger_conditions": {},
+    "weight": 28,
+    "options": [
+      {
+        "text": "建立轮值表，公开透明",
+        "effects": {"cohesion": 6, "human_weight": 2},
+        "result_text": "你把值日安排贴在墙上，虽然有人嫌麻烦，但争吵明显减少。"
+      },
+      {
+        "text": "谁有空谁做，不强制",
+        "effects": {"cohesion": -4},
+        "result_text": "两周后垃圾桶又满了，旧问题重新爆发。"
+      }
+    ]
+  },
+  {
+    "id": "low_human_012",
+    "title": "深夜散伙饭",
+    "description": "一次争执后，有人提议大家先别练了，去吃顿夜宵把话说开。街边小店还亮着灯，热气腾腾。",
+    "trigger_conditions": {
+      "cohesion": {"max": 45}
+    },
+    "weight": 36,
+    "interaction_steps": 2,
+    "options": [
+      {
+        "text": "去，今晚把问题讲清楚",
+        "effects": {"cohesion": 8, "human_weight": 4, "money": -400},
+        "result_text": "你们边吃边聊，情绪逐渐缓下来。至少愿意听彼此说完。",
+        "follow_up": {
+          "description": "聊到后半夜，有成员突然提到过去一次被忽视的委屈。所有人都沉默了。",
+          "options": [
+            {
+              "text": "认真回应，承认当时处理不当",
+              "effects": {"cohesion": 10, "human_weight": 4},
+              "result_text": "你没有辩解，只是认真道歉。那个人红着眼眶点头：'那我们重新开始。'"
+            },
+            {
+              "text": "先略过，改天再谈",
+              "effects": {"cohesion": -2, "human_weight": -1},
+              "result_text": "你们勉强把话题转开，但那根刺还在。"
+            }
+          ]
+        }
+      },
+      {
+        "text": "不去，先各自冷静",
+        "effects": {"cohesion": 2},
+        "result_text": "冲突没有升级，但也没有真正解决。"
+      }
+    ]
+  },
+  {
+    "id": "low_human_013",
+    "title": "匿名建议箱",
+    "description": "有人在排练室门口挂了个'匿名建议箱'，希望大家把不敢当面说的话写下来。第一天就塞满了纸条。",
+    "trigger_conditions": {},
+    "weight": 27,
+    "stage": 2,
+    "options": [
+      {
+        "text": "每周公开读一次，逐条讨论",
+        "effects": {"cohesion": 7, "human_weight": 3},
+        "result_text": "你们把建议分成'立即做'和'慢慢改'两类，气氛比以前坦诚了不少。"
+      },
+      {
+        "text": "看完就算，不公开处理",
+        "effects": {"cohesion": -3},
+        "result_text": "纸条越积越多，却没人知道是否真的被重视。"
+      }
+    ]
+  },
+  {
+    "id": "low_human_014",
+    "title": "巡演前的心理压力",
+    "description": "临近一场重要演出，几位成员出现明显焦虑：失眠、食欲差、练习时容易急躁。有人说'我怕我们撑不住'。",
+    "trigger_conditions": {
+      "reputation": {"min": 35}
+    },
+    "weight": 33,
+    "stage": 3,
+    "options": [
+      {
+        "text": "安排一天减压活动",
+        "effects": {"cohesion": 10, "human_weight": 4, "money": -600},
+        "result_text": "你带大家去郊外放空一天，回来后排练效率反而更高。"
+      },
+      {
+        "text": "继续高强度推进",
+        "effects": {"creativity": 3, "cohesion": -6},
+        "result_text": "技术上有进步，但团队情绪明显绷紧。"
+      }
+    ]
+  },
+  {
     "id": "low_human_repeatable_01",
     "title": "酒馆门口的流浪猫",
     "description": "那只流浪猫又来了，蹲在酒馆门口眯着眼睛晒太阳。几个成员围过来逗它玩。",
@@ -180,6 +319,26 @@
         "text": "让它自由自在吧",
         "effects": {"creativity": 1},
         "result_text": "看着猫咪悠闲的样子，好像也没那么焦虑了。"
+      }
+    ]
+  },
+  {
+    "id": "low_human_repeatable_02",
+    "title": "晚班后的闲聊",
+    "description": "打烊后大家坐在门口台阶上吹风，没人谈工作，只聊一些无关紧要的小事。这样的夜晚不解决问题，但会让人觉得还在同一条船上。",
+    "trigger_conditions": {},
+    "weight": 12,
+    "repeatable": true,
+    "options": [
+      {
+        "text": "多聊一会儿",
+        "effects": {"cohesion": 2, "human_weight": 1},
+        "result_text": "你们聊到街灯熄灭，关系悄悄变得柔软。"
+      },
+      {
+        "text": "早点回去休息",
+        "effects": {"creativity": 1},
+        "result_text": "你先起身离开，留下一句'明天见'。"
       }
     ]
   }

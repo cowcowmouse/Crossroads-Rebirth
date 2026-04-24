@@ -16,6 +16,9 @@ var confirm_btn: Button
 
 var current_event_data: Dictionary = {}
 var is_stage2_or_later: bool = false
+var _interaction_stack: Array = []
+var _current_prompt: Dictionary = {}
+var _last_selected_index: int = -1
 
 func _ready():
 	_build_ui()
@@ -158,6 +161,10 @@ func _build_ui():
 func show_event(event_data: Dictionary):
 	current_event_data = event_data
 	is_stage2_or_later = EventManager.get_current_stage() >= 2
+	_interaction_stack.clear()
+	_last_selected_index = -1
+	
+	_apply_stage_theme(EventManager.get_current_stage())
 	
 	# 连锁事件标题加前缀和特殊颜色
 	var title_text = event_data.get("title", "事件")
@@ -174,13 +181,17 @@ func show_event(event_data: Dictionary):
 	
 	title_label.text = title_text
 	desc_label.text = event_data.get("description", "")
+	_current_prompt = {
+		"description": event_data.get("description", ""),
+		"options": event_data.get("options", [])
+	}
 	
 	# 清旧选项
 	for child in options_container.get_children():
 		child.queue_free()
 	
 	# 创建选项按钮
-	var options = event_data.get("options", [])
+	var options = _current_prompt.get("options", [])
 	for i in range(options.size()):
 		var opt = options[i]
 		var btn = _create_option_button(opt, i)
@@ -189,6 +200,36 @@ func show_event(event_data: Dictionary):
 	options_container.visible = true
 	result_container.visible = false
 	visible = true
+
+func _apply_stage_theme(stage: int):
+	# 按阶段提供明显可视差异：前期偏暖、中期偏冷、后期偏压抑深色
+	var overlay_color := Color(0.05, 0.03, 0.08, 0.75)
+	var panel_bg := Color(0.18, 0.14, 0.12, 0.95)
+	var border_color := Color(0.55, 0.40, 0.25, 1.0)
+	var title_color := Color(0.95, 0.82, 0.55)
+	var body_color := Color(0.85, 0.82, 0.75)
+
+	if stage == 2:
+		overlay_color = Color(0.03, 0.08, 0.12, 0.76)
+		panel_bg = Color(0.11, 0.17, 0.20, 0.95)
+		border_color = Color(0.30, 0.62, 0.72, 1.0)
+		title_color = Color(0.70, 0.92, 0.98)
+		body_color = Color(0.83, 0.91, 0.94)
+	elif stage == 3:
+		overlay_color = Color(0.10, 0.02, 0.02, 0.80)
+		panel_bg = Color(0.16, 0.08, 0.09, 0.95)
+		border_color = Color(0.74, 0.34, 0.28, 1.0)
+		title_color = Color(1.0, 0.76, 0.66)
+		body_color = Color(0.93, 0.84, 0.80)
+
+	overlay.color = overlay_color
+	var panel_style = panel.get_theme_stylebox("panel") as StyleBoxFlat
+	if panel_style:
+		panel_style.bg_color = panel_bg
+		panel_style.border_color = border_color
+		panel.add_theme_stylebox_override("panel", panel_style)
+	title_label.add_theme_color_override("font_color", title_color)
+	desc_label.add_theme_color_override("default_color", body_color)
 
 func _create_option_button(option: Dictionary, index: int) -> Button:
 	var btn = Button.new()
@@ -237,11 +278,12 @@ func _create_option_button(option: Dictionary, index: int) -> Button:
 	return btn
 
 func _on_option_pressed(option_index: int):
-	var options = current_event_data.get("options", [])
+	var options = _current_prompt.get("options", [])
 	if option_index >= options.size():
 		return
 	
 	var chosen = options[option_index]
+	_last_selected_index = option_index
 	
 	# 记录变动前
 	var before = {
@@ -276,21 +318,46 @@ func _on_option_pressed(option_index: int):
 	if change_lines.size() > 0:
 		bbcode += "\n\n" + "  ".join(change_lines)
 	
+	# 若有后续互动，推进到下一层，不结束事件
+	if chosen.has("follow_up") and chosen["follow_up"] is Dictionary:
+		_interaction_stack.append(_current_prompt)
+		var next_prompt: Dictionary = chosen["follow_up"]
+		_current_prompt = {
+			"description": next_prompt.get("description", ""),
+			"options": next_prompt.get("options", [])
+		}
+		_show_prompt_step(bbcode)
+		return
+
 	result_label.text = bbcode
-	
-	# 显示结果，隐藏选项
 	options_container.visible = false
 	result_container.visible = true
-	
-	# 发射信号
+
 	var event_id = current_event_data.get("id", "unknown")
 	event_completed.emit(event_id, option_index)
+
+func _show_prompt_step(previous_result: String):
+	for child in options_container.get_children():
+		child.queue_free()
+
+	var step_desc = str(_current_prompt.get("description", ""))
+	desc_label.text = step_desc
+
+	var options: Array = _current_prompt.get("options", [])
+	for i in range(options.size()):
+		var btn = _create_option_button(options[i], i)
+		options_container.add_child(btn)
+
+	result_label.text = previous_result + "\n\n[color=#9ec3ff]事件仍在继续，你需要再做一个决定。[/color]"
+	options_container.visible = true
+	result_container.visible = true
 
 func _on_confirm_pressed():
 	visible = false
 	_return_to_main()
 
 func _return_to_main():
+	MemberEventManager.prepare_post_midweek_return_events()
 	# 返回主场景
 	var main_scene_path = "res://project/scenes/main/main.tscn"
 	if ResourceLoader.exists(main_scene_path):

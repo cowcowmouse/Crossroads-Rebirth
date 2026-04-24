@@ -165,6 +165,146 @@
     ]
   },
   {
+    "id": "low_biz_009",
+    "title": "账本上的隐形亏损",
+    "description": "你在对账时发现酒吧有一笔长期被忽略的小额亏损：杯具损耗、外卖抽佣、临时工加班都在悄悄吃掉利润。账面看着还行，现金流却越来越紧。",
+    "trigger_conditions": {},
+    "weight": 34,
+    "min_stage": 1,
+    "max_stage": 2,
+    "options": [
+      {
+        "text": "立刻做精细化成本管控",
+        "effects": {"money": 1500, "business_weight": 3, "cohesion": -2},
+        "result_text": "你重新梳理了采购和排班，现金流明显改善，但成员抱怨你最近像个会计。"
+      },
+      {
+        "text": "先保持现状，避免伤士气",
+        "effects": {"cohesion": 3, "money": -500},
+        "result_text": "团队氛围轻松了些，但资金压力仍在缓慢上升。"
+      }
+    ]
+  },
+  {
+    "id": "low_biz_010",
+    "title": "外卖平台合作邀约",
+    "description": "本地外卖平台找上门，希望酒吧上架'夜宵套餐'。抽佣偏高，但能快速带来新客流。老钉子皱眉：'线上方便是方便，可别把我们做成快餐店。'",
+    "trigger_conditions": {},
+    "weight": 33,
+    "stage": 2,
+    "options": [
+      {
+        "text": "上架套餐，先拿流量",
+        "effects": {"money": 2000, "business_weight": 3, "reputation": 3},
+        "result_text": "订单确实增加了，深夜时段也开始忙起来。"
+      },
+      {
+        "text": "只保留到店体验，不做外卖",
+        "effects": {"art_weight": 1, "human_weight": 2, "money": -500},
+        "result_text": "你保住了酒吧的氛围感，但也错过了一波线上流量。"
+      }
+    ]
+  },
+  {
+    "id": "low_biz_011",
+    "title": "临时赞助商的附加条款",
+    "description": "一个临时赞助商愿意给你们一笔现金，但要求演出时固定口播广告词。金额不大，却能缓一口气。成员里有人说可以接受，也有人觉得尴尬。",
+    "trigger_conditions": {
+      "money": {"max": 4500}
+    },
+    "weight": 36,
+    "options": [
+      {
+        "text": "接受赞助，按要求执行",
+        "effects": {"money": 2500, "business_weight": 2, "art_weight": -1},
+        "result_text": "钱到账很快，但演出中那段口播让台下气氛有点出戏。"
+      },
+      {
+        "text": "拒绝条款，守住演出完整性",
+        "effects": {"reputation": 4, "cohesion": 3},
+        "result_text": "你们没拿到这笔钱，但成员对方向更一致了。"
+      }
+    ]
+  },
+  {
+    "id": "low_biz_012",
+    "title": "票价调整争议",
+    "description": "近期演出上座率尚可，有人提议把票价上调20%。会计说这是自然涨价，主唱却担心会伤害老粉。",
+    "trigger_conditions": {
+      "reputation": {"min": 25}
+    },
+    "weight": 31,
+    "stage": 2,
+    "interaction_steps": 2,
+    "options": [
+      {
+        "text": "上调票价，试探市场",
+        "effects": {"money": 2200, "business_weight": 3, "reputation": -2},
+        "result_text": "收入提升明显，但评论区开始出现'越来越贵'的声音。",
+        "follow_up": {
+          "description": "涨价后一周，你收到几位老客人的私信：'能不能给老粉留个旧价入口？'",
+          "options": [
+            {
+              "text": "设置老粉优惠通道",
+              "effects": {"reputation": 5, "human_weight": 3, "money": -500},
+              "result_text": "你在购票页加了'老粉票'，争议明显下降。"
+            },
+            {
+              "text": "维持统一票价",
+              "effects": {"business_weight": 2, "reputation": -3},
+              "result_text": "定价体系更统一了，但你失去了一部分最早支持你的人。"
+            }
+          ]
+        }
+      },
+      {
+        "text": "保持原价，先稳口碑",
+        "effects": {"reputation": 4, "human_weight": 2},
+        "result_text": "你们在口碑上维持了友好形象，收益增长则相对缓慢。"
+      }
+    ]
+  },
+  {
+    "id": "low_biz_013",
+    "title": "供应商突然涨价",
+    "description": "酒水与食材供应商通知下月统一涨价12%。如果不调整菜单，利润会被压缩；如果跟着涨价，客流又可能受影响。",
+    "trigger_conditions": {},
+    "weight": 38,
+    "options": [
+      {
+        "text": "优化菜单结构，减少高损耗品",
+        "effects": {"money": 1200, "business_weight": 2, "cohesion": 1},
+        "result_text": "你下架了几款低利润单品，整体毛利率被稳住了。"
+      },
+      {
+        "text": "硬扛成本，不动价格",
+        "effects": {"reputation": 3, "money": -1200},
+        "result_text": "客人感受很好，但账本上的压力更明显了。"
+      }
+    ]
+  },
+  {
+    "id": "low_biz_014",
+    "title": "兼职人手紧缺",
+    "description": "最近兼职服务员频繁请假，吧台和后厨经常忙不过来。你需要在省钱和稳定运营之间做选择。",
+    "trigger_conditions": {},
+    "weight": 32,
+    "min_stage": 1,
+    "max_stage": 3,
+    "options": [
+      {
+        "text": "提高时薪，优先稳定排班",
+        "effects": {"money": -1500, "reputation": 4, "business_weight": 2},
+        "result_text": "服务体验改善了，差评减少，但人工成本上升。"
+      },
+      {
+        "text": "让乐队成员轮流帮忙",
+        "effects": {"cohesion": -3, "human_weight": 1, "money": 500},
+        "result_text": "你省下了人力成本，但成员排练时间被明显挤压。"
+      }
+    ]
+  },
+  {
     "id": "low_biz_repeatable_01",
     "title": "酒馆日常",
     "description": "今晚酒馆客人不多不少，老钉子照常在吧台忙活，偶尔有客人聊几句。",
@@ -181,6 +321,26 @@
         "text": "在后台整理设备",
         "effects": {"creativity": 1},
         "result_text": "设备都收拾整齐了，心情也跟着清爽了。"
+      }
+    ]
+  },
+  {
+    "id": "low_biz_repeatable_02",
+    "title": "账房夜班",
+    "description": "打烊后你独自坐在吧台核对流水，键盘敲击声和冰箱压缩机的嗡鸣交织在一起。没有大事发生，但经营细节总得有人盯着。",
+    "trigger_conditions": {},
+    "weight": 12,
+    "repeatable": true,
+    "options": [
+      {
+        "text": "顺手整理下周预算",
+        "effects": {"business_weight": 1, "money": 300},
+        "result_text": "你提前做好了预算，下周开销心里更有数。"
+      },
+      {
+        "text": "早点收工休息",
+        "effects": {"cohesion": 1},
+        "result_text": "你把电脑一合，决定今天先睡个好觉。"
       }
     ]
   }

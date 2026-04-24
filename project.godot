@@ -29,6 +29,7 @@ ClockState="*res://project/scripts/autoload/ClockState.gd"
 Signals="*res://project/scripts/autoload/signals.gd"
 EventManager="*res://project/scripts/autoload/EventManager.gd"
 AudioManager="*res://project/scripts/autoload/AudioManager.gd"
+MemberEventManager="*res://project/scripts/autoload/MemberEventManager.gd"
 
 [dialogic]
 

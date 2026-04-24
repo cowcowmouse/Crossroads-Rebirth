@@ -170,6 +170,148 @@
 	]
   },
   {
+	"id": "high_art_009",
+	"title": "跨界舞台合作",
+	"description": "一支现代舞团队希望和你们做一次跨界现场。导演说：'音乐不是背景，要成为舞者的对手戏。'这是一次高风险高回报的艺术尝试。",
+	"trigger_conditions": {
+	  "creativity": {"min": 50}
+	},
+	"weight": 32,
+	"stage": 2,
+	"options": [
+	  {
+		"text": "接受合作，打磨联动作",
+		"effects": {"art_weight": 4, "creativity": 10, "reputation": 8},
+		"result_text": "排练过程艰难，但首演当晚全场起立鼓掌。你们被贴上了'敢冒险'的标签。"
+	  },
+	  {
+		"text": "婉拒，专注常规演出",
+		"effects": {"business_weight": 1, "cohesion": 2},
+		"result_text": "你们保留了稳定节奏，也错过了一次破圈机会。"
+	  }
+	]
+  },
+  {
+	"id": "high_art_010",
+	"title": "概念专辑提案",
+	"description": "成员提出做一张有完整叙事线的概念专辑，从第一首到最后一首讲同一个故事。工程量巨大，但一旦成功会很有辨识度。",
+	"trigger_conditions": {},
+	"weight": 30,
+	"stage": 2,
+	"interaction_steps": 2,
+	"options": [
+	  {
+		"text": "做，哪怕慢一点",
+		"effects": {"art_weight": 5, "creativity": 12, "money": -1500},
+		"result_text": "你们开始建立世界观、人物线和动机主题，进度很慢但作品逐渐成形。",
+		"follow_up": {
+		  "description": "做到中途，团队在'故事该开放式结尾还是明确收束'上发生分歧。",
+		  "options": [
+			{
+			  "text": "开放式结尾，留白给听众",
+			  "effects": {"art_weight": 4, "reputation": 3},
+			  "result_text": "专辑评论区充满解读帖，争议与热度并存。"
+			},
+			{
+			  "text": "明确收束，讲完整个故事",
+			  "effects": {"cohesion": 4, "creativity": 4},
+			  "result_text": "作品叙事完整，现场演出时观众更容易共鸣。"
+			}
+		  ]
+		}
+	  },
+	  {
+		"text": "不做，先保证产量",
+		"effects": {"money": 1500, "business_weight": 2},
+		"result_text": "你们维持了稳定发歌频率，但没有形成新的艺术记忆点。"
+	  }
+	]
+  },
+  {
+	"id": "high_art_011",
+	"title": "独立策展人来访",
+	"description": "一位独立艺术节策展人看完演出后提出邀请：希望你们在废弃厂房做一场沉浸式专场，观众数量少但审美浓度极高。",
+	"trigger_conditions": {
+	  "reputation": {"min": 35}
+	},
+	"weight": 31,
+	"options": [
+	  {
+		"text": "接下专场，做一场实验",
+		"effects": {"art_weight": 5, "reputation": 7, "money": 1000},
+		"result_text": "你们把场地灯光和曲序做成了一个完整叙事，观众不多但几乎全员成为忠实听众。"
+	  },
+	  {
+		"text": "拒绝，维持常规场次",
+		"effects": {"money": 1200},
+		"result_text": "你们继续走熟悉路线，收入稳定但艺术标签没有进一步强化。"
+	  }
+	]
+  },
+  {
+	"id": "high_art_012",
+	"title": "母带处理抉择",
+	"description": "后期工程师给了两版母带：一版动态更自然但不够'炸'，另一版响度更高更适合平台播放。两者不可兼得。",
+	"trigger_conditions": {},
+	"weight": 34,
+	"stage": 2,
+	"options": [
+	  {
+		"text": "保留动态，优先听感",
+		"effects": {"art_weight": 3, "creativity": 4, "reputation": 3},
+		"result_text": "音响党与乐评人给出很高评价。"
+	  },
+	  {
+		"text": "提高响度，优先传播",
+		"effects": {"business_weight": 3, "reputation": 5},
+		"result_text": "数据表现更好，但也有评论说声音有点'压扁了'。"
+	  }
+	]
+  },
+  {
+	"id": "high_art_013",
+	"title": "古董乐器修复",
+	"description": "老钉子从仓库翻出一把年代久远的老吉他，音色独特但几乎报废。修复费不低，却可能成为你们声音标识。",
+	"trigger_conditions": {
+	  "money": {"min": 5000}
+	},
+	"weight": 29,
+	"stage": 3,
+	"options": [
+	  {
+		"text": "修，做成标志音色",
+		"effects": {"money": -2500, "art_weight": 4, "creativity": 8},
+		"result_text": "修复后的音色带着粗粝又温暖的颗粒感，新歌一出来就有人认出是你们。"
+	  },
+	  {
+		"text": "不修，预算留给巡演",
+		"effects": {"business_weight": 2, "money": 500},
+		"result_text": "你们保持了资金弹性，但错过了一次塑造独特声音的机会。"
+	  }
+	]
+  },
+  {
+	"id": "high_art_014",
+	"title": "清唱试演",
+	"description": "有人提议在下一场演出中加入一段全员清唱，几乎不靠器乐。风险很大，但如果成功会让全场记住。",
+	"trigger_conditions": {
+	  "cohesion": {"min": 60}
+	},
+	"weight": 30,
+	"options": [
+	  {
+		"text": "上，赌一次现场张力",
+		"effects": {"creativity": 9, "art_weight": 4, "reputation": 6},
+		"result_text": "清唱段落让全场安静到能听见呼吸，结束后掌声几乎掀翻屋顶。"
+	  },
+	  {
+		"text": "保守，不改现有编排",
+		"effects": {"cohesion": 2},
+		"result_text": "演出稳定完成，但没有留下特别的记忆点。"
+	  }
+	]
+  },
+  {
 	"id": "high_art_repeatable_01",
 	"title": "日常排练",
 	"description": "又到了例行排练的时间，没什么特别的事，但坚持练习总是好的。",
@@ -186,6 +328,26 @@
 		"text": "随便练练就收工",
 		"effects": {"cohesion": 2},
 		"result_text": "轻松的一天，大家心情还行。"
+	  }
+	]
+  },
+  {
+	"id": "high_art_repeatable_02",
+	"title": "半小时即兴",
+	"description": "排练前还有半小时空档，成员提议先来一段不设主题的即兴，随手录下来备用。",
+	"trigger_conditions": {},
+	"weight": 12,
+	"repeatable": true,
+	"options": [
+	  {
+		"text": "录下来，后续再整理",
+		"effects": {"creativity": 4, "art_weight": 1},
+		"result_text": "其中一段旋律意外很好听，被你标记成了新歌素材。"
+	  },
+	  {
+		"text": "不录，只当热身",
+		"effects": {"cohesion": 2},
+		"result_text": "大家状态被顺利调动起来，正式排练更顺了。"
 	  }
 	]
   }

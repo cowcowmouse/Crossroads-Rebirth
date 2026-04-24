@@ -1,0 +1,164 @@
+[
+  {
+    "id": "conflict_finn_sebastian",
+    "title": "音乐灵魂 vs 商业逻辑",
+    "member_a": "finn",
+    "member_b": "sebastian",
+    "cohesion_threshold": 35,
+    "description": "【芬恩】你把音乐当商品！你根本不懂音乐！\n【塞巴斯蒂安】没有我，你们连舞台都没有！",
+    "options": [
+      {
+        "text": "强制中断争吵，让两人先冷静",
+        "effects": {
+          "cohesion": -10,
+          "each_relationship": -15
+        },
+        "result_text": "两人勉强停下，但气氛依然剑拔弩张。这周排练效率大幅下降。"
+      }
+    ],
+    "mediation_result": {
+      "description": "【梅】你们别吵了……\n芬恩看重音乐的灵魂，塞巴斯蒂安想让乐队走得更远，大家都是为了这支乐队啊。\n【梅】音乐需要热爱，也需要支撑，少了哪一样都不行。我们坐下来好好说，好不好？\n【梅】大家都是为了乐队，为了彼此。以后有话好好说，别再吵架了。\n【系统提示】矛盾已化解，团队凝聚力+20，双方关系各+20，此矛盾永久关闭。",
+      "effects": {
+        "cohesion": 20,
+        "each_relationship": 20
+      },
+      "result_text": "大家都是为了乐队，为了彼此。以后有话好好说，别再吵架了。",
+      "permanently_resolved": true
+    }
+  },
+  {
+    "id": "conflict_kira_finn",
+    "title": "流量 vs 灵魂",
+    "member_a": "kira",
+    "member_b": "finn",
+    "cohesion_threshold": 35,
+    "description": "【芬恩】你的歌只有流量，没有灵魂！\n【凯拉】你根本不懂我经历了什么！",
+    "options": [
+      {
+        "text": "强制中断争吵，让两人先冷静",
+        "effects": {
+          "cohesion": -8,
+          "each_relationship": -12
+        },
+        "result_text": "两人背对背，气氛僵硬。这周排练时，他们完全不配合彼此。"
+      }
+    ],
+    "mediation_result": {
+      "description": "【梅】凯拉一直在努力做真实的自己，芬恩也只是希望音乐更有温度。\n【梅】你们都很努力，别用伤人的话伤害彼此。我们是一家人，要互相理解才对。\n【梅】大家都是为了乐队，为了彼此。以后有话好好说，别再吵架了。\n【系统提示】矛盾已化解，团队凝聚力+20，双方关系各+20，此矛盾永久关闭。",
+      "effects": {
+        "cohesion": 20,
+        "each_relationship": 20
+      },
+      "result_text": "大家都是为了乐队，为了彼此。以后有话好好说，别再吵架了。",
+      "permanently_resolved": true
+    }
+  },
+  {
+    "id": "conflict_rio_duan",
+    "title": "心跳 vs 精准",
+    "member_a": "rio",
+    "member_b": "duan",
+    "cohesion_threshold": 35,
+    "description": "【杜安】你的鼓点偏差0.12秒，影响全队数据。\n【里奥】音乐不是电路！你没有心！",
+    "options": [
+      {
+        "text": "强制中断争吵，让两人先冷静",
+        "effects": {
+          "cohesion": -8,
+          "each_relationship": -10
+        },
+        "result_text": "里奥和杜安各走一边，排练陷入僵局。"
+      }
+    ],
+    "mediation_result": {
+      "description": "【梅】杜安追求精准是为了乐队更整齐，里奥的感情才让音乐有温度。\n【梅】精准和心跳缺一不可，你们互补才是最棒的，别再吵了。\n【梅】大家都是为了乐队，为了彼此。以后有话好好说，别再吵架了。\n【系统提示】矛盾已化解，团队凝聚力+20，双方关系各+20，此矛盾永久关闭。",
+      "effects": {
+        "cohesion": 20,
+        "each_relationship": 20
+      },
+      "result_text": "大家都是为了乐队，为了彼此。以后有话好好说，别再吵架了。",
+      "permanently_resolved": true
+    }
+  },
+  {
+    "id": "conflict_lily_duan",
+    "title": "纯粹 vs 效率",
+    "member_a": "lily",
+    "member_b": "duan",
+    "cohesion_threshold": 35,
+    "description": "【杜安】我改了你的旋律，效率更高。\n【莉莉】你这是亵渎音乐！",
+    "options": [
+      {
+        "text": "强制中断争吵，让两人先冷静",
+        "effects": {
+          "cohesion": -8,
+          "each_relationship": -10
+        },
+        "result_text": "莉莉抱着小提琴离开，杜安盯着屏幕沉默。本周的编排工作几乎停滞。"
+      }
+    ],
+    "mediation_result": {
+      "description": "【梅】莉莉珍惜古典的纯粹，杜安想让音乐更适合舞台，你们都没有错。\n【梅】我们可以一起商量，保留初心，也变得更好，别生气了。\n【梅】大家都是为了乐队，为了彼此。以后有话好好说，别再吵架了。\n【系统提示】矛盾已化解，团队凝聚力+20，双方关系各+20，此矛盾永久关闭。",
+      "effects": {
+        "cohesion": 20,
+        "each_relationship": 20
+      },
+      "result_text": "大家都是为了乐队，为了彼此。以后有话好好说，别再吵架了。",
+      "permanently_resolved": true
+    }
+  },
+  {
+    "id": "conflict_sebastian_aya",
+    "title": "生存 vs 温暖",
+    "member_a": "sebastian",
+    "member_b": "aya",
+    "cohesion_threshold": 35,
+    "description": "【塞巴斯蒂安】义演不赚钱，取消。\n【阿雅】你冷血得可怕！",
+    "options": [
+      {
+        "text": "强制中断争吵，让两人先冷静",
+        "effects": {
+          "cohesion": -10,
+          "each_relationship": -15
+        },
+        "result_text": "阿雅离开了会议室，乐队气氛降至冰点。"
+      }
+    ],
+    "mediation_result": {
+      "description": "【梅】塞巴斯蒂安担心乐队生存，阿雅想让音乐温暖更多人，都是善良的心意。\n【梅】我们可以兼顾生存与温暖，不用走到对立面。\n【梅】大家都是为了乐队，为了彼此。以后有话好好说，别再吵架了。\n【系统提示】矛盾已化解，团队凝聚力+20，双方关系各+20，此矛盾永久关闭。",
+      "effects": {
+        "cohesion": 20,
+        "each_relationship": 20
+      },
+      "result_text": "大家都是为了乐队，为了彼此。以后有话好好说，别再吵架了。",
+      "permanently_resolved": true
+    }
+  },
+  {
+    "id": "conflict_kira_lily",
+    "title": "勇敢 vs 界限",
+    "member_a": "kira",
+    "member_b": "lily",
+    "cohesion_threshold": 35,
+    "description": "【凯拉】你放开一点啊！\n【莉莉】我做不到！别逼我！",
+    "options": [
+      {
+        "text": "强制中断冲突，让两人先冷静",
+        "effects": {
+          "cohesion": -5,
+          "each_relationship": -8
+        },
+        "result_text": "莉莉独自去了琴房，凯拉站在原地，有些不知所措。"
+      }
+    ],
+    "mediation_result": {
+      "description": "【梅】凯拉只是想帮莉莉勇敢一点，莉莉只是需要时间慢慢来。\n【梅】我们都等你，不逼你，也不怪你，好吗？\n【梅】大家都是为了乐队，为了彼此。以后有话好好说，别再吵架了。\n【系统提示】矛盾已化解，团队凝聚力+20，双方关系各+20，此矛盾永久关闭。",
+      "effects": {
+        "cohesion": 20,
+        "each_relationship": 20
+      },
+      "result_text": "大家都是为了乐队，为了彼此。以后有话好好说，别再吵架了。",
+      "permanently_resolved": true
+    }
+  }
+]

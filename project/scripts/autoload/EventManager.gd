@@ -33,6 +33,13 @@ var _consecutive_repeatable_count: int = 0
 # 当前游戏阶段: 1=前期, 2=中期, 3=后期
 var current_stage: int = 1
 
+# 各阶段对 early/mid/late 事件桶的权重（用于同池内阶段差分）
+const STAGE_BUCKET_WEIGHTS := {
+	1: {"early": 70, "mid": 25, "late": 5},
+	2: {"early": 20, "mid": 60, "late": 20},
+	3: {"early": 10, "mid": 25, "late": 65}
+}
+
 var resource_manager: Node = null
 var constants: Node = null
 
@@ -229,6 +236,9 @@ func get_eligible_events(pool_name: String) -> Array:
 	for event_data in pool:
 		if _check_all_conditions(event_data):
 			eligible.append(event_data)
+
+	# 阶段事件桶分流：优先从 early/mid/late 对应桶中抽取
+	eligible = _filter_by_stage_bucket(eligible)
 	
 	# 安全兜底：如果没有任何事件满足条件，放入所有无条件的可重复事件
 	if eligible.is_empty():
@@ -250,6 +260,101 @@ func get_eligible_events(pool_name: String) -> Array:
 		eligible.append(pool[0])
 	
 	return eligible
+
+func _filter_by_stage_bucket(events: Array) -> Array:
+	if events.is_empty():
+		return events
+
+	var buckets := {"early": [], "mid": [], "late": [], "any": []}
+	for evt in events:
+		var label = str(evt.get("stage_label", "")).to_lower()
+		if label == "":
+			label = _infer_stage_label(evt)
+		if not buckets.has(label):
+			label = "any"
+		buckets[label].append(evt)
+
+	# 若没有阶段标签，保持原样
+	if buckets["early"].is_empty() and buckets["mid"].is_empty() and buckets["late"].is_empty():
+		return events
+
+	var chosen_bucket = _roll_stage_bucket(buckets)
+	if chosen_bucket.size() > 0:
+		print("[EventManager] 阶段桶命中: ", _detect_bucket_name(chosen_bucket, buckets), " 事件数:", chosen_bucket.size())
+		return chosen_bucket
+
+	# 回退：按阶段自然优先级返回
+	match current_stage:
+		1:
+			if buckets["early"].size() > 0:
+				return buckets["early"]
+		2:
+			if buckets["mid"].size() > 0:
+				return buckets["mid"]
+		3:
+			if buckets["late"].size() > 0:
+				return buckets["late"]
+
+	if buckets["any"].size() > 0:
+		return buckets["any"]
+	return events
+
+func _roll_stage_bucket(buckets: Dictionary) -> Array:
+	var weights: Dictionary = STAGE_BUCKET_WEIGHTS.get(current_stage, STAGE_BUCKET_WEIGHTS[1])
+	var total = 0
+	var roll_table: Array = []
+
+	for bucket_name in ["early", "mid", "late"]:
+		var arr: Array = buckets.get(bucket_name, [])
+		if arr.is_empty():
+			continue
+		var w = int(weights.get(bucket_name, 0))
+		if w <= 0:
+			continue
+		total += w
+		roll_table.append({"name": bucket_name, "weight": w})
+
+	if total <= 0:
+		if buckets.get("any", []).size() > 0:
+			return buckets["any"]
+		return []
+
+	var roll = randi() % total
+	var acc = 0
+	for row in roll_table:
+		acc += int(row["weight"])
+		if roll < acc:
+			return buckets[row["name"]]
+
+	if buckets.get("any", []).size() > 0:
+		return buckets["any"]
+	return []
+
+func _detect_bucket_name(chosen: Array, buckets: Dictionary) -> String:
+	for k in buckets.keys():
+		if buckets[k] == chosen:
+			return str(k)
+	return "unknown"
+
+func _infer_stage_label(event_data: Dictionary) -> String:
+	var stage = int(event_data.get("stage", 0))
+	if stage == 1:
+		return "early"
+	if stage == 2:
+		return "mid"
+	if stage == 3:
+		return "late"
+
+	var min_stage = int(event_data.get("min_stage", 0))
+	var max_stage = int(event_data.get("max_stage", 0))
+	if max_stage == 1:
+		return "early"
+	if min_stage >= 3:
+		return "late"
+	if min_stage == 2 or max_stage == 2:
+		return "mid"
+
+	return "any"
 
 # 综合检查：触发条件 + 阶段 + 不重复 + 连锁前置
 func _check_all_conditions(event_data: Dictionary) -> bool:

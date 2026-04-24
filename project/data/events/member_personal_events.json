@@ -1,0 +1,1739 @@
+{
+  "rio": {
+    "stage_1_events": [
+      {
+        "id": "rio_s1_01",
+        "title": "深夜的酒杯",
+        "description": "深夜的吧台，里奥独自坐在阴影里，手中紧握着一杯威士忌。他低声自语：'别靠太近……我身上的味道不好闻。'他的手在微微颤抖，似乎在等某种崩溃的到来。",
+        "options": [
+          {
+            "text": "在他旁边安静地坐下",
+            "effects": {
+              "relationship": 5,
+              "cohesion": 2
+            },
+            "result_text": "你什么也没说，只是陪着他。里奥沉默了很久，最后轻声说了句：'……谢谢。'他没有喝那杯酒。"
+          },
+          {
+            "text": "帮他把酒杯收走",
+            "effects": {
+              "relationship": -3
+            },
+            "result_text": "里奥猛地护住酒杯，警惕地看着你。'别碰我的东西。'他的声音沙哑而充满敌意。你退开了。"
+          }
+        ]
+      },
+      {
+        "id": "rio_s1_02",
+        "title": "关灯后的节拍",
+        "description": "酒吧打烊后，你听见储物间传来很轻的敲击声。推门一看，里奥正拿着两根旧鼓棒，在木箱上试着打节拍。看到你时，他立刻停下，像被抓包一样把鼓棒藏到身后。",
+        "options": [
+          {
+            "text": "继续打吧，我帮你守门",
+            "effects": {
+              "relationship": 6,
+              "cohesion": 3,
+              "creativity": 2
+            },
+            "result_text": "里奥盯着你看了几秒，最终重新举起鼓棒。节拍从断断续续到逐渐稳定，他低声说：'别告诉别人……我还想再试一次。'"
+          },
+          {
+            "text": "这么晚了，先回去休息",
+            "effects": {
+              "relationship": 2,
+              "cohesion": 1
+            },
+            "result_text": "里奥点点头，把鼓棒放回箱子里。临走前他回头看了一眼：'明天……我也许会早点来。'"
+          }
+        ]
+      }
+    ],
+    "key_1to2": {
+      "id": "rio_key_1to2",
+      "title": "发抖的手",
+      "description": "打烊后的深夜吧台，里奥坐在阴影里，手里握着半杯威士忌，手悬在酒杯上方，不停发抖，面前的吧台上，放着他藏了很久的鼓槌。\n\n【里奥】（声音沙哑，带着醉意，却不敢碰酒杯）别靠太近……我身上的酒气，不好闻。\n【你】又在和自己较劲？\n【里奥】（苦笑一声，指尖划过鼓槌）以前握鼓槌的手，现在只会握酒杯，抖得连节拍都抓不住。乐队散了之后，我就成了个废物。",
+      "trigger_relation": 30,
+      "lock_zero": false,
+      "options": [
+        {
+          "text": "不用撑一整夜，撑过今晚就够了。我在这里陪你。",
+          "effects": {
+            "relationship": 25,
+            "cohesion": 10,
+            "mood": 10
+          },
+          "result_text": "【里奥】（眼眶发红，把酒杯推到一边，拿起鼓槌，紧紧攥在手里）……好。撑过今晚。谢谢你，没把我当废物。",
+          "advance": true
+        },
+        {
+          "text": "别勉强自己，想喝就喝吧，别太为难自己。",
+          "effects": {
+            "relationship": -10,
+            "cohesion": -5,
+            "mood": -5
+          },
+          "result_text": "【里奥】（苦笑一声，仰头喝光了杯里的酒）我就知道，没人会真的指望我。",
+          "advance": false
+        },
+        {
+          "text": "再这样喝下去，你这辈子都别想再碰鼓了。",
+          "effects": {},
+          "result_text": "【里奥】（沉默许久，把酒杯收了起来）……我知道。",
+          "advance": false
+        }
+      ]
+    },
+    "stage_2_events": [
+      {
+        "id": "rio_s2_01",
+        "title": "鼓槌的温度",
+        "description": "排练结束后，你发现里奥偷偷留下来，站在鼓组旁边。他的手指轻轻触碰着鼓面，神情复杂——既渴望又恐惧。",
+        "options": [
+          {
+            "text": "递给他一副鼓槌",
+            "effects": {
+              "relationship": 8,
+              "creativity": 5,
+              "cohesion": 3
+            },
+            "result_text": "里奥接过鼓槌，犹豫了一下，轻轻敲了几下。声音有些生涩，但他的眼里闪过了久违的光。'手感……还在。'"
+          },
+          {
+            "text": "在旁边安静等他自己决定",
+            "effects": {
+              "relationship": 3,
+              "cohesion": 2
+            },
+            "result_text": "里奥站了很久，最终没有拿起鼓槌。但他回头看了你一眼，点了点头。至少，他没有逃跑。"
+          }
+        ]
+      }
+    ],
+    "key_2to3": {
+      "id": "rio_key_2to3",
+      "title": "不是为了谁",
+      "description": "清晨的酒吧，阳光透过窗户洒在鼓组上，里奥坐在鼓前，手里握着鼓槌，面前放着一张他当年乐队的演出照片，他已经在这里坐了两个小时。\n\n【里奥】（听见脚步声，回头看你，脸上没有醉意，眼神清澈）我昨天没喝。一滴都没碰。\n【你】我看到了，你在这里坐了一早上？\n【里奥】（指尖划过照片）以前我打鼓，是为了乐队，为了不被人看不起。后来戒酒，是为了不拖你们的后腿。\n【里奥】但昨天晚上我想明白了，我这次拿起鼓槌，不是为了任何人，是为了我自己。我想再登一次台，再打一次我自己写的曲子。",
+      "trigger_relation": 60,
+      "options": [
+        {
+          "text": "我们所有人，都在舞台上等着你。",
+          "effects": {
+            "relationship": 30,
+            "cohesion": 15,
+            "creativity": 10
+          },
+          "result_text": "【里奥】（笑着拿起鼓槌，落下第一拍，节奏稳而有力）好。这一次，我不会再放手了。",
+          "advance": true
+        },
+        {
+          "text": "你早就该这么想了，你本来就是个优秀的鼓手。",
+          "effects": {
+            "relationship": 30,
+            "cohesion": 15,
+            "creativity": 10
+          },
+          "result_text": "【里奥】（笑着拿起鼓槌，落下第一拍，节奏稳而有力）好。这一次，我不会再放手了。",
+          "advance": true
+        },
+        {
+          "text": "要不要现在试试，打一段给我听听？",
+          "effects": {
+            "relationship": 30,
+            "cohesion": 15,
+            "creativity": 10
+          },
+          "result_text": "【里奥】（笑着拿起鼓槌，落下第一拍，节奏稳而有力）好。这一次，我不会再放手了。",
+          "advance": true
+        }
+      ]
+    },
+    "stage_3_events": [
+      {
+        "id": "rio_s3_01",
+        "title": "老搭档的默契",
+        "description": "演出临近，里奥主动找你讨论编曲。他提出了一段大胆的鼓点安排，眼中满是自信。'让我试试这段新编排，相信我。'这和之前那个躲在阴影里的人判若两人。",
+        "options": [
+          {
+            "text": "全力支持他的编排",
+            "effects": {
+              "relationship": 5,
+              "creativity": 8,
+              "cohesion": 5
+            },
+            "result_text": "里奥的编排出人意料地完美。排练时，所有人都被那段鼓点震住了。里奥拍着你的肩膀：'谢谢你当初没放弃我。'"
+          },
+          {
+            "text": "建议稍微保守一点",
+            "effects": {
+              "relationship": 2,
+              "creativity": 3,
+              "cohesion": 2
+            },
+            "result_text": "里奥想了想，做了一些调整。最终效果很好，他咧嘴笑着说：'下次让我放飞一回。'"
+          }
+        ]
+      }
+    ]
+  },
+  "kira": {
+    "stage_1_events": [
+      {
+        "id": "kira_s1_01",
+        "title": "镜子前的笑容",
+        "description": "凯拉对着化妆室的镜子仔细补妆，嘴角挂着标准的甜美微笑，可眼神里空空的。她注意到你，反射性地问：'要拍照吗？我习惯了。'顿了一下又说：'累也不能说呀，偶像不能有情绪。'",
+        "options": [
+          {
+            "text": "你不用笑给我看",
+            "effects": {
+              "relationship": 5,
+              "cohesion": 2
+            },
+            "result_text": "凯拉的笑容僵住了一瞬。她低下头，声音很轻：'……好久没人这么说了。'她把口红放下了。"
+          },
+          {
+            "text": "你笑起来很好看",
+            "effects": {
+              "relationship": -2
+            },
+            "result_text": "凯拉又露出那个完美的微笑：'谢谢！'但你注意到她的眼睛没有在笑。"
+          }
+        ]
+      }
+    ],
+    "key_1to2": {
+      "id": "kira_key_1to2",
+      "title": "恶评风暴",
+      "description": "酒吧的化妆间，凯拉对着镜子，手里攥着手机，屏幕上是满屏的恶评，她眼眶发红，却还在对着镜子练习标准的微笑，化妆台上放着她写了一半的原创歌词。\n\n【凯拉】（听见脚步声，迅速锁屏，擦掉眼泪，挤出标准的甜美笑容）呀，老板，你怎么来了？要拍照吗？我补个妆就好。\n【你】不用装了，我都看到了。\n【凯拉】（笑容瞬间垮掉，肩膀垮了下来）他们喜欢的，是镜头里那个甜美的凯拉。如果我唱自己写的歌，唱摇滚，唱那些不开心的情绪……他们就会不喜欢我了，我就什么都没有了。",
+      "trigger_relation": 30,
+      "lock_zero": false,
+      "options": [
+        {
+          "text": "你不用讨好任何人，你只要做你自己就够了。",
+          "effects": {
+            "relationship": 25,
+            "reputation": 10,
+            "cohesion": 10
+          },
+          "result_text": "【凯拉】（拿起写满歌词的本子，眼泪掉了下来，却笑了）……谢谢你。在这里，我终于可以不用笑了。",
+          "advance": true,
+          "unlock_kira_original_song": true
+        },
+        {
+          "text": "先稳住人气吧，现实最重要，别拿自己的前途冒险。",
+          "effects": {
+            "relationship": -10,
+            "cohesion": -5,
+            "mood": -5
+          },
+          "result_text": "【凯拉】（低下头，把歌词本收进抽屉里）……我知道了。",
+          "advance": false
+        },
+        {
+          "text": "想唱就唱，这里是熔炉，没人会限制你。",
+          "effects": {
+            "relationship": 25,
+            "reputation": 10,
+            "cohesion": 10
+          },
+          "result_text": "【凯拉】（拿起写满歌词的本子，眼泪掉了下来，却笑了）……谢谢你。在这里，我终于可以不用笑了。",
+          "advance": true,
+          "unlock_kira_original_song": true
+        }
+      ]
+    },
+    "stage_2_events": [
+      {
+        "id": "kira_s2_01",
+        "title": "卸下的妆",
+        "description": "排练间隙，凯拉第一次素颜出现在大家面前。她有些不安地摸着脸：'是不是很丑？'但她的声音是真实的，不再是甜腻的偶像音调了。",
+        "options": [
+          {
+            "text": "这才是凯拉",
+            "effects": {
+              "relationship": 8,
+              "cohesion": 5
+            },
+            "result_text": "凯拉愣了一下，然后笑了——不是那种练习过的微笑，是发自内心的。'谢谢你让我知道，不完美也可以。'"
+          },
+          {
+            "text": "你想怎样都行",
+            "effects": {
+              "relationship": 3,
+              "cohesion": 2
+            },
+            "result_text": "凯拉点点头，似乎还在适应不戴面具的感觉。但她没有回去补妆。"
+          }
+        ]
+      }
+    ],
+    "key_2to3": {
+      "id": "kira_key_2to3",
+      "title": "从未唱过的歌",
+      "description": "深夜的空舞台，全场没有灯光，只有一支话筒立在中央，凯拉站在话筒前，清唱着自己写的原创歌曲，没有任何伴奏，声音里全是情绪。\n\n【凯拉】（唱完最后一句，听见你的掌声，转过身，有些惊愕）你都听到了？\n【你】唱的很好......\n【凯拉】这是我写的第一首，完全属于我自己的歌。以前我总怕，我不笑、不甜美，就没人喜欢我。\n【凯拉】但现在我明白了，真正喜欢我的人，会喜欢真实的我。谢谢你，让我敢做凯拉，而不是那个镜头里的偶像。",
+      "trigger_relation": 60,
+      "options": [
+        {
+          "text": "最终演出，就唱这首歌吧，让所有人都听到真实的你。",
+          "effects": {
+            "relationship": 30,
+            "reputation": 15,
+            "cohesion": 15
+          },
+          "result_text": "【凯拉】（用力点头，眼里含着泪，却笑得无比灿烂）好！我要让所有人都听到，我唱自己的歌，有多好听！",
+          "advance": true
+        },
+        {
+          "text": "你天生就该站在舞台上，唱你自己的歌。",
+          "effects": {
+            "relationship": 30,
+            "reputation": 15,
+            "cohesion": 15
+          },
+          "result_text": "【凯拉】（用力点头，眼里含着泪，却笑得无比灿烂）好！我要让所有人都听到，我唱自己的歌，有多好听！",
+          "advance": true
+        },
+        {
+          "text": "以后不用再藏着了，想唱什么，我们都陪你。",
+          "effects": {
+            "relationship": 30,
+            "reputation": 15,
+            "cohesion": 15
+          },
+          "result_text": "【凯拉】（用力点头，眼里含着泪，却笑得无比灿烂）好！我要让所有人都听到，我唱自己的歌，有多好听！",
+          "advance": true
+        }
+      ]
+    },
+    "stage_3_events": [
+      {
+        "id": "kira_s3_01",
+        "title": "真实的声音",
+        "description": "凯拉开始在酒吧的小舞台上唱自己写的歌。观众不多，但每个人都听得入迷。她下台后满脸红光：'哪怕只有三个人在听，那也是听我的歌的三个人。'",
+        "options": [
+          {
+            "text": "以后会有更多人听到的",
+            "effects": {
+              "relationship": 5,
+              "reputation": 8,
+              "cohesion": 3
+            },
+            "result_text": "凯拉握着你的手：'重要的是，我终于敢唱了。'"
+          },
+          {
+            "text": "享受当下就好",
+            "effects": {
+              "relationship": 3,
+              "cohesion": 5
+            },
+            "result_text": "凯拉嗯了一声，看着台下的听众微笑。那是最真实的凯拉。"
+          }
+        ]
+      }
+    ]
+  },
+  "mei": {
+    "stage_1_events": [
+      {
+        "id": "mei_s1_01",
+        "title": "安静的身影",
+        "description": "梅默默整理着乐器架上的设备，动作轻柔仔细，安静得像空气。你走过去时她微微让开：'大家舒服就好，我没关系。'她总是这样，把自己缩到最小。",
+        "options": [
+          {
+            "text": "你也是乐队的一份子，不用总让着别人",
+            "effects": {
+              "relationship": 5,
+              "cohesion": 3
+            },
+            "result_text": "梅怔了一下，然后轻轻笑了：'习惯了。不过……被人看见的感觉，挺好的。'"
+          },
+          {
+            "text": "谢谢你一直在照顾大家",
+            "effects": {
+              "relationship": 3,
+              "cohesion": 2
+            },
+            "result_text": "梅摇摇头：'不用谢。'但她的嘴角微微翘起，似乎很开心被认可。"
+          }
+        ]
+      }
+    ],
+    "key_1to2": {
+      "id": "mei_key_1to2",
+      "title": "地上的碎片",
+      "description": "队员争执过后的酒吧，满地都是散落的乐谱，梅蹲在地上，一张一张捡起来，手指被纸划破了也没在意，眼眶发红，却还在默默整理。\n\n【梅】（听见脚步声，抬起头，慌忙擦掉眼泪，挤出温柔的笑）啊，老板，不好意思，弄的这么乱，我马上就收拾好。\n【你】别收拾了，手都划破了。他们吵架，不是你的错。\n【梅】（低下头，声音哽咽）我不想大家散……可我好像只会忍耐，只会收拾烂摊子，我什么都做不好。我也会累，只是不敢说，怕给大家添麻烦。",
+      "trigger_relation": 30,
+      "lock_zero": false,
+      "options": [
+        {
+          "text": "你没必要一直忍耐，有什么难处，以后都可以直说。",
+          "effects": {
+            "relationship": 25,
+            "cohesion": 15
+          },
+          "result_text": "【梅】（眼泪掉了下来，却松了一口气，露出了释然的笑）……谢谢你，终于有人看见我了。",
+          "advance": true,
+          "unlock_mediation": true
+        },
+        {
+          "text": "团队就这样，忍忍就过去了，辛苦你了。",
+          "effects": {
+            "relationship": -10,
+            "cohesion": -5,
+            "mood": -5
+          },
+          "result_text": "【梅】（低下头，继续默默捡乐谱）……好，我知道了。",
+          "advance": false
+        },
+        {
+          "text": "这个家，有你在才稳。你不用一个人扛着，我们一起。",
+          "effects": {
+            "relationship": 25,
+            "cohesion": 15
+          },
+          "result_text": "【梅】（眼泪掉了下来，却松了一口气，露出了释然的笑）……谢谢你，终于有人看见我了。",
+          "advance": true,
+          "unlock_mediation": true
+        }
+      ],
+      "trigger_conditions": {
+        "cohesion": {
+          "max": 50
+        }
+      }
+    },
+    "stage_2_events": [
+      {
+        "id": "mei_s2_01",
+        "title": "过度操劳的温柔",
+        "description": "你发现梅已经连续几天帮所有人处理杂务——帮里奥收拾酒杯、帮凯拉整理衣物、帮老钉子擦吧台。她的脸色有些苍白，但嘴上还是说'我没事'。",
+        "options": [
+          {
+            "text": "今天你休息，换我来",
+            "effects": {
+              "relationship": 10,
+              "cohesion": 5
+            },
+            "result_text": "梅张了张嘴想拒绝，最终还是坐下了。'真的可以吗……'她靠在椅子上闭上了眼睛，很快就睡着了。她真的太累了。"
+          },
+          {
+            "text": "你不用什么都揽在身上",
+            "effects": {
+              "relationship": 5,
+              "cohesion": 3
+            },
+            "result_text": "梅犹豫了一下：'可是如果我不做……'她似乎在学着不再那么委屈自己，但还需要时间。"
+          }
+        ]
+      },
+      {
+        "id": "mei_s2_02",
+        "title": "写给自己的便签",
+        "description": "你在后台白板上看到一张便签，字迹很工整：'今天先照顾自己，再照顾大家。'落款是梅。她看到你注意到那张纸，有些不好意思地把手背到身后。",
+        "options": [
+          {
+            "text": "这张便签写得很好，继续坚持",
+            "effects": {
+              "relationship": 8,
+              "cohesion": 4,
+              "mood": 4
+            },
+            "result_text": "梅轻轻点头，把便签重新贴正。'我会试着先把自己照顾好。'她说这句话时，声音比以往坚定。"
+          },
+          {
+            "text": "需要我陪你一起执行吗",
+            "effects": {
+              "relationship": 10,
+              "cohesion": 5
+            },
+            "result_text": "梅愣了一下，然后露出很浅的笑。'那就约好，互相提醒。'她第一次主动提出了自己的需求。"
+          }
+        ]
+      }
+    ],
+    "key_2to3": {
+      "id": "mei_key_2to3",
+      "title": "属于我的Slap",
+      "description": "乐队排练室，梅站在舞台前排，手里握着贝斯，第一次站在最显眼的位置，而不是角落，她指尖微微发抖，却眼神坚定。\n\n【梅】（看到你，有点不好意思地笑了）我以前，总习惯站在角落，给大家托底，做最不起眼的贝斯手。\n【你】你早就该站到前面来了，你的Slap弹的非常好。\n【梅】以前我总觉得，大家舒服就好，我没关系。可现在我想通了，我也有自己的舞台梦，我也想让大家听到我的贝斯，听到我的声音。",
+      "trigger_relation": 60,
+      "options": [
+        {
+          "text": "最终演出，给你留了贝斯Solo的段落，该你发光了。",
+          "effects": {
+            "relationship": 30,
+            "cohesion": 20,
+            "creativity": 10
+          },
+          "result_text": "【梅】（笑着拨动琴弦，流畅的贝斯Solo响起，自信又耀眼）好！这一次，我要为自己演奏。",
+          "advance": true
+        },
+        {
+          "text": "不用再躲在角落了，我们都在你身后。",
+          "effects": {
+            "relationship": 30,
+            "cohesion": 20,
+            "creativity": 10
+          },
+          "result_text": "【梅】（笑着拨动琴弦，流畅的贝斯Solo响起，自信又耀眼）好！这一次，我要为自己演奏。",
+          "advance": true
+        },
+        {
+          "text": "要不要现在弹一段，让我们都开开眼？",
+          "effects": {
+            "relationship": 30,
+            "cohesion": 20,
+            "creativity": 10
+          },
+          "result_text": "【梅】（笑着拨动琴弦，流畅的贝斯Solo响起，自信又耀眼）好！这一次，我要为自己演奏。",
+          "advance": true
+        }
+      ]
+    },
+    "stage_3_events": [
+      {
+        "id": "mei_s3_01",
+        "title": "调解之力",
+        "description": "乐队两个成员又起了争执。以前的梅会默默退到角落，但这次她走到两人中间，平静而坚定地说：'我们都在用自己的方式撑着这个乐队。别用伤害，表达害怕。'",
+        "options": [
+          {
+            "text": "把调解的事交给梅",
+            "effects": {
+              "relationship": 5,
+              "cohesion": 12
+            },
+            "result_text": "梅温柔但有力地化解了冲突。两个人都冷静下来了。梅回头看了你一眼，微笑着。她终于找到了属于自己的力量。",
+            "unlock_mediation": true
+          },
+          {
+            "text": "和她一起调解",
+            "effects": {
+              "relationship": 3,
+              "cohesion": 8
+            },
+            "result_text": "你们合力安抚了争吵的两人。梅小声说：'有你在，我更有信心了。'"
+          }
+        ]
+      }
+    ]
+  },
+  "old_nail": {
+    "stage_1_events": [
+      {
+        "id": "nail_s1_01",
+        "title": "擦杯子的老人",
+        "description": "老钉子像往常一样缓慢地擦着吧台的杯子，偶尔偷偷看你一眼。你靠近时，他平静地说：'少喝酒，手会坏。'他盯着你的手看了一会，眼神里有一丝说不清的东西：'……眼熟。'",
+        "options": [
+          {
+            "text": "你认识我？",
+            "effects": {
+              "relationship": 5
+            },
+            "result_text": "老钉子沉默了一下，又低头继续擦杯子。'老了，记性不好。'但你注意到他擦杯子的手停顿了一下。"
+          },
+          {
+            "text": "谢谢提醒",
+            "effects": {
+              "relationship": 3,
+              "cohesion": 2
+            },
+            "result_text": "老钉子点点头，继续干活。沉默中，你感到一种莫名的安心感。"
+          }
+        ]
+      }
+    ],
+    "key_1to2": {
+      "id": "nail_key_1to2",
+      "title": "不要重蹈覆辙",
+      "description": "打烊后的深夜酒吧，老钉子背对着你，慢慢擦着杯子，吧台上放着一张你父亲年轻时的演出照片，他看了很久，背影里全是隐忍的情绪。\n\n【老钉子】（头也不回，声音沙哑）少喝酒，你的手还没好全。\n【你】你认识我爸，对不对？你看这张照片，看了很久了。\n【老钉子】（转过身，看着你，眼神复杂）这条路很苦。你父亲走了一辈子，摔得很惨，被资本坑得倾家荡产，到死都没再登上舞台。我不想你重蹈覆辙。",
+      "trigger_relation": 30,
+      "lock_zero": false,
+      "options": [
+        {
+          "text": "你好像知道很多关于我爸，关于我的事。我想听。",
+          "effects": {
+            "relationship": 25,
+            "recovery": 10,
+            "cohesion": 10
+          },
+          "result_text": "【老钉子】（露出了难得的笑容，把照片推到你面前）好。你想知道的，我全都告诉你。你父亲要是看到你现在的样子，一定会很骄傲。",
+          "advance": true,
+          "unlock_fathers_relic": true
+        },
+        {
+          "text": "我的路，我自己走，不用你提醒。",
+          "effects": {
+            "relationship": -10,
+            "mood": -5
+          },
+          "result_text": "【老钉子】（沉默许久，转过身继续擦杯子）……随你吧。",
+          "advance": false
+        },
+        {
+          "text": "我不会像我爸一样，我会守住我的音乐，也守住这个酒吧。",
+          "effects": {
+            "relationship": 25,
+            "recovery": 10,
+            "cohesion": 10
+          },
+          "result_text": "【老钉子】（露出了难得的笑容，把照片推到你面前）好。你想知道的，我全都告诉你。你父亲要是看到你现在的样子，一定会很骄傲。",
+          "advance": true,
+          "unlock_fathers_relic": true
+        }
+      ],
+      "trigger_conditions": {
+        "recovery": {
+          "min": 50
+        }
+      }
+    },
+    "stage_2_events": [
+      {
+        "id": "nail_s2_01",
+        "title": "老照片",
+        "description": "你在吧台下面的抽屉里发现了一张泛黄的照片——照片上是一群年轻人在这个酒吧的舞台上演出，其中一个人长得很像你的父亲。老钉子走过来，看到照片后沉默了很久。",
+        "options": [
+          {
+            "text": "这就是当年的'熔炉'吗？",
+            "effects": {
+              "relationship": 10,
+              "cohesion": 5
+            },
+            "result_text": "老钉子拿起照片，手指轻轻摩挲着。'最好的时光。'他的声音很轻，但你看到他的嘴角微微上扬。'你和他……很像。'他把照片递给了你。"
+          },
+          {
+            "text": "悄悄把照片放回去",
+            "effects": {
+              "relationship": 3
+            },
+            "result_text": "你觉得不该擅自翻别人的回忆。老钉子走过来看到抽屉微开，沉默地关上了。他什么也没说。"
+          }
+        ]
+      }
+    ],
+    "key_2to3": {
+      "id": "nail_key_2to3",
+      "title": "欢迎回家",
+      "description": "深夜空无一人的酒吧，所有灯都关掉，只留吧台一盏黄灯。老钉子从保险柜里拿出一个旧铁盒，里面是父亲的吉他拨片、当年的乐队合同、一张泛黄的三人合影（父亲、老钉子、年幼的主角）。他指尖颤抖，第一次在你面前卸下所有伪装。\n\n【老钉子】（捧着铁盒，声音苍老发颤）这是你爸这辈子最珍贵的东西。他到死，都在护着你。\n【你】我爸…… 他到底经历了什么？\n【老钉子】（慢慢抬头，眼中含泪）你爸当年和你一样，红过、拼过、也被凤凰唱片坑得家破人亡。他临死前抓着我的手说——“别让 Alexi 走音乐这条路，太苦、太脏、太容易被资本吃掉。如果他非要闯，别出面拦，别让他恨你，在暗处护着他就好。”\n【老钉子】签约那晚，我破例拦了你。我扮成陌生人，可你骂我多管闲事，愤怒、醉酒、冲出去……就出了车祸。我这辈子，最对不起的人，就是你和你爸。",
+      "trigger_relation": 60,
+      "options": [
+        {
+          "text": "当年拦我的那个人…… 是你。",
+          "effects": {
+            "relationship": 30,
+            "recovery": 15,
+            "creativity": 20,
+            "cohesion": 25,
+            "reputation": 100
+          },
+          "result_text": "【老钉子】（眼泪终于落下，把铁盒推到你面前）我守了这家酒吧、守了你整整十年。现在我把你爸的遗憾、我的愧疚、所有秘密…… 全都还给你。欢迎回家，Alexi。",
+          "advance": true,
+          "unlock_main_truth": true,
+          "unlock_nail_guardian_aura": true
+        },
+        {
+          "text": "我不怪你，这条路是我自己选的。",
+          "effects": {
+            "relationship": 30,
+            "recovery": 15,
+            "creativity": 20,
+            "cohesion": 25,
+            "reputation": 100
+          },
+          "result_text": "【老钉子】（眼泪终于落下，把铁盒推到你面前）我守了这家酒吧、守了你整整十年。现在我把你爸的遗憾、我的愧疚、所有秘密…… 全都还给你。欢迎回家，Alexi。",
+          "advance": true,
+          "unlock_main_truth": true,
+          "unlock_nail_guardian_aura": true
+        },
+        {
+          "text": "爸没选错兄弟，你是我在这世上最亲的人。",
+          "effects": {
+            "relationship": 30,
+            "recovery": 15,
+            "creativity": 20,
+            "cohesion": 25,
+            "reputation": 100
+          },
+          "result_text": "【老钉子】（眼泪终于落下，把铁盒推到你面前）我守了这家酒吧、守了你整整十年。现在我把你爸的遗憾、我的愧疚、所有秘密…… 全都还给你。欢迎回家，Alexi。",
+          "advance": true,
+          "unlock_main_truth": true,
+          "unlock_nail_guardian_aura": true
+        }
+      ],
+      "trigger_conditions": {
+        "recovery": {
+          "min": 90
+        },
+        "fathers_relic": true
+      }
+    },
+    "stage_3_events": [
+      {
+        "id": "nail_s3_01",
+        "title": "守护者的微笑",
+        "description": "你注意到老钉子最近擦杯子的时候，不再偷偷看你了——他是光明正大地看着你和乐队的人笑着闹着。偶尔他会哼起一段老旋律，那是你父亲的歌。",
+        "options": [
+          {
+            "text": "跟着他一起哼",
+            "effects": {
+              "relationship": 5,
+              "cohesion": 8,
+              "memory": 5
+            },
+            "result_text": "你们一老一少，在空荡的酒吧里合着旋律。那一刻，熔炉酒吧像是穿越了时光，回到了最温暖的年代。"
+          },
+          {
+            "text": "笑着听他哼完",
+            "effects": {
+              "relationship": 3,
+              "cohesion": 5
+            },
+            "result_text": "老钉子哼完后，看了你一眼：'你父亲要是看到你现在的样子，会很骄傲的。'"
+          }
+        ]
+      }
+    ]
+  },
+  "finn": {
+    "stage_1_events": [
+      {
+        "id": "finn_s1_01",
+        "title": "磨钝的拨片",
+        "description": "深夜打烊后的排练室，台灯昏黄，芬恩靠在墙角，地板扔着几个磨钝的拨片，指尖发黑，浑身压抑着怒火。他看见你，冷冷地别开眼。",
+        "options": [
+          {
+            "text": "坐下来，什么也不说",
+            "effects": {
+              "relationship": 5,
+              "cohesion": 2
+            },
+            "result_text": "芬恩沉默地看了你一眼，没有离开。这已经是他罕见的认可了。"
+          },
+          {
+            "text": "你今天状态不对",
+            "effects": {
+              "relationship": -3
+            },
+            "result_text": "芬恩冷冷地瞥你一眼。「轮得到你说？」他重新拿起吉他，把你挡在了身后。"
+          }
+        ]
+      },
+      {
+        "id": "finn_s1_02",
+        "title": "完美主义的琴弦",
+        "description": "芬恩第七次换断掉的琴弦。他的手指已经被弦割出了血痕，但他只是包了一下，继续弹。「差一点点。就差一点点。」他在自言自语。",
+        "options": [
+          {
+            "text": "要不要先休息一下",
+            "effects": {
+              "relationship": 3,
+              "cohesion": 2
+            },
+            "result_text": "芬恩摇头，但换弦的动作慢了一些。沉默中，似乎接受了你的存在。"
+          },
+          {
+            "text": "你弹的已经很好了",
+            "effects": {
+              "relationship": -5
+            },
+            "result_text": "芬恩停下来，抬眼看你，眼神里带着明显的不屑。「你有耳朵吗？」他转过身，继续弹。"
+          }
+        ]
+      }
+    ],
+    "key_1to2": {
+      "id": "finn_key_1to2",
+      "title": "等了五年的答案",
+      "description": "深夜打烊后的排练室，只有一盏台灯亮着。芬恩靠在墙角，地板扔着 3 个磨钝的拨片，指尖发黑（被弦的漆和锈染黑），浑身压抑怒火。\n\n【芬恩】（声音发颤，冷意刺骨）你就打算一直这样？弹个音阶都畏畏缩缩，连碰琴都要做半小时心理建设？",
+      "trigger_relation": 30,
+      "trigger_conditions": {
+        "recovery": {
+          "min": 30
+        }
+      },
+      "lock_zero": false,
+      "interaction_steps": [
+        {
+          "step": 1,
+          "prompt": "",
+          "options": [
+            {
+              "text": "我手伤还没好全，能弹成这样已经不错了。",
+              "step_id": "r1_opt1",
+              "next_dialogue": "【芬恩】（冷笑，语气更冷）手伤？Yngwie 车祸颈椎断了都能重回巅峰，你连爬个格子都为难？",
+              "next_step": 2
+            },
+            {
+              "text": "我知道我状态很差，不用你反复提醒。",
+              "step_id": "r1_opt2",
+              "next_step": 2
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "prompt": "【芬恩】（眼神软了一瞬又立刻冷硬）现在说这些没用。你当初拿起吉他，到底为了什么？",
+          "options": [
+            {
+              "text": "当年是我不对，不该不听劝签那份合同。",
+              "step_id": "r2_optA",
+              "next_step": 3
+            },
+            {
+              "text": "我怎么样与你无关，看不惯可以走。",
+              "step_id": "r2_optB",
+              "next_step": 3
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "prompt": "【芬恩】（眼神软了一瞬又立刻冷硬）你当初拿起吉他，到底为了什么？",
+          "options": [
+            {
+              "text": "为了音乐。",
+              "step_id": "r3_opt1",
+              "is_final": true,
+              "effects": {
+                "relationship": 25,
+                "cohesion": 10,
+                "creativity": 10
+              },
+              "result_text": "【芬恩】（沉默许久，把一枚新拨片放在你琴上）算我没白等。明早九点，排练室见，我陪你把基本功捡回来。",
+              "advance": true,
+              "unlock_finn_practice": true
+            },
+            {
+              "text": "为了红，让所有人都知道我。",
+              "step_id": "r3_opt2",
+              "is_final": true,
+              "lock_zero_if_prev": [
+                "r1_opt1",
+                "r2_optB"
+              ],
+              "effects_lock": {
+                "cohesion": -20,
+                "mood": -15
+              },
+              "result_text_lock": "【芬恩】（抓起吉他，头也不回走向门口）我瞎了眼才等你这么多年。",
+              "effects": {
+                "relationship": 25,
+                "cohesion": 10,
+                "creativity": 10
+              },
+              "result_text": "【芬恩】（沉默许久，把一枚新拨片放在你琴上）算我没白等。明早九点，排练室见，我陪你把基本功捡回来。",
+              "advance_if_not_lock": true,
+              "unlock_finn_practice": true
+            },
+            {
+              "text": "我只想养伤，别的不想谈。",
+              "step_id": "r3_opt3",
+              "is_final": true,
+              "lock_zero_if_prev": [
+                "r1_opt1",
+                "r2_optB"
+              ],
+              "effects_lock": {
+                "cohesion": -20,
+                "mood": -15
+              },
+              "result_text_lock": "【芬恩】（抓起吉他，头也不回走向门口）我瞎了眼才等你这么多年。",
+              "effects": {
+                "relationship": 25,
+                "cohesion": 10,
+                "creativity": 10
+              },
+              "result_text": "【芬恩】（沉默许久，把一枚新拨片放在你琴上）算我没白等。明早九点，排练室见，我陪你把基本功捡回来。",
+              "advance_if_not_lock": true,
+              "unlock_finn_practice": true
+            }
+          ]
+        }
+      ],
+      "options": [
+        {
+          "text": "（多轮对话——见 interaction_steps）",
+          "effects": {},
+          "result_text": "",
+          "advance": false
+        }
+      ]
+    },
+    "stage_2_events": [
+      {
+        "id": "finn_s2_01",
+        "title": "破晓的基本功",
+        "description": "排练室里，芬恩站在你身后，冷着脸纠正你每一个不对的指法。「手腕。又抬高了。」他从不夸你，但他每次都准时出现。",
+        "options": [
+          {
+            "text": "认真接受他的指正",
+            "effects": {
+              "relationship": 8,
+              "creativity": 5
+            },
+            "result_text": "一个小时后，芬恩停下来，用拨片敲了敲你的吉他头。「还行。」这已经是他最高的褒奖。"
+          },
+          {
+            "text": "你能不能说句好听的",
+            "effects": {
+              "relationship": 3,
+              "creativity": 2
+            },
+            "result_text": "芬恩扯了扯嘴角。「你弹好了我就说。」他转过身，继续给你做示范。"
+          }
+        ]
+      },
+      {
+        "id": "finn_s2_02",
+        "title": "输给他了",
+        "description": "乐队排练，芬恩突然接过你的吉他，弹了一段你昨天练的曲子——快了两倍，没有任何错音，干净得像流水。然后他把琴递回来，什么也没说。",
+        "options": [
+          {
+            "text": "……我服了，你教我怎么弹这段。",
+            "effects": {
+              "relationship": 10,
+              "creativity": 8,
+              "cohesion": 3
+            },
+            "result_text": "芬恩罕见地弯了弯嘴角。「先把基本功练扎实。」但他坐了下来，很认真地开始教你。"
+          },
+          {
+            "text": "哼，我迟早也能弹成这样。",
+            "effects": {
+              "relationship": 5,
+              "creativity": 3
+            },
+            "result_text": "芬恩看着你，眼里有一点说不清的东西。「那就练。」"
+          }
+        ]
+      }
+    ],
+    "key_2to3": {
+      "id": "finn_key_2to3",
+      "title": "赢了",
+      "description": "乐队首次公演结束深夜，后台只有两人，芬恩反复听你演出的Solo录音，脸上没有平日的冷意。\n\n【芬恩】（关掉录音，抬眼看你，语气平静）你刚才这段Solo，编的不错。",
+      "trigger_relation": 60,
+      "trigger_conditions": {
+        "recovery": {
+          "min": 80
+        }
+      },
+      "interaction_steps": [
+        {
+          "step": 1,
+          "prompt": "【芬恩】（关掉录音，抬眼看你，语气平静）你刚才这段Solo，编的不错。",
+          "options": [
+            {
+              "text": "还是比你差远了，有几个地方处理得不够好。",
+              "step_id": "s1_opt1",
+              "next_dialogue": "【芬恩】（挑眉）少得意，结尾的推弦还是飘了，回头再练。",
+              "next_step": 2
+            },
+            {
+              "text": "那当然，也不看看是谁编的。",
+              "step_id": "s1_opt2",
+              "next_dialogue": "【芬恩】（挑眉）少得意，结尾的推弦还是飘了，回头再练。",
+              "next_step": 2
+            },
+            {
+              "text": "这段有很多你的影子，少年时你教我的东西，我一直没忘。",
+              "step_id": "s1_opt3",
+              "next_dialogue": "【芬恩】（挑眉）少得意，结尾的推弦还是飘了，回头再练。",
+              "next_step": 2
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "prompt": "【芬恩】当年和你决裂，我后悔了五年。我总觉得，当年我要是再强硬一点，你就不会走那条弯路，不会出那场车祸。",
+          "options": [
+            {
+              "text": "都过去了，现在我们不是又站在一起了吗。",
+              "step_id": "s2_optA",
+              "is_final": true,
+              "effects": {
+                "relationship": 30,
+                "creativity": 15,
+                "cohesion": 15
+              },
+              "result_text": "【芬恩】（把自己的备用吉他推到你面前）以后主音Solo，我们双声部配合。我承认，这一次，你赢了。",
+              "advance": true
+            },
+            {
+              "text": "当年是我自己选的，不怪你。",
+              "step_id": "s2_optB",
+              "is_final": true,
+              "effects": {
+                "relationship": 30,
+                "creativity": 15,
+                "cohesion": 15
+              },
+              "result_text": "【芬恩】（把自己的备用吉他推到你面前）以后主音Solo，我们双声部配合。我承认，这一次，你赢了。",
+              "advance": true
+            },
+            {
+              "text": "要怪就怪我当年太急功近利，看不清现实。",
+              "step_id": "s2_optC",
+              "is_final": true,
+              "effects": {
+                "relationship": 30,
+                "creativity": 15,
+                "cohesion": 15
+              },
+              "result_text": "【芬恩】（把自己的备用吉他推到你面前）以后主音Solo，我们双声部配合。我承认，这一次，你赢了。",
+              "advance": true
+            }
+          ]
+        }
+      ],
+      "options": [
+        {
+          "text": "（多轮对话——见 interaction_steps）",
+          "effects": {},
+          "result_text": "",
+          "advance": false
+        }
+      ]
+    },
+    "stage_3_events": [
+      {
+        "id": "finn_s3_01",
+        "title": "双声部",
+        "description": "演出前的最后排练，芬恩站在你身边，调整了一下位置，变成了双吉他站位。他没有解释，直接开始弹。两把吉他的声音交织在一起，像是失散多年后重逢。",
+        "options": [
+          {
+            "text": "跟上他的节奏",
+            "effects": {
+              "relationship": 5,
+              "creativity": 10,
+              "cohesion": 5
+            },
+            "result_text": "两人同时停下，对视一秒。芬恩说：「这才像话。」这是他第一次，在你面前真正地笑了。"
+          },
+          {
+            "text": "故意弹错一个音",
+            "effects": {
+              "relationship": 3,
+              "creativity": 5
+            },
+            "result_text": "芬恩皱眉。「你干嘛？」你回答：「测试你的反应。」他翻了个白眼，但继续弹了下去。"
+          }
+        ]
+      }
+    ]
+  },
+  "sebastian": {
+    "stage_1_events": [
+      {
+        "id": "sebastian_s1_01",
+        "title": "精密的眼神",
+        "description": "塞巴斯蒂安坐在酒吧角落，平板电脑上全是数据表格，偶尔抬头扫视乐队，眼神像在估价一件商品。他看到你，语气不带感情：「你们的内容变现路径很窄，需要重新规划。」",
+        "options": [
+          {
+            "text": "我们的重点是音乐，不是变现",
+            "effects": {
+              "relationship": 5,
+              "cohesion": 2
+            },
+            "result_text": "塞巴斯蒂安顿了一下，视线在你脸上停留片刻。「有趣。」他把平板放下了一会。"
+          },
+          {
+            "text": "你的分析有道理",
+            "effects": {
+              "relationship": -3
+            },
+            "result_text": "塞巴斯蒂安点点头，重新看向数据。「我以为你和其他音乐人一样短视。」他的语气仍然冰冷。"
+          }
+        ]
+      },
+      {
+        "id": "sebastian_s1_02",
+        "title": "天使投资人的第一课",
+        "description": "塞巴斯蒂安给你列了一张表格，详细分析了乐队目前的收入来源和亏损。他的分析精准得可怕，但那双眼睛在看到某张演出照片时，短暂地停顿了一下。",
+        "options": [
+          {
+            "text": "你看演出照片的时候，在想什么？",
+            "effects": {
+              "relationship": 8,
+              "cohesion": 3
+            },
+            "result_text": "塞巴斯蒂安收回视线，重新变回面无表情。「在想投资回报率。」但你注意到他把那张照片多看了两秒。"
+          },
+          {
+            "text": "照你说的改",
+            "effects": {
+              "relationship": 2
+            },
+            "result_text": "塞巴斯蒂安满意地点头。「明智。你们需要理性，而不只是激情。」"
+          }
+        ]
+      }
+    ],
+    "key_1to2": {
+      "id": "sebastian_key_1to2",
+      "title": "凤凰唱片的合同",
+      "description": "白天的酒吧包间，塞巴斯蒂安穿着笔挺的西装，把一份厚厚的商业合同推到你面前，合同封面上印着凤凰唱片的logo，旁边放着一支钢笔。\n\n【塞巴斯蒂安】（指尖敲了敲合同封面，语气冰冷平稳）这是凤凰唱片给你的独家签约合同，三年保底500万，全平台流量扶持，标准化商业包装，把你的乐队打造成全国顶级的摇滚IP。\n【你】合同里的条件是什么？\n【塞巴斯蒂安】很简单。音乐内容、演出安排、商业活动，全部由公司统一规划，你只需要负责演出和创作，不用管任何经营的事。稳定盈利，稳赚不赔。",
+      "trigger_relation": 30,
+      "trigger_conditions": {
+        "reputation": {
+          "min": 200
+        }
+      },
+      "lock_zero": false,
+      "options": [
+        {
+          "text": "我需要先看完整的合同条款，再做决定。",
+          "effects": {
+            "relationship": 25,
+            "money": 200
+          },
+          "result_text": "【塞巴斯蒂安】（收起合同，坐在沙发上，语气缓和下来）我明白了。是我低估了你对音乐的执念。这份合同作废，我会以个人名义，给你的乐队注资100万，不干涉任何创作，只做你的天使投资人。",
+          "advance": true
+        },
+        {
+          "text": "我可以签，但创作自主权必须在我手里，公司不能干涉我的音乐内容。",
+          "effects": {
+            "relationship": 25,
+            "money": 200
+          },
+          "result_text": "【塞巴斯蒂安】（收起合同，坐在沙发上，语气缓和下来）我明白了。是我低估了你对音乐的执念。这份合同作废，我会以个人名义，给你的乐队注资100万，不干涉任何创作，只做你的天使投资人。",
+          "advance": true
+        },
+        {
+          "text": "我不会签凤凰唱片的合同。",
+          "effects": {
+            "money": -500,
+            "reputation": -100,
+            "cohesion": -15
+          },
+          "result_text": "【塞巴斯蒂安】（收起合同，眼神瞬间冰冷，起身整理西装）我给过你机会。从今往后，凤凰唱片会成为你最大的对手，我们走着瞧。",
+          "lock_zero": true
+        },
+        {
+          "text": "别用你的资本玷污音乐，拿着你的合同，滚。",
+          "effects": {
+            "money": -500,
+            "reputation": -100,
+            "cohesion": -15
+          },
+          "result_text": "【塞巴斯蒂安】（收起合同，眼神瞬间冰冷，起身整理西装）我给过你机会。从今往后，凤凰唱片会成为你最大的对手，我们走着瞧。",
+          "lock_zero": true
+        }
+      ]
+    },
+    "stage_2_events": [
+      {
+        "id": "sebastian_s2_01",
+        "title": "冰冷外壳下的一瞥",
+        "description": "乐队彩排，塞巴斯蒂安坐在观众席做记录，却渐渐停下了笔。某一段旋律响起时，他的表情出现了一道裂缝——不是在计算，而是在感受。",
+        "options": [
+          {
+            "text": "散场后问他：刚才在想什么？",
+            "effects": {
+              "relationship": 10,
+              "cohesion": 5
+            },
+            "result_text": "塞巴斯蒂安沉默了很久。「……我想起了一件很久以前的事。」他没有继续说，但这是他第一次停止计算。"
+          },
+          {
+            "text": "不打扰他",
+            "effects": {
+              "relationship": 5,
+              "cohesion": 3
+            },
+            "result_text": "你装作没看见，继续排练。彩排结束，塞巴斯蒂安走过来说：「今天的状态比上次好。」"
+          }
+        ]
+      },
+      {
+        "id": "sebastian_s2_02",
+        "title": "预算表的空白行",
+        "description": "你看见塞巴斯蒂安在预算表里留了一行空白，标题写着'不可量化价值'。他察觉到你的目光，合上电脑，语气依旧平静：'有些收益，财务模型无法预测。'",
+        "options": [
+          {
+            "text": "那就把这一行写成“现场心跳”",
+            "effects": {
+              "relationship": 9,
+              "cohesion": 4,
+              "reputation": 5
+            },
+            "result_text": "塞巴斯蒂安低笑了一声，指尖轻敲桌面。'不错的命名。'他真的把那一行改成了你说的标题。"
+          },
+          {
+            "text": "你终于开始相信音乐本身了",
+            "effects": {
+              "relationship": 7,
+              "cohesion": 3
+            },
+            "result_text": "塞巴斯蒂安没有反驳，只是把电脑重新打开。'我在修正过去的偏差。'"
+          }
+        ]
+      }
+    ],
+    "key_2to3": {
+      "id": "sebastian_key_2to3",
+      "title": "撕掉的合同",
+      "description": "乐队最终演出前一周，塞巴斯蒂安把你叫到办公室，当着你的面，撕碎了凤凰唱片的合作邀约，还有他和公司的劳务合同。\n\n【塞巴斯蒂安】（把撕碎的合同扔进垃圾桶，转身看着你）凤凰唱片给我开了总监的职位，让我带你回去，给我三倍年薪。\n【你】你怎么选的？\n【塞巴斯蒂安】我辞职了。我算过无数笔账，算过收益、风险、回报率，可我从来没算过，音乐本身的价值。",
+      "trigger_relation": 60,
+      "trigger_conditions": {
+        "money": {
+          "min": 5000
+        }
+      },
+      "options": [
+        {
+          "text": "为什么要这么做？为了我，还是为了乐队？",
+          "effects": {
+            "relationship": 30,
+            "money": 1000,
+            "reputation": 200,
+            "cohesion": 20
+          },
+          "result_text": "【塞巴斯蒂安】我在资本圈混了十几年，这点后路还是有的。比起报复，我更不想错过你们的最终演出。\n【塞巴斯蒂安】我投的不是生意，是你，是这支乐队。最终演出的所有成本，我全包了。我想看着你们，站在最大的舞台上。",
+          "advance": true
+        },
+        {
+          "text": "你不怕凤凰唱片报复你吗？",
+          "effects": {
+            "relationship": 30,
+            "money": 1000,
+            "reputation": 200,
+            "cohesion": 20
+          },
+          "result_text": "【塞巴斯蒂安】我在资本圈混了十几年，这点后路还是有的。比起报复，我更不想错过你们的最终演出。\n【塞巴斯蒂安】我投的不是生意，是你，是这支乐队。最终演出的所有成本，我全包了。我想看着你们，站在最大的舞台上。",
+          "advance": true
+        },
+        {
+          "text": "我还以为，你这辈子只会盯着账本和数字。",
+          "effects": {
+            "relationship": 30,
+            "money": 1000,
+            "reputation": 200,
+            "cohesion": 20
+          },
+          "result_text": "【塞巴斯蒂安】我在资本圈混了十几年，这点后路还是有的。比起报复，我更不想错过你们的最终演出。\n【塞巴斯蒂安】我投的不是生意，是你，是这支乐队。最终演出的所有成本，我全包了。我想看着你们，站在最大的舞台上。",
+          "advance": true
+        }
+      ]
+    },
+    "stage_3_events": [
+      {
+        "id": "sebastian_s3_01",
+        "title": "最后的账单",
+        "description": "演出前夜，塞巴斯蒂安把一份账单推到你面前。上面是这几个月他个人支出的明细——演出场地、设备、宣传……数字庞大，却一笔不差。他说：「这是我这辈子花得最值的钱。」",
+        "options": [
+          {
+            "text": "我们不会让你失望的",
+            "effects": {
+              "relationship": 5,
+              "reputation": 10,
+              "cohesion": 5
+            },
+            "result_text": "塞巴斯蒂安把账单收起来。「我知道。」他难得露出了一个真诚的笑容。「上台，让所有人都看到你们。」"
+          },
+          {
+            "text": "以后这笔账，我来还",
+            "effects": {
+              "relationship": 3,
+              "cohesion": 5
+            },
+            "result_text": "塞巴斯蒂安摇摇头。「不用。这不是借款，是投资。而且……这笔账，值得。」"
+          }
+        ]
+      }
+    ]
+  },
+  "lily": {
+    "stage_1_events": [
+      {
+        "id": "lily_s1_01",
+        "title": "完美的错误",
+        "description": "琴房里，莉莉的小提琴弓停了下来。她盯着谱子上某个音符，反复演奏同一小节，每一次都几乎完美，但她仍然皱着眉头。「还差一点点。」",
+        "options": [
+          {
+            "text": "你已经弹得很好了",
+            "effects": {
+              "relationship": -3
+            },
+            "result_text": "莉莉轻轻摇头。「不够好。」她重新拿起琴弓，再弹一遍。"
+          },
+          {
+            "text": "你在追求什么样的完美？",
+            "effects": {
+              "relationship": 5,
+              "cohesion": 2
+            },
+            "result_text": "莉莉停下来，想了很久。「我也不知道……只是不能有任何错误。」她第一次有些疑惑地看着自己的双手。"
+          }
+        ]
+      },
+      {
+        "id": "aya_s1_02",
+        "title": "借来的麦克风",
+        "description": "阿雅抱着一个旧麦克风回到酒吧，说是从社区活动室借来的。她想办一场小型开放麦，让附近不敢上台的人也能唱一首自己的歌。",
+        "options": [
+          {
+            "text": "我来帮你把场地和时间都安排好",
+            "effects": {
+              "relationship": 6,
+              "cohesion": 4,
+              "reputation": 3
+            },
+            "result_text": "阿雅眼睛一下亮了起来。'太好了！'她立刻开始列名单，边写边笑，连语速都快了不少。"
+          },
+          {
+            "text": "先做一期试试，控制规模",
+            "effects": {
+              "relationship": 4,
+              "cohesion": 2
+            },
+            "result_text": "阿雅认真点头。'好，先让十个人站上来。'她把麦克风抱得更紧了，像抱着一盏灯。"
+          }
+        ]
+      }
+    ],
+    "key_1to2": {
+      "id": "lily_key_1to2",
+      "title": "那一个错音",
+      "description": "琴房里，莉莉面前摆着小提琴谱，她刚刚脱谱演奏，错了一个音，现在浑身紧绷，手指发白，手里的琴弓不停发抖，眼眶发红，陷入了极度的自我否定。\n\n【莉莉】（听见脚步声，猛地停下，背对着你，声音带着哭腔）别过来……我刚才出错了。\n【你】不就是错了一个音吗，没什么大不了的。\n【莉莉】（猛地转过身，眼神里全是恐惧）错一个音，就是失败！二十年了，我只学会了正确，学会了按谱演奏。自由是什么？是失控，是错误，是崩塌。我不敢。",
+      "trigger_relation": 30,
+      "lock_zero": false,
+      "options": [
+        {
+          "text": "错误也是音乐的一部分。你可以慢慢来，不用逼自己必须完美。",
+          "effects": {
+            "relationship": 25,
+            "creativity": 10,
+            "cohesion": 10
+          },
+          "result_text": "【莉莉】（放下琴弓，眼泪掉了下来，紧绷的肩膀终于放松了）……原来，我也可以出错。",
+          "advance": true,
+          "unlock_lily_improv": true
+        },
+        {
+          "text": "那就别冒险了，按谱子演奏最安全，不会出错。",
+          "effects": {
+            "relationship": -10,
+            "cohesion": -5,
+            "creativity": -5
+          },
+          "result_text": "【莉莉】（低下头，重新拿起谱子，恢复了冰冷的完美状态）……是，你说的对。",
+          "advance": false
+        },
+        {
+          "text": "听说过吉普赛爵士小提琴吗，和你一样都是演奏和声小调为主，可他们也有大量的即兴段落。",
+          "effects": {
+            "relationship": 25,
+            "creativity": 10,
+            "cohesion": 10
+          },
+          "result_text": "【莉莉】（放下琴弓，眼泪掉了下来，紧绷的肩膀终于放松了）……原来，我也可以出错。",
+          "advance": true,
+          "unlock_lily_improv": true
+        }
+      ]
+    },
+    "stage_2_events": [
+      {
+        "id": "lily_s2_01",
+        "title": "第一次脱谱",
+        "description": "排练间隙，莉莉悄悄在角落里脱谱拉了几小节，声音有点颤，有一两个不标准的音，但旋律里有了一种奇异的生命力。她发现你在看，立刻停下来。",
+        "options": [
+          {
+            "text": "继续，别停，那段很好听",
+            "effects": {
+              "relationship": 10,
+              "creativity": 8,
+              "cohesion": 3
+            },
+            "result_text": "莉莉犹豫了一下，重新拉了起来，脸微微红着，但声音越来越稳。「……谢谢你不让我停。」"
+          },
+          {
+            "text": "你的即兴越来越有感觉了",
+            "effects": {
+              "relationship": 8,
+              "creativity": 5
+            },
+            "result_text": "莉莉低下头，把琴弓捏得紧了一些。「……真的吗？」她的声音很轻，但嘴角微微动了一下。"
+          }
+        ]
+      }
+    ],
+    "key_2to3": {
+      "id": "lily_key_2to3",
+      "title": "自由的声音",
+      "description": "深夜的酒吧，没有乐谱，没有节拍器，莉莉闭着眼睛，拉着小提琴，完全脱谱即兴，旋律自由又温柔，没有刻意的完美，却充满了情绪，她脸上带着从未有过的松弛笑容。\n\n【莉莉】（拉完最后一个音，睁开眼看到你，有点害羞地笑了）是不是……有很多错音？\n【你】非常好听，这是我听过你最动人的演奏。\n【莉莉】（眼里闪着光）我终于敢错了。我终于敢不看谱子，拉我自己想拉的旋律。原来自由，不是失控，是我终于可以做我自己。",
+      "trigger_relation": 60,
+      "options": [
+        {
+          "text": "最终演出，就用这段即兴，让所有人看到自由的你。",
+          "effects": {
+            "relationship": 30,
+            "creativity": 20,
+            "cohesion": 15
+          },
+          "result_text": "【莉莉】（用力点头，重新拿起琴弓，眼里全是光芒）好！我要让所有人都知道，小提琴不只是严肃乐器！",
+          "advance": true
+        },
+        {
+          "text": "你早就该挣脱那些束缚了，你天生就该自由演奏。",
+          "effects": {
+            "relationship": 30,
+            "creativity": 20,
+            "cohesion": 15
+          },
+          "result_text": "【莉莉】（用力点头，重新拿起琴弓，眼里全是光芒）好！我要让所有人都知道，小提琴不只是严肃乐器！",
+          "advance": true
+        },
+        {
+          "text": "能不能再拉一遍？我想好好听听，属于你的音乐。",
+          "effects": {
+            "relationship": 30,
+            "creativity": 20,
+            "cohesion": 15
+          },
+          "result_text": "【莉莉】（用力点头，重新拿起琴弓，眼里全是光芒）好！我要让所有人都知道，小提琴不只是严肃乐器！",
+          "advance": true
+        }
+      ]
+    },
+    "stage_3_events": [
+      {
+        "id": "lily_s3_01",
+        "title": "吉普赛小提琴",
+        "description": "某天排练，莉莉突然提议：「我想在这段加一个即兴小提琴。」全场沉默了一秒，然后所有人异口同声：「好。」她站出来，拉了一段完全即兴的旋律，把整首曲子点亮了。",
+        "options": [
+          {
+            "text": "把这段即兴保留进正式演出",
+            "effects": {
+              "relationship": 5,
+              "creativity": 10,
+              "cohesion": 8
+            },
+            "result_text": "莉莉愣了一下，然后露出了她第一个真正的笑容——不是完美的，带着一点点害羞，但非常真实。「……好。」"
+          },
+          {
+            "text": "你来决定放不放，这是你的Solo",
+            "effects": {
+              "relationship": 8,
+              "creativity": 5
+            },
+            "result_text": "莉莉想了很久，然后点头。「放。」她的声音不大，但很坚定。"
+          }
+        ]
+      }
+    ]
+  },
+  "aya": {
+    "stage_1_events": [
+      {
+        "id": "aya_s1_01",
+        "title": "路边的音乐",
+        "description": "你发现阿雅在酒吧门口蹲着，把手里的零钱递给一个街头卖唱的老人。她抬头看见你，不好意思地笑了：「不好意思，让你等了。」",
+        "options": [
+          {
+            "text": "你一直这样做吗？",
+            "effects": {
+              "relationship": 5,
+              "cohesion": 3
+            },
+            "result_text": "阿雅想了想：「有人被接住一次，就能撑很久。我希望能成为那个伸出手的人。」"
+          },
+          {
+            "text": "我们该进去了",
+            "effects": {
+              "relationship": -2
+            },
+            "result_text": "阿雅点点头，跟着你走进去。但她的眼神仍然停留在那个老人身上。"
+          }
+        ]
+      }
+    ],
+    "key_1to2": {
+      "id": "aya_key_1to2",
+      "title": "伸出的手",
+      "description": "酒吧门口，阿雅帮一个流浪的落魄乐手整理琴箱，手里提着给小镇留守儿童准备的义演乐谱，她蹲在地上，温柔地安慰着对方，眼眶发红，却依旧坚定。\n\n【阿雅】（看到你，站起身，有点不好意思地笑了）不好意思，让你见笑了。\n【你】你又在帮这些落魄的乐手？\n【阿雅】（眼神温柔又坚定）不是所有事都要算收益的。有人被接住一次，就能撑很久。音乐应该接住人，而不是抬高人。我想做那个伸手的人，哪怕只有一点点用。",
+      "trigger_relation": 30,
+      "lock_zero": false,
+      "options": [
+        {
+          "text": "我和你一起伸手，以后义演和音乐治疗，我们乐队一起做。",
+          "effects": {
+            "relationship": 25,
+            "reputation": 15,
+            "cohesion": 10
+          },
+          "result_text": "【阿雅】（眼里瞬间亮了起来，笑得无比温暖）真的吗？谢谢你！我就知道，音乐最本真的意义，就是连接与治愈。",
+          "advance": true,
+          "unlock_community_show": true
+        },
+        {
+          "text": "我们先顾好自己的乐队就够了，别管这么多闲事。",
+          "effects": {
+            "relationship": -10,
+            "cohesion": -5,
+            "reputation": -5
+          },
+          "result_text": "【阿雅】（笑容淡了下去，轻轻点了点头）……我知道了。",
+          "advance": false
+        },
+        {
+          "text": "你做的事很有意义，我支持你。",
+          "effects": {
+            "relationship": 25,
+            "reputation": 15,
+            "cohesion": 10
+          },
+          "result_text": "【阿雅】（眼里瞬间亮了起来，笑得无比温暖）真的吗？谢谢你！我就知道，音乐最本真的意义，就是连接与治愈。",
+          "advance": true,
+          "unlock_community_show": true
+        }
+      ]
+    },
+    "stage_2_events": [
+      {
+        "id": "aya_s2_01",
+        "title": "音乐治疗",
+        "description": "阿雅在酒吧的角落摆了一圈椅子，旁边放着吉他，几个看起来很迷茫的年轻人坐在那里。她轻声说着什么，偶尔拨动琴弦。你站在门口，不想打扰。",
+        "options": [
+          {
+            "text": "悄悄坐在一旁听",
+            "effects": {
+              "relationship": 8,
+              "cohesion": 5,
+              "reputation": 3
+            },
+            "result_text": "活动结束，一个年轻人眼眶红红地道谢。阿雅看见你，有点惊讶，然后笑了。「谢谢你没有打扰我们。」"
+          },
+          {
+            "text": "主动提出加入",
+            "effects": {
+              "relationship": 5,
+              "cohesion": 3
+            },
+            "result_text": "阿雅考虑了一下，点点头。「你来就来，但要把自己的情绪也放进音乐里。」"
+          }
+        ]
+      }
+    ],
+    "key_2to3": {
+      "id": "aya_key_2to3",
+      "title": "他们笑了",
+      "description": "小镇的广场上，义演刚刚结束，台下的留守儿童、落魄乐手、小镇居民都在鼓掌，阿雅站在舞台中央，手里拿着话筒，眼里全是泪水，却笑得无比灿烂。\n\n【阿雅】（走到你身边，声音带着哽咽）你看到了吗？他们笑了。音乐真的治愈了他们。\n【你】这都是你的功劳，是你把音乐的温暖带给了他们。\n【阿雅】以前我总觉得，我一个人的力量太小了，什么都改变不了。但现在我明白了，这才是音乐。是连接，是温暖，是回家。",
+      "trigger_relation": 60,
+      "options": [
+        {
+          "text": "最终演出，我们把他们都请来，让他们和我们一起站在舞台上。",
+          "effects": {
+            "relationship": 30,
+            "reputation": 20,
+            "cohesion": 20
+          },
+          "result_text": "【阿雅】（用力点头，和你紧紧拥抱）好！我们一起，让音乐成为更多人的家。",
+          "advance": true
+        },
+        {
+          "text": "以后这条路，我们一起走，把音乐的温暖带给更多人。",
+          "effects": {
+            "relationship": 30,
+            "reputation": 20,
+            "cohesion": 20
+          },
+          "result_text": "【阿雅】（用力点头，和你紧紧拥抱）好！我们一起，让音乐成为更多人的家。",
+          "advance": true
+        },
+        {
+          "text": "你做到了，你让音乐有了最珍贵的意义。",
+          "effects": {
+            "relationship": 30,
+            "reputation": 20,
+            "cohesion": 20
+          },
+          "result_text": "【阿雅】（用力点头，和你紧紧拥抱）好！我们一起，让音乐成为更多人的家。",
+          "advance": true
+        }
+      ]
+    },
+    "stage_3_events": [
+      {
+        "id": "aya_s3_01",
+        "title": "回家的音乐",
+        "description": "义演后，一个小女孩跑过来拉住阿雅的手：「阿姨，你的音乐让我想起了妈妈。」阿雅蹲下来，和她说了很久的话。你在旁边，什么也没说，只是等着。",
+        "options": [
+          {
+            "text": "扶阿雅站起来，一起回去",
+            "effects": {
+              "relationship": 5,
+              "cohesion": 8,
+              "reputation": 5
+            },
+            "result_text": "阿雅握了一下你的手。「谢谢你今天在这里。」回去的路上，她一直在微笑。"
+          },
+          {
+            "text": "先送小女孩回去",
+            "effects": {
+              "relationship": 8,
+              "cohesion": 5
+            },
+            "result_text": "阿雅眼里含着泪，点点头。「好。」这是她第一次，感到有人和她一起承担这份温柔。"
+          }
+        ]
+      }
+    ]
+  },
+  "duan": {
+    "stage_1_events": [
+      {
+        "id": "duan_s1_01",
+        "title": "完美的波形",
+        "description": "杜安盯着屏幕上的音频波形，反复调整参数。他头也不回地说：「这段鼓点偏差0.03秒，不可接受。」他对精准的追求超过任何人。",
+        "options": [
+          {
+            "text": "0.03秒观众根本听不出来",
+            "effects": {
+              "relationship": 5,
+              "cohesion": 2
+            },
+            "result_text": "杜安沉默片刻。「但我知道。」他继续调参数，但调整幅度变小了一些。"
+          },
+          {
+            "text": "你的标准真的很高",
+            "effects": {
+              "relationship": -2
+            },
+            "result_text": "杜安点了点头，没有回头。「必须高。低标准会传染。」"
+          }
+        ]
+      }
+    ],
+    "key_1to2": {
+      "id": "duan_key_1to2",
+      "title": "校准的极限",
+      "description": "制作室里，杜安盯着屏幕上的音频波形，反复校准了几十遍节奏，眼里却藏着迷茫，面前的咖啡已经凉透了。\n\n【杜安】（头也不回，语气冰冷）别打扰我，我正在校准，这节奏始终调不准确。\n【你】你已经调了一整天了，休息一下吧。\n【杜安】Eric Johnson一张专辑调几年，我这才调几天？",
+      "trigger_relation": 30,
+      "lock_zero": false,
+      "options": [
+        {
+          "text": "就算是EJ，节奏该伸缩就伸缩，而不是像你这样啊。",
+          "effects": {
+            "relationship": 25,
+            "creativity": 10,
+            "cohesion": 10
+          },
+          "result_text": "【杜安】（沉默许久，关掉了参数校准界面，拿起了鼓槌）……原来如此。",
+          "advance": true,
+          "unlock_duan_production": true
+        },
+        {
+          "text": "继续优化吧，节奏越稳定，音乐就越完美。",
+          "effects": {
+            "relationship": -10,
+            "cohesion": -5,
+            "creativity": -5
+          },
+          "result_text": "【杜安】（转过身，重新盯着屏幕，恢复了冰冷的状态）……你说的对。",
+          "advance": false
+        },
+        {
+          "text": "不如放下数据，跟着感觉打一段，试试？",
+          "effects": {
+            "relationship": 25,
+            "creativity": 10,
+            "cohesion": 10
+          },
+          "result_text": "【杜安】（沉默许久，关掉了参数校准界面，拿起了鼓槌）……原来如此。",
+          "advance": true,
+          "unlock_duan_production": true
+        }
+      ]
+    },
+    "stage_2_events": [
+      {
+        "id": "duan_s2_01",
+        "title": "数据之外",
+        "description": "杜安第一次在排练时跟着感觉打了一段鼓，没有看任何参数。打完后他愣了一下，看着你。「那段……有0.8秒的误差。」",
+        "options": [
+          {
+            "text": "那段是今天排练里最棒的部分",
+            "effects": {
+              "relationship": 10,
+              "creativity": 8,
+              "cohesion": 5
+            },
+            "result_text": "杜安沉默了很久。他重新拿起鼓槌，没有说话，打了同一段——这次更放松了一点。"
+          },
+          {
+            "text": "以后每次排练都试着来一段",
+            "effects": {
+              "relationship": 5,
+              "creativity": 5
+            },
+            "result_text": "杜安想了想，点了头。「好。但我会记录每次的误差数据。」你决定不说这样违背了初衷。"
+          }
+        ]
+      }
+    ],
+    "key_2to3": {
+      "id": "duan_key_2to3",
+      "title": "第32版伴奏",
+      "description": "排练室里，杜安播放了自己新做的伴奏，里面有轻微的节拍误差，有不完美的波形，却无比温暖、有生命力，他站在屏幕前，脸上带着淡淡的笑容，这是他第一次，没有追求零误差。\n\n【杜安】（看向你，语气平静，却带着一丝骄傲）这是我做的第32版伴奏。保留了大约0.8秒的节拍误差。\n【你】乐句有了呼吸感啊，和你以前的作品完全不一样。\n【杜安】以前我总想解析伸缩节奏，现在我觉得只要好听就行。\n【杜安】今后现场还要靠你们把节奏稳下来啊。",
+      "trigger_relation": 60,
+      "options": [
+        {
+          "text": "以后乐队就靠你这双耳朵了。",
+          "effects": {
+            "relationship": 30,
+            "creativity": 15,
+            "cohesion": 15
+          },
+          "result_text": "【杜安】（笑着点头，按下了播放键）好。以后乐队的所有编曲，我全包了。我会把我们的心跳，都写进音乐里。",
+          "advance": true
+        },
+        {
+          "text": "欢迎你，终于找到了属于自己的音乐。",
+          "effects": {
+            "relationship": 30,
+            "creativity": 15,
+            "cohesion": 15
+          },
+          "result_text": "【杜安】（笑着点头，按下了播放键）好。以后乐队的所有编曲，我全包了。我会把我们的心跳，都写进音乐里。",
+          "advance": true
+        },
+        {
+          "text": "能不能再放一遍？我想跟着这段，弹一段Solo。",
+          "effects": {
+            "relationship": 30,
+            "creativity": 15,
+            "cohesion": 15
+          },
+          "result_text": "【杜安】（笑着点头，按下了播放键）好。以后乐队的所有编曲，我全包了。我会把我们的心跳，都写进音乐里。",
+          "advance": true
+        }
+      ]
+    },
+    "stage_3_events": [
+      {
+        "id": "duan_s3_01",
+        "title": "心跳的节拍",
+        "description": "演出前夜，杜安把最终版伴奏推给所有人。「最后检查了一遍。」他停顿了一下，「我故意保留了一些误差。那是我们的心跳。」",
+        "options": [
+          {
+            "text": "谢谢你，杜安",
+            "effects": {
+              "relationship": 5,
+              "creativity": 8,
+              "cohesion": 8
+            },
+            "result_text": "杜安点了点头。「不用谢。」停顿。「但是……表现好一点。」这已经是他说过最暖的话了。"
+          },
+          {
+            "text": "我们不会让这些心跳白费的",
+            "effects": {
+              "relationship": 8,
+              "cohesion": 5
+            },
+            "result_text": "杜安没有说话，只是把伴奏的音量调高了一点。"
+          }
+        ]
+      }
+    ]
+  }
+}
