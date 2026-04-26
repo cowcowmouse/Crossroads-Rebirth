@@ -72,7 +72,8 @@ func init_new_game():
 		constants.RES_REPUTATION: {"value": 10, "min": 0, "max": 100},
 		constants.RES_COHESION: {"value": 60, "min": 0, "max": 100},
 		constants.RES_CREATIVITY: {"value": 30, "min": 0, "max": 100},
-		constants.RES_MEMORY: {"value": 0, "min": 0, "max": 100}
+		constants.RES_MEMORY: {"value": 0, "min": 0, "max": 100},
+		constants.RES_MOOD: {"value": 60, "min": 0, "max": 100}
 	}
 	
 	# 行动点初始化
@@ -131,6 +132,7 @@ func _init_default_members():
 			"name": "里奥",
 			"role": "鼓手",
 			"unlocked": true,
+			"relationship": 0,
 			"relationship_progress": 0,
 			"weekly_chat_count": 0,
 			"morale": 60,
@@ -143,6 +145,7 @@ func _init_default_members():
 			"name": "凯拉",
 			"role": "主唱",
 			"unlocked": true,
+			"relationship": 0,
 			"relationship_progress": 0,
 			"weekly_chat_count": 0,
 			"morale": 60,
@@ -155,6 +158,7 @@ func _init_default_members():
 			"name": "梅",
 			"role": "贝斯手",
 			"unlocked": true,
+			"relationship": 0,
 			"relationship_progress": 0,
 			"weekly_chat_count": 0,
 			"morale": 60,
@@ -167,6 +171,7 @@ func _init_default_members():
 			"name": "老钉子",
 			"role": "酒吧守护者",
 			"unlocked": true,
+			"relationship": 0,
 			"relationship_progress": 1,
 			"weekly_chat_count": 0,
 			"morale": 100,
@@ -174,6 +179,71 @@ func _init_default_members():
 			"health": 100,
 			"skill": 80,
 			"charm": 60
+		},
+		constants.MEMBER_FINN: {
+			"name": "芬恩",
+			"role": "吉他手",
+			"unlocked": true,
+			"relationship": 0,
+			"relationship_progress": 0,
+			"weekly_chat_count": 0,
+			"morale": 60,
+			"fatigue": 30,
+			"health": 80,
+			"skill": 50,
+			"charm": 50
+		},
+		constants.MEMBER_SEBASTIAN: {
+			"name": "塞巴斯蒂安",
+			"role": "键盘手",
+			"unlocked": true,
+			"relationship": 0,
+			"relationship_progress": 0,
+			"weekly_chat_count": 0,
+			"morale": 60,
+			"fatigue": 30,
+			"health": 80,
+			"skill": 50,
+			"charm": 50
+		},
+		constants.MEMBER_LILY: {
+			"name": "莉莉",
+			"role": "小提琴手",
+			"unlocked": true,
+			"relationship": 0,
+			"relationship_progress": 0,
+			"weekly_chat_count": 0,
+			"morale": 60,
+			"fatigue": 30,
+			"health": 80,
+			"skill": 50,
+			"charm": 50
+		},
+		constants.MEMBER_AYA: {
+			"name": "阿雅",
+			"role": "舞蹈演员",
+			"unlocked": true,
+			"relationship": 0,
+			"relationship_progress": 0,
+			"weekly_chat_count": 0,
+			"morale": 60,
+			"fatigue": 30,
+			"health": 80,
+			"skill": 50,
+			"charm": 50
+		},
+		constants.MEMBER_DUAN: {
+			"name": "杜安",
+			"role": "声乐教练",
+			"unlocked": true,
+			"relationship": 0,
+			"relationship_progress": 0,
+			"weekly_chat_count": 0,
+			"morale": 60,
+			"fatigue": 30,
+			"health": 80,
+			"skill": 50,
+			"charm": 50
 		}
 	}
 

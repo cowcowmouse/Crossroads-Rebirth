@@ -62,6 +62,7 @@ const CLOCK_ICON_DIM_COLOR := Color(0.65, 0.65, 0.65, 1.0)
 
 # 周阶段切换演出脚本
 const WEEK_TRANSITION_OVERLAY_SCRIPT = preload("res://project/scripts/ui/WeekTransitionOverlay.gd")
+const MEMBER_EVENT_DIALOG_SCENE = preload("res://project/scenes/event/MemberEventDialog.tscn")
 
 # SkipButton 防连点状态
 var is_skip_button_processing: bool = false
@@ -197,7 +198,22 @@ func _ready():
 
 	# 加载保存的音量设置
 	_load_volume_setting()
+	call_deferred("_maybe_show_post_midweek_member_event")
 
+
+func _maybe_show_post_midweek_member_event():
+	if not MemberEventManager.has_post_midweek_return_events():
+		return
+	MemberEventManager.consume_post_midweek_return_flag()
+	var dialog = MEMBER_EVENT_DIALOG_SCENE.instantiate()
+	if dialog == null:
+		return
+	dialog.close_when_finished = true
+	var ui_host = get_node_or_null("UILayer")
+	if ui_host:
+		ui_host.add_child(dialog)
+	else:
+		add_child(dialog)
 
 func _on_settings_pressed():
 	_play_ui_click_sound()
@@ -393,7 +409,20 @@ func _on_skip_button_mouse_exited():
 
 func _on_week_changed(week: int):
 	_refresh_week_phase_ui()
+	_refresh_all_facility_buttons()
 
+func _refresh_all_facility_buttons():
+	var button_paths = [
+		"UILayer/StageButton",
+		"UILayer/BarButton",
+		"UILayer/LoungeButton",
+		"UILayer/RehearsalButton"
+	]
+
+	for path in button_paths:
+		var btn = get_node_or_null(path)
+		if btn and btn.has_method("refresh_repair_state"):
+			btn.refresh_repair_state()
 
 func _get_week_phase_display_name(phase: int) -> String:
 	match phase:
@@ -1698,7 +1727,7 @@ func _build_memory_event_pages(event_data: Dictionary) -> Array:
 
 
 # 切换背景图，给后续插图留好位置
-func _switch_memory_event_background(image_path: String):
+func _switch_memory_event_background(image_path: String, image_hint: String = ""):
 	if memory_event_backdrop == null:
 		return
 
@@ -1711,12 +1740,15 @@ func _switch_memory_event_background(image_path: String):
 				memory_event_image_label.visible = false
 			return
 
-	# 没图时只显示简短占位文字，不再显示整段路径
+	# 没图时显示提示文案
 	memory_event_backdrop.texture = null
 	memory_event_backdrop.visible = false
 
 	if memory_event_image_label:
-		memory_event_image_label.text = "暂无事件插图"
+		if image_hint.strip_edges() != "":
+			memory_event_image_label.text = "背景图需求：\n" + image_hint
+		else:
+			memory_event_image_label.text = "暂无事件插图"
 		memory_event_image_label.visible = true
 
 
@@ -1812,14 +1844,14 @@ func _create_memory_event_panel():
 	# 无图时的占位文字
 	memory_event_image_label = Label.new()
 	memory_event_image_label.name = "FallbackLabel"
-	memory_event_image_label.anchor_left = 0.30
-	memory_event_image_label.anchor_top = 0.22
-	memory_event_image_label.anchor_right = 0.70
-	memory_event_image_label.anchor_bottom = 0.30
+	memory_event_image_label.anchor_left = 0.20
+	memory_event_image_label.anchor_top = 0.18
+	memory_event_image_label.anchor_right = 0.80
+	memory_event_image_label.anchor_bottom = 0.42
 	memory_event_image_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	memory_event_image_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	memory_event_image_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	memory_event_image_label.add_theme_font_size_override("font_size", 18)
+	memory_event_image_label.add_theme_font_size_override("font_size", 20)
 	memory_event_image_label.add_theme_color_override("font_color", Color(0.90, 0.90, 0.90))
 	memory_event_image_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.85))
 	memory_event_image_label.add_theme_constant_override("outline_size", 6)
@@ -1950,7 +1982,8 @@ func _show_memory_event_page(page_index: int):
 
 	# 背景：页 image_path 优先，没有就回退事件 image_path
 	var page_image_path := str(page_data.get("image_path", event_data.get("image_path", "")))
-	_switch_memory_event_background(page_image_path)
+	var page_image_hint := str(page_data.get("image_hint", event_data.get("image_hint", "")))
+	_switch_memory_event_background(page_image_path, page_image_hint)
 
 	# 正文
 	if memory_event_text_label:
@@ -2094,8 +2127,10 @@ func _on_memory_event_choice_selected(option: Dictionary):
 
 		# 如果结果页也有背景图，先切一次
 		var result_image_path := str(option.get("result_image_path", ""))
-		if result_image_path != "":
-			_switch_memory_event_background(result_image_path)
+		var result_image_hint := str(option.get("result_image_hint", ""))
+
+		if result_image_path != "" or result_image_hint != "":
+			_switch_memory_event_background(result_image_path, result_image_hint)
 
 		_clear_memory_event_choices()
 

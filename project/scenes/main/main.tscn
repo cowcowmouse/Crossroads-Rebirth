@@ -60,8 +60,17 @@ shader_parameter/line_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pt5qx"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_svdfk"]
-bg_color = Color(0.043137256, 0.043137256, 0.043137256, 0.78431374)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fkgpr"]
+bg_color = Color(0.14117648, 0.08235294, 0.043137256, 0.54901963)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.5411765, 0.3529412, 0.14117648, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_582ml"]
 shader = ExtResource("22_fkgpr")
@@ -387,10 +396,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 630.0
-offset_top = 378.0
-offset_right = 1335.0
-offset_bottom = 809.0
+offset_left = 439.0
+offset_top = 290.0
+offset_right = 1199.0
+offset_bottom = 721.0
 grow_horizontal = 1
 grow_vertical = 1
 
@@ -418,24 +427,26 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 273.3333
+offset_top = 90.0
+offset_right = -320.00006
+offset_bottom = -110.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_svdfk")
+theme_override_styles/panel = SubResource("StyleBoxFlat_fkgpr")
 
 [node name="Label" type="Label" parent="UILayer/StageButton/RepairMask"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = -11.5
-offset_right = 24.0
-offset_bottom = 11.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 200
+theme_override_colors/font_color = Color(0.9607843, 0.93333334, 0.5803922, 1)
+theme_override_colors/font_shadow_color = Color(0.16470589, 0.08627451, 0.039215688, 1)
+theme_override_colors/font_outline_color = Color(0.16470589, 0.08627451, 0.039215688, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 64
 text = "维修中"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -463,24 +474,26 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 273.3333
+offset_top = 90.0
+offset_right = -320.00006
+offset_bottom = -110.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_svdfk")
+theme_override_styles/panel = SubResource("StyleBoxFlat_fkgpr")
 
 [node name="Label" type="Label" parent="UILayer/BarButton/RepairMask"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = -11.5
-offset_right = 24.0
-offset_bottom = 11.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 200
+theme_override_colors/font_color = Color(0.9607843, 0.93333334, 0.5803922, 1)
+theme_override_colors/font_shadow_color = Color(0.16470589, 0.08627451, 0.039215688, 1)
+theme_override_colors/font_outline_color = Color(0.16470589, 0.08627451, 0.039215688, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 64
 text = "维修中"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -497,6 +510,7 @@ offset_right = -46.0
 offset_bottom = -60.0
 grow_horizontal = 0
 grow_vertical = 0
+theme_override_colors/font_color = Color(0.9607843, 0.93333334, 0.8745098, 1)
 text = "跳过阶段"
 
 [node name="SettlementPanel" parent="UILayer" instance=ExtResource("22_wsoed")]

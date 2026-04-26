@@ -1,163 +1,522 @@
-[
+﻿[
   {
-	"id": "low_art_001",
-	"title": "创作瓶颈",
-	"description": "乐队连续几周没有新作品，成员们感到焦虑，创作灵感似乎完全枯竭了。",
-	"trigger_conditions": {},
-	"weight": 40,
-	"options": [
-	  {
-		"text": "强迫创作，硬写一首",
-		"effects": {"creativity": -8, "cohesion": -5, "art_weight": -2},
-		"result_text": "写出来的歌很一般，大家都不满意。"
-	  },
-	  {
-		"text": "休息放松，调整状态",
-		"effects": {"creativity": 5, "cohesion": 5, "human_weight": 2},
-		"result_text": "休息后状态好转，灵感慢慢回来。"
-	  }
-	]
+    "id": "low_art_001",
+    "title": "创作瓶颈",
+    "description": "乐队连续几周没有新作品，排练室里弥漫着一种无形的压力。成员们各自坐在角落，翻着手机，没人愿意第一个开口。创作灵感似乎完全枯竭了，每个人都能感觉到——如果再不写出新东西，这支乐队存在的意义都会被质疑。",
+    "stage_label": "early",
+    "trigger_conditions": {},
+    "weight": 40,
+    "min_stage": 1,
+    "max_stage": 1,
+    "options": [
+      {
+        "text": "强迫创作，硬写一首",
+        "effects": {"creativity": -8, "cohesion": -5, "art_weight": -2},
+        "result_text": "写出来的歌很一般，旋律平庸、歌词做作。大家录完小样后沉默了好一阵，最终有人说：'算了，至少我们试过了。'"
+      },
+      {
+        "text": "休息放松，调整状态",
+        "effects": {"creativity": 5, "cohesion": 5, "human_weight": 2},
+        "result_text": "你提议今天不排练了，去街上逛逛。成员们如释重负地放下乐器。傍晚回来的时候，有人哼起了一段新旋律——灵感就这么悄悄回来了。"
+      }
+    ]
   },
   {
-	"id": "low_art_002",
-	"title": "观众反应冷淡",
-	"description": "最近的演出观众反应平平，没人记得乐队的歌。大家开始怀疑音乐方向是否正确。",
-	"trigger_conditions": {},
-	"weight": 30,
-	"options": [
-	  {
-		"text": "改进编曲，增加流行元素",
-		"effects": {"reputation": 5, "business_weight": 2, "art_weight": -1},
-		"result_text": "新编曲吸引了一些路人粉。"
-	  },
-	  {
-		"text": "坚持自我，相信艺术",
-		"effects": {"cohesion": 3, "art_weight": 1},
-		"result_text": "成员们支持你的决定。"
-	  }
-	]
+    "id": "low_art_002",
+    "title": "观众反应冷淡",
+    "description": "最近几场演出的观众反应平平。台下零星的掌声像施舍一样刺耳。散场后看到评论区写：'还行吧，但也就那样。'大家开始怀疑音乐方向是否正确。",
+    "stage_label": "early",
+    "trigger_conditions": {},
+    "weight": 30,
+    "min_stage": 1,
+    "max_stage": 1,
+    "options": [
+      {
+        "text": "改进编曲，增加流行元素",
+        "effects": {"reputation": 5, "business_weight": 2, "art_weight": -1},
+        "result_text": "花了两天重新编排主打曲，加入抓耳的副歌hook。下一场演出确实多了些跟着哼的人。"
+      },
+      {
+        "text": "坚持自我，相信艺术",
+        "effects": {"cohesion": 3, "art_weight": 1},
+        "result_text": "你在群里发了段话：'我们做的音乐可能不是给所有人听的，但至少是我们自己想做的。'成员们纷纷回了个拳头emoji。"
+      }
+    ]
   },
   {
-	"id": "low_art_003",
-	"title": "乐器损坏危机",
-	"description": "排练时主力乐器意外损坏，资金紧张让维修变得棘手。",
-	"trigger_conditions": {
-	  "money": {"max": 3000}
-	},
-	"weight": 50,
-	"options": [
-	  {
-		"text": "咬牙花钱修好",
-		"effects": {"money": -1500, "creativity": 8, "art_weight": 1},
-		"result_text": "修好后音色反而更好了。"
-	  },
-	  {
-		"text": "借用备用乐器凑合",
-		"effects": {"creativity": -5, "cohesion": -3},
-		"result_text": "备用乐器手感不好，排练效果打了折扣。"
-	  }
-	]
+    "id": "low_art_003",
+    "title": "乐器损坏危机",
+    "description": "排练到一半，吉他手的琴颈突然发出一声脆响——裂了。这把琴跟了他三年，修理费至少一千五，但账上的钱本来就捉襟见肘。",
+    "stage_label": "early",
+    "trigger_conditions": {"money": {"max": 3000}},
+    "weight": 50,
+    "options": [
+      {
+        "text": "咬牙花钱修好",
+        "effects": {"money": -1500, "creativity": 8, "art_weight": 1},
+        "result_text": "修琴师傅换了根更好的支撑柱，音色反而比之前更亮了。吉他手抱着琴弹了一下午，写出了一段新riff。"
+      },
+      {
+        "text": "借用备用乐器凑合",
+        "effects": {"creativity": -5, "cohesion": -3},
+        "result_text": "从仓库翻出一把落满灰的旧琴，弦都锈了。手感完全不对，排练磕磕绊绊。"
+      }
+    ]
   },
   {
-	"id": "low_art_004",
-	"title": "地下音乐圈的新机遇",
-	"description": "一个地下音乐厂牌注意到了你们，想免费帮你们做一张Demo，但风格偏实验性。",
-	"trigger_conditions": {
-	  "creativity": {"min": 40}
-	},
-	"weight": 35,
-	"options": [
-	  {
-		"text": "合作做实验Demo",
-		"effects": {"creativity": 12, "art_weight": 4, "reputation": 5},
-		"result_text": "Demo在地下音乐圈引起了不小的反响。"
-	  },
-	  {
-		"text": "谢绝，专注自己的风格",
-		"effects": {"art_weight": 1, "cohesion": 3},
-		"result_text": "大家觉得保持自我也很重要。"
-	  }
-	]
+    "id": "low_art_004",
+    "title": "地下音乐圈的新机遇",
+    "description": "一个地下音乐厂牌的主理人在酒吧偶然听了你们的现场，喝完一整瓶啤酒后走过来：'你们的东西很有意思，不够成熟但有味道。想免费帮你们做一张Demo，方向偏实验性。'",
+    "stage_label": "early",
+    "trigger_conditions": {"creativity": {"min": 40}},
+    "weight": 35,
+    "options": [
+      {
+        "text": "合作做实验Demo",
+        "effects": {"creativity": 12, "art_weight": 4, "reputation": 5},
+        "result_text": "在厂牌的简易录音棚里泡了三天，尝试了一堆从没用过的效果器。Demo在地下音乐论坛上被转发了上百次。"
+      },
+      {
+        "text": "谢绝，专注自己的风格",
+        "effects": {"art_weight": 1, "cohesion": 3},
+        "result_text": "你婉拒了：'感谢，但我们想先把自己的东西做扎实。'对方拍拍你的肩：'以后想试了随时来。'"
+      }
+    ]
   },
   {
-	"id": "low_art_005",
-	"title": "创造力极低时的迷茫",
-	"description": "排练室里死气沉沉，连最简单的和弦都弹得心不在焉。大家脸上写满了迷茫。",
-	"trigger_conditions": {
-	  "creativity": {"max": 25}
-	},
-	"weight": 50,
-	"options": [
-	  {
-		"text": "全队出去散心一天",
-		"effects": {"creativity": 12, "cohesion": 8, "money": -500, "human_weight": 2},
-		"result_text": "到了户外才发现天空这么蓝，大家的心情好了很多。"
-	  },
-	  {
-		"text": "咬牙继续练",
-		"effects": {"creativity": 3, "cohesion": -5},
-		"result_text": "练是练了，但大家更烦躁了。"
-	  }
-	]
+    "id": "low_art_005",
+    "title": "创造力极低时的迷茫",
+    "description": "排练室里死气沉沉。鼓手漫不经心地敲着镲片，贝斯手在调手机，键盘手趴在琴上发呆。外面下着小雨，雨声比你们的音乐好听多了。",
+    "stage_label": "early",
+    "trigger_conditions": {"creativity": {"max": 25}},
+    "weight": 50,
+    "options": [
+      {
+        "text": "全队出去散心一天",
+        "effects": {"creativity": 12, "cohesion": 8, "money": -500, "human_weight": 2},
+        "result_text": "去了城外的河边，买了几瓶汽水坐在堤坝上。有人开始唱歌，其他人自然地跟上了——这才是音乐该有的样子。"
+      },
+      {
+        "text": "咬牙继续练",
+        "effects": {"creativity": 3, "cohesion": -5},
+        "result_text": "强撑着又练了两个小时，效果还不如平时半小时。散场时没人说话。"
+      }
+    ]
   },
   {
-	"id": "low_art_006",
-	"title": "音乐教学邀请",
-	"description": "社区中心邀请乐队给青少年做一次音乐工作坊，报酬不多但很有意义。",
-	"trigger_conditions": {},
-	"weight": 30,
-	"stage": 2,
-	"options": [
-	  {
-		"text": "接受邀请，教孩子们音乐",
-		"effects": {"creativity": 8, "reputation": 10, "human_weight": 4, "money": 500},
-		"result_text": "孩子们的热情让成员们重新找到了音乐的初心。"
-	  },
-	  {
-		"text": "没时间，婉拒",
-		"effects": {"reputation": -3},
-		"result_text": "错过了一次好机会。"
-	  }
-	]
+    "id": "low_art_006",
+    "title": "音乐教学邀请",
+    "description": "社区中心的王阿姨打来电话，说在办青少年音乐营，想邀请乐队做一次工作坊。'报酬不多，但孩子们特别期待！'电话那头能听到孩子们叽叽喳喳的声音。",
+    "stage_label": "mid",
+    "trigger_conditions": {},
+    "weight": 30,
+    "stage": 2,
+    "options": [
+      {
+        "text": "接受邀请，教孩子们音乐",
+        "effects": {"creativity": 8, "reputation": 10, "human_weight": 4, "money": 500},
+        "result_text": "十几个孩子用崇拜的眼神看着乐器。一个小女孩说：'哥哥姐姐，你们的音乐好像会说话！'所有人都重新找到了拿起乐器的初心。"
+      },
+      {
+        "text": "没时间，婉拒",
+        "effects": {"reputation": -3},
+        "result_text": "后来在社交媒体上看到别的乐队去了，孩子们玩得很开心。心里有点不是滋味。"
+      }
+    ]
   },
   {
-	"id": "low_art_007",
-	"title": "音乐风格的重大抉择",
-	"description": "乐队走到了一个岔路口。继续小众路线可能永远无法出头，但改变风格又怕失去自我。这次的选择可能影响深远。",
-	"trigger_conditions": {},
-	"weight": 35,
-	"stage": 3,
-	"options": [
-	  {
-		"text": "大胆转型，拥抱大众市场",
-		"effects": {"money": 3000, "reputation": 20, "business_weight": 8, "art_weight": -6, "creativity": -10},
-		"result_text": "转型阵痛期不短，但确实触及了更多听众。老粉的失望也很明显。"
-	  },
-	  {
-		"text": "坚守初心，深耕小众",
-		"effects": {"art_weight": 8, "creativity": 15, "cohesion": 10},
-		"result_text": "虽然路更窄了，但走得更坚定了。"
-	  }
-	]
+    "id": "low_art_007",
+    "title": "音乐风格的重大抉择",
+    "description": "经纪人摊开两份方案：左边是商业化路线，右边是小众深耕。'你们不能再这样不上不下了，要么往大众走，要么彻底扎进地下。这次的选择可能决定未来五年的方向。'所有人都看着你。",
+    "stage_label": "late",
+    "trigger_conditions": {},
+    "weight": 35,
+    "stage": 3,
+    "options": [
+      {
+        "text": "大胆转型，拥抱大众市场",
+        "effects": {"money": 3000, "reputation": 20, "business_weight": 8, "art_weight": -6, "creativity": -10},
+        "result_text": "转型阵痛比想象中更剧烈。评论区一半在骂'背叛'，一半在说'终于能听了'。数据好看多了，但老粉取关的通知让人不太好受。"
+      },
+      {
+        "text": "坚守初心，深耕小众",
+        "effects": {"art_weight": 8, "creativity": 15, "cohesion": 10},
+        "result_text": "你把商业方案推回去。排练室里每个人的眼睛都亮了。路虽然更窄了，但走得更坚定了。"
+      }
+    ]
   },
   {
-	"id": "low_art_repeatable_01",
-	"title": "无事发生",
-	"description": "平平无奇的一天，酒馆里几个老客人照常来喝酒听歌，一切如常。",
-	"trigger_conditions": {},
-	"weight": 15,
-	"repeatable": true,
-	"options": [
-	  {
-		"text": "和老客人聊聊天",
-		"effects": {"human_weight": 1, "reputation": 1},
-		"result_text": "老客人说他最喜欢你们上次弹的那首歌。"
-	  },
-	  {
-		"text": "安静地待着",
-		"effects": {"creativity": 1},
-		"result_text": "安静也是一种力量。"
-	  }
-	]
+    "id": "low_art_008",
+    "title": "深夜的灵感火花",
+    "description": "凌晨两点，你在酒吧打烊后独自弹着吉他，突然脑海里闪过一段旋律。不确定好不好，但它像一颗种子正在发芽。你掏出手机录下来。",
+    "stage_label": "early",
+    "trigger_conditions": {},
+    "weight": 30,
+    "min_stage": 1,
+    "max_stage": 1,
+    "options": [
+      {
+        "text": "立刻发到群里，让大家听",
+        "effects": {"creativity": 8, "cohesion": 5, "art_weight": 2},
+        "result_text": "群里沉默几分钟后，鼓手发了条60秒的语音——是即兴配的节奏。贝斯手也跟了一段。凌晨三点的群聊变成了云端排练室。"
+      },
+      {
+        "text": "先自己打磨一下再说",
+        "effects": {"creativity": 5, "art_weight": 1},
+        "result_text": "你反复听了十几遍，改了几个音。这段旋律一直在脑子里转，说不定明天能写成完整的歌。"
+      }
+    ]
+  },
+  {
+    "id": "low_art_009",
+    "title": "翻唱争议",
+    "description": "有人建议翻唱一首热门歌曲涨粉：'短视频平台上翻唱很火！'但也有人觉得翻唱掉价。讨论了一下午没有结果。",
+    "stage_label": "early",
+    "trigger_conditions": {},
+    "weight": 35,
+    "min_stage": 1,
+    "max_stage": 2,
+    "options": [
+      {
+        "text": "翻唱一首，但做出自己的风格",
+        "effects": {"reputation": 8, "creativity": 3, "art_weight": 1, "business_weight": 2},
+        "result_text": "选了一首经典老歌重新编排。视频发出去后'这版编曲比原版还好听'是最多的评论。既涨了粉也没丢面子。"
+      },
+      {
+        "text": "坚持只做原创",
+        "effects": {"art_weight": 3, "cohesion": 2, "creativity": 5},
+        "result_text": "你拍板：'我们是乐队，不是翻唱机器。'接下来的一周所有人都更拼命地写歌了。"
+      }
+    ]
+  },
+  {
+    "id": "low_art_010",
+    "title": "录音棚的意外",
+    "description": "好不容易借到朋友的录音棚录新歌，录到一半发现人声轨有底噪，之前录的全部作废。所有人盯着电脑屏幕上的波形图，心情跌到了谷底。",
+    "stage_label": "mid",
+    "trigger_conditions": {},
+    "weight": 35,
+    "stage": 2,
+    "options": [
+      {
+        "text": "重新录，今晚通宵也要搞定",
+        "effects": {"creativity": 10, "cohesion": 5, "art_weight": 3},
+        "result_text": "凌晨四点最后一轨人声录完。回放时所有人都笑了——通宵的疲惫反而让演唱多了一种脆弱的真实感。"
+      },
+      {
+        "text": "算了，回排练室录",
+        "effects": {"creativity": -3, "cohesion": -2, "art_weight": -1},
+        "result_text": "在排练室勉强录了一版，效果差强人意。这首歌可能就这样了。"
+      }
+    ]
+  },
+  {
+    "id": "low_art_011",
+    "title": "老唱片的启示",
+    "description": "老钉子在仓库翻出一箱旧黑胶唱片，都是七八十年代的摇滚和爵士。'这些是当年驻唱乐队留下的，那时候没什么钱，但音乐是真好听。'你们围坐在唱片机旁听着温暖的声音。",
+    "stage_label": "early",
+    "trigger_conditions": {},
+    "weight": 25,
+    "interaction_steps": 2,
+    "options": [
+      {
+        "text": "仔细听完整箱唱片",
+        "effects": {"creativity": 10, "art_weight": 3, "human_weight": 2},
+        "result_text": "听了一整个下午，在本子上记满了灵感。老钉子笑了：'年轻人，这才叫做音乐。'",
+        "follow_up": {
+          "description": "你发现其中一张专辑的封底写着一行字：'献给所有在深夜弹琴的人。'这句话莫名地打动了你。",
+          "options": [
+            {
+              "text": "把这句话写进新歌歌词",
+              "effects": {"creativity": 5, "art_weight": 2},
+              "result_text": "这句话成了副歌的核心意象。每次唱到这里，台下都会安静下来。"
+            },
+            {
+              "text": "写在排练室的墙上",
+              "effects": {"cohesion": 5, "human_weight": 2},
+              "result_text": "你用马克笔写在了排练室门口。从此每次进门都能看到这句话。"
+            }
+          ]
+        }
+      },
+      {
+        "text": "随便听几首就好",
+        "effects": {"creativity": 3, "art_weight": 1},
+        "result_text": "听了几首就被手机消息打断了。老钉子摇摇头，默默把唱片收了起来。"
+      }
+    ]
+  },
+  {
+    "id": "low_art_012",
+    "title": "街头演出的诱惑",
+    "description": "周末步行街人头攒动。有人提议：'去街上唱啊！不要钱，就当练胆。'另一个犹豫：'万一唱砸了丢人怎么办？'两种声音在排练室里拉锯。",
+    "stage_label": "early",
+    "trigger_conditions": {},
+    "weight": 30,
+    "min_stage": 1,
+    "max_stage": 2,
+    "options": [
+      {
+        "text": "去！年轻人怕什么丢人",
+        "effects": {"reputation": 6, "creativity": 5, "cohesion": 3, "art_weight": 2},
+        "result_text": "搬着音箱出现在步行街中央。唱到第三首歌时周围已经围了一大圈人。有个大爷听完鼓了半天掌，还塞了二十块钱到琴盒里。"
+      },
+      {
+        "text": "再练练，下次再去",
+        "effects": {"creativity": 2, "cohesion": -2},
+        "result_text": "'再练练'往往就意味着永远不去了。这个提议后来再也没人提起过。"
+      }
+    ]
+  },
+  {
+    "id": "low_art_013",
+    "title": "音乐比赛的邀请函",
+    "description": "收到本地乐队大赛的邀请函，奖金不多但主办方说会有唱片公司的人来看。'这是个机会。'——'但我们准备好了吗？'比赛在三周后。",
+    "stage_label": "mid",
+    "trigger_conditions": {"creativity": {"min": 35}},
+    "weight": 35,
+    "stage": 2,
+    "interaction_steps": 2,
+    "options": [
+      {
+        "text": "报名参赛，全力准备",
+        "effects": {"creativity": 8, "cohesion": 5, "art_weight": 3},
+        "result_text": "三周高强度排练后发挥出了最好水平。虽然没拿冠军，但评委单独留下了你们的联系方式。",
+        "follow_up": {
+          "description": "一位评委私下找到你：'你们的音乐有种原始的力量，但编曲太粗糙了。我可以免费给你们上几节课。'",
+          "options": [
+            {
+              "text": "谦虚接受指导",
+              "effects": {"creativity": 8, "art_weight": 3, "reputation": 5},
+              "result_text": "评委是退休的音乐学院教授，免费上了三节编曲课。受益匪浅。"
+            },
+            {
+              "text": "感谢但婉拒",
+              "effects": {"art_weight": 1, "cohesion": 2},
+              "result_text": "你觉得乐队的风格不该被'教'出来。评委笑了笑：'有个性，好事。'"
+            }
+          ]
+        }
+      },
+      {
+        "text": "这次算了，还没准备好",
+        "effects": {"cohesion": -3},
+        "result_text": "后来听说冠军乐队已经签约了一家不错的厂牌。有些机会错过就是错过了。"
+      }
+    ]
+  },
+  {
+    "id": "low_art_014",
+    "title": "MV拍摄的机会",
+    "description": "一个学影视的朋友说可以免费帮你们拍MV，条件是用他的毕业作品发表。'画面质量我保证，但可能有点怪——全程逆光、慢动作、意识流。'",
+    "stage_label": "mid",
+    "trigger_conditions": {},
+    "weight": 28,
+    "stage": 2,
+    "options": [
+      {
+        "text": "接受，艺术就该冒险",
+        "effects": {"art_weight": 4, "reputation": 8, "creativity": 6},
+        "result_text": "在废弃工厂里淋着假雨弹琴。成品评论两极分化——'看不懂但被震撼了'和'这到底在拍什么'各占一半。但至少所有人都记住了你们。"
+      },
+      {
+        "text": "拒绝，想要更接地气的风格",
+        "effects": {"cohesion": 2, "business_weight": 1},
+        "result_text": "朋友有点失望但表示理解。你们商量以后自己用手机拍个现场版。"
+      }
+    ]
+  },
+  {
+    "id": "low_art_015",
+    "title": "成员的独立创作",
+    "description": "键盘手悄悄写了一首歌，风格和乐队完全不同——更柔和、更私人。他小心翼翼地问：'这首歌能不能用乐队的名义发？'其他成员表情很复杂。",
+    "stage_label": "mid",
+    "trigger_conditions": {},
+    "weight": 30,
+    "stage": 2,
+    "options": [
+      {
+        "text": "支持他，多元化不是坏事",
+        "effects": {"creativity": 8, "cohesion": 8, "art_weight": 2, "human_weight": 3},
+        "result_text": "歌发出去后意外受到好评。键盘手感动得差点哭出来。乐队曲风从此多了一个新维度。"
+      },
+      {
+        "text": "建议他用个人名义发",
+        "effects": {"cohesion": -3, "art_weight": 1},
+        "result_text": "键盘手表情暗了一下：'也对，是我想多了。'乐队内部气氛微妙了几天。"
+      }
+    ]
+  },
+  {
+    "id": "low_art_016",
+    "title": "音响设备的回声",
+    "description": "排练时音响出了毛病，产生了一种奇怪的回声效果。大家正准备重启，鼓手突然说：'等等——这个回声挺好听的。'仔细一听，确实有种梦幻的质感。",
+    "stage_label": "early",
+    "trigger_conditions": {},
+    "weight": 25,
+    "options": [
+      {
+        "text": "就用这个效果录一段",
+        "effects": {"creativity": 10, "art_weight": 3},
+        "result_text": "趁着音响没修好赶紧录了段即兴。这段充满偶然性的录音后来成了最受欢迎的一首歌的intro。有时候bug就是feature。"
+      },
+      {
+        "text": "先修好设备再说",
+        "effects": {"creativity": 1},
+        "result_text": "修好了音响，一切恢复正常，那个奇妙的回声也消失了。"
+      }
+    ]
+  },
+  {
+    "id": "low_art_017",
+    "title": "来自远方的信",
+    "description": "酒吧收到一封手写信。寄信人说他在网上听到你们的歌后骑了三百公里摩托来酒吧，结果你们没演出。'下次演出能提前通知吗？我还会来的。'信纸上画了个笑脸。",
+    "stage_label": "late",
+    "trigger_conditions": {"reputation": {"min": 30}},
+    "weight": 30,
+    "stage": 3,
+    "interaction_steps": 2,
+    "options": [
+      {
+        "text": "给他回信，邀请他来看下一场",
+        "effects": {"human_weight": 5, "reputation": 8, "cohesion": 5},
+        "result_text": "演出那天前排果然出现了一个风尘仆仆的年轻人。他跟着每一首歌大声唱。",
+        "follow_up": {
+          "description": "演出结束后他走到台前，从背包里掏出一个用报纸包着的东西递给你——一个手工雕刻的木头吉他拨片。",
+          "options": [
+            {
+              "text": "郑重收下，以后每次演出都带着",
+              "effects": {"cohesion": 5, "human_weight": 3, "art_weight": 2},
+              "result_text": "这个木拨片成了乐队的护身符。每次上台前大家都会摸一摸——它代表着最纯粹的音乐连接。"
+            },
+            {
+              "text": "感谢他，和他聊聊音乐",
+              "effects": {"reputation": 5, "human_weight": 3},
+              "result_text": "你们聊到凌晨。他在小镇上开了家唱片店，墙上挂着你们的海报。临走前说：'你们的音乐让我觉得世界没那么无聊。'"
+            }
+          ]
+        }
+      },
+      {
+        "text": "在社交媒体上公开感谢",
+        "effects": {"reputation": 10, "human_weight": 2},
+        "result_text": "你把信拍照发到网上：'三百公里，只为一首歌。'帖子被转发了上千次。"
+      }
+    ]
+  },
+  {
+    "id": "low_art_018",
+    "title": "创作低谷中的争论",
+    "description": "又一次排练以沉默收场。贝斯手终于忍不住说：'我觉得问题出在你——你写的词太文艺了，没人听得懂。'空气瞬间凝固。",
+    "stage_label": "mid",
+    "trigger_conditions": {"creativity": {"max": 30}},
+    "weight": 40,
+    "stage": 2,
+    "options": [
+      {
+        "text": "冷静下来，认真听他说完",
+        "effects": {"cohesion": 8, "creativity": 8, "human_weight": 3, "art_weight": 1},
+        "result_text": "他认真分析了几首歌的歌词问题，说得确实有道理。最终达成共识：歌词要真诚但不要晦涩。争吵反而推动了进步。"
+      },
+      {
+        "text": "反驳他，为自己辩护",
+        "effects": {"cohesion": -8, "art_weight": 2},
+        "result_text": "越吵越凶，最后摔门走人。其他成员面面相觑，不知该站哪边。"
+      }
+    ]
+  },
+  {
+    "id": "low_art_019",
+    "title": "音乐节的废墟",
+    "description": "一个本地小型音乐节因为资金问题取消了，但场地已经搭好了。有人建议：'我们去那个废弃的舞台拍点东西吧，废墟里演奏一定很有feel。'",
+    "stage_label": "late",
+    "trigger_conditions": {},
+    "weight": 30,
+    "stage": 3,
+    "interaction_steps": 3,
+    "options": [
+      {
+        "text": "去废弃舞台演奏并拍摄",
+        "effects": {"creativity": 12, "art_weight": 5, "reputation": 10},
+        "result_text": "空无一人的舞台上，你们的音乐在风中回荡。摄影师朋友拍下了整个过程。",
+        "follow_up": {
+          "description": "拍摄过程中，一个路过的老人停下来听。他听完一首歌后鼓起掌来：'六十年前我在这个位置看过一场演出，今天又听到了。'",
+          "options": [
+            {
+              "text": "请他讲讲那场演出的故事",
+              "effects": {"human_weight": 5, "creativity": 5},
+              "result_text": "老人讲了一个关于一支失散乐队的故事。你们听得入了神——这简直就是你们的故事的另一个版本。",
+              "follow_up": {
+                "description": "老人讲完后从口袋里掏出一张泛黄的照片：'这是当年那支乐队。'照片上的年轻人朝气蓬勃地笑着，和你们一样年轻。",
+                "options": [
+                  {
+                    "text": "把照片翻拍下来，作为新专辑封面的灵感",
+                    "effects": {"art_weight": 5, "creativity": 8},
+                    "result_text": "新专辑的封面用了一个致敬构图——同样的位置，同样的笑容，跨越了六十年的时光。"
+                  },
+                  {
+                    "text": "和老人合一张影",
+                    "effects": {"human_weight": 5, "cohesion": 3},
+                    "result_text": "这张照片后来挂在了酒吧的墙上，旁边写着：'音乐不会老去。'"
+                  }
+                ]
+              }
+            },
+            {
+              "text": "为他再弹一首",
+              "effects": {"reputation": 5, "art_weight": 3, "human_weight": 3},
+              "result_text": "你们为这唯一的观众又弹了三首歌。老人听完满脸泪痕，说这是他这辈子听过的最好的演出。"
+            }
+          ]
+        }
+      },
+      {
+        "text": "算了，没人看到有什么意义",
+        "effects": {"cohesion": -2},
+        "result_text": "这个提议就这样不了了之了。但每次路过那个废弃舞台，总有人会看一眼。"
+      }
+    ]
+  },
+  {
+    "id": "low_art_repeatable_01",
+    "title": "无事发生",
+    "description": "平平无奇的一天。酒馆里几个老客人照常来喝酒听歌，暖黄灯光照在掉漆的吧台上。老钉子在擦杯子，偶尔抬头看一眼窗外。",
+    "stage_label": "any",
+    "trigger_conditions": {},
+    "weight": 15,
+    "repeatable": true,
+    "options": [
+      {
+        "text": "和老客人聊聊天",
+        "effects": {"human_weight": 1, "reputation": 1},
+        "result_text": "老客人说他最喜欢你们上次弹的那首歌，还能哼出副歌的调子。"
+      },
+      {
+        "text": "安静地待着",
+        "effects": {"creativity": 1},
+        "result_text": "你靠在窗边看着街上的人，脑子里不自觉地开始编旋律。安静也是一种力量。"
+      }
+    ]
+  },
+  {
+    "id": "low_art_repeatable_02",
+    "title": "雨天的排练室",
+    "description": "外面下着大雨，铁皮屋顶被雨点敲得叮叮当当。成员们陆续到齐，身上带着潮湿的气息。",
+    "stage_label": "any",
+    "trigger_conditions": {},
+    "weight": 12,
+    "repeatable": true,
+    "options": [
+      {
+        "text": "配合雨声即兴弹一段",
+        "effects": {"creativity": 3, "art_weight": 1},
+        "result_text": "雨声成了天然的节拍器。跟着雨的节奏即兴弹了一段，意外地好听。"
+      },
+      {
+        "text": "正常排练",
+        "effects": {"creativity": 1, "cohesion": 1},
+        "result_text": "按部就班排练了两小时。雨停了，大家各自回家。平凡但充实的一天。"
+      }
+    ]
   }
 ]

@@ -1,0 +1,213 @@
+[gd_scene load_steps=4 format=3 uid="uid://dco8dhyurwf4l"]
+
+[ext_resource type="Script" uid="uid://rk7mbx4a2ohs" path="res://project/scripts/models/minigame/FinalPerformance.gd" id="1_3d7l3"]
+[ext_resource type="AudioStream" uid="uid://canp4x6fbmfth" path="res://project/audio/bgm/final_neoclassical.mp3" id="1_mpp6d"]
+[ext_resource type="Texture2D" uid="uid://bhr1n1kesj73r" path="res://project/assets/images/finalgame/finstage1.png" id="2_ar1mo"]
+
+[node name="FinalPerformance" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3d7l3")
+
+[node name="StageBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_ar1mo")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="CharacterLayer" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="FXLayer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FlashRect" type="ColorRect" parent="FXLayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="NoteLayer" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 17.0
+offset_top = 73.0
+offset_right = 57.0
+offset_bottom = 113.0
+
+[node name="Lane1" type="ColorRect" parent="NoteLayer"]
+custom_minimum_size = Vector2(40, 420)
+layout_mode = 0
+offset_left = 792.0
+offset_top = 136.0
+offset_right = 832.0
+offset_bottom = 708.0
+color = Color(0.62352943, 0.09803922, 0, 0.19607843)
+
+[node name="Lane2" type="ColorRect" parent="NoteLayer"]
+layout_mode = 0
+offset_left = 932.0
+offset_top = 136.0
+offset_right = 972.0
+offset_bottom = 708.0
+color = Color(1, 1, 0.60784316, 0.19607843)
+
+[node name="Lane3" type="ColorRect" parent="NoteLayer"]
+layout_mode = 0
+offset_left = 1072.0
+offset_top = 136.0
+offset_right = 1112.0
+offset_bottom = 708.0
+color = Color(0.22745098, 1, 1, 0.19607843)
+
+[node name="JudgeLine" type="ColorRect" parent="NoteLayer"]
+layout_mode = 0
+offset_left = 762.0
+offset_top = 708.0
+offset_right = 1142.0
+offset_bottom = 743.0
+color = Color(1, 1, 1, 0.5882353)
+
+[node name="ActiveNotes" type="Control" parent="NoteLayer"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="ComboLabel" type="Label" parent="UI"]
+offset_left = 1382.0
+offset_top = 331.0
+offset_right = 1445.0
+offset_bottom = 354.0
+text = "comboo"
+
+[node name="TechLabel" type="Label" parent="UI"]
+offset_left = 429.0
+offset_top = 353.0
+offset_right = 469.0
+offset_bottom = 376.0
+text = "tech"
+
+[node name="EmotionLabel" type="Label" parent="UI"]
+offset_left = 429.0
+offset_top = 244.0
+offset_right = 470.0
+offset_bottom = 267.0
+text = "emot"
+
+[node name="ControlLabel" type="Label" parent="UI"]
+offset_left = 429.0
+offset_top = 296.0
+offset_right = 480.0
+offset_bottom = 319.0
+text = "contro"
+
+[node name="SegmentTitle" type="Label" parent="UI"]
+offset_left = 132.0
+offset_top = 70.0
+offset_right = 172.0
+offset_bottom = 93.0
+text = "sege"
+
+[node name="ChoicePanel" type="Panel" parent="UI"]
+custom_minimum_size = Vector2(420, 220)
+offset_left = 113.0
+offset_top = 587.0
+offset_right = 533.0
+offset_bottom = 807.0
+
+[node name="TitleLabel" type="Label" parent="UI/ChoicePanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "选择"
+
+[node name="ArtButton" type="Button" parent="UI/ChoicePanel"]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 139.0
+offset_right = 105.0
+offset_bottom = 170.0
+text = "艺术表达"
+
+[node name="HumanButton" type="Button" parent="UI/ChoicePanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 87.0
+offset_top = -93.0
+offset_right = 159.0
+offset_bottom = -62.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "情感表达"
+
+[node name="BusinessButton" type="Button" parent="UI/ChoicePanel"]
+layout_mode = 1
+offset_left = 123.0
+offset_top = 56.0
+offset_right = 195.0
+offset_bottom = 87.0
+text = "稳定控制"
+
+[node name="Lane1KeyLabel" type="Label" parent="UI"]
+offset_left = 823.0
+offset_top = 823.0
+offset_right = 863.0
+offset_bottom = 846.0
+theme_override_colors/font_color = Color(1, 0.34117648, 0.15294118, 1)
+text = "A"
+
+[node name="Lane2KeyLabel" type="Label" parent="UI"]
+offset_left = 966.0
+offset_top = 823.0
+offset_right = 1006.0
+offset_bottom = 846.0
+theme_override_colors/font_color = Color(1, 0.78431374, 0.5921569, 1)
+text = "S"
+
+[node name="Lane3KeyLabel" type="Label" parent="UI"]
+offset_left = 1095.0
+offset_top = 823.0
+offset_right = 1135.0
+offset_bottom = 846.0
+theme_override_colors/font_color = Color(0.19215687, 1, 1, 1)
+text = "D"
+
+[node name="HitResultLabel" type="Label" parent="UI"]
+offset_left = 1019.0
+offset_top = 748.0
+offset_right = 1067.0
+offset_bottom = 771.0
+
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_mpp6d")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
