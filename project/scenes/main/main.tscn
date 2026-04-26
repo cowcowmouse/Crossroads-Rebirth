@@ -260,6 +260,7 @@ size_flags_vertical = 4
 color = Color(0.44705883, 1, 1, 1)
 
 [node name="Rehabpanel" type="Panel" parent="UILayer"]
+visible = false
 modulate = Color(0.8047426, 0.80474263, 0.8047426, 1)
 offset_left = 343.0
 offset_top = 207.00002
@@ -542,13 +543,13 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -463.99988
-offset_top = -123.00006
-offset_right = -433.99988
-offset_bottom = -92.00006
+offset_left = -413.0
+offset_top = -66.99994
+offset_right = -383.0
+offset_bottom = -36.0
 grow_horizontal = 0
 grow_vertical = 0
-scale = Vector2(4.0437303, 3.897308)
+scale = Vector2(2.2055025, 1.9309621)
 text = "⚙"
 
 [node name="MemberStanding_tscn" parent="." instance=ExtResource("23_gmtqm")]

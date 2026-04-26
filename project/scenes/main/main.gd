@@ -1167,66 +1167,281 @@ var jump_button: Button = null
 
 
 func _create_debug_panel():
-	# 创建调试面板
+	# 创建调试面板（扩大尺寸）
 	debug_panel = Panel.new()
-	debug_panel.size = Vector2(220, 120)
+	debug_panel.size = Vector2(520, 360)
 	debug_panel.position = Vector2(10, 200)
 
-	# 设置面板样式 - 浅灰色半透明
+	# 设置面板样式
 	var panel_style = StyleBoxFlat.new()
-	panel_style.bg_color = Color(0.85, 0.85, 0.85, 0.9)  # 浅灰色，透明度0.9
-	panel_style.set_corner_radius_all(8)  # 圆角
+	panel_style.bg_color = Color(0.2, 0.2, 0.2, 0.95)
+	panel_style.set_corner_radius_all(8)
 	debug_panel.add_theme_stylebox_override("panel", panel_style)
 
-	# 创建输入框
-	week_input = LineEdit.new()
-	week_input.size = Vector2(80, 30)
-	week_input.position = Vector2(10, 10)
-	week_input.placeholder_text = "周数(1-18)"
-	week_input.add_theme_color_override("font_color", Color(1, 1, 1))  # 白色文字
-	week_input.add_theme_color_override("placeholder_color", Color(0.3, 0.3, 0.3))
+	# ===== 第一行：周数跳转 =====
+	var week_label = Label.new()
+	week_label.text = "跳转周数:"
+	week_label.position = Vector2(10, 10)
+	week_label.size = Vector2(80, 25)
+	week_label.add_theme_color_override("font_color", Color(1, 1, 1))
+	debug_panel.add_child(week_label)
 
-	# 创建跳转按钮
+	week_input = LineEdit.new()
+	week_input.size = Vector2(80, 25)
+	week_input.position = Vector2(95, 10)
+	week_input.placeholder_text = "1-30"
+	week_input.add_theme_color_override("font_color", Color(1, 1, 1))
+	week_input.add_theme_color_override("placeholder_color", Color(0.7, 0.7, 0.7))
+	debug_panel.add_child(week_input)
+
 	jump_button = Button.new()
-	jump_button.size = Vector2(80, 30)
-	jump_button.position = Vector2(100, 10)
+	jump_button.size = Vector2(60, 25)
+	jump_button.position = Vector2(185, 10)
 	jump_button.text = "跳转"
 	jump_button.add_theme_color_override("font_color", Color(1, 1, 1))
-	var button_style = StyleBoxFlat.new()
-	button_style.bg_color = Color(0.3, 0.5, 0.8)
-	button_style.set_corner_radius_all(4)
-	jump_button.add_theme_stylebox_override("normal", button_style)
+	var jump_style = StyleBoxFlat.new()
+	jump_style.bg_color = Color(0.3, 0.5, 0.8)
+	jump_style.set_corner_radius_all(4)
+	jump_button.add_theme_stylebox_override("normal", jump_style)
 	jump_button.pressed.connect(_on_debug_jump_pressed)
+	debug_panel.add_child(jump_button)
 
-	# 添加关闭按钮
+	# ===== 第二行：资金修改 =====
+	var money_label = Label.new()
+	money_label.text = "资金:"
+	money_label.position = Vector2(10, 50)
+	money_label.size = Vector2(50, 25)
+	money_label.add_theme_color_override("font_color", Color(1, 1, 1))
+	debug_panel.add_child(money_label)
+
+	var money_value = LineEdit.new()
+	money_value.name = "MoneyValue"
+	money_value.size = Vector2(100, 25)
+	money_value.position = Vector2(65, 50)
+	money_value.placeholder_text = str(ResourceManager.get_money())
+	money_value.add_theme_color_override("font_color", Color(1, 1, 1))
+	debug_panel.add_child(money_value)
+
+	var money_set_btn = Button.new()
+	money_set_btn.size = Vector2(60, 25)
+	money_set_btn.position = Vector2(175, 50)
+	money_set_btn.text = "设置"
+	money_set_btn.add_theme_color_override("font_color", Color(1, 1, 1))
+	var btn_style = StyleBoxFlat.new()
+	btn_style.bg_color = Color(0.4, 0.4, 0.5)
+	btn_style.set_corner_radius_all(4)
+	money_set_btn.add_theme_stylebox_override("normal", btn_style)
+	money_set_btn.pressed.connect(_on_debug_set_money.bind(money_value))
+	debug_panel.add_child(money_set_btn)
+
+	# ===== 第三行：声誉修改 =====
+	var rep_label = Label.new()
+	rep_label.text = "声誉:"
+	rep_label.position = Vector2(10, 85)
+	rep_label.size = Vector2(50, 25)
+	rep_label.add_theme_color_override("font_color", Color(1, 1, 1))
+	debug_panel.add_child(rep_label)
+
+	var rep_value = LineEdit.new()
+	rep_value.name = "RepValue"
+	rep_value.size = Vector2(100, 25)
+	rep_value.position = Vector2(65, 85)
+	rep_value.placeholder_text = str(ResourceManager.get_reputation())
+	rep_value.add_theme_color_override("font_color", Color(1, 1, 1))
+	debug_panel.add_child(rep_value)
+
+	var rep_set_btn = Button.new()
+	rep_set_btn.size = Vector2(60, 25)
+	rep_set_btn.position = Vector2(175, 85)
+	rep_set_btn.text = "设置"
+	rep_set_btn.add_theme_color_override("font_color", Color(1, 1, 1))
+	rep_set_btn.add_theme_stylebox_override("normal", btn_style)
+	rep_set_btn.pressed.connect(_on_debug_set_reputation.bind(rep_value))
+	debug_panel.add_child(rep_set_btn)
+
+	# ===== 第四行：凝聚力修改 =====
+	var coh_label = Label.new()
+	coh_label.text = "凝聚力:"
+	coh_label.position = Vector2(260, 85)
+	coh_label.size = Vector2(50, 25)
+	coh_label.add_theme_color_override("font_color", Color(1, 1, 1))
+	debug_panel.add_child(coh_label)
+
+	var coh_value = LineEdit.new()
+	coh_value.name = "CohValue"
+	coh_value.size = Vector2(100, 25)
+	coh_value.position = Vector2(320, 85)
+	coh_value.placeholder_text = str(ResourceManager.get_cohesion())
+	coh_value.add_theme_color_override("font_color", Color(1, 1, 1))
+	debug_panel.add_child(coh_value)
+
+	var coh_set_btn = Button.new()
+	coh_set_btn.size = Vector2(60, 25)
+	coh_set_btn.position = Vector2(430, 85)
+	coh_set_btn.text = "设置"
+	coh_set_btn.add_theme_color_override("font_color", Color(1, 1, 1))
+	coh_set_btn.add_theme_stylebox_override("normal", btn_style)
+	coh_set_btn.pressed.connect(_on_debug_set_cohesion.bind(coh_value))
+	debug_panel.add_child(coh_set_btn)
+
+	# ===== 第五行：创造力修改 =====
+	var cre_label = Label.new()
+	cre_label.text = "创造力:"
+	cre_label.position = Vector2(10, 120)
+	cre_label.size = Vector2(50, 25)
+	cre_label.add_theme_color_override("font_color", Color(1, 1, 1))
+	debug_panel.add_child(cre_label)
+
+	var cre_value = LineEdit.new()
+	cre_value.name = "CreValue"
+	cre_value.size = Vector2(100, 25)
+	cre_value.position = Vector2(65, 120)
+	cre_value.placeholder_text = str(ResourceManager.get_creativity())
+	cre_value.add_theme_color_override("font_color", Color(1, 1, 1))
+	debug_panel.add_child(cre_value)
+
+	var cre_set_btn = Button.new()
+	cre_set_btn.size = Vector2(60, 25)
+	cre_set_btn.position = Vector2(175, 120)
+	cre_set_btn.text = "设置"
+	cre_set_btn.add_theme_color_override("font_color", Color(1, 1, 1))
+	cre_set_btn.add_theme_stylebox_override("normal", btn_style)
+	cre_set_btn.pressed.connect(_on_debug_set_creativity.bind(cre_value))
+	debug_panel.add_child(cre_set_btn)
+
+	# ===== 第六行：记忆恢复度修改 =====
+	var mem_label = Label.new()
+	mem_label.text = "记忆:"
+	mem_label.position = Vector2(260, 120)
+	mem_label.size = Vector2(50, 25)
+	mem_label.add_theme_color_override("font_color", Color(1, 1, 1))
+	debug_panel.add_child(mem_label)
+
+	var mem_value = LineEdit.new()
+	mem_value.name = "MemValue"
+	mem_value.size = Vector2(100, 25)
+	mem_value.position = Vector2(320, 120)
+	mem_value.placeholder_text = str(ResourceManager.get_memory())
+	mem_value.add_theme_color_override("font_color", Color(1, 1, 1))
+	debug_panel.add_child(mem_value)
+
+	var mem_set_btn = Button.new()
+	mem_set_btn.size = Vector2(60, 25)
+	mem_set_btn.position = Vector2(430, 120)
+	mem_set_btn.text = "设置"
+	mem_set_btn.add_theme_color_override("font_color", Color(1, 1, 1))
+	mem_set_btn.add_theme_stylebox_override("normal", btn_style)
+	mem_set_btn.pressed.connect(_on_debug_set_memory.bind(mem_value))
+	debug_panel.add_child(mem_set_btn)
+
+	# ===== 第七行：行动点修改 =====
+	var action_label = Label.new()
+	action_label.text = "行动点:"
+	action_label.position = Vector2(10, 155)
+	action_label.size = Vector2(50, 25)
+	action_label.add_theme_color_override("font_color", Color(1, 1, 1))
+	debug_panel.add_child(action_label)
+
+	var action_value = LineEdit.new()
+	action_value.name = "ActionValue"
+	action_value.size = Vector2(100, 25)
+	action_value.position = Vector2(65, 155)
+	action_value.placeholder_text = str(ResourceManager.get_action_points())
+	action_value.add_theme_color_override("font_color", Color(1, 1, 1))
+	debug_panel.add_child(action_value)
+
+	var action_set_btn = Button.new()
+	action_set_btn.size = Vector2(60, 25)
+	action_set_btn.position = Vector2(175, 155)
+	action_set_btn.text = "设置"
+	action_set_btn.add_theme_color_override("font_color", Color(1, 1, 1))
+	action_set_btn.add_theme_stylebox_override("normal", btn_style)
+	action_set_btn.pressed.connect(_on_debug_set_action_points.bind(action_value))
+	debug_panel.add_child(action_set_btn)
+
+	# ===== 添加关闭按钮 =====
 	var close_btn = Button.new()
-	close_btn.size = Vector2(30, 30)
-	close_btn.position = Vector2(180, 10)
-	close_btn.text = "X"
+	close_btn.size = Vector2(60, 25)
+	close_btn.position = Vector2(320, 280)
+	close_btn.text = "关闭"
 	close_btn.add_theme_color_override("font_color", Color(1, 1, 1))
 	var close_style = StyleBoxFlat.new()
 	close_style.bg_color = Color(0.8, 0.3, 0.3)
 	close_style.set_corner_radius_all(4)
 	close_btn.add_theme_stylebox_override("normal", close_style)
 	close_btn.pressed.connect(_toggle_debug_panel)
+	debug_panel.add_child(close_btn)
 
-	# 添加提示标签
+	# 提示标签
 	var tip_label = Label.new()
 	tip_label.text = "按 F12 隐藏/显示"
-	tip_label.position = Vector2(10, 50)
+	tip_label.position = Vector2(10, 260)
 	tip_label.size = Vector2(200, 20)
-	tip_label.add_theme_color_override("font_color", Color(0.2, 0.2, 0.2))  # 深灰色文字
-
-	debug_panel.add_child(week_input)
-	debug_panel.add_child(jump_button)
-	debug_panel.add_child(close_btn)
+	tip_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
 	debug_panel.add_child(tip_label)
 
 	# 默认打开
 	debug_panel.visible = true
 	add_child(debug_panel)
 
+# ===================== 调试数值设置 =====================
 
+func _on_debug_set_money(input_field: LineEdit):
+	var value = input_field.text.to_int()
+	ResourceManager.add_money(value - ResourceManager.get_money())
+	input_field.placeholder_text = str(ResourceManager.get_money())
+	_refresh_resource_display()
+	print("设置资金为: ", ResourceManager.get_money())
+
+func _on_debug_set_reputation(input_field: LineEdit):
+	var value = input_field.text.to_int()
+	value = clamp(value, 0, 100)
+	ResourceManager.add_reputation(value - ResourceManager.get_reputation())
+	input_field.placeholder_text = str(ResourceManager.get_reputation())
+	_refresh_resource_display()
+	print("设置声誉为: ", ResourceManager.get_reputation())
+
+func _on_debug_set_cohesion(input_field: LineEdit):
+	var value = input_field.text.to_int()
+	value = clamp(value, 0, 100)
+	ResourceManager.add_cohesion(value - ResourceManager.get_cohesion())
+	input_field.placeholder_text = str(ResourceManager.get_cohesion())
+	_refresh_resource_display()
+	print("设置凝聚力为: ", ResourceManager.get_cohesion())
+
+func _on_debug_set_creativity(input_field: LineEdit):
+	var value = input_field.text.to_int()
+	value = clamp(value, 0, 100)
+	ResourceManager.add_creativity(value - ResourceManager.get_creativity())
+	input_field.placeholder_text = str(ResourceManager.get_creativity())
+	_refresh_resource_display()
+	print("设置创造力为: ", ResourceManager.get_creativity())
+
+func _on_debug_set_memory(input_field: LineEdit):
+	var value = input_field.text.to_int()
+	value = clamp(value, 0, 100)
+	ResourceManager.add_memory(value - ResourceManager.get_memory())
+	input_field.placeholder_text = str(ResourceManager.get_memory())
+	_refresh_resource_display()
+	print("设置记忆恢复度为: ", ResourceManager.get_memory())
+
+func _on_debug_set_action_points(input_field: LineEdit):
+	var value = input_field.text.to_int()
+	value = clamp(value, 0, 3)
+	
+	# 修改行动点
+	var current = ResourceManager.get_action_points()
+	var delta = value - current
+	if delta > 0:
+		for i in range(delta):
+			ResourceManager.consume_action_point()  # 实际是增加，需要特殊处理
+			# 由于 ResourceManager 的 action_points 可以直接设置，建议添加一个方法
+	# 更好的方法：直接修改 ResourceManager 的 action_points
+	ResourceManager.set_action_points(value)
+	input_field.placeholder_text = str(ResourceManager.get_action_points())
+	_refresh_resource_display()
+	print("设置行动点为: ", ResourceManager.get_action_points())
+	
 func _toggle_debug_panel():
 	if debug_panel:
 		debug_panel.visible = !debug_panel.visible
@@ -1246,8 +1461,8 @@ func _on_debug_jump_pressed():
 	var target_week = input_text.to_int()
 	if target_week < 1:
 		target_week = 1
-	if target_week > 18:
-		target_week = 18
+	if target_week > 30:
+		target_week = 30
 
 	print("调试：准备跳转到第", target_week, "周")
 
@@ -1286,15 +1501,15 @@ func _show_jump_notification(week: int):
 
 func _refresh_resource_display():
 	if money_label:
-		money_label.text = str(ResourceManager.get_resource_value(Constants.RES_MONEY))
+		money_label.text = "资金: %d" % ResourceManager.get_money()
 	if reputation_label:
-		reputation_label.text = str(ResourceManager.get_resource_value(Constants.RES_REPUTATION))
+		reputation_label.text = "声誉: %d" % ResourceManager.get_reputation()
 	if cohesion_label:
-		cohesion_label.text = str(ResourceManager.get_resource_value(Constants.RES_COHESION))
+		cohesion_label.text = "凝聚力: %d" % ResourceManager.get_cohesion()
 	if creativity_label:
-		creativity_label.text = str(ResourceManager.get_resource_value(Constants.RES_CREATIVITY))
+		creativity_label.text = "创造力: %d" % ResourceManager.get_creativity()
 	if memory_label:
-		memory_label.text = str(ResourceManager.get_resource_value(Constants.RES_MEMORY))
+		memory_label.text = "记忆恢复度: %d" % ResourceManager.get_memory()
 
 
 # 刷新整个 UI（供 GameManager 调用）

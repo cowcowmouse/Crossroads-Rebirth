@@ -230,19 +230,41 @@ func add_creativity(amount: int) -> bool:
 	return modify_core_resource(constants.RES_CREATIVITY, amount)
 
 func add_memory(amount: int) -> bool:
-	return modify_core_resource(constants.RES_MEMORY, amount)
-	# BackgroundManager.update_memory_filter(get_memory())
-
+	var result = modify_core_resource(constants.RES_MEMORY, amount)
+	
+	# 记忆恢复度变化后，检查是否满足结局条件
+	if result:
+		var ending_manager = get_node("/root/EndingManager")
+		if ending_manager and ending_manager.has_method("check_ending"):
+			ending_manager.check_ending()
+	
+	return result
+	
 # 获取资金（供人物面板等脚本直接调用）
 func get_money() -> int:
 	return get_resource_value(constants.RES_MONEY)
+	
+# 获取记忆恢复度
+func get_memory() -> int:
+	return get_resource_value(constants.RES_MEMORY)
 
-# ===================== 康复训练接口 =====================
+# 获取声誉
+func get_reputation() -> int:
+	return get_resource_value(constants.RES_REPUTATION)
 
+# 获取凝聚力
+func get_cohesion() -> int:
+	return get_resource_value(constants.RES_COHESION)
+
+# 获取创造力
+func get_creativity() -> int:
+	return get_resource_value(constants.RES_CREATIVITY)
+	
 # 获取当前记忆恢复阶段
 func get_memory_stage() -> int:
 	return memory_stage
-
+	
+# ===================== 康复训练接口 =====================
 # 获取当前阶段的恢复度上限
 # 当前规则：
 # - 0阶段上限：30（达到后可触发 0 -> 1 关键事件）
@@ -464,7 +486,7 @@ func update_debt_status_after_settlement():
 # 是否应触发负债失败
 # 当前规则：负债持续 1 周即失败
 func should_trigger_debt_game_over() -> bool:
-	return debt_weeks >= 1
+	return debt_weeks >= 3
 
 # ===================== 行动点接口 =====================
 
@@ -557,7 +579,16 @@ func get_ai_weight(weight_name: String) -> int:
 
 func get_all_weights() -> Dictionary:
 	return ai_weights.duplicate()
+# 获取单个权重值
+func get_art_weight() -> int:
+	return get_ai_weight(constants.WEIGHT_ART)
 
+func get_business_weight() -> int:
+	return get_ai_weight(constants.WEIGHT_BUSINESS)
+
+func get_human_weight() -> int:
+	return get_ai_weight(constants.WEIGHT_HUMAN)
+	
 # 获取本周方向值变化记录
 func get_weekly_weight_changes() -> Dictionary:
 	return weekly_weight_changes.duplicate()
@@ -1589,3 +1620,10 @@ func show_first_time_minigame_description(stage_name: String):
 	
 	get_tree().current_scene.add_child(dialog)
 	dialog.popup_centered()
+
+func set_action_points(value: int):
+	action_points = clamp(value, 0, MAX_ACTION_POINTS)
+	refresh_current_scene_topbar()
+	print("行动点已设置为: ", action_points)
+
+# ===================== 便捷获取方法 =====================
