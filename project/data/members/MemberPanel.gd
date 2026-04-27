@@ -39,7 +39,7 @@ func _on_recruit_pressed():
 
 func setup(char_id: String):
 	character_id = char_id
-	character_data = MemberData.get_character(char_id)
+#	character_data = MemberData.get_character(char_id)
 	
 	if not character_data:
 		queue_free()

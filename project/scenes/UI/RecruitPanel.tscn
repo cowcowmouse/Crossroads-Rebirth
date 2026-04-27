@@ -1,0 +1,103 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbqp0otnalajn"]
+
+[ext_resource type="Script" uid="uid://ddqpuf20md0v7" path="res://project/scenes/UI/RecruitPanel.gd" id="1_d3431"]
+
+[node name="RecruitPanel" type="Panel"]
+custom_minimum_size = Vector2(620, 420)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_d3431")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -648.0
+offset_top = -326.0
+offset_right = 1268.0
+offset_bottom = 756.0
+tooltip_text = "踢出"
+mouse_filter = 2
+color = Color(0.5636256, 0.5636255, 0.5636255, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 105.0
+offset_top = -93.0
+offset_right = 454.0
+offset_bottom = 276.0
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer"]
+modulate = Color(0.55891573, 0.21107778, 0.06302604, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "招募"
+horizontal_alignment = 1
+
+[node name="InfoLabel" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(100, 80)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "所需资金：12000"
+horizontal_alignment = 1
+
+[node name="RecruitButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(20, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "招募"
+
+[node name="CancelButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(180, 60)
+layout_mode = 2
+text = "取消"
+
+[node name="KickButton" type="Button" parent="VBoxContainer"]
+modulate = Color(0.83900684, 0.20241901, 0.27641436, 1)
+custom_minimum_size = Vector2(20, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "踢出"
+
+[node name="ResultLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 146.0
+offset_top = 325.0
+offset_right = 429.0
+offset_bottom = 444.0
+
+[node name="KickConfirmPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = -40.0
+offset_top = -183.0
+offset_right = 591.0
+offset_bottom = 548.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="KickConfirmPanel"]
+layout_mode = 0
+offset_left = 272.0
+offset_top = 288.0
+offset_right = 356.0
+offset_bottom = 333.0
+
+[node name="ConfirmKickBtn" type="Button" parent="KickConfirmPanel/HBoxContainer"]
+layout_mode = 2
+text = "确定"
+
+[node name="CancelKickBtn" type="Button" parent="KickConfirmPanel/HBoxContainer"]
+layout_mode = 2
+text = "取消"
+
+[node name="ConfirmText" type="Label" parent="KickConfirmPanel"]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 178.0
+offset_right = 548.0
+offset_bottom = 259.0
+theme_override_font_sizes/font_size = 20
+text = "踢出成员会减少5声誉值，下次招募仍要支付相应金额"
+horizontal_alignment = 1
+vertical_alignment = 1

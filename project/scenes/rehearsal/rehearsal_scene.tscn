@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://b8uve8pei0ak7"]
+[gd_scene load_steps=26 format=3 uid="uid://b8uve8pei0ak7"]
 
 [ext_resource type="Texture2D" uid="uid://74jorwl6hifk" path="res://project/scenes/rehearsal/images/practice-room.jpg" id="1_abjjs"]
 [ext_resource type="Script" uid="uid://bdpkroltk0uem" path="res://project/scenes/rehearsal/rehearsal_scene.gd" id="1_ow65r"]
@@ -14,6 +14,10 @@
 [ext_resource type="Texture2D" uid="uid://buo3p1nfqnovn" path="res://project/assets/images/ui/buttons/rehearsalup.png" id="12_4jwa2"]
 [ext_resource type="Shader" uid="uid://g7r7lx8ad3m" path="res://project/scenes/rehearsal/outline_rehearsal.gdshader" id="12_6q26r"]
 [ext_resource type="PackedScene" uid="uid://qvf8llp2hilo" path="res://project/scenes/facility/facility_panel.tscn" id="12_e6c5m"]
+[ext_resource type="Texture2D" uid="uid://cj81w6fbmp1gf" path="res://project/assets/images/ui/clock/clock_before.png" id="15_k03si"]
+[ext_resource type="Texture2D" uid="uid://slf5stjmfsyh" path="res://project/assets/images/ui/clock/clock_after.png" id="16_qn4nl"]
+[ext_resource type="Texture2D" uid="uid://byc0ahl5jg80x" path="res://project/assets/images/ui/clock/clock_mid.png" id="17_e6c5m"]
+[ext_resource type="Script" uid="uid://bdrcdpmk7urw5" path="res://project/scripts/MemberSpawner.gd" id="18_qn4nl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rn2sn"]
 shader = ExtResource("12_6q26r")
@@ -189,3 +193,33 @@ theme_override_font_sizes/font_size = 200
 text = "维修中"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="MemberSpawnPoints" type="Node2D" parent="."]
+
+[node name="Marker2D" type="Marker2D" parent="MemberSpawnPoints"]
+position = Vector2(-249, -82)
+
+[node name="Sprite2D" type="Sprite2D" parent="MemberSpawnPoints/Marker2D"]
+visible = false
+position = Vector2(-249, -82)
+texture = ExtResource("15_k03si")
+
+[node name="Marker2D2" type="Marker2D" parent="MemberSpawnPoints"]
+position = Vector2(-958, 677)
+
+[node name="Sprite2D" type="Sprite2D" parent="MemberSpawnPoints/Marker2D2"]
+visible = false
+position = Vector2(-958, 677)
+texture = ExtResource("16_qn4nl")
+
+[node name="Marker2D3" type="Marker2D" parent="MemberSpawnPoints"]
+position = Vector2(148, 378)
+
+[node name="Sprite2D" type="Sprite2D" parent="MemberSpawnPoints/Marker2D3"]
+visible = false
+position = Vector2(148, 378)
+texture = ExtResource("17_e6c5m")
+
+[node name="System" type="Node" parent="." node_paths=PackedStringArray("rehearsal_spawn_points")]
+script = ExtResource("18_qn4nl")
+rehearsal_spawn_points = [NodePath("../MemberSpawnPoints/Marker2D"), NodePath("../MemberSpawnPoints/Marker2D2"), NodePath("../MemberSpawnPoints/Marker2D3")]

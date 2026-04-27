@@ -29,6 +29,10 @@ ClockState="*res://project/scripts/autoload/ClockState.gd"
 Signals="*res://project/scripts/autoload/signals.gd"
 EventManager="*res://project/scripts/autoload/EventManager.gd"
 AudioManager="*res://project/scripts/autoload/AudioManager.gd"
+MemberManager="*res://project/data/members/MemberManager.gd"
+UIManager="*res://project/scripts/autoload/UIManager.gd"
+MemberSpawn="*res://project/data/members/MemberSpawnSystem.gd"
+MembersDatabase="*res://project/scripts/models/member/MembersDatabase.gd"
 
 [dialogic]
 

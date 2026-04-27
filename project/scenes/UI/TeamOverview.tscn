@@ -1,0 +1,110 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6yftgnd3biyx"]
+
+[ext_resource type="Texture2D" uid="uid://b28510ks1x2au" path="res://project/assets/scenebackup/member_background.png" id="1_64ym4"]
+[ext_resource type="Script" uid="uid://c5qt4u8atxr37" path="res://project/scenes/UI/TeamOverview.gd" id="1_h2p8h"]
+
+[node name="TeamOverview" type="Control"]
+custom_minimum_size = Vector2(1920, 1080)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 18.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_h2p8h")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(958.49994, 546.99994)
+scale = Vector2(1.8243114, 1.419786)
+texture = ExtResource("1_64ym4")
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 1017.0
+offset_top = 116.0
+offset_right = 1594.0
+offset_bottom = 276.0
+theme_override_font_sizes/font_size = 32
+text = "乐队成员"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="."]
+custom_minimum_size = Vector2(900, 500)
+layout_direction = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -262.0
+offset_top = -160.5
+offset_right = 262.0
+offset_bottom = 160.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 40
+theme_override_constants/v_separation = 40
+columns = 3
+
+[node name="MemberSlot1" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(260, 180)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GridContainer/MemberSlot1"]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 32.0
+offset_right = 86.0
+offset_bottom = 82.0
+
+[node name="Label" type="Label" parent="GridContainer/MemberSlot1/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="GridContainer/MemberSlot1/VBoxContainer"]
+layout_mode = 2
+
+[node name="MemberSlot2" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(260, 180)
+layout_mode = 2
+
+[node name="MemberSlot3" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(260, 180)
+layout_mode = 2
+
+[node name="MemberSlot4" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(260, 180)
+layout_mode = 2
+
+[node name="MemberSlot5" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(260, 180)
+layout_mode = 2
+
+[node name="MemberSlot6" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(260, 180)
+layout_mode = 2
+
+[node name="MemberSlot7" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(260, 180)
+layout_mode = 2
+
+[node name="MemberSlot8" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(260, 180)
+layout_mode = 2
+
+[node name="MemberSlot9" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(260, 180)
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1544.0
+offset_top = 91.0
+offset_right = 1792.0
+offset_bottom = 183.0
+theme_override_font_sizes/font_size = 60
+text = "退出"
+
+[connection signal="pressed" from="CloseButton" to="." method="_on_exit_button_pressed"]

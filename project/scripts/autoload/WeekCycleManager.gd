@@ -15,6 +15,8 @@ var current_week: int = 1
 func _ready():
 	process_mode = PROCESS_MODE_ALWAYS
 
+
+
 func start_new_week():
 	current_week += 1
 	

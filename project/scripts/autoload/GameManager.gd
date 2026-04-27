@@ -15,7 +15,7 @@ var is_game_ended: bool = false
 
 func _ready():
 	process_mode = PROCESS_MODE_ALWAYS
-
+	
 func get_current_week():
 	return current_week
 
