@@ -36,8 +36,17 @@ shader_parameter/line_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y7n27"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iiqy2"]
-bg_color = Color(0.043137256, 0.043137256, 0.043137256, 0.78431374)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_by5hv"]
+bg_color = Color(0.14117648, 0.08235294, 0.043137256, 0.54901963)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.5411765, 0.3529412, 0.14117648, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
 
 [node name="lounge_scene" type="Node2D"]
 script = ExtResource("1_wek5q")
@@ -170,29 +179,30 @@ script = ExtResource("5_ocngs")
 facility_type = "lounge"
 
 [node name="RepairMask" type="Panel" parent="UILayer/LoungeButton"]
-visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 65.00006
+offset_top = 24.999878
+offset_right = -30.000061
+offset_bottom = -10.000244
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_by5hv")
+
+[node name="Label" type="Label" parent="UILayer/LoungeButton/RepairMask"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_iiqy2")
-
-[node name="Label" type="Label" parent="UILayer/LoungeButton/RepairMask"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = -11.5
-offset_right = 24.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 200
+theme_override_colors/font_color = Color(0.9607843, 0.93333334, 0.5803922, 1)
+theme_override_colors/font_shadow_color = Color(0.16470589, 0.08627451, 0.039215688, 1)
+theme_override_colors/font_outline_color = Color(0.16470589, 0.08627451, 0.039215688, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 64
 text = "维修中"
 horizontal_alignment = 1
 vertical_alignment = 1

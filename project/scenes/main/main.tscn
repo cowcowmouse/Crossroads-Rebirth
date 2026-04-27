@@ -63,8 +63,17 @@ shader_parameter/line_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pt5qx"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_svdfk"]
-bg_color = Color(0.043137256, 0.043137256, 0.043137256, 0.78431374)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fkgpr"]
+bg_color = Color(0.14117648, 0.08235294, 0.043137256, 0.54901963)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.5411765, 0.3529412, 0.14117648, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_582ml"]
 shader = ExtResource("22_fkgpr")
@@ -221,6 +230,47 @@ layout_mode = 2
 texture = ExtResource("13_c2s8q")
 script = ExtResource("13_dniyw")
 
+[node name="WeekPhaseGroup" type="HBoxContainer" parent="UILayer/TopBar"]
+layout_mode = 2
+
+[node name="WeekLabel" type="Label" parent="UILayer/TopBar/WeekPhaseGroup"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "第几周"
+
+[node name="DividerLabel" type="Label" parent="UILayer/TopBar/WeekPhaseGroup"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "|"
+
+[node name="PhaseLabel" type="Label" parent="UILayer/TopBar/WeekPhaseGroup"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "周初"
+
+[node name="PhaseDotContainer" type="HBoxContainer" parent="UILayer/TopBar/WeekPhaseGroup"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="BeforeDot" type="ColorRect" parent="UILayer/TopBar/WeekPhaseGroup/PhaseDotContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+color = Color(1, 1, 0.7411765, 1)
+
+[node name="MidDot" type="ColorRect" parent="UILayer/TopBar/WeekPhaseGroup/PhaseDotContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_vertical = 4
+color = Color(1, 0.5254902, 1, 1)
+
+[node name="AfterDot" type="ColorRect" parent="UILayer/TopBar/WeekPhaseGroup/PhaseDotContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_vertical = 4
+color = Color(0.44705883, 1, 1, 1)
+
 [node name="Rehabpanel" type="Panel" parent="UILayer"]
 visible = false
 modulate = Color(0.8047426, 0.80474263, 0.8047426, 1)
@@ -349,10 +399,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 630.0
-offset_top = 378.0
-offset_right = 1335.0
-offset_bottom = 809.0
+offset_left = 439.0
+offset_top = 290.0
+offset_right = 1199.0
+offset_bottom = 721.0
 grow_horizontal = 1
 grow_vertical = 1
 
@@ -380,24 +430,26 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 273.3333
+offset_top = 90.0
+offset_right = -320.00006
+offset_bottom = -110.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_svdfk")
+theme_override_styles/panel = SubResource("StyleBoxFlat_fkgpr")
 
 [node name="Label" type="Label" parent="UILayer/StageButton/RepairMask"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = -11.5
-offset_right = 24.0
-offset_bottom = 11.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 200
+theme_override_colors/font_color = Color(0.9607843, 0.93333334, 0.5803922, 1)
+theme_override_colors/font_shadow_color = Color(0.16470589, 0.08627451, 0.039215688, 1)
+theme_override_colors/font_outline_color = Color(0.16470589, 0.08627451, 0.039215688, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 64
 text = "维修中"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -425,24 +477,26 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 273.3333
+offset_top = 90.0
+offset_right = -320.00006
+offset_bottom = -110.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_svdfk")
+theme_override_styles/panel = SubResource("StyleBoxFlat_fkgpr")
 
 [node name="Label" type="Label" parent="UILayer/BarButton/RepairMask"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = -11.5
-offset_right = 24.0
-offset_bottom = 11.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 200
+theme_override_colors/font_color = Color(0.9607843, 0.93333334, 0.5803922, 1)
+theme_override_colors/font_shadow_color = Color(0.16470589, 0.08627451, 0.039215688, 1)
+theme_override_colors/font_outline_color = Color(0.16470589, 0.08627451, 0.039215688, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 64
 text = "维修中"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -459,6 +513,7 @@ offset_right = -46.0
 offset_bottom = -60.0
 grow_horizontal = 0
 grow_vertical = 0
+theme_override_colors/font_color = Color(0.9607843, 0.93333334, 0.8745098, 1)
 text = "跳过阶段"
 
 [node name="SettlementPanel" parent="UILayer" instance=ExtResource("22_wsoed")]
@@ -505,13 +560,13 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -463.99988
-offset_top = -123.00006
-offset_right = -433.99988
-offset_bottom = -92.00006
+offset_left = -413.0
+offset_top = -66.99994
+offset_right = -383.0
+offset_bottom = -36.0
 grow_horizontal = 0
 grow_vertical = 0
-scale = Vector2(4.0437303, 3.897308)
+scale = Vector2(2.2055025, 1.9309621)
 text = "⚙"
 
 [node name="MemberStanding_tscn" parent="." instance=ExtResource("23_gmtqm")]
@@ -577,9 +632,8 @@ position = Vector2(-341.78494, 150.44202)
 scale = Vector2(0.28668892, 0.2838307)
 texture = ExtResource("29_bieqv")
 
-[node name="System" type="Node" parent="." node_paths=PackedStringArray("main_spawn_points")]
+[node name="System" type="Node" parent="."]
 script = ExtResource("30_bieqv")
-main_spawn_points = [NodePath("../MemberSpawnPoints/Marker2D"), NodePath("../MemberSpawnPoints/Marker2D2"), NodePath("../MemberSpawnPoints/Marker2D3"), NodePath("../MemberSpawnPoints/Marker2D4")]
 
 [connection signal="pressed" from="UILayer/ArrowLeft" to="." method="_on_texture_button_pressed"]
 [connection signal="pressed" from="UILayer/ArrowRight" to="." method="_on_arrow_right_pressed"]

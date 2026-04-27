@@ -4,7 +4,8 @@
 	"pages": [
 	  {
 		"title": "关键事件：重建手感",
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s1_bg01.png",
+		"image_hint": "深夜打烊酒吧，暖黄低照明，空舞台与旧吉他，安静压抑，低饱和暖色",
 		"dialogues": [
 		  {
 			"speaker": "narration",
@@ -17,20 +18,22 @@
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s1_bg02.png",
+		"image_hint": "深夜酒吧角落，主角坐着看自己的手，吉他靠在桌边，绝望感强",
 		"dialogues": [
 		  {
 			"speaker": "narration",
-			"text": "你坐在酒吧角落，右手旧伤隐隐作痛。桌上的吉他离你很近，近得像是在逼你重新承认：你还没有彻底失去它。"
+			"text": "你把琴抱到腿上，试着让左手落回熟悉的把位，可真正要发力时，右手却像不是自己的一样。"
 		  },
 		  {
 			"speaker": "narration",
-			"text": "你抬起手，试着按住琴弦，最基础的音阶在脑子里熟得发烫，可真正要弹出来时，手却像不是自己的一样。"
+			"text": "那些你曾经闭着眼都能完成的动作，现在每一步都像要重新确认。"
 		  }
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s1_bg02.png",
+		"image_hint": "主角手部近景，琴弦与旧伤疤，低光，情绪内缩",
 		"dialogues": [
 		  {
 			"speaker": "alexi_inner",
@@ -39,7 +42,8 @@
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s1_bg02.png",
+		"image_hint": "舞台边半近景，主角低头试弹，气氛自嘲与挫败",
 		"dialogues": [
 		  {
 			"speaker": "alexi",
@@ -52,7 +56,8 @@
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s1_bg03.png",
+		"image_hint": "老钉子靠在音箱边，背景昏暗，平静开口",
 		"dialogues": [
 		  {
 			"speaker": "old_nail",
@@ -61,7 +66,8 @@
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s1_bg03.png",
+		"image_hint": "主角与老钉子对话，琴横在两人之间，沉重感",
 		"dialogues": [
 		  {
 			"speaker": "alexi",
@@ -70,78 +76,22 @@
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s1_bg03.png",
+		"image_hint": "深夜酒吧角落，老钉子平静讲述传奇案例，主角抬头",
 		"dialogues": [
 		  {
 			"speaker": "old_nail",
-			"text": "你听过Tony Iommi吧。当年工厂事故，指尖被切掉，只能戴自制护指弹琴。所有人都说他再也上不了台。"
-		  }
-		]
-	  },
-	  {
-		"image_path": "",
-		"dialogues": [
-		  {
-			"speaker": "alexi",
-			"text": "……Tony那代的金属……根本都弹不快。我跟他的路子不一样。"
-		  }
-		]
-	  },
-	  {
-		"image_path": "",
-		"dialogues": [
-		  {
-			"speaker": "old_nail",
-			"text": "好。那我说一个你真正服气的。"
-		  }
-		]
-	  },
-	  {
-		"image_path": "",
-		"dialogues": [
-		  {
-			"speaker": "alexi",
-			"text": "……谁。"
-		  }
-		]
-	  },
-	  {
-		"image_path": "",
-		"dialogues": [
-		  {
-			"speaker": "old_nail",
-			"text": "Yngwie Malmsteen。"
-		  }
-		]
-	  },
-	  {
-		"image_path": "",
-		"dialogues": [
-		  {
-			"speaker": "alexi",
-			"text": "他……"
-		  }
-		]
-	  },
-	  {
-		"image_path": "",
-		"dialogues": [
-		  {
-			"speaker": "old_nail",
-			"text": "车祸，颈椎骨折、手臂神经重创。医生直接判他：再也不能速弹。"
+			"text": "Yngwie Malmsteen。车祸，颈椎骨折、手臂神经重创。医生直接判他：再也不能速弹。"
 		  },
 		  {
 			"speaker": "old_nail",
 			"text": "可他复健的第一步，就是你现在弹的这个——和声小调音阶。"
-		  },
-		  {
-			"speaker": "old_nail",
-			"text": "他没有放弃，反而趁着复健，把和声小调练到更极致，还把经济拨弦打磨到前所未有的精准高效……车祸之后，他反而更强。"
 		  }
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s1_bg03.png",
+		"image_hint": "主角注视自己的手，情绪从绝望转为迟疑",
 		"dialogues": [
 		  {
 			"speaker": "alexi",
@@ -150,35 +100,46 @@
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s1_bg03.png",
+		"image_hint": "老钉子靠在音箱旁，暖黄灯下，语气平静坚定",
 		"dialogues": [
 		  {
 			"speaker": "old_nail",
 			"text": "别人觉得传奇就该一步登天。可真正走出来的人，都从最笨、最基础、最不起眼的地方重新站起。"
-		  }
-		]
-	  },
-	  {
-		"image_path": "",
-		"dialogues": [
-		  {
-			"speaker": "alexi",
-			"text": "我以为我再也回不去了。"
-		  }
-		]
-	  },
-	  {
-		"image_path": "",
-		"dialogues": [
+		  },
 		  {
 			"speaker": "old_nail",
 			"text": "你不是回去。你是重新建立你的手、你的音乐、你自己。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "res://project/assets/images/memory_events/s1_bg04.png",
+		"image_hint": "主角重新把琴扶正，手放回琴弦，呼吸平缓下来",
+		"dialogues": [
+		  {
+			"speaker": "narration",
+			"text": "你低头看着那只曾经让你引以为傲、也曾让你彻底崩溃的手。"
+		  },
+		  {
+			"speaker": "narration",
+			"text": "这一次，你忽然意识到，恢复并不一定意味着回到原来的样子。"
+		  }
+		]
+	  },
+	  {
+		"image_path": "res://project/assets/images/memory_events/s1_bg04.png",
+		"image_hint": "深夜舞台边，主角在决定如何重新开始，专注且安静",
+		"dialogues": [
+		  {
+			"speaker": "alexi_inner",
+			"text": "也许我现在真正要决定的，不是还能不能回去，而是我要怎么重新开始。"
 		  }
 		],
 		"choices": [
 		  {
 			"id": "art",
-			"text": "继续盯着音阶和拨弦本身，把注意力全部放回音乐。",
+			"text": "把注意力全部放回音阶和拨弦本身，先把每个音弹实。",
 			"memory_delta": 2,
 			"weights": {
 			  "art": 3
@@ -186,14 +147,14 @@
 			"result_dialogues": [
 			  {
 				"speaker": "alexi_inner",
-				"text": "速度不重要，过去也不重要，你只想先把每一个音弹实。"
+				"text": "速度不重要，过去也不重要。现在最重要的，是让每一个音重新变得真实。"
 			  }
 			],
-			"next_page": 17
+			"next_page": 11
 		  },
 		  {
 			"id": "human",
-			"text": "先把心里的恐惧说出来，承认自己现在真的很怕。",
+			"text": "承认自己真的在害怕，让这份恐惧先被说出来。",
 			"memory_delta": 1,
 			"weights": {
 			  "human": 3
@@ -201,14 +162,14 @@
 			"result_dialogues": [
 			  {
 				"speaker": "alexi_inner",
-				"text": "把这句话说出口的瞬间，胸口那种压着的东西终于松动了一点。"
+				"text": "把这句话说出口的瞬间，胸口那种一直压着的东西终于松了一点。"
 			  }
 			],
-			"next_page": 20
+			"next_page": 13
 		  },
 		  {
 			"id": "business",
-			"text": "把这次练习当成一次复健任务，先恢复最基础的控制力。",
+			"text": "把这次练习当成复健任务，先把最基础的控制力练回来。",
 			"memory_delta": 1,
 			"weights": {
 			  "business": 3
@@ -216,15 +177,16 @@
 			"result_dialogues": [
 			  {
 				"speaker": "alexi_inner",
-				"text": "只要能把控制力一点点找回来，后面的事就还有得谈。"
+				"text": "不去想天赋和过去，先把控制力一点点找回来，后面的事才有资格谈。"
 			  }
 			],
-			"next_page": 23
+			"next_page": 15
 		  }
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s1_bg04.png",
+		"image_hint": "主角专注练习和声小调，指尖与琴弦特写，气氛专注",
 		"dialogues": [
 		  {
 			"speaker": "alexi",
@@ -233,17 +195,13 @@
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s1_bg06.png",
+		"image_hint": "近景，主角稳稳弹出几个干净的音，微弱希望感",
 		"dialogues": [
 		  {
 			"speaker": "narration",
 			"text": "你弹下去的第一个音还有些犹豫，第二个音开始变稳，第三个音终于不再发虚。"
-		  }
-		]
-	  },
-	  {
-		"image_path": "",
-		"dialogues": [
+		  },
 		  {
 			"speaker": "alexi_inner",
 			"text": "我不是在证明自己还能不能回到从前。我是在重新把音乐一点点抓回来。"
@@ -252,12 +210,13 @@
 		"choices": [
 		  {
 			"text": "继续",
-			"next_page": 24
+			"next_page": 17
 		  }
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s1_bg05.png",
+		"image_hint": "主角低头承认脆弱，老钉子在一旁安静听着，情绪释放",
 		"dialogues": [
 		  {
 			"speaker": "alexi",
@@ -266,17 +225,13 @@
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s1_bg05.png",
+		"image_hint": "老钉子站在旁边，语气平静，暖光包裹场景",
 		"dialogues": [
 		  {
 			"speaker": "old_nail",
 			"text": "怕很正常。可你现在不是在比赛，也不是在上台，你只是在学着重新把自己接回来。"
-		  }
-		]
-	  },
-	  {
-		"image_path": "",
-		"dialogues": [
+		  },
 		  {
 			"speaker": "narration",
 			"text": "你听着这句话，终于不再把“恢复”当成一场必须立刻赢下来的胜负。"
@@ -285,12 +240,13 @@
 		"choices": [
 		  {
 			"text": "继续",
-			"next_page": 24
+			"next_page": 17
 		  }
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s1_bg04.png",
+		"image_hint": "主角把琴摆正，像校准机器一样逐步复健，理性专注",
 		"dialogues": [
 		  {
 			"speaker": "narration",
@@ -304,31 +260,22 @@
 		"choices": [
 		  {
 			"text": "继续",
-			"next_page": 24
+			"next_page": 17
 		  }
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s1_bg06.png",
+		"image_hint": "深夜舞台，灯光稍微亮起，主角弹完后停住，带一点治愈感",
 		"dialogues": [
 		  {
 			"speaker": "alexi",
 			"text": "……成了。虽然慢，但……音是实的。"
-		  }
-		]
-	  },
-	  {
-		"image_path": "",
-		"dialogues": [
+		  },
 		  {
 			"speaker": "old_nail",
-			"text": "你看。一步一步，就能走回去。"
-		  }
-		]
-	  },
-	  {
-		"image_path": "",
-		"dialogues": [
+			"text": "你看。一步一步，就能走回来。"
+		  },
 		  {
 			"speaker": "alexi_inner",
 			"text": "我不是破碎。我是重建。"
@@ -342,20 +289,22 @@
 	"pages": [
 	  {
 		"title": "关键事件：找回控制",
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s2_bg01.png",
+		"image_hint": "午后酒吧全景，自然光从窗边照进来，气氛平静温暖，吉他放在吧台或桌边",
 		"dialogues": [
 		  {
 			"speaker": "narration",
-			"text": "酒吧的午后格外安静，右手旧伤还带着几分浅浅的酸胀，却不妨碍你指尖轻搭琴弦。"
+			"text": "午后的酒吧格外安静，右手旧伤还带着几分浅浅的酸胀，却已经不再像从前那样支配你的动作。"
 		  },
 		  {
 			"speaker": "narration",
-			"text": "身旁的吉他陪着你，没有刻意的提醒，只是那份熟悉的质感，让你心底的犹豫渐渐消散。"
+			"text": "身旁的吉他陪着你，没有刻意提醒，只是那份熟悉的质感，让心底的犹豫一点点松开。"
 		  }
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s2_bg02.png",
+		"image_hint": "主角午后抱琴，手放在指板上，平静试弹，柔和自然光",
 		"dialogues": [
 		  {
 			"speaker": "alexi_inner",
@@ -364,7 +313,8 @@
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s2_bg02.png",
+		"image_hint": "手与指板近景，乐句流畅，氛围安静",
 		"dialogues": [
 		  {
 			"speaker": "alexi",
@@ -377,7 +327,8 @@
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s2_bg02.png",
+		"image_hint": "午后酒吧靠窗区域，主角专注看着自己的手，轻微恍惚感",
 		"dialogues": [
 		  {
 			"speaker": "alexi",
@@ -386,7 +337,8 @@
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s2_bg03.png",
+		"image_hint": "芬恩站在墙边或吧台旁，主角坐着抱琴，安静对话",
 		"dialogues": [
 		  {
 			"speaker": "finn",
@@ -395,7 +347,8 @@
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s2_bg03.png",
+		"image_hint": "午后酒吧，主角与芬恩对话，气氛克制但不再紧绷",
 		"dialogues": [
 		  {
 			"speaker": "alexi",
@@ -404,16 +357,8 @@
 		]
 	  },
 	  {
-		"image_path": "",
-		"dialogues": [
-		  {
-			"speaker": "finn",
-			"text": "车祸之后，我以为你再也碰不了琴。现在我信了，你真的能回来。"
-		  }
-		]
-	  },
-	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s2_bg04.png",
+		"image_hint": "主角有轻微眩晕感，背景浮现模糊记忆碎片的意象",
 		"dialogues": [
 		  {
 			"speaker": "alexi",
@@ -422,7 +367,8 @@
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s2_bg03.png",
+		"image_hint": "芬恩平静注视主角，午后暖光",
 		"dialogues": [
 		  {
 			"speaker": "finn",
@@ -431,92 +377,46 @@
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s2_bg04.png",
+		"image_hint": "主角低头抱琴，情绪从平静转为恐惧，背景可带轻微事故/演出残影感",
 		"dialogues": [
 		  {
 			"speaker": "alexi",
-			"text": "我怕想起那天。怕想起车祸，怕想起我失去的一切，怕再也找不回以前在指板飞驰的感觉……"
+			"text": "我怕想起那天。怕想起车祸，怕想起我失去的一切。"
 		  }
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s2_bg05.png",
+		"image_hint": "老钉子端着水走近，琴放在吧台上，场景有开解意味",
 		"dialogues": [
 		  {
 			"speaker": "old_nail",
-			"text": "我给你说个你也许没听过的人。一个爵士吉他手，叫Pat Martino。"
-		  }
-		]
-	  },
-	  {
-		"image_path": "",
-		"dialogues": [
-		  {
-			"speaker": "alexi",
-			"text": "爵士？我不会弹啊。我可不会给观众演奏那些复杂的和弦。"
-		  }
-		]
-	  },
-	  {
-		"image_path": "",
-		"dialogues": [
-		  {
-			"speaker": "old_nail",
-			"text": "他在巅峰期，因为严重的脑动脉瘤，差点死掉。术后，他彻底失去了所有指板记忆、乐句记忆，甚至认不出自己弹了一辈子的曲子。"
-		  }
-		]
-	  },
-	  {
-		"image_path": "",
-		"dialogues": [
-		  {
-			"speaker": "alexi",
-			"text": "他……他怎么回来的？连指板都忘了，还能弹琴？"
-		  }
-		]
-	  },
-	  {
-		"image_path": "",
-		"dialogues": [
-		  {
-			"speaker": "old_nail",
-			"text": "他从最基础的C大调音阶、三和弦开始，一条指板、一个乐句、一个和弦，重新把自己的音乐记忆“刻”回手里。"
+			"text": "Pat Martino，术后彻底失去了所有指板记忆，却从最基础的音阶重新学起，不仅恢复，还达到了更高的境界。"
 		  },
 		  {
 			"speaker": "old_nail",
-			"text": "用了整整三年，不仅完全恢复，还把自己的乐句体系、指板逻辑，练到了比巅峰期更通透、更极致的境界。"
-		  },
-		  {
-			"speaker": "old_nail",
-			"text": "他说过一句话：“失去记忆，不是失去音乐，是给了你一次重新理解音乐的机会。”"
+			"text": "他说过一句话：失去记忆，不是失去音乐，是给了你一次重新理解音乐的机会。"
 		  }
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s2_bg05.png",
+		"image_hint": "主角看着琴，情绪从惧怕转向理解，午后光更亮一些",
 		"dialogues": [
 		  {
 			"speaker": "alexi",
 			"text": "原来……就算指板记忆全丢了，也能找回来。甚至能找得更透彻。"
-		  }
-		]
-	  },
-	  {
-		"image_path": "",
-		"dialogues": [
-		  {
-			"speaker": "finn",
-			"text": "说个不好听的话，现在的指板体系和原来你那种老派弹法完全不一样了。"
 		  },
 		  {
 			"speaker": "finn",
-			"text": "现在网上教程也很多，找一个体系就能把指板慢慢熟悉回来。"
+			"text": "现在的指板体系和过去不一样了。可只要你肯重新建立，总能把它找回来。"
 		  }
 		],
 		"choices": [
 		  {
 			"id": "art",
-			"text": "继续顺着乐句和旋律往下追，把“想起来”交给音乐本身。",
+			"text": "继续顺着乐句和旋律往下追，让音乐自己把记忆带回来。",
 			"memory_delta": 3,
 			"weights": {
 			  "art": 4
@@ -524,14 +424,14 @@
 			"result_dialogues": [
 			  {
 				"speaker": "alexi_inner",
-				"text": "如果音乐能把记忆唤醒，那你就干脆让它带你把那些东西一并找回来。"
+				"text": "如果音乐能把记忆唤醒，那你就干脆让它带着你把那些碎片一并找回来。"
 			  }
 			],
-			"next_page": 17
+			"next_page": 11
 		  },
 		  {
 			"id": "human",
-			"text": "先接受自己在害怕，也接受有人正在把你一点点拉回来。",
+			"text": "接受自己仍然在害怕，也接受有人正在把你一点点拉回来。",
 			"memory_delta": 2,
 			"weights": {
 			  "human": 4
@@ -539,10 +439,10 @@
 			"result_dialogues": [
 			  {
 				"speaker": "alexi_inner",
-				"text": "也许恢复从来不只是你和琴之间的事，它同样和那些没有离开你的人有关。"
+				"text": "恢复从来不只是你和琴之间的事，它同样和那些没有在你最低谷离开的人有关。"
 			  }
 			],
-			"next_page": 20
+			"next_page": 13
 		  },
 		  {
 			"id": "business",
@@ -554,25 +454,21 @@
 			"result_dialogues": [
 			  {
 				"speaker": "alexi_inner",
-				"text": "如果要真正回来，你得重新建立一套更清楚、更有效的演奏体系。"
+				"text": "如果要真正回来，你得建立一套更清楚、更有效，也更属于现在的体系。"
 			  }
 			],
-			"next_page": 21
+			"next_page": 15
 		  }
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s2_bg06.png",
+		"image_hint": "主角重新弹起短句，某些位置忽然变得清晰，柔和光线包裹场景",
 		"dialogues": [
 		  {
 			"speaker": "alexi",
 			"text": "好。那我就继续弹。弹到指板彻底熟悉，弹到记忆完整，弹到手感彻底回来。"
-		  }
-		]
-	  },
-	  {
-		"image_path": "",
-		"dialogues": [
+		  },
 		  {
 			"speaker": "narration",
 			"text": "你再次弹起短句，某些音的位置突然变得异常清晰，像是它们从来就没有离开过。"
@@ -580,7 +476,8 @@
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s2_bg06.png",
+		"image_hint": "主角午后抱琴，内心拼凑感增强，治愈感",
 		"dialogues": [
 		  {
 			"speaker": "alexi_inner",
@@ -590,12 +487,13 @@
 		"choices": [
 		  {
 			"text": "继续",
-			"next_page": 23
+			"next_page": 17
 		  }
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s2_bg06.png",
+		"image_hint": "主角不再躲开恍惚感，老钉子与芬恩存在于同一空间，陪伴感明显",
 		"dialogues": [
 		  {
 			"speaker": "narration",
@@ -609,22 +507,18 @@
 		"choices": [
 		  {
 			"text": "继续",
-			"next_page": 23
+			"next_page": 17
 		  }
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s2_bg06.png",
+		"image_hint": "吧台或桌面上摊开练习笔记、指板逻辑，主角开始整理体系",
 		"dialogues": [
 		  {
 			"speaker": "narration",
 			"text": "你开始认真思考芬恩说的话，把指板位置、连接方式和练习逻辑一条条重新整理。"
-		  }
-		]
-	  },
-	  {
-		"image_path": "",
-		"dialogues": [
+		  },
 		  {
 			"speaker": "alexi_inner",
 			"text": "失去并不意味着结束，有时候它反而逼着你建立起比过去更清晰的控制。"
@@ -633,12 +527,13 @@
 		"choices": [
 		  {
 			"text": "继续",
-			"next_page": 23
+			"next_page": 17
 		  }
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s2_bg06.png",
+		"image_hint": "午后酒吧被阳光照亮，主角平稳弹奏，场景更完整更明亮",
 		"dialogues": [
 		  {
 			"speaker": "narration",
@@ -657,7 +552,8 @@
 	"pages": [
 	  {
 		"title": "关键事件：完全重生",
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s3_bg01.png",
+		"image_hint": "深夜空舞台全景，单束顶光，琴身被照亮，强烈舞台感",
 		"dialogues": [
 		  {
 			"speaker": "narration",
@@ -670,20 +566,18 @@
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s3_bg01.png",
+		"image_hint": "主角站在舞台中央抱琴，空舞台，氛围坚定而平静",
 		"dialogues": [
 		  {
 			"speaker": "narration",
 			"text": "你抱着吉他，指尖抚过琴弦，它不再是束缚，而是与你并肩同行的伙伴，见证着你破茧重生的每一刻。"
-		  },
-		  {
-			"speaker": "narration",
-			"text": "这一次，你没有试探，也没有犹豫，手在琴上稳定得像从未出过错。"
 		  }
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s3_bg02.png",
+		"image_hint": "主角演奏主题旋律，灯光稳定，动作自信干净",
 		"dialogues": [
 		  {
 			"speaker": "alexi",
@@ -696,7 +590,8 @@
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s3_bg02.png",
+		"image_hint": "主角近景，眼神坚定，舞台灯压出强烈层次",
 		"dialogues": [
 		  {
 			"speaker": "alexi_inner",
@@ -705,7 +600,8 @@
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s3_bg03.png",
+		"image_hint": "老钉子站在台下阴影里，主角在灯下，舞台对话感",
 		"dialogues": [
 		  {
 			"speaker": "old_nail",
@@ -714,7 +610,8 @@
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s3_bg03.png",
+		"image_hint": "主角站在灯下回答，气氛平静释然",
 		"dialogues": [
 		  {
 			"speaker": "alexi",
@@ -723,17 +620,13 @@
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s3_bg03.png",
+		"image_hint": "舞台上下对话，暗部与亮部强烈对比",
 		"dialogues": [
 		  {
 			"speaker": "old_nail",
 			"text": "恨过我吗？"
-		  }
-		]
-	  },
-	  {
-		"image_path": "",
-		"dialogues": [
+		  },
 		  {
 			"speaker": "alexi",
 			"text": "我康复时甚至不记得是谁在阻拦我了……但现在看来，你当时是在救我。"
@@ -741,7 +634,8 @@
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s3_bg03.png",
+		"image_hint": "主角独自站在舞台中央，进入更深的自我陈述",
 		"dialogues": [
 		  {
 			"speaker": "alexi",
@@ -750,7 +644,8 @@
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s3_bg03.png",
+		"image_hint": "老钉子台下微微抬头，气氛温和",
 		"dialogues": [
 		  {
 			"speaker": "old_nail",
@@ -759,16 +654,8 @@
 		]
 	  },
 	  {
-		"image_path": "",
-		"dialogues": [
-		  {
-			"speaker": "alexi",
-			"text": "Yngwie车祸重伤，把经济拨弦推向了极致。至少和Shawn Lane、Allan Holdsworth这些已经离世的怪物相比，我还活着。"
-		  }
-		]
-	  },
-	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s3_bg04.png",
+		"image_hint": "舞台近景，主角继续陈述自己的变化，光更明亮一些",
 		"dialogues": [
 		  {
 			"speaker": "alexi",
@@ -785,26 +672,13 @@
 		]
 	  },
 	  {
-		"image_path": "",
-		"dialogues": [
-		  {
-			"speaker": "old_nail",
-			"text": "看来你反而变得更强了。"
-		  }
-		]
-	  },
-	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s3_bg04.png",
+		"image_hint": "舞台全景，主角完成自我定义，气氛达到高潮",
 		"dialogues": [
 		  {
 			"speaker": "alexi",
 			"text": "我回来了。不是作为曾经的天才。而是作为重生的、拥有自己体系的乐手。"
-		  }
-		]
-	  },
-	  {
-		"image_path": "",
-		"dialogues": [
+		  },
 		  {
 			"speaker": "old_nail",
 			"text": "欢迎回来，Alexi。"
@@ -813,7 +687,7 @@
 		"choices": [
 		  {
 			"id": "art",
-			"text": "把这段重生写进音乐里，让它成为你新的声音。",
+			"text": "把这段重生写进音乐里，让它成为你真正新的声音。",
 			"memory_delta": 3,
 			"weights": {
 			  "art": 5
@@ -824,11 +698,11 @@
 				"text": "那些差点摧毁你的东西，最后反而变成了你最不能被取代的声音。"
 			  }
 			],
-			"next_page": 15
+			"next_page": 11
 		  },
 		  {
 			"id": "human",
-			"text": "先承认自己能回来，不只是因为天赋，也因为有人一直没有放弃你。",
+			"text": "承认自己能回来，不只是因为天赋，也因为一直有人没有放弃你。",
 			"memory_delta": 2,
 			"weights": {
 			  "human": 5
@@ -836,14 +710,14 @@
 			"result_dialogues": [
 			  {
 				"speaker": "alexi_inner",
-				"text": "那些劝你、等你、没有在你最低谷时离开的人，也成为了你重生的一部分。"
+				"text": "重生并不只是把自己从废墟里拉出来，也是终于能重新看见那些托住过你的人。"
 			  }
 			],
-			"next_page": 16
+			"next_page": 12
 		  },
 		  {
 			"id": "business",
-			"text": "把过去的失败和代价都纳入自己的体系，决定以后怎样继续走下去。",
+			"text": "把事故、康复和失败都纳入自己的体系，决定以后怎样继续走下去。",
 			"memory_delta": 2,
 			"weights": {
 			  "business": 5
@@ -851,15 +725,16 @@
 			"result_dialogues": [
 			  {
 				"speaker": "alexi_inner",
-				"text": "天赋、事故、康复、体系，所有东西都必须被组织成你往前走的现实。"
+				"text": "过去不会因为想起来就变轻，但你至少已经有能力把它们组织成你继续往前走的现实。"
 			  }
 			],
-			"next_page": 17
+			"next_page": 13
 		  }
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s3_bg04.png",
+		"image_hint": "舞台上主角独立站立，带有史诗感但仍克制",
 		"dialogues": [
 		  {
 			"speaker": "alexi_inner",
@@ -873,12 +748,13 @@
 		"choices": [
 		  {
 			"text": "继续",
-			"next_page": 18
+			"next_page": 14
 		  }
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s3_bg04.png",
+		"image_hint": "舞台下隐约有人影或台下空间，强调陪伴与关系",
 		"dialogues": [
 		  {
 			"speaker": "alexi_inner",
@@ -888,12 +764,13 @@
 		"choices": [
 		  {
 			"text": "继续",
-			"next_page": 18
+			"next_page": 14
 		  }
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s3_bg04.png",
+		"image_hint": "主角站在灯下，神情平静成熟，偏现实与清醒感",
 		"dialogues": [
 		  {
 			"speaker": "alexi_inner",
@@ -907,12 +784,13 @@
 		"choices": [
 		  {
 			"text": "继续",
-			"next_page": 18
+			"next_page": 14
 		  }
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s3_bg04.png",
+		"image_hint": "舞台最终定格画面，光线更完整，重生感明确",
 		"dialogues": [
 		  {
 			"speaker": "alexi_inner",
@@ -921,7 +799,8 @@
 		]
 	  },
 	  {
-		"image_path": "",
+		"image_path": "res://project/assets/images/memory_events/s3_bg04.png",
+		"image_hint": "舞台远景，光线由一点扩散到整个空间，收束感与完成感",
 		"dialogues": [
 		  {
 			"speaker": "narration",

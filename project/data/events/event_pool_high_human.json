@@ -165,6 +165,144 @@
     ]
   },
   {
+    "id": "high_human_009",
+    "title": "深夜长谈",
+    "description": "演出结束后，几位成员没有立刻回家，而是围在吧台旁聊到凌晨。大家第一次坦白说出最近最害怕失去的东西。",
+    "trigger_conditions": {},
+    "weight": 32,
+    "stage": 2,
+    "options": [
+      {
+        "text": "你也说出自己的不安",
+        "effects": {"cohesion": 10, "human_weight": 4},
+        "result_text": "你的坦白让所有人都松了一口气，团队关系更真实了。"
+      },
+      {
+        "text": "只听不说，保持沉默",
+        "effects": {"cohesion": 4, "human_weight": 1},
+        "result_text": "你陪着大家聊到天亮，虽然你没开口，但气氛仍然温暖。"
+      }
+    ]
+  },
+  {
+    "id": "high_human_010",
+    "title": "跨城粉丝来信",
+    "description": "你收到一封跨城粉丝的手写来信，信里说你们的歌陪他度过了抑郁最严重的一段时间。成员们读完都沉默了很久。",
+    "trigger_conditions": {
+      "reputation": {"min": 35}
+    },
+    "weight": 30,
+    "options": [
+      {
+        "text": "公开回信，鼓励更多人",
+        "effects": {"reputation": 10, "human_weight": 4, "cohesion": 3},
+        "result_text": "你们的回信被广泛转发，很多人留言分享自己的故事。"
+      },
+      {
+        "text": "私下回信，保持低调",
+        "effects": {"human_weight": 5, "cohesion": 5},
+        "result_text": "你们认真写了长信回复，对方在回信里说：'谢谢你们把我当成一个具体的人。'"
+      }
+    ]
+  },
+  {
+    "id": "high_human_011",
+    "title": "团队志愿日",
+    "description": "社区发起志愿活动，希望你们帮忙组织一场'旧物换新生'义卖。乐队是否参与，会影响你们在本地的情感连接。",
+    "trigger_conditions": {},
+    "weight": 29,
+    "stage": 2,
+    "options": [
+      {
+        "text": "全员参与并现场表演",
+        "effects": {"human_weight": 5, "reputation": 8, "cohesion": 6, "money": -300},
+        "result_text": "活动现场很热闹，居民对乐队好感度显著提升。"
+      },
+      {
+        "text": "只捐物资，不到现场",
+        "effects": {"human_weight": 2, "reputation": 3},
+        "result_text": "你们表达了支持，但影响力相对有限。"
+      }
+    ]
+  },
+  {
+    "id": "high_human_012",
+    "title": "老友重聚夜",
+    "description": "几位早期支持你们的老朋友突然来酒吧，说想听你们唱当年第一首原创。那首歌很生涩，却承载了很多记忆。",
+    "trigger_conditions": {},
+    "weight": 31,
+    "interaction_steps": 2,
+    "options": [
+      {
+        "text": "唱，哪怕不完美",
+        "effects": {"cohesion": 8, "human_weight": 4, "creativity": 4},
+        "result_text": "你们唱到副歌时，台下有人跟着落泪。那首旧歌突然有了新的意义。",
+        "follow_up": {
+          "description": "唱完后，老朋友提议把这首歌重新录制，作为纪念版本发布。",
+          "options": [
+            {
+              "text": "同意重录，送给老粉",
+              "effects": {"reputation": 7, "human_weight": 4, "money": -500},
+              "result_text": "纪念版发布后，评论区几乎被'谢谢你们还记得这首歌'刷屏。"
+            },
+            {
+              "text": "不重录，把它留在现场",
+              "effects": {"art_weight": 2, "cohesion": 3},
+              "result_text": "你们决定让这首歌只属于当晚的记忆，反而更珍贵。"
+            }
+          ]
+        }
+      },
+      {
+        "text": "改唱现在最成熟的作品",
+        "effects": {"reputation": 4, "human_weight": 1},
+        "result_text": "演出依然精彩，但老朋友说：'我们其实更想听你们最初的样子。'"
+      }
+    ]
+  },
+  {
+    "id": "high_human_013",
+    "title": "成员健康预警",
+    "description": "连续高强度排练后，一位成员出现明显身体不适。继续硬撑可能影响更长远的团队稳定。",
+    "trigger_conditions": {
+      "cohesion": {"min": 55}
+    },
+    "weight": 34,
+    "stage": 3,
+    "options": [
+      {
+        "text": "暂停部分计划，优先恢复",
+        "effects": {"cohesion": 10, "human_weight": 4, "money": -1000},
+        "result_text": "你们主动降速，成员状态很快回升，团队信任感也更强。"
+      },
+      {
+        "text": "咬牙推进，演出不能停",
+        "effects": {"reputation": 3, "cohesion": -8},
+        "result_text": "短期目标达成了，但成员关系出现了新的裂痕。"
+      }
+    ]
+  },
+  {
+    "id": "high_human_014",
+    "title": "公开感谢名单",
+    "description": "团队提议在下一场演出大屏上公开一份'感谢名单'，写上幕后工作人员与长期支持者。有人担心会显得煽情。",
+    "trigger_conditions": {},
+    "weight": 28,
+    "stage": 3,
+    "options": [
+      {
+        "text": "公开致谢，让努力被看见",
+        "effects": {"human_weight": 5, "reputation": 6, "cohesion": 4},
+        "result_text": "后台工作人员当晚都在朋友圈发了截图，团队士气被明显拉高。"
+      },
+      {
+        "text": "内部感谢，不对外展示",
+        "effects": {"cohesion": 3},
+        "result_text": "你们在内部做了感谢仪式，低调但温暖。"
+      }
+    ]
+  },
+  {
     "id": "high_human_repeatable_01",
     "title": "酒馆门口的流浪汉",
     "description": "那个常在酒馆门口晃悠的流浪汉又来了。他没有恶意，但有些客人不太舒服。",
@@ -181,6 +319,26 @@
         "text": "礼貌地请他离开",
         "effects": {"reputation": 1},
         "result_text": "他默默走了，你心里有些不是滋味。"
+      }
+    ]
+  },
+  {
+    "id": "high_human_repeatable_02",
+    "title": "散场后的拥抱",
+    "description": "演出结束后，成员们习惯性地在后台互相击掌或拥抱。没有华丽剧情，但这种小动作总能让人安心。",
+    "trigger_conditions": {},
+    "weight": 12,
+    "repeatable": true,
+    "options": [
+      {
+        "text": "和每个人都击个掌",
+        "effects": {"cohesion": 2, "human_weight": 1},
+        "result_text": "你把后台气氛拉得很暖，大家笑着说今天辛苦了。"
+      },
+      {
+        "text": "简单说一句晚安",
+        "effects": {"creativity": 1},
+        "result_text": "你收好乐器离开，心里却比平时更踏实。"
       }
     ]
   }

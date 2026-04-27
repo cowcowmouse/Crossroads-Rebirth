@@ -48,8 +48,12 @@ var memory_stage_event_flags := {
 	"stage_2_to_3_done": false
 }
 
+# 人物系统数据入口
+var character_data = null
+
 # 节点就绪后自动初始化（此时 constants 已赋值）
 func _ready():
+	_init_character_system()
 	init_new_game()
 
 # 新游戏初始化
@@ -68,7 +72,8 @@ func init_new_game():
 		constants.RES_REPUTATION: {"value": 10, "min": 0, "max": 100},
 		constants.RES_COHESION: {"value": 60, "min": 0, "max": 100},
 		constants.RES_CREATIVITY: {"value": 30, "min": 0, "max": 100},
-		constants.RES_MEMORY: {"value": 0, "min": 0, "max": 100}
+		constants.RES_MEMORY: {"value": 0, "min": 0, "max": 100},
+		constants.RES_MOOD: {"value": 60, "min": 0, "max": 100}
 	}
 	
 	# 行动点初始化
@@ -127,6 +132,7 @@ func _init_default_members():
 			"name": "里奥",
 			"role": "鼓手",
 			"unlocked": true,
+			"relationship": 0,
 			"relationship_progress": 0,
 			"weekly_chat_count": 0,
 			"morale": 60,
@@ -139,6 +145,7 @@ func _init_default_members():
 			"name": "凯拉",
 			"role": "主唱",
 			"unlocked": true,
+			"relationship": 0,
 			"relationship_progress": 0,
 			"weekly_chat_count": 0,
 			"morale": 60,
@@ -151,6 +158,7 @@ func _init_default_members():
 			"name": "梅",
 			"role": "贝斯手",
 			"unlocked": true,
+			"relationship": 0,
 			"relationship_progress": 0,
 			"weekly_chat_count": 0,
 			"morale": 60,
@@ -163,6 +171,7 @@ func _init_default_members():
 			"name": "老钉子",
 			"role": "酒吧守护者",
 			"unlocked": true,
+			"relationship": 0,
 			"relationship_progress": 1,
 			"weekly_chat_count": 0,
 			"morale": 100,
@@ -170,6 +179,71 @@ func _init_default_members():
 			"health": 100,
 			"skill": 80,
 			"charm": 60
+		},
+		constants.MEMBER_FINN: {
+			"name": "芬恩",
+			"role": "吉他手",
+			"unlocked": true,
+			"relationship": 0,
+			"relationship_progress": 0,
+			"weekly_chat_count": 0,
+			"morale": 60,
+			"fatigue": 30,
+			"health": 80,
+			"skill": 50,
+			"charm": 50
+		},
+		constants.MEMBER_SEBASTIAN: {
+			"name": "塞巴斯蒂安",
+			"role": "键盘手",
+			"unlocked": true,
+			"relationship": 0,
+			"relationship_progress": 0,
+			"weekly_chat_count": 0,
+			"morale": 60,
+			"fatigue": 30,
+			"health": 80,
+			"skill": 50,
+			"charm": 50
+		},
+		constants.MEMBER_LILY: {
+			"name": "莉莉",
+			"role": "小提琴手",
+			"unlocked": true,
+			"relationship": 0,
+			"relationship_progress": 0,
+			"weekly_chat_count": 0,
+			"morale": 60,
+			"fatigue": 30,
+			"health": 80,
+			"skill": 50,
+			"charm": 50
+		},
+		constants.MEMBER_AYA: {
+			"name": "阿雅",
+			"role": "舞蹈演员",
+			"unlocked": true,
+			"relationship": 0,
+			"relationship_progress": 0,
+			"weekly_chat_count": 0,
+			"morale": 60,
+			"fatigue": 30,
+			"health": 80,
+			"skill": 50,
+			"charm": 50
+		},
+		constants.MEMBER_DUAN: {
+			"name": "杜安",
+			"role": "声乐教练",
+			"unlocked": true,
+			"relationship": 0,
+			"relationship_progress": 0,
+			"weekly_chat_count": 0,
+			"morale": 60,
+			"fatigue": 30,
+			"health": 80,
+			"skill": 50,
+			"charm": 50
 		}
 	}
 
@@ -226,15 +300,41 @@ func add_creativity(amount: int) -> bool:
 	return modify_core_resource(constants.RES_CREATIVITY, amount)
 
 func add_memory(amount: int) -> bool:
-	return modify_core_resource(constants.RES_MEMORY, amount)
-	# BackgroundManager.update_memory_filter(get_memory())
+	var result = modify_core_resource(constants.RES_MEMORY, amount)
+	
+	# 记忆恢复度变化后，检查是否满足结局条件
+	if result:
+		var ending_manager = get_node("/root/EndingManager")
+		if ending_manager and ending_manager.has_method("check_ending"):
+			ending_manager.check_ending()
+	
+	return result
+	
+# 获取资金（供人物面板等脚本直接调用）
+func get_money() -> int:
+	return get_resource_value(constants.RES_MONEY)
+	
+# 获取记忆恢复度
+func get_memory() -> int:
+	return get_resource_value(constants.RES_MEMORY)
 
-# ===================== 康复训练接口 =====================
+# 获取声誉
+func get_reputation() -> int:
+	return get_resource_value(constants.RES_REPUTATION)
 
+# 获取凝聚力
+func get_cohesion() -> int:
+	return get_resource_value(constants.RES_COHESION)
+
+# 获取创造力
+func get_creativity() -> int:
+	return get_resource_value(constants.RES_CREATIVITY)
+	
 # 获取当前记忆恢复阶段
 func get_memory_stage() -> int:
 	return memory_stage
-
+	
+# ===================== 康复训练接口 =====================
 # 获取当前阶段的恢复度上限
 # 当前规则：
 # - 0阶段上限：30（达到后可触发 0 -> 1 关键事件）
@@ -425,6 +525,7 @@ func complete_memory_stage_event() -> Dictionary:
 
 	print("记忆恢复阶段提升到：", memory_stage)
 	return result
+
 # ===================== 资金状态接口 =====================
 
 # 是否有足够资金支付指定金额
@@ -455,7 +556,7 @@ func update_debt_status_after_settlement():
 # 是否应触发负债失败
 # 当前规则：负债持续 1 周即失败
 func should_trigger_debt_game_over() -> bool:
-	return debt_weeks >= 1
+	return debt_weeks >= 3
 
 # ===================== 行动点接口 =====================
 
@@ -548,7 +649,16 @@ func get_ai_weight(weight_name: String) -> int:
 
 func get_all_weights() -> Dictionary:
 	return ai_weights.duplicate()
+# 获取单个权重值
+func get_art_weight() -> int:
+	return get_ai_weight(constants.WEIGHT_ART)
 
+func get_business_weight() -> int:
+	return get_ai_weight(constants.WEIGHT_BUSINESS)
+
+func get_human_weight() -> int:
+	return get_ai_weight(constants.WEIGHT_HUMAN)
+	
 # 获取本周方向值变化记录
 func get_weekly_weight_changes() -> Dictionary:
 	return weekly_weight_changes.duplicate()
@@ -609,6 +719,17 @@ func get_member_stat(member_id: String, stat_name: String) -> int:
 	if members.has(member_id) and members[member_id].has(stat_name):
 		return members[member_id][stat_name]
 	return -1
+
+# 治疗全体成员（供人物特殊能力调用）
+func heal_all_members():
+	for member_id in members.keys():
+		modify_member_stat(member_id, "health", 20)
+	print("已为全体成员恢复健康")
+
+# 化解冲突（供人物特殊能力调用）
+func resolve_conflict():
+	add_cohesion(10)
+	print("已化解一次团队冲突，凝聚力+10")
 
 # ===================== 互动进度管理 =====================
 
@@ -1312,42 +1433,180 @@ func apply_pending_facility_upgrades():
 
 # ===================== 人物系统接口 =====================
 
-var character_data: Node = null
-
+# 初始化人物系统
 func _init_character_system():
-	character_data = load("res://project/data/members/MemberData.gd").new()
-	add_child(character_data)
+	if character_data != null:
+		return
 
-func get_character(char_id: String) -> Dictionary:
-	if character_data:
-		return character_data.get_character(char_id)
+	var member_data_script = load("res://project/data/members/MemberData.gd")
+	if member_data_script == null:
+		push_error("ResourceManager: 找不到人物数据脚本 res://project/data/members/MemberData.gd")
+		return
+
+	character_data = member_data_script.new()
+
+	# 如果人物数据脚本是 Node，则挂到树上；如果不是，也允许作为普通对象使用
+	if character_data is Node:
+		add_child(character_data)
+
+# 将任意人物数据标准化为 Dictionary，兼容 Resource / Object / Dictionary
+func _normalize_character_data(raw_data) -> Dictionary:
+	var result: Dictionary = {}
+
+	if raw_data == null:
+		return result
+
+	if raw_data is Dictionary:
+		return raw_data.duplicate(true)
+
+	# 如果返回的是 Resource/Object，则把常用字段抽成字典
+	var keys = [
+		"id", "name", "role", "avatar", "personality", "unlocked",
+		"morale", "fatigue", "health", "skill", "charm",
+		"special_stats", "relationship", "interaction_count", "current_stage",
+		"stage2_condition", "stage3_condition", "unlock_condition",
+		"join_income", "join_effect_text", "special_ability",
+		"resource_effects", "events_triggered", "relationship_progress",
+		"weekly_chat_count"
+	]
+
+	if raw_data is Object:
+		for key in keys:
+			var value = raw_data.get(key)
+			if value != null:
+				result[key] = value
+
+	return result
+
+# 取出人物脚本里的 characters 表
+func _extract_character_map() -> Dictionary:
+	if character_data == null:
+		return {}
+
+	if character_data.has_method("get_all_characters_map"):
+		var data = character_data.get_all_characters_map()
+		if data is Dictionary:
+			return data
+
+	if character_data is Object:
+		var maybe_map = character_data.get("characters")
+		if maybe_map is Dictionary:
+			return maybe_map
+
 	return {}
 
-func get_all_characters() -> Array:
-	if character_data:
-		var list = []
-		for char_id in character_data.characters:
-			list.append(character_data.characters[char_id])
-		return list
-	return []
+# 获取单个人物数据
+func get_character(char_id: String) -> Dictionary:
+	if character_data == null:
+		_init_character_system()
 
+	var result: Dictionary = {}
+
+	if character_data != null and character_data.has_method("get_character"):
+		result = _normalize_character_data(character_data.get_character(char_id))
+	else:
+		var characters = _extract_character_map()
+		if characters.has(char_id):
+			result = _normalize_character_data(characters[char_id])
+
+	# 回退：如果人物总表里没有，但 members 里有，就至少保证面板能打开
+	if result.is_empty() and members.has(char_id):
+		result = members[char_id].duplicate(true)
+		result["id"] = char_id
+
+	# 补齐一些常用字段，避免面板直接空取
+	if members.has(char_id):
+		if not result.has("name"):
+			result["name"] = members[char_id].get("name", "未知角色")
+		if not result.has("role"):
+			result["role"] = members[char_id].get("role", "未知身份")
+		if not result.has("relationship"):
+			result["relationship"] = members[char_id].get("relationship_progress", 0)
+
+	if not result.has("special_ability"):
+		result["special_ability"] = {}
+
+	return result
+
+# 获取全部人物数据
+func get_all_characters() -> Array:
+	if character_data == null:
+		_init_character_system()
+
+	var list: Array = []
+
+	if character_data != null and character_data.has_method("get_all_characters"):
+		var raw_list = character_data.get_all_characters()
+		if raw_list is Array:
+			for item in raw_list:
+				list.append(_normalize_character_data(item))
+			return list
+
+	var characters = _extract_character_map()
+	for char_id in characters.keys():
+		list.append(_normalize_character_data(characters[char_id]))
+
+	return list
+
+# 增加人物关系
 func add_relationship(char_id: String, delta: int):
-	if character_data:
+	if character_data == null:
+		_init_character_system()
+
+	if character_data != null and character_data.has_method("add_relationship"):
 		var new_rel = character_data.add_relationship(char_id, delta)
 		# 发射信号更新UI
 		EventBus.relationship_changed.emit(char_id, new_rel)
 		return new_rel
+
+	var characters = _extract_character_map()
+	if characters.has(char_id) and characters[char_id] is Dictionary:
+		var old_rel = int(characters[char_id].get("relationship", 0))
+		var new_rel = clamp(old_rel + delta, 0, 100)
+		characters[char_id]["relationship"] = new_rel
+		EventBus.relationship_changed.emit(char_id, new_rel)
+		return new_rel
+
+	# 回退到 members 的 relationship_progress
+	if members.has(char_id):
+		var new_progress = add_relationship_progress(char_id, delta)
+		EventBus.relationship_changed.emit(char_id, new_progress)
+		return new_progress
+
 	return 0
 
 func get_relationship(char_id: String) -> int:
-	if character_data and character_data.characters.has(char_id):
-		return character_data.characters[char_id]["relationship"]
+	if character_data == null:
+		_init_character_system()
+
+	var characters = _extract_character_map()
+	if characters.has(char_id):
+		var raw = characters[char_id]
+		if raw is Dictionary:
+			return int(raw.get("relationship", 0))
+		elif raw is Object:
+			return int(raw.get("relationship"))
+
+	# 回退到 members
+	if members.has(char_id):
+		return int(members[char_id].get("relationship_progress", 0))
+
 	return 0
 
 func get_character_stage(char_id: String) -> int:
-	if character_data and character_data.characters.has(char_id):
-		return character_data.characters[char_id].get("current_stage", 1)
+	if character_data == null:
+		_init_character_system()
+
+	var characters = _extract_character_map()
+	if characters.has(char_id):
+		var raw = characters[char_id]
+		if raw is Dictionary:
+			return int(raw.get("current_stage", 1))
+		elif raw is Object:
+			return int(raw.get("current_stage"))
+
 	return 1
+
 # ===================== 声誉阶段系统（周末小游戏规模） ====================
 const REPUTATION_STAGES = {
 	"small":  {"min": 0,   "max": 39,  "name": "小型表演", "scale": 0.6, "desc": "小型酒吧驻唱，观众不多，但很亲切。"},
@@ -1431,3 +1690,10 @@ func show_first_time_minigame_description(stage_name: String):
 	
 	get_tree().current_scene.add_child(dialog)
 	dialog.popup_centered()
+
+func set_action_points(value: int):
+	action_points = clamp(value, 0, MAX_ACTION_POINTS)
+	refresh_current_scene_topbar()
+	print("行动点已设置为: ", action_points)
+
+# ===================== 便捷获取方法 =====================

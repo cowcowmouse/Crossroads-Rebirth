@@ -1,6 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://cy72tji61wjdt"]
+[gd_scene load_steps=4 format=3 uid="uid://cy72tji61wjdt"]
 
 [ext_resource type="Script" uid="uid://npd2qxorse83" path="res://project/scripts/autoload/SettlementPanel.gd" id="1_0ms0e"]
+[ext_resource type="Texture2D" uid="uid://dy2sjbak5bued" path="res://project/assets/images/ui/icons/settlebg.png" id="2_e3ijn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e3ijn"]
+bg_color = Color(0.105882354, 0.07058824, 0.047058824, 0.8)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.64705884, 0.42352942, 0.18039216, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
 
 [node name="SettlementPanel" type="Panel"]
 anchors_preset = 15
@@ -10,13 +23,35 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0ms0e")
 
-[node name="Bg" type="TextureRect" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-metadata/_edit_use_anchors_ = true
+[node name="DimMask" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.53333336)
 
-[node name="WeekLabel" type="Label" parent="."]
+[node name="Bg" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(640, 460)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_e3ijn")
+
+[node name="CardPanel" type="Panel" parent="."]
+custom_minimum_size = Vector2(580, 430)
+layout_mode = 0
+offset_left = 584.0
+offset_top = 220.0
+offset_right = 1426.0
+offset_bottom = 820.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_e3ijn")
+
+[node name="WeekLabel" type="Label" parent="CardPanel"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -25,96 +60,124 @@ offset_left = -26.5
 offset_right = 26.5
 offset_bottom = 23.0
 grow_horizontal = 2
+theme_override_colors/font_color = Color(0.9490196, 0.8235294, 0.54509807, 1)
+theme_override_colors/font_outline_color = Color(0.16470589, 0.08627451, 0.039215688, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 26
 text = " 周结算"
 
-[node name="ExpenseLabel" type="Label" parent="."]
+[node name="ExpenseLabel" type="Label" parent="CardPanel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.48541668
-anchor_top = 0.6111111
-anchor_right = 0.528125
-anchor_bottom = 0.6111111
-offset_right = 40.0
-offset_bottom = 23.0
+anchor_left = -0.65389943
+anchor_top = -0.6259259
+anchor_right = -0.6111911
+anchor_bottom = -0.6259259
+offset_left = 912.5833
+offset_top = 635.55554
+offset_right = 1032.875
+offset_bottom = 658.55554
+theme_override_colors/font_color = Color(0.9529412, 0.90588236, 0.8156863, 1)
 text = "固定支出：-1500"
 metadata/_edit_use_anchors_ = true
 
-[node name="IncomeLabel" type="Label" parent="."]
+[node name="IncomeLabel" type="Label" parent="CardPanel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.484375
-anchor_top = 0.5
-anchor_right = 0.52916664
-anchor_bottom = 0.5
-offset_right = 40.0
-offset_bottom = 23.0
+anchor_left = -0.6539489
+anchor_top = -0.5683333
+anchor_right = -0.60915726
+anchor_bottom = -0.5683333
+offset_left = 910.625
+offset_top = 520.0
+offset_right = 1034.8334
+offset_bottom = 543.0
+theme_override_colors/font_color = Color(0.9529412, 0.90588236, 0.8156863, 1)
 text = "酒吧收入：+1300"
 metadata/_edit_use_anchors_ = true
 
-[node name="NetChangeLabel" type="Label" parent="."]
+[node name="NetChangeLabel" type="Label" parent="CardPanel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.48125
-anchor_top = 0.39259258
-anchor_right = 0.52760416
-anchor_bottom = 0.39259258
-offset_right = 40.0
-offset_bottom = 23.0
+anchor_left = -0.6766627
+anchor_top = -0.46382722
+anchor_right = -0.6174535
+anchor_bottom = -0.45049387
+offset_left = 904.75
+offset_top = 408.2963
+offset_right = 1031.8959
+offset_bottom = 431.2963
+theme_override_colors/font_color = Color(0.9529412, 0.90588236, 0.8156863, 1)
+theme_override_font_sizes/font_size = 22
 text = "本周净变化：-200"
 metadata/_edit_use_anchors_ = true
 
-[node name="MoneyAfterLabel" type="Label" parent="."]
+[node name="MoneyAfterLabel" type="Label" parent="CardPanel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.47083333
-anchor_top = 0.083333336
-anchor_right = 0.5171875
-anchor_bottom = 0.083333336
-offset_right = 40.0
-offset_bottom = 23.0
+anchor_left = -0.64271575
+anchor_top = 0.012222227
+anchor_right = -0.59636164
+anchor_bottom = 0.012222227
+offset_left = 885.1667
+offset_top = 86.666664
+offset_right = 1012.3125
+offset_bottom = 109.666664
+theme_override_colors/font_color = Color(0.9529412, 0.90588236, 0.8156863, 1)
+theme_override_font_sizes/font_size = 20
 text = "结算后资金：-200"
 metadata/_edit_use_anchors_ = true
 
-[node name="LoungeBonusLabel" type="Label" parent="."]
+[node name="LoungeBonusLabel" type="Label" parent="CardPanel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.4453125
-anchor_top = 0.16944444
-anchor_right = 0.54114586
-anchor_bottom = 0.16944444
-offset_right = 40.0
-offset_bottom = 23.0
+anchor_left = -0.5904839
+anchor_top = 0.06962962
+anchor_right = -0.49465066
+anchor_bottom = 0.06962962
+offset_left = 837.1875
+offset_top = 176.22223
+offset_right = 1057.3541
+offset_bottom = 199.22223
+theme_override_colors/font_color = Color(0.9529412, 0.90588236, 0.8156863, 1)
 text = "休息室恢复：疲劳-4 / 凝聚力+3"
 metadata/_edit_use_anchors_ = true
 
-[node name="WeightChangeLabel" type="Label" parent="."]
+[node name="WeightChangeLabel" type="Label" parent="CardPanel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.4359375
-anchor_top = 0.65833336
-anchor_right = 0.565625
-anchor_bottom = 0.65833336
-offset_right = 40.0
-offset_bottom = 23.0
+anchor_left = -0.6301217
+anchor_top = -0.48611113
+anchor_right = -0.5004342
+anchor_bottom = -0.48611113
+offset_left = 819.5625
+offset_top = 684.6667
+offset_right = 1103.375
+offset_bottom = 707.6667
+theme_override_colors/font_color = Color(0.9529412, 0.90588236, 0.8156863, 1)
 text = "方向值变化：商业 +2 / 艺术 +0 / 人情 +3"
 metadata/_edit_use_anchors_ = true
 
-[node name="DebtStatusLabel" type="Label" parent="."]
+[node name="DebtStatusLabel" type="Label" parent="CardPanel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.46979168
-anchor_top = 0.2851852
-anchor_right = 0.52916664
-anchor_bottom = 0.2851852
-offset_right = 40.0
-offset_bottom = 23.0
+anchor_left = -0.62257516
+anchor_top = 0.02901235
+anchor_right = -0.56320024
+anchor_bottom = 0.02901235
+offset_left = 883.2083
+offset_top = 296.5926
+offset_right = 1034.8334
+offset_bottom = 319.5926
+theme_override_colors/font_color = Color(0.9529412, 0.90588236, 0.8156863, 1)
 text = "负债状态：是（1周）"
 metadata/_edit_use_anchors_ = true
 
-[node name="ConfirmButton" type="Button" parent="."]
+[node name="ConfirmButton" type="Button" parent="CardPanel"]
 layout_mode = 0
-offset_left = 962.0
-offset_top = 828.0
-offset_right = 1002.0
-offset_bottom = 859.0
+offset_left = 407.0
+offset_top = 500.0
+offset_right = 447.0
+offset_bottom = 531.0
+theme_override_colors/font_color = Color(0.9529412, 0.90588236, 0.8156863, 1)
 text = "确认"

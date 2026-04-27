@@ -7,6 +7,7 @@ const RES_REPUTATION: String = "reputation"
 const RES_COHESION: String = "cohesion"
 const RES_CREATIVITY: String = "creativity"
 const RES_MEMORY: String = "memory"
+const RES_MOOD: String = "mood"
 
 # ==================== AI权重ID ====================
 
@@ -33,6 +34,11 @@ const MEMBER_RIO: String = "rio"
 const MEMBER_KIRA: String = "kira"
 const MEMBER_MEI: String = "mei"
 const MEMBER_old_NAIL: String = "old_nail"
+const MEMBER_FINN: String = "finn"
+const MEMBER_SEBASTIAN: String = "sebastian"
+const MEMBER_LILY: String = "lily"
+const MEMBER_AYA: String = "aya"
+const MEMBER_DUAN: String = "duan"
 
 # ==================== 成员属性ID ====================
 
@@ -86,7 +92,7 @@ const WARNING_LOW: String = "low"
 
 # 获取所有成员ID列表
 static func get_all_member_ids() -> Array:
-	return [MEMBER_RIO, MEMBER_KIRA, MEMBER_MEI, MEMBER_old_NAIL]
+	return [MEMBER_RIO, MEMBER_KIRA, MEMBER_MEI, MEMBER_old_NAIL, MEMBER_FINN, MEMBER_SEBASTIAN, MEMBER_LILY, MEMBER_AYA, MEMBER_DUAN]
 
 # 获取所有设施类型列表
 static func get_all_facility_types() -> Array:

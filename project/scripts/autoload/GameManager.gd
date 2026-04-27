@@ -3,11 +3,13 @@ extends Node
 var current_week = 1
 var current_phase = "early"  # early / mid / late
 
+const MAX_WEEK = 30
+
 # 阶段配置
 const PHASE_CONFIG = {
-	"early": {"min": 1, "max": 3, "name": "前期"},
-	"mid": {"min": 4, "max": 12, "name": "中期"},
-	"late": {"min": 13, "max": 18, "name": "后期"}
+	"early": {"min": 1, "max": 8, "name": "前期"},
+	"mid": {"min": 9, "max": 22, "name": "中期"},
+	"late": {"min": 23, "max": 30, "name": "后期"}
 }
 
 # 游戏是否已结束
@@ -37,17 +39,21 @@ func get_phase_progress() -> float:
 
 # 获取游戏总进度（0-1）
 func get_game_progress() -> float:
-	return float(current_week) / 18.0
+	return float(current_week) / 30.0
 
 func next_week():
 	if is_game_ended:
 		print("游戏已结束，无法进入下一周")
 		return
 	
-	# 检查是否已经是第18周
-	if current_week >= 18:
+	# 检查是否已经是第30周
+	if current_week >= MAX_WEEK:
 		print("已达最终周，触发游戏结局")
-		_end_game()
+		var ending_manager = get_node("/root/EndingManager")
+		if ending_manager:
+			ending_manager.check_ending()
+		else:
+			print("警告: EndingManager 未找到")
 		return
 	
 	current_week += 1
@@ -78,9 +84,9 @@ func next_week():
 func check_phase_transition():
 	var old_phase = current_phase
 	
-	if current_week >= 13:
+	if current_week >= 23:
 		current_phase = "late"
-	elif current_week >= 4:
+	elif current_week >= 9:
 		current_phase = "mid"
 	else:
 		current_phase = "early"
@@ -99,7 +105,7 @@ func jump_to_week(target_week: int):
 		print("游戏已结束，先重置游戏")
 		reset_game()
 	
-	target_week = clamp(target_week, 1, 18)
+	target_week = clamp(target_week, 1, MAX_WEEK)
 	
 	if target_week == current_week:
 		print("已经是第", target_week, "周")
@@ -177,37 +183,38 @@ func _refresh_after_jump():
 	# 应用待生效的设施升级
 	if ResourceManager:
 		ResourceManager.apply_pending_facility_upgrades()
-# 结束游戏，显示结局界面
-func _end_game():
-	if is_game_ended:
-		return
-	
-	is_game_ended = true
-	print("=== 游戏结束！第18周已完成 ===")
-	
-	# 发射游戏结束信号
-	EventBus.game_over.emit("game_complete")
-	
-	# 切换到结束场景
-	_show_end_scene()
-
-# 显示结局场景
-func _show_end_scene():
-	# 获取当前场景树
-	var tree = get_tree()
-	if not tree:
-		return
-	
-	# 切换到结局场景（根据你的场景路径修改）
-	var end_scene_path = "res://project/scenes/end/EndScene.tscn"
-	
-	# 检查文件是否存在
-	if ResourceLoader.exists(end_scene_path):
-		tree.change_scene_to_file(end_scene_path)
-	else:
-		print("结局场景不存在: ", end_scene_path)
-		# 如果没有结局场景，显示一个简单的提示
-		_show_end_notification()
+		
+## 结束游戏，显示结局界面
+#func _end_game():
+	#if is_game_ended:
+		#return
+	#
+	#is_game_ended = true
+	#print("=== 游戏结束！第18周已完成 ===")
+	#
+	## 发射游戏结束信号
+	#EventBus.game_over.emit("game_complete")
+	#
+	## 切换到结束场景
+	#_show_end_scene()
+#
+## 显示结局场景
+#func _show_end_scene():
+	## 获取当前场景树
+	#var tree = get_tree()
+	#if not tree:
+		#return
+	#
+	## 切换到结局场景（根据你的场景路径修改）
+	#var end_scene_path = "res://project/scenes/end/EndScene.tscn"
+	#
+	## 检查文件是否存在
+	#if ResourceLoader.exists(end_scene_path):
+		#tree.change_scene_to_file(end_scene_path)
+	#else:
+		#print("结局场景不存在: ", end_scene_path)
+		## 如果没有结局场景，显示一个简单的提示
+		#_show_end_notification()
 
 # 简单的结束提示（备用）
 func _show_end_notification():
@@ -218,8 +225,7 @@ func _show_end_notification():
 
 # 周结算（保持原有逻辑）
 func weekly_settlement():
-	
-	var is_final_week = (current_week >= 18)
+	var is_final_week = (current_week >= MAX_WEEK)
 	
 	print("=== 第", current_week, "周结算开始 ===")
 	EventBus.weekly_settlement_started.emit(current_week)
@@ -293,8 +299,9 @@ func weekly_settlement():
 	print("=== 第", current_week, "周结算完成 ===")
 	
 	if is_final_week:
-		print("第18周结算完成，游戏结束")
-		_end_game()
+		print("第", current_week, "周结算完成，游戏结束")
+		await get_tree().create_timer(0.5).timeout
+		_check_and_trigger_ending()
 		return
 	
 	# 否则进入下一周
@@ -303,6 +310,22 @@ func weekly_settlement():
 	# 每周结算后检查结局
 	# EndingManager.check_ending()
 	
+func _delayed_next_week():
+	# 修改这里：第30周结束游戏
+	if current_week >= MAX_WEEK:
+		print("第", current_week, "周结算完成，游戏结束")
+		_check_and_trigger_ending()
+		return
+	
+	next_week()
+
+func _check_and_trigger_ending():
+	var ending_manager = get_node("/root/EndingManager")
+	if ending_manager and ending_manager.has_method("check_ending"):
+		ending_manager.check_ending()
+	else:
+		print("错误: EndingManager 未找到")
+		
 func _show_settlement_panel(settlement_data: Dictionary):
 	var current_scene = get_tree().current_scene
 	if not current_scene:
@@ -320,16 +343,6 @@ func _show_settlement_panel(settlement_data: Dictionary):
 	else:
 		print("未找到 SettlementPanel")
 
-func _delayed_next_week():
-	# 如果是第18周，结束游戏
-	if current_week >= 18:
-		print("第18周结算完成，游戏结束")
-		_end_game()
-		return
-	
-	# 进入下一周
-	next_week()
-	
 func _check_game_over_condition():
 	if ResourceManager.should_trigger_debt_game_over():
 		print("触发失败结局：资金负债持续 1 周")
@@ -338,14 +351,17 @@ func _check_game_over_condition():
 func _trigger_game_over(game_over_type: String):
 	print("游戏失败接口已调用，类型：", game_over_type)
 	
-	# 标记游戏已结束
 	is_game_ended = true
 	
 	if EventBus.has_signal("game_over_triggered"):
 		EventBus.game_over_triggered.emit(game_over_type)
 	
-	# 切换到失败结局场景
-	_show_end_scene()
+	# 改为触发 EndingManager 的坏结局
+	var ending_manager = get_node("/root/EndingManager")
+	if ending_manager:
+		ending_manager.trigger_bad_ending()
+	else:
+		print("错误: EndingManager 未找到")
 
 # 重置游戏（用于重新开始）
 func reset_game():
@@ -359,6 +375,7 @@ func reset_game():
 	# 重置资源管理器
 	if ResourceManager:
 		ResourceManager.init_new_game()
+		ResourceManager.restore_action_points()
 	
 	# 重置周循环管理器
 	var week_cycle = get_node("/root/WeekCycleManager")
@@ -370,6 +387,10 @@ func reset_game():
 	var clock_state = get_node("/root/ClockState")
 	if clock_state:
 		clock_state.set_phase(clock_state.ClockPhase.BEFORE_WEEK)
+	
+	# 重置负债相关
+	if ResourceManager:
+		ResourceManager.reset_debt_weeks()
 	
 	# 发射重置信号
 	EventBus.game_reset.emit()

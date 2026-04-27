@@ -1,77 +1,77 @@
 [gd_scene load_steps=14 format=3 uid="uid://bpfjlk8a6mk23"]
 
 [ext_resource type="Script" uid="uid://dd5aeyl4tflxn" path="res://Char_OldNail.gd" id="1_nnkky"]
-[ext_resource type="Texture2D" uid="uid://bvxctpyviqeht" path="res://人物.png" id="2_5i6sk"]
+[ext_resource type="Texture2D" uid="uid://drhnswbr37wx0" path="res://project/assets/character/cf3965cb-8d36-4690-9de7-802b801db0e5.jpg" id="2_nnkky"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dniyw"]
-atlas = ExtResource("2_5i6sk")
-region = Rect2(0, 0, 208, 298)
+[sub_resource type="AtlasTexture" id="AtlasTexture_nnkky"]
+atlas = ExtResource("2_nnkky")
+region = Rect2(0, 0, 224, 400)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_c2s8q"]
-atlas = ExtResource("2_5i6sk")
-region = Rect2(208, 0, 208, 298)
+[sub_resource type="AtlasTexture" id="AtlasTexture_5i6sk"]
+atlas = ExtResource("2_nnkky")
+region = Rect2(224, 0, 224, 400)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_oesgy"]
-atlas = ExtResource("2_5i6sk")
-region = Rect2(416, 0, 208, 298)
+[sub_resource type="AtlasTexture" id="AtlasTexture_wy3hg"]
+atlas = ExtResource("2_nnkky")
+region = Rect2(448, 0, 224, 400)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_svdfk"]
-atlas = ExtResource("2_5i6sk")
-region = Rect2(624, 0, 208, 298)
+[sub_resource type="AtlasTexture" id="AtlasTexture_3d5ye"]
+atlas = ExtResource("2_nnkky")
+region = Rect2(672, 0, 224, 400)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wsoed"]
-atlas = ExtResource("2_5i6sk")
-region = Rect2(0, 298, 208, 298)
+[sub_resource type="AtlasTexture" id="AtlasTexture_5615w"]
+atlas = ExtResource("2_nnkky")
+region = Rect2(0, 400, 224, 400)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gmtqm"]
-atlas = ExtResource("2_5i6sk")
-region = Rect2(208, 298, 208, 298)
+[sub_resource type="AtlasTexture" id="AtlasTexture_d5aup"]
+atlas = ExtResource("2_nnkky")
+region = Rect2(224, 400, 224, 400)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pt5qx"]
-atlas = ExtResource("2_5i6sk")
-region = Rect2(416, 298, 208, 298)
+[sub_resource type="AtlasTexture" id="AtlasTexture_fqbdj"]
+atlas = ExtResource("2_nnkky")
+region = Rect2(448, 400, 224, 400)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2myfi"]
-atlas = ExtResource("2_5i6sk")
-region = Rect2(624, 298, 208, 298)
+[sub_resource type="AtlasTexture" id="AtlasTexture_uwxxw"]
+atlas = ExtResource("2_nnkky")
+region = Rect2(672, 400, 224, 400)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ptfxj"]
-atlas = ExtResource("2_5i6sk")
-region = Rect2(0, 596, 208, 298)
+[sub_resource type="AtlasTexture" id="AtlasTexture_17ear"]
+atlas = ExtResource("2_nnkky")
+region = Rect2(0, 800, 224, 400)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_wy3hg"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dniyw")
+"texture": SubResource("AtlasTexture_nnkky")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_c2s8q")
+"texture": SubResource("AtlasTexture_5i6sk")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_oesgy")
+"texture": SubResource("AtlasTexture_wy3hg")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_svdfk")
+"texture": SubResource("AtlasTexture_3d5ye")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wsoed")
+"texture": SubResource("AtlasTexture_5615w")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gmtqm")
+"texture": SubResource("AtlasTexture_d5aup")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_pt5qx")
+"texture": SubResource("AtlasTexture_fqbdj")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2myfi")
+"texture": SubResource("AtlasTexture_uwxxw")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ptfxj")
+"texture": SubResource("AtlasTexture_17ear")
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 6.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3d5ye"]
@@ -85,10 +85,11 @@ input_pickable = true
 script = ExtResource("1_nnkky")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Char_OldNail"]
-position = Vector2(177.47267, 176.12563)
-scale = Vector2(0.8, 0.8)
+position = Vector2(164.3642, 146.23033)
+scale = Vector2(0.6829601, 0.6505236)
 sprite_frames = SubResource("SpriteFrames_wy3hg")
 autoplay = "default"
+frame_progress = 0.4603521
 
 [node name="Timer" type="Timer" parent="Char_OldNail"]
 one_shot = true
