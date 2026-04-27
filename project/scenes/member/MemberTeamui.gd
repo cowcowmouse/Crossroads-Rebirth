@@ -4,8 +4,11 @@ extends Control
 @onready var Btn_Toggle: Button = $Btn_Toggle
 @onready var AvatarContainer: HBoxContainer = $AvatarContainer
 
-# 如果你做了自定义头像按钮预制体，可以在这里指定（推荐后面做）
+# 如果你做了自定义头像按钮预制体，可以在这里指定
 @export var avatar_button_scene: PackedScene
+
+# 引用 MemberManager（推荐使用 Autoload 方式）
+@onready var member_manager = get_node_or_null("/root/MemberManager")
 
 func _ready():
 	AvatarContainer.visible = false
@@ -23,8 +26,12 @@ func refresh_team_ui():
 	for child in AvatarContainer.get_children():
 		child.queue_free()
 
-	var unlocked_members = MemberManager.get_unlocked_members()
-	
+	if not member_manager:
+		push_error("MemberManager 未找到！请确认它已设为 Autoload")
+		return
+
+	var unlocked_members = member_manager.get_unlocked_members()
+
 	for member in unlocked_members:
 		var btn
 		
@@ -45,8 +52,9 @@ func refresh_team_ui():
 func _on_member_clicked(member_id: String):
 	print("点击了成员：", member_id)
 	
-	# 安全调用 UIManager
-	if UIManager and UIManager.has_method("show_member_dialogue"):
-		UIManager.show_member_dialogue(member_id)
+	# 安全调用对话系统
+	var talk_system = get_node_or_null("/root/MemberTalkSystem")  # 或你实际的对话系统路径
+	if talk_system and talk_system.has_method("show_simple_chat"):
+		talk_system.show_simple_chat(member_id)
 	else:
-		push_warning("UIManager 或 show_member_dialogue 方法未找到！请检查 Autoload 设置。")
+		push_warning("对话系统未找到或方法不存在")

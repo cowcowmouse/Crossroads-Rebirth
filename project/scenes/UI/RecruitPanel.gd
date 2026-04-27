@@ -16,6 +16,9 @@ var current_member = null
 @onready var confirm_kick_btn = $KickConfirmPanel/HBoxContainer/ConfirmKickBtn
 @onready var cancel_kick_btn = $KickConfirmPanel/HBoxContainer/CancelKickBtn
 
+# 安全引用 MemberManager（Autoload）
+@onready var member_manager = get_node_or_null("/root/MemberManager")
+
 func _ready():
 	result_label.visible = false
 	kick_confirm_panel.visible = false
@@ -32,7 +35,7 @@ func _ready():
 
 func setup(member_id: String):
 	current_member_id = member_id
-	current_member = MemberManager.get_member(member_id)
+	current_member = member_manager.get_member(member_id) if member_manager else null
 	
 	if not current_member:
 		queue_free()
@@ -60,7 +63,7 @@ func _on_recruit_pressed():
 	
 	if ResourceManager.can_afford(cost):
 		ResourceManager.add_money(-cost)
-		MemberManager.unlock_member(current_member_id)
+		member_manager.unlock_member(current_member_id)
 		
 		# 招募成功增加声誉
 		if ResourceManager.has_method("add_reputation"):
@@ -92,7 +95,7 @@ func _confirm_kick():
 		return
 	
 	# 执行踢出
-	MemberManager.kick_member(current_member_id)
+	member_manager.kick_member(current_member_id)
 	
 	result_label.text = "已踢出成员\n声誉 -15"
 	result_label.modulate = Color.RED
