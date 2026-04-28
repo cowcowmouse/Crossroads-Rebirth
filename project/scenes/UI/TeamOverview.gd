@@ -72,5 +72,12 @@ func _on_slot_clicked(member_id: String):
 
 # 退出按钮保持不变
 func _on_exit_button_pressed():
-	print("退出按钮被点击，返回主场景...")
-	get_tree().change_scene_to_file("res://project/scenes/main/main.tscn")
+	print("退出 TeamOverview，准备返回：", Global.previous_scene_path)
+	
+	if Global.previous_scene_path != "":
+		var err = get_tree().change_scene_to_file(Global.previous_scene_path)
+		if err != OK:
+			print("返回失败！错误码：", err)
+	else:
+		# 保险：如果没记录就回主场景
+		get_tree().change_scene_to_file("res://project/scenes/main/main.tscn")

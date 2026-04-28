@@ -52,6 +52,8 @@ columns = 3
 [node name="MemberSlot1" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(260, 180)
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Old Nail"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GridContainer/MemberSlot1"]
 layout_mode = 0
@@ -69,34 +71,53 @@ layout_mode = 2
 [node name="MemberSlot2" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(260, 180)
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Kira"
 
 [node name="MemberSlot3" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(260, 180)
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Mei"
 
 [node name="MemberSlot4" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(260, 180)
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Rio"
 
 [node name="MemberSlot5" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(260, 180)
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Finn"
 
 [node name="MemberSlot6" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(260, 180)
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Sebastian
+"
 
 [node name="MemberSlot7" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(260, 180)
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Lily
+"
 
 [node name="MemberSlot8" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(260, 180)
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Aya"
 
 [node name="MemberSlot9" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(260, 180)
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Duane
+"
 
 [node name="CloseButton" type="Button" parent="."]
 layout_mode = 0

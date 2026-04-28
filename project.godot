@@ -86,6 +86,7 @@ audio/channel_defaults={
 }
 variables={}
 MemberManager="*res://project/data/members/MemberManager.gd"
+Global="*res://project/scripts/Global.gd"
 
 [dialogic]
 

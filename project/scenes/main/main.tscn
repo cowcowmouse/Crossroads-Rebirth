@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://bkmekgpgq855c" path="res://project/scenes/main/main.gd" id="1_87m5t"]
 [ext_resource type="Texture2D" uid="uid://c4lvblykh1k4q" path="res://project/scenes/main/bar.jpg" id="1_hyk8p"]
 [ext_resource type="PackedScene" uid="uid://dgnu5ega1avui" path="res://project/scenes/main/TutorialLayer.tscn" id="2_j0ny1"]
-[ext_resource type="Texture2D" uid="uid://c081ycqu7klpj" path="res://project/assets/images/ui/buttons/arrow_left.png" id="4_j0ny1"]
-[ext_resource type="Texture2D" uid="uid://ry54py63wynw" path="res://project/assets/images/ui/buttons/arrow_right.png" id="5_q5kvs"]
+[ext_resource type="Texture2D" uid="uid://c081ycqu7klpj" path="res://project/assets/buttons/arrow_left.png" id="4_j0ny1"]
+[ext_resource type="Texture2D" uid="uid://ry54py63wynw" path="res://project/assets/buttons/arrow_right.png" id="5_q5kvs"]
 [ext_resource type="Script" uid="uid://dfl0os8qca18h" path="res://project/scenes/main/button.gd" id="5_wiwuw"]
 [ext_resource type="Script" uid="uid://d3biv27nvyji2" path="res://project/scenes/main/rehab_btn.gd" id="6_1hgs3"]
 [ext_resource type="Texture2D" uid="uid://dtyvnw357ycvu" path="res://project/assets/images/ui/icons/money.png" id="6_da6bn"]
@@ -20,8 +20,8 @@
 [ext_resource type="PackedScene" uid="uid://qvf8llp2hilo" path="res://project/scenes/facility/facility_panel.tscn" id="16_k7nr8"]
 [ext_resource type="Script" uid="uid://r08km7j8emn8" path="res://project/scripts/models/facility/facility_entry_button.gd" id="17_dniyw"]
 [ext_resource type="Shader" uid="uid://d0i6cdvlqd2pd" path="res://project/scenes/lounge/outline.gdshader" id="19_ptfxj"]
-[ext_resource type="Texture2D" uid="uid://bj0xjax3adgom" path="res://project/assets/images/ui/buttons/stageup.png" id="20_oesgy"]
-[ext_resource type="Texture2D" uid="uid://d37jay72hpkji" path="res://project/assets/images/ui/buttons/barup.png" id="21_svdfk"]
+[ext_resource type="Texture2D" uid="uid://bj0xjax3adgom" path="res://project/assets/buttons/stageup.png" id="20_oesgy"]
+[ext_resource type="Texture2D" uid="uid://d37jay72hpkji" path="res://project/assets/buttons/barup.png" id="21_svdfk"]
 [ext_resource type="Shader" uid="uid://ce8lsaeamn455" path="res://project/scenes/main/outlinebar.gdshader" id="22_fkgpr"]
 [ext_resource type="PackedScene" uid="uid://cy72tji61wjdt" path="res://project/scenes/settlement/settlement_panel.tscn" id="22_wsoed"]
 [ext_resource type="PackedScene" uid="uid://bpfjlk8a6mk23" path="res://project/scenes/member/MemberStanding.tscn" id="23_gmtqm"]
@@ -632,8 +632,9 @@ position = Vector2(-447.21515, 134.55804)
 scale = Vector2(0.28668892, 0.2838307)
 texture = ExtResource("29_bieqv")
 
-[node name="System" type="Node" parent="."]
+[node name="MemberSpawner" type="Node" parent="." node_paths=PackedStringArray("main_spawn_points")]
 script = ExtResource("30_bieqv")
+main_spawn_points = [NodePath("../MemberSpawnPoints/Marker2D"), NodePath("../MemberSpawnPoints/Marker2D3"), NodePath("../MemberSpawnPoints/Marker2D4"), NodePath("../MemberSpawnPoints/Marker2D2")]
 
 [connection signal="pressed" from="UILayer/ArrowLeft" to="." method="_on_texture_button_pressed"]
 [connection signal="pressed" from="UILayer/ArrowRight" to="." method="_on_arrow_right_pressed"]

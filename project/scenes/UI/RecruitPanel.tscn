@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://cbqp0otnalajn"]
+[gd_scene load_steps=3 format=3 uid="uid://cbqp0otnalajn"]
 
 [ext_resource type="Script" uid="uid://ddqpuf20md0v7" path="res://project/scenes/UI/RecruitPanel.gd" id="1_d3431"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d3431"]
+bg_color = Color(0.8862745, 0.84313726, 0.8745098, 0.9137255)
 
 [node name="RecruitPanel" type="Panel"]
 custom_minimum_size = Vector2(620, 420)
@@ -70,11 +73,13 @@ offset_right = 429.0
 offset_bottom = 444.0
 
 [node name="KickConfirmPanel" type="Panel" parent="."]
+self_modulate = Color(0, 0, 0, 1)
 layout_mode = 0
-offset_left = -40.0
-offset_top = -183.0
-offset_right = 591.0
-offset_bottom = 548.0
+offset_left = -34.0
+offset_top = -188.0
+offset_right = 637.0
+offset_bottom = 543.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_d3431")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="KickConfirmPanel"]
 layout_mode = 0
@@ -85,10 +90,12 @@ offset_bottom = 333.0
 
 [node name="ConfirmKickBtn" type="Button" parent="KickConfirmPanel/HBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 text = "确定"
 
 [node name="CancelKickBtn" type="Button" parent="KickConfirmPanel/HBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 text = "取消"
 
 [node name="ConfirmText" type="Label" parent="KickConfirmPanel"]
@@ -97,7 +104,8 @@ offset_left = 76.0
 offset_top = 178.0
 offset_right = 548.0
 offset_bottom = 259.0
-theme_override_font_sizes/font_size = 20
-text = "踢出成员会减少5声誉值，下次招募仍要支付相应金额"
+theme_override_font_sizes/font_size = 30
+text = "踢出成员会减少15声誉值
+下次招募仍要支付相应金额"
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -1,6 +1,6 @@
 # Global.gd（或新建 MemberManager.gd 作为 Autoload 更好）
 extends Node
-
+var previous_scene_path: String = ""   # 记住上一个场景的路径
 # 每个成员的数据结构
 var members := {
 	"old_nail": {"relation": 0, "weekly_first_chat": true, "joined": false, "total_chat": 0, "stage": 0},
