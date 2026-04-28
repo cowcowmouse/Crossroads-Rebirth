@@ -205,6 +205,14 @@ text = "维修中"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Btn_TeamOverview" type="Button" parent="UILayer"]
+offset_left = 42.0
+offset_top = 215.0
+offset_right = 290.0
+offset_bottom = 342.0
+theme_override_font_sizes/font_size = 60
+text = "成员列表"
+
 [node name="MemberSpawnPoints" type="Node2D" parent="."]
 
 [node name="Marker2D" type="Marker2D" parent="MemberSpawnPoints"]
@@ -234,3 +242,5 @@ texture = ExtResource("17_e6c5m")
 [node name="System" type="Node" parent="." node_paths=PackedStringArray("rehearsal_spawn_points")]
 script = ExtResource("18_qn4nl")
 rehearsal_spawn_points = [NodePath("../MemberSpawnPoints/Marker2D"), NodePath("../MemberSpawnPoints/Marker2D2"), NodePath("../MemberSpawnPoints/Marker2D3")]
+
+[connection signal="pressed" from="UILayer/Btn_TeamOverview" to="." method="_on_btn_team_overview_pressed"]

@@ -20,3 +20,19 @@ func _ready():
 func _on_back_pressed():
 	print("返回主场景")
 	get_tree().change_scene_to_file("res://project/scenes/main/main.tscn")
+
+
+func _on_btn_team_overview_pressed() -> void:
+	print("乐队成员按钮被点击！准备跳转...")  # 先打印测试
+	
+	var team_scene_path = "res://project/scenes/ui/TeamOverview.tscn"
+	
+	if ResourceLoader.exists(team_scene_path):
+		var err = get_tree().change_scene_to_file(team_scene_path)
+		if err != OK:
+			print("跳转失败！错误码：", err)
+		else:
+			print("成功跳转到人物界面")
+	else:
+		print("错误：找不到 TeamOverview.tscn 文件")
+		print("请确认路径是否正确")
