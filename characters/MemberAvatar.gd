@@ -10,7 +10,7 @@ func _ready():
 		return
 	
 	# 加载全身图片
-	var path = "res://project/assets/character/fullbody/%s.jpg" % member_id
+	var path = "res://project/assets/character/fullbody/%s.png" % member_id
 	
 	if ResourceLoader.exists(path):
 		sprite.texture = load(path)
