@@ -8,6 +8,7 @@ id = "mei"
 name = "梅"
 role = "贝斯手"
 personality = "团队粘合剂"
+portrait = "res://project/assets/character/fullbody/mei.png"
 morale = 75
 fatigue = 25
 health = 90

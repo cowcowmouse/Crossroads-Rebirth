@@ -60,16 +60,23 @@ func spawn_members():
 			_spawn_member(member, point.global_position + offset)
 
 func _spawn_member(member, pos: Vector2):
-	var avatar_scene = preload("res://characters/MemberAvatar.tscn")
-	if not avatar_scene:
+	# 【修改】使用可点击版本
+	var clickable_scene = preload("res://project/scenes/characters/ClickableMember.tscn")
+	if not clickable_scene:
+		push_warning("找不到 ClickableMember.tscn")
 		return
 	
-	var avatar = avatar_scene.instantiate()
-	avatar.member_id = member.id
-	avatar.global_position = pos
-	avatar.add_to_group("scene_member")
+	var member_instance = clickable_scene.instantiate()
 	
-	get_tree().current_scene.add_child(avatar)
+	# 调用 setup（传入ID 和 立绘路径）
+	# 如果你的 CharacterBase 里立绘字段不是 portrait，请改成实际名称（常见是 portrait 或 portrait_path）
+	member_instance.setup(member.id, member.portrait)
+	
+	member_instance.global_position = pos
+	member_instance.add_to_group("scene_member")
+	get_tree().current_scene.add_child(member_instance)
+	
+	print("✅ 已生成可点击成员：", member.name, " (", member.id, ")")
 
 func clear_existing_members():
 	for node in get_tree().get_nodes_in_group("scene_member"):

@@ -2,12 +2,15 @@ extends Resource
 class_name CharacterBase
 
 # ==================== 基础信息 ====================
+
 @export var id: String = ""
 @export var name: String = ""
 @export var role: String = ""
 @export var avatar: Texture2D
 @export var personality: String = ""
 @export var unlocked: bool = true
+@export var favor: int = 0
+@export var portrait: String = ""   
 
 # ==================== 基础状态 ====================
 @export var morale: int = 60      # 心情

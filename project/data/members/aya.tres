@@ -8,7 +8,6 @@ id = "aya"
 name = "阿雅"
 role = "音乐治疗师"
 personality = "音乐治疗"
-unlocked = false
 morale = 80
 fatigue = 20
 health = 90
