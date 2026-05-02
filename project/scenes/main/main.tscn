@@ -92,6 +92,7 @@ position = Vector2(4, 0)
 script = ExtResource("1_87m5t")
 
 [node name="TutorialLayer" parent="." instance=ExtResource("2_j0ny1")]
+visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(1.6565933, 1.646552)

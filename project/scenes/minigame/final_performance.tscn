@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dco8dhyurwf4l"]
 
-[ext_resource type="Script" uid="uid://rk7mbx4a2ohs" path="res://project/scripts/models/minigame/FinalPerformance.gd" id="1_3d7l3"]
+[ext_resource type="Script" path="res://project/scripts/models/minigame/FinalPerformance.gd" id="1_3d7l3"]
 [ext_resource type="AudioStream" uid="uid://canp4x6fbmfth" path="res://project/audio/bgm/final_neoclassical.mp3" id="1_mpp6d"]
 [ext_resource type="Texture2D" uid="uid://bhr1n1kesj73r" path="res://project/assets/images/finalgame/finstage1.png" id="2_ar1mo"]
 
