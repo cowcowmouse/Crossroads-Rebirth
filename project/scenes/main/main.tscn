@@ -1,9 +1,10 @@
-[gd_scene load_steps=46 format=3 uid="uid://em05axaem0ia"]
+[gd_scene load_steps=47 format=3 uid="uid://em05axaem0ia"]
 
 [ext_resource type="Script" uid="uid://bkmekgpgq855c" path="res://project/scenes/main/main.gd" id="1_87m5t"]
 [ext_resource type="Texture2D" uid="uid://c4lvblykh1k4q" path="res://project/scenes/main/bar.jpg" id="1_hyk8p"]
 [ext_resource type="PackedScene" uid="uid://dgnu5ega1avui" path="res://project/scenes/main/TutorialLayer.tscn" id="2_j0ny1"]
 [ext_resource type="Texture2D" uid="uid://c081ycqu7klpj" path="res://project/assets/buttons/arrow_left.png" id="4_j0ny1"]
+[ext_resource type="Script" uid="uid://dlnmxbg5ocni1" path="res://project/scenes/main/BarBackground.gd" id="4_u6irc"]
 [ext_resource type="Texture2D" uid="uid://ry54py63wynw" path="res://project/assets/buttons/arrow_right.png" id="5_q5kvs"]
 [ext_resource type="Script" uid="uid://dfl0os8qca18h" path="res://project/scenes/main/button.gd" id="5_wiwuw"]
 [ext_resource type="Script" uid="uid://d3biv27nvyji2" path="res://project/scenes/main/rehab_btn.gd" id="6_1hgs3"]
@@ -99,6 +100,7 @@ script = ExtResource("1_87m5t")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(1.6565933, 1.646552)
 texture = ExtResource("1_hyk8p")
+script = ExtResource("4_u6irc")
 metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]

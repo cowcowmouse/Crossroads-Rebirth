@@ -22,6 +22,8 @@ var facility_upgrading: Dictionary = {}
 
 # 设施待生效等级（升级延迟到下周生效）
 var facility_pending_levels: Dictionary = {}
+# ===================== 休息室背景切换 =====================
+# 不再依赖升级等级，完全根据当前资源数值实时切换
 
 # 连续负债周数（用于失败判定）
 var debt_weeks: int = 0
@@ -124,6 +126,12 @@ func init_new_game():
 	
 	print("核心资源初始化完成")
 	refresh_current_scene_topbar()
+	_refresh_rehearsal_background()
+		# 初始游戏时也刷新一次休息室背景
+	var bg_node = get_tree().get_first_node_in_group("lounge_background")
+	if bg_node and bg_node.has_method("update_background"):
+		bg_node.update_background()
+
 
 # 初始化默认成员
 func _init_default_members():
@@ -251,6 +259,7 @@ func _init_default_members():
 
 # 修改核心资源，返回是否成功
 func modify_core_resource(resource_name: String, delta: int) -> bool:
+	
 	if not core_resources.has(resource_name):
 		print("错误：不存在的资源", resource_name)
 		return false
@@ -269,7 +278,20 @@ func modify_core_resource(resource_name: String, delta: int) -> bool:
 	
 	# 发射信号通知UI刷新
 	event_bus.core_resource_changed.emit(resource_name, new_value, actual_delta)
-	
+	if resource_name in [constants.RES_MONEY, constants.RES_COHESION, constants.RES_CREATIVITY]:
+			var bg_node = get_tree().get_first_node_in_group("lounge_background")
+			if bg_node and bg_node.has_method("update_background"):
+				bg_node.update_background()
+				
+		# 资源变化时刷新排练室背景
+	if resource_name in [constants.RES_MONEY, constants.RES_COHESION, constants.RES_CREATIVITY]:
+		_refresh_rehearsal_background()
+		
+		# 资源变化时刷新主场景（酒吧）背景
+	if resource_name in [constants.RES_MONEY, constants.RES_COHESION, constants.RES_CREATIVITY]:
+		_refresh_bar_background()
+		
+		
 	# 检查资源边界事件
 	_check_resource_boundary_event(resource_name, new_value)
 	
@@ -628,6 +650,19 @@ func refresh_current_scene_topbar():
 
 	if action_point_label:
 		action_point_label.text = "行动点: %d/%d" % [action_points, MAX_ACTION_POINTS]
+
+# 新增：排练室背景刷新
+func _refresh_rehearsal_background():
+	var bg_node = get_tree().get_first_node_in_group("rehearsal_background")
+	if bg_node and bg_node.has_method("update_background"):
+		bg_node.update_background()
+		
+# 新增：主场景（酒吧）背景刷新
+func _refresh_bar_background():
+	var bg_node = get_tree().get_first_node_in_group("bar_background")
+	if bg_node and bg_node.has_method("update_background"):
+		bg_node.update_background()
+		
 
 # ===================== AI权重接口 =====================
 
