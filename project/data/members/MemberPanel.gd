@@ -41,6 +41,7 @@ func _on_recruit_pressed():
 func setup(char_id: String):
 	character_id = char_id
 	character_data = ResourceManager.get_character(char_id)
+
 	
 	if character_data.is_empty():
 		push_error("MemberPanel: 找不到角色数据 -> %s" % char_id)

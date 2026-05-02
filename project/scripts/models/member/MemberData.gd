@@ -1,115 +1,71 @@
-extends Node
+# MemberData.gd
+@tool
+class_name MemberData
+extends Resource
 
-# 角色ID常量
-const CHAR_RIO = "rio"
-const CHAR_KIRA = "kira"
-const CHAR_MEI = "mei"
-const CHAR_FINN = "finn"
-const CHAR_SEBASTIAN = "sebastian"
-const CHAR_LILY = "lily"
-const CHAR_AYA = "aya"
-const CHAR_DUANE = "duane"
-const CHAR_OLD_NAIL = "old_nail"
+# ==================== 基础信息 ====================
+@export var id: String = "rio"
+@export var name: String = "里奥"
+@export var role: String = "鼓手"
+@export var portrait: Texture2D               # 用于入队UI、对话立绘
+@export var idle_animation: SpriteFrames      # 待机逐帧动画
 
-var characters_cache: Dictionary = {}
+# ==================== 状态 ====================
+@export var unlocked: bool = false
+@export var is_recruited: bool = false
+@export var relationship: int = 0             # 0~100，决定阶段
 
-func _ready():
-	_load_all_characters()
+@export var current_stage: int = 1            # 1,2,3 阶段
 
-func _load_all_characters():
-	var character_ids = [
-		CHAR_RIO, CHAR_KIRA, CHAR_MEI, CHAR_FINN,
-		CHAR_SEBASTIAN, CHAR_LILY, CHAR_AYA, CHAR_DUANE, CHAR_OLD_NAIL
-	]
+# ==================== 属性 ====================
+@export var morale: int = 60
+@export var fatigue: int = 30
+@export var health: int = 80
+@export var skill: int = 50
+@export var charm: int = 50
+
+# 特殊属性（可扩展）
+@export var special_stats: Dictionary = {
+	"soberness": 70,
+	"popularity": 40
+}
+
+# ==================== 互动与招募 ====================
+@export var interaction_count_this_week: int = 0
+@export var join_cost: int = 5000                     # 招募所需资金
+@export var join_effect_text: String = "提升全队声誉收益 +15%"
+
+# 特殊能力（入队后生效）
+@export var special_ability: String = ""              # 描述
+@export var special_ability_id: String = ""           # 用于代码识别，如 "kira_reputation_boost"
+
+# ==================== 方法 ====================
+
+# 获取当前关系阶段 (1,2,3)
+func get_relationship_stage() -> int:
+	if relationship >= 60:
+		return 3
+	elif relationship >= 30:
+		return 2
+	else:
+		return 1
+
+# 增加关系值（每周第一次对话调用）
+func add_relationship(delta: int = 1) -> void:
+	var old_stage = get_relationship_stage()
+	relationship = clamp(relationship + delta, 0, 100)
+	var new_stage = get_relationship_stage()
 	
-	for char_id in character_ids:
-		var path = "res://project/data/members/%s.tres" % char_id
-		if ResourceLoader.exists(path):
-			characters_cache[char_id] = load(path)
-			print("加载角色: ", char_id)
-		else:
-			print("警告: 找不到 ", path)
-
-func get_character(char_id: String) -> CharacterBase:
-	return characters_cache.get(char_id, null)
-
-func get_character_dict(char_id: String) -> Dictionary:
-	var char = get_character(char_id)
-	if not char:
-		return {}
-	
-	return {
-		"id": char.id,
-		"name": char.name,
-		"role": char.role,
-		"personality": char.personality,
-		"unlocked": char.unlocked,
-		"morale": char.morale,
-		"fatigue": char.fatigue,
-		"health": char.health,
-		"skill": char.skill,
-		"charm": char.charm,
-		"special_stats": char.special_stats,
-		"relationship": char.relationship,
-		"interaction_count": char.interaction_count,
-		"current_stage": char.current_stage,
-		"join_income": char.join_income,
-		"join_effect_text": char.join_effect_text,
-		"special_ability": char.special_ability,
-		"resource_effects": char.resource_effects
-	}
-
-func get_unlocked_characters() -> Array:
-	var unlocked = []
-	for char_id in characters_cache:
-		if characters_cache[char_id].unlocked:
-			unlocked.append(char_id)
-	return unlocked
-
-func add_relationship(char_id: String, delta: int) -> int:
-	var char = get_character(char_id)
-	if not char:
-		return 0
-	
-	var old = char.relationship
-	var new_val = clamp(old + delta, 0, 100)
-	char.relationship = new_val
+	if new_stage > old_stage:
+		print(name, " 关系提升至阶段 ", new_stage)
 	
 	# 保存修改
-	ResourceSaver.save(char)
-	
-	# 检查阶段变化
-	_check_stage_change(char)
-	
-	return new_val
+	ResourceSaver.save(self)
 
-func _check_stage_change(char: CharacterBase):
-	var rel = char.relationship
-	var current_stage = char.current_stage
-	var new_stage = current_stage
-	
-	if rel >= 60 and current_stage < 3:
-		new_stage = 3
-	elif rel >= 30 and current_stage < 2:
-		new_stage = 2
-	
-	if new_stage != current_stage:
-		char.current_stage = new_stage
-		ResourceSaver.save(char)
-		print(char.name, " 进入剧情阶段 ", new_stage)
+# 每周重置互动次数
+func reset_weekly_interaction():
+	interaction_count_this_week = 0
 
-func modify_special_stat(char_id: String, stat: String, delta: int) -> int:
-	var char = get_character(char_id)
-	if not char:
-		return 0
-	
-	if not char.special_stats.has(stat):
-		return 0
-	
-	var old = char.special_stats[stat]
-	var new_val = clamp(old + delta, 0, 100)
-	char.special_stats[stat] = new_val
-	
-	ResourceSaver.save(char)
-	print(char.name, " 的 ", stat, " 变化: ", old, " -> ", new_val)
-	return new_val
+# 是否可以招募（阶段2及以上）
+func can_recruit() -> bool:
+	return get_relationship_stage() >= 2 and not is_recruited

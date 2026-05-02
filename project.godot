@@ -29,12 +29,13 @@ ClockState="*res://project/scripts/autoload/ClockState.gd"
 Signals="*res://project/scripts/autoload/signals.gd"
 EventManager="*res://project/scripts/autoload/EventManager.gd"
 AudioManager="*res://project/scripts/autoload/AudioManager.gd"
+<<<<<<<HEADMemberManager="*res://project/data/members/MemberManager.gd"
+UIManager="*res://project/scripts/autoload/UIManager.gd"
+MemberSpawn="*res://project/data/members/MemberSpawnSystem.gd"
+MembersDatabase="*res://project/scripts/models/member/MembersDatabase.gd"
 EndingManager="*res://project/scripts/autoload/EndingManager.gd"
 MemberEventManager="*res://project/scripts/autoload/MemberEventManager.gd"
-
-[dialogic]
-
-directories/dch_directory={
+">>>>>>>f086a46ca089fe5fcf25695afb05288033e58986[dialogic]directories/dch_directory"={
 "unit_test_character": "res://project/Tests/Resources/unit_test_character.dch",
 "老钉子": "res://老钉子.dch"
 }
@@ -84,6 +85,22 @@ audio/channel_defaults={
 }
 }
 variables={}
+MemberManager="*res://project/data/members/MemberManager.gd"
+Global="*res://project/scripts/Global.gd"
+
+[dialogic]
+
+directories/dch_directory={
+"unit_test_character": "res://project/Tests/Resources/unit_test_character.dch",
+"老钉子": "res://老钉子.dch"
+}
+directories/dtl_directory={
+"old_nail": "res://old_nail.dtl",
+"stage_1": "res://addons/dialogic/characters/old_nail/stage_1.dtl",
+"stage_2": "res://addons/dialogic/characters/old_nail/stage_2.dtl",
+"stage_3": "res://addons/dialogic/characters/old_nail/stage_3.dtl"
+}
+layout/style_directory={}
 
 [display]
 

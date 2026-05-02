@@ -1,48 +1,75 @@
+# BackgroundManager.gd
 extends Node
 
 @onready var background_rect: TextureRect = null
 
+# ====================== 阶段背景映射 ======================
+var phase_backgrounds := {
+	"early": {
+		"main": "res://project/assets/background/early_main.png",      # 主场景
+		"lounge": "res://project/assets/background/early_lounge.png",
+		"rehearsal": "res://project/assets/background/early_rehearsal.png"
+	},
+	"mid": {
+		"main": "res://project/assets/background/mid_main.png",
+		"lounge": "res://project/assets/background/mid_lounge.png",
+		"rehearsal": "res://project/assets/background/mid_rehearsal.png"
+	},
+	"late": {
+		"main": "res://project/assets/background/late_main.png",
+		"lounge": "res://project/assets/background/late_lounge.png",
+		"rehearsal": "res://project/assets/background/late_rehearsal.png"
+	}
+}
+
 func _ready():
-	# 延迟获取背景节点，确保场景已加载
 	await get_tree().process_frame
 	_find_background()
+	
+	# 监听阶段变化
+	if EventBus and EventBus.has_signal("game_phase_changed"):
+		EventBus.game_phase_changed.connect(_on_phase_changed)
+	elif GameManager:
+		GameManager.connect("phase_changed", _on_phase_changed)  # 如果你用的是 signal
 
 func _find_background():
 	var scene = get_tree().current_scene
 	if scene:
-		background_rect = scene.get_node_or_null("UILayer/Background")
+		background_rect = scene.get_node_or_null("UILayer/Background")  # 根据你的实际路径调整
 
-func update_background():
+func _on_phase_changed(new_phase: String):
+	print("阶段切换为：", new_phase, "，更新背景")
+	update_background_by_phase(new_phase)
+
+# ====================== 根据阶段切换背景 ======================
+func update_background_by_phase(phase: String = ""):
+	if phase == "":
+		phase = GameManager.get_current_phase() if GameManager else "early"
+	
 	if not background_rect:
 		_find_background()
 		if not background_rect:
 			return
 	
-	var cohesion = ResourceManager.get_cohesion()
-	var art = ResourceManager.get_art_weight()
-	var business = ResourceManager.get_business_weight()
+	var current_scene_name = get_tree().current_scene.name.to_lower()
+	var bg_type = "main"
 	
-	# 计算背景索引 0-5
-	var index = 0
-	if cohesion > 70: index += 1
-	if art > 50: index += 2
-	if business > 50: index += 3
+	if "lounge" in current_scene_name:
+		bg_type = "lounge"
+	elif "rehearsal" in current_scene_name:
+		bg_type = "rehearsal"
 	
-	var bg_path = "res://project/assets/images/Background/bg_%d.png" % index
-	if ResourceLoader.exists(bg_path):
-		background_rect.texture = load(bg_path)
+	var path = phase_backgrounds.get(phase, {}).get(bg_type, "")
+	
+	if path and ResourceLoader.exists(path):
+		_fade_to_new_background(path)
+	else:
+		print("警告：阶段背景缺失 -> ", phase, " / ", bg_type)
 
-func update_memory_filter(memory_value: int):
-	var filter_rect = get_tree().current_scene.get_node_or_null("UILayer/FilterRect")
-	if not filter_rect:
-		return
-	
-	var stage = 0
-	if memory_value >= 70:
-		stage = 2
-	elif memory_value >= 30:
-		stage = 1
-	
-	var filter_path = "res://art/filters/filter_stage_%d.png" % stage
-	if ResourceLoader.exists(filter_path):
-		filter_rect.texture = load(filter_path)
+func _fade_to_new_background(new_path: String):
+	var tween = create_tween()
+	tween.tween_property(background_rect, "modulate:a", 0.0, 0.8)
+	tween.tween_callback(func():
+		background_rect.texture = load(new_path)
+	)
+	tween.tween_property(background_rect, "modulate:a", 1.0, 0.8)

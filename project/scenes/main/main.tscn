@@ -1,10 +1,11 @@
-[gd_scene load_steps=43 format=3 uid="uid://em05axaem0ia"]
+[gd_scene load_steps=47 format=3 uid="uid://em05axaem0ia"]
 
 [ext_resource type="Script" uid="uid://bkmekgpgq855c" path="res://project/scenes/main/main.gd" id="1_87m5t"]
 [ext_resource type="Texture2D" uid="uid://c4lvblykh1k4q" path="res://project/scenes/main/bar.jpg" id="1_hyk8p"]
 [ext_resource type="PackedScene" uid="uid://dgnu5ega1avui" path="res://project/scenes/main/TutorialLayer.tscn" id="2_j0ny1"]
-[ext_resource type="Texture2D" uid="uid://c081ycqu7klpj" path="res://project/assets/images/ui/buttons/arrow_left.png" id="4_j0ny1"]
-[ext_resource type="Texture2D" uid="uid://ry54py63wynw" path="res://project/assets/images/ui/buttons/arrow_right.png" id="5_q5kvs"]
+[ext_resource type="Texture2D" uid="uid://c081ycqu7klpj" path="res://project/assets/buttons/arrow_left.png" id="4_j0ny1"]
+[ext_resource type="Script" uid="uid://dlnmxbg5ocni1" path="res://project/scenes/main/BarBackground.gd" id="4_u6irc"]
+[ext_resource type="Texture2D" uid="uid://ry54py63wynw" path="res://project/assets/buttons/arrow_right.png" id="5_q5kvs"]
 [ext_resource type="Script" uid="uid://dfl0os8qca18h" path="res://project/scenes/main/button.gd" id="5_wiwuw"]
 [ext_resource type="Script" uid="uid://d3biv27nvyji2" path="res://project/scenes/main/rehab_btn.gd" id="6_1hgs3"]
 [ext_resource type="Texture2D" uid="uid://dtyvnw357ycvu" path="res://project/assets/images/ui/icons/money.png" id="6_da6bn"]
@@ -20,13 +21,16 @@
 [ext_resource type="PackedScene" uid="uid://qvf8llp2hilo" path="res://project/scenes/facility/facility_panel.tscn" id="16_k7nr8"]
 [ext_resource type="Script" uid="uid://r08km7j8emn8" path="res://project/scripts/models/facility/facility_entry_button.gd" id="17_dniyw"]
 [ext_resource type="Shader" uid="uid://d0i6cdvlqd2pd" path="res://project/scenes/lounge/outline.gdshader" id="19_ptfxj"]
-[ext_resource type="Texture2D" uid="uid://bj0xjax3adgom" path="res://project/assets/images/ui/buttons/stageup.png" id="20_oesgy"]
-[ext_resource type="Texture2D" uid="uid://d37jay72hpkji" path="res://project/assets/images/ui/buttons/barup.png" id="21_svdfk"]
+[ext_resource type="Texture2D" uid="uid://bj0xjax3adgom" path="res://project/assets/buttons/stageup.png" id="20_oesgy"]
+[ext_resource type="Texture2D" uid="uid://d37jay72hpkji" path="res://project/assets/buttons/barup.png" id="21_svdfk"]
 [ext_resource type="Shader" uid="uid://ce8lsaeamn455" path="res://project/scenes/main/outlinebar.gdshader" id="22_fkgpr"]
 [ext_resource type="PackedScene" uid="uid://cy72tji61wjdt" path="res://project/scenes/settlement/settlement_panel.tscn" id="22_wsoed"]
 [ext_resource type="PackedScene" uid="uid://bpfjlk8a6mk23" path="res://project/scenes/member/MemberStanding.tscn" id="23_gmtqm"]
 [ext_resource type="PackedScene" uid="uid://dfbwrjpx5x318" path="res://project/scenes/main/talk_system.tscn" id="24_2myfi"]
 [ext_resource type="PackedScene" uid="uid://4y42wmkxig7p" path="res://project/scenes/member/MemberTeamUI.tscn" id="25_ptfxj"]
+[ext_resource type="Texture2D" uid="uid://b33h6yd8jib34" path="res://project/assets/character/调整图片透明背景 (1).png" id="28_rhwvr"]
+[ext_resource type="Texture2D" uid="uid://slf5stjmfsyh" path="res://project/assets/images/ui/clock/clock_after.png" id="29_bieqv"]
+[ext_resource type="Script" uid="uid://bdrcdpmk7urw5" path="res://project/scripts/MemberSpawner.gd" id="30_bieqv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_j0ny1"]
 line_spacing = 28.0
@@ -97,6 +101,7 @@ visible = false
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(1.6565933, 1.646552)
 texture = ExtResource("1_hyk8p")
+script = ExtResource("4_u6irc")
 metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -580,7 +585,62 @@ offset_right = 27.0
 offset_bottom = 377.0
 metadata/_edit_use_anchors_ = true
 
+[node name="Btn_TeamOverview" type="Button" parent="."]
+offset_left = -1164.0
+offset_top = -365.0
+offset_right = -916.0
+offset_bottom = -238.0
+theme_override_font_sizes/font_size = 60
+text = "成员列表"
+
+[node name="MemberSpawnPoints" type="Node2D" parent="."]
+
+[node name="Marker2D" type="Marker2D" parent="MemberSpawnPoints"]
+modulate = Color(0.29411766, 1, 1, 1)
+self_modulate = Color(0.33333334, 1, 1, 1)
+position = Vector2(-5650, 7210)
+scale = Vector2(0.1, 0.1)
+gizmo_extents = 0.0
+
+[node name="Sprite2D" type="Sprite2D" parent="MemberSpawnPoints/Marker2D"]
+visible = false
+position = Vector2(-5650, 7210)
+texture = ExtResource("28_rhwvr")
+
+[node name="Marker2D3" type="Marker2D" parent="MemberSpawnPoints"]
+position = Vector2(247, 394)
+
+[node name="Sprite2D" type="Sprite2D" parent="MemberSpawnPoints/Marker2D3"]
+visible = false
+position = Vector2(247, 394)
+scale = Vector2(0.2879518, 0.30769232)
+texture = ExtResource("9_nlgu0")
+
+[node name="Marker2D4" type="Marker2D" parent="MemberSpawnPoints"]
+position = Vector2(1156, 434)
+
+[node name="Sprite2D" type="Sprite2D" parent="MemberSpawnPoints/Marker2D4"]
+visible = false
+position = Vector2(1156.0001, 434.00003)
+scale = Vector2(0.3192771, 0.36410257)
+texture = ExtResource("11_j0ny1")
+
+[node name="Marker2D2" type="Marker2D" parent="MemberSpawnPoints"]
+position = Vector2(-341.785, 150.442)
+scale = Vector2(0.9999998, 0.9999998)
+
+[node name="Sprite2D" type="Sprite2D" parent="MemberSpawnPoints/Marker2D2"]
+visible = false
+position = Vector2(-447.21515, 134.55804)
+scale = Vector2(0.28668892, 0.2838307)
+texture = ExtResource("29_bieqv")
+
+[node name="MemberSpawner" type="Node" parent="." node_paths=PackedStringArray("main_spawn_points")]
+script = ExtResource("30_bieqv")
+main_spawn_points = [NodePath("../MemberSpawnPoints/Marker2D"), NodePath("../MemberSpawnPoints/Marker2D3"), NodePath("../MemberSpawnPoints/Marker2D4"), NodePath("../MemberSpawnPoints/Marker2D2")]
+
 [connection signal="pressed" from="UILayer/ArrowLeft" to="." method="_on_texture_button_pressed"]
 [connection signal="pressed" from="UILayer/ArrowRight" to="." method="_on_arrow_right_pressed"]
 [connection signal="pressed" from="UILayer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="UILayer/TopBar/RehabBtn" to="." method="_on_rehab_trigger"]
+[connection signal="pressed" from="Btn_TeamOverview" to="." method="_on_btn_team_overview_pressed"]

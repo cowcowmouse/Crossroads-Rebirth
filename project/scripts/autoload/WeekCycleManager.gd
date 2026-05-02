@@ -23,6 +23,8 @@ func _emit_initial_week_state():
 	if EventBus.has_signal("week_phase_changed"):
 		EventBus.week_phase_changed.emit(current_phase)
 
+
+
 func start_new_week():
 	current_week += 1
 	

@@ -50,3 +50,4 @@ resource_effects = {
 "cohesion": 0.2,
 "creativity": 0.4
 }
+join_cost = 680

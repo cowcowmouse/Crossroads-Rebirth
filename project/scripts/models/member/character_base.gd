@@ -53,6 +53,6 @@ class_name CharacterBase
 
 # ==================== 资源关联 ====================
 @export var resource_effects: Dictionary = {}
-
+@export var join_cost: int = 100
 # ==================== 事件标记 ====================
 @export var events_triggered: Array = []

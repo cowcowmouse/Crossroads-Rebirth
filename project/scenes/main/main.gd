@@ -2249,3 +2249,28 @@ func _finish_memory_stage_event():
 		_set_ui_enabled(false)
 	else:
 		_set_ui_enabled(true)
+# 主场景里的按钮 pressed 信号连接的函数
+func _on_team_button_pressed():
+	get_tree().change_scene_to_file("res://project/scenes/ui/TeamOverview.tscn")
+
+
+# 主场景里的按钮 pressed 信号连接的函数
+func _on_team_button_pressed1():
+	get_tree().change_scene_to_file("res://project/scenes/ui/TeamOverview.tscn")
+
+
+func _on_btn_team_overview_pressed():
+	print("乐队成员按钮被点击！准备跳转...")
+	
+	# 关键：先记住当前场景路径
+	Global.previous_scene_path = get_tree().current_scene.scene_file_path
+	
+	var team_scene_path = "res://project/scenes/ui/TeamOverview.tscn"
+	if ResourceLoader.exists(team_scene_path):
+		var err = get_tree().change_scene_to_file(team_scene_path)
+		if err == OK:
+			print("成功跳转到人物界面，来源：", Global.previous_scene_path)
+		else:
+			print("跳转失败！错误码：", err)
+	else:
+		print("错误：找不到 TeamOverview.tscn 文件")

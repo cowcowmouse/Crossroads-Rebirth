@@ -1,8 +1,9 @@
-[gd_scene load_steps=23 format=3 uid="uid://bpd3gsxwdnfqs"]
+[gd_scene load_steps=28 format=3 uid="uid://bpd3gsxwdnfqs"]
 
 [ext_resource type="Texture2D" uid="uid://yi44n201w5d6" path="res://project/scenes/lounge/images/lounge.jpg" id="1_04c67"]
 [ext_resource type="Script" uid="uid://b1bnqa8lwnws5" path="res://project/scenes/lounge/lounge_scene.gd" id="1_wek5q"]
-[ext_resource type="Texture2D" uid="uid://ry54py63wynw" path="res://project/assets/images/ui/buttons/arrow_right.png" id="3_baew8"]
+[ext_resource type="Texture2D" uid="uid://ry54py63wynw" path="res://project/assets/buttons/arrow_right.png" id="3_baew8"]
+[ext_resource type="Script" uid="uid://dx8stvhvtuvmo" path="res://project/scenes/lounge/LoungeBackground.gd" id="3_y7n27"]
 [ext_resource type="Script" uid="uid://jnlartudsul0" path="res://project/scenes/lounge/back_button.gd" id="4_baew8"]
 [ext_resource type="Texture2D" uid="uid://dtyvnw357ycvu" path="res://project/assets/images/ui/icons/money.png" id="5_kqtjp"]
 [ext_resource type="Script" uid="uid://r08km7j8emn8" path="res://project/scripts/models/facility/facility_entry_button.gd" id="5_ocngs"]
@@ -13,7 +14,11 @@
 [ext_resource type="Texture2D" uid="uid://ysub1jlpwati" path="res://project/assets/images/ui/icons/Memory.png" id="9_5gkc5"]
 [ext_resource type="Texture2D" uid="uid://djl65dvfn2url" path="res://project/assets/images/ui/icons/ActionPoint.png" id="10_mt33l"]
 [ext_resource type="Shader" uid="uid://d0i6cdvlqd2pd" path="res://project/scenes/lounge/outline.gdshader" id="11_by5hv"]
-[ext_resource type="Texture2D" uid="uid://1850iqivpu1r" path="res://project/assets/images/ui/buttons/loungeup.png" id="11_iiqy2"]
+[ext_resource type="Texture2D" uid="uid://1850iqivpu1r" path="res://project/assets/buttons/loungeup.png" id="11_iiqy2"]
+[ext_resource type="Texture2D" uid="uid://byc0ahl5jg80x" path="res://project/assets/images/ui/clock/clock_mid.png" id="15_5gkc5"]
+[ext_resource type="Texture2D" uid="uid://slf5stjmfsyh" path="res://project/assets/images/ui/clock/clock_after.png" id="16_mt33l"]
+[ext_resource type="Texture2D" uid="uid://cj81w6fbmp1gf" path="res://project/assets/images/ui/clock/clock_before.png" id="17_mt33l"]
+[ext_resource type="Script" uid="uid://bdrcdpmk7urw5" path="res://project/scripts/MemberSpawner.gd" id="18_eqfy5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_v2elt"]
 shader = ExtResource("11_by5hv")
@@ -50,6 +55,7 @@ script = ExtResource("1_wek5q")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(1.657, 1.647)
 texture = ExtResource("1_04c67")
+script = ExtResource("3_y7n27")
 metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -204,3 +210,46 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="FacilityPanel" parent="UILayer" instance=ExtResource("6_ocos6")]
+
+[node name="Btn_TeamOverview" type="Button" parent="UILayer"]
+offset_left = 6.0
+offset_top = 312.0
+offset_right = 254.0
+offset_bottom = 439.0
+theme_override_font_sizes/font_size = 60
+text = "成员列表"
+
+[node name="MemberSpawnPoints" type="Node2D" parent="."]
+
+[node name="Marker2D" type="Marker2D" parent="MemberSpawnPoints"]
+position = Vector2(-713, 654)
+
+[node name="Sprite2D" type="Sprite2D" parent="MemberSpawnPoints/Marker2D"]
+visible = false
+position = Vector2(-713, 654)
+scale = Vector2(0.8724138, 0.7994012)
+texture = ExtResource("15_5gkc5")
+
+[node name="Marker2D2" type="Marker2D" parent="MemberSpawnPoints"]
+position = Vector2(325.25, 189)
+
+[node name="Sprite2D" type="Sprite2D" parent="MemberSpawnPoints/Marker2D2"]
+visible = false
+position = Vector2(325.25, 189)
+scale = Vector2(0.7137931, 0.62650603)
+texture = ExtResource("16_mt33l")
+
+[node name="Marker2D3" type="Marker2D" parent="MemberSpawnPoints"]
+position = Vector2(-591.75, 153.25)
+
+[node name="Sprite2D" type="Sprite2D" parent="MemberSpawnPoints/Marker2D3"]
+visible = false
+position = Vector2(-591.75, 153.25)
+scale = Vector2(0.6862069, 0.5242424)
+texture = ExtResource("17_mt33l")
+
+[node name="System" type="Node" parent="." node_paths=PackedStringArray("lounge_spawn_points")]
+script = ExtResource("18_eqfy5")
+lounge_spawn_points = [NodePath("../MemberSpawnPoints/Marker2D"), NodePath("../MemberSpawnPoints/Marker2D2"), NodePath("../MemberSpawnPoints/Marker2D3")]
+
+[connection signal="pressed" from="UILayer/Btn_TeamOverview" to="." method="_on_btn_team_overview_pressed"]
