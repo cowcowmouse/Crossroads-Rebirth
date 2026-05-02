@@ -70,8 +70,8 @@ const UI_LAYER_Z_INDEX := 60
 const FX_LAYER_Z_INDEX := 90
 
 # 如果你的成功/失败结局场景路径不同，只改这里两行。
-const SUCCESS_ENDING_SCENE_PATH = "res://project/scenes/ending/success_ending.tscn"
-const FAILURE_ENDING_SCENE_PATH = "res://project/scenes/ending/failure_ending.tscn"
+const SUCCESS_ENDING_SCENE_PATH = "res://project/scenes/End/EndingDialog.tscn"
+const FAILURE_ENDING_SCENE_PATH = "res://project/scenes/End/EndingDialog.tscn"
 
 # 可选字体路径。存在就使用，不存在就使用 Godot 默认字体。
 const UI_FONT_CANDIDATE_PATHS := [
@@ -2549,7 +2549,18 @@ func _finish_performance():
 	})
 
 	_play_result_transition(str(last_result_info.get("result_type", "failure")), false)
-
+	
+	# 获取结果
+	var result = _evaluate_performance_result()
+	var success = (result.get("result_type") == "success")
+	
+	# 通知 EndingManager 小游戏结果
+	var ending_manager = get_node("/root/EndingManager")
+	if ending_manager and ending_manager.has_method("on_final_performance_finished"):
+		ending_manager.on_final_performance_finished(success)
+	else:
+		# 备用：直接切换结局场景
+		_open_result_ending(result.get("result_type"), false)
 
 func _play_result_transition(result_type: String, forced_skip: bool):
 	if performance_locked:
@@ -2602,7 +2613,20 @@ func _play_result_transition(result_type: String, forced_skip: bool):
 
 
 func _open_result_ending(result_type: String, forced_skip: bool):
+	# 通知 EndingManager 小游戏结果
+	var ending_manager = get_node("/root/EndingManager")
+	if ending_manager and ending_manager.has_method("on_final_performance_finished"):
+		var success = (result_type == "success")
+		ending_manager.on_final_performance_finished(success)
+		return
+	
+	# 备用：直接切换场景
 	var scene_path := SUCCESS_ENDING_SCENE_PATH if result_type == "success" else FAILURE_ENDING_SCENE_PATH
+	
+	if ResourceLoader.exists(scene_path):
+		get_tree().change_scene_to_file(scene_path)
+		return
+
 
 	if FileAccess.file_exists(scene_path):
 		get_tree().change_scene_to_file(scene_path)
@@ -2613,11 +2637,6 @@ func _open_result_ending(result_type: String, forced_skip: bool):
 	if result_type == "failure":
 		desc_text = "这场演出没能撑到最后。"
 
-	if forced_skip:
-		desc_text = "已直接跳转到%s结局占位页。" % ("成功" if result_type == "success" else "失败")
-
-	result_center_label.text = "%s\n\n%s" % [title_text, desc_text]
-	result_center_label.visible = true
 
 
 func _unhandled_input(event):

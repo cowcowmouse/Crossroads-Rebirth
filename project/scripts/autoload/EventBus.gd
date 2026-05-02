@@ -36,7 +36,7 @@ signal week_changed(week: int)
 signal game_phase_changed(phase: String)
 signal week_phase_changed(phase: int)
 signal phase_changed(phase: String)
-
+signal final_week_ready(can_perform: bool)
 # ==================== UI相关信号 ====================
 signal ui_refresh_requested(target: String)
 signal element_highlight(element: Node, text: String)

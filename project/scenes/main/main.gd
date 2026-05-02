@@ -626,24 +626,29 @@ func _play_skip_button_press_feedback():
 
 # ===================== 周阶段切换演出 =====================
 func _create_week_transition_overlay():
-	var root_node = get_tree().root
-	if not root_node:
-		print("❌ 未找到 root，无法创建周阶段切换演出层")
+	# 添加安全检查
+	var tree = get_tree()
+	if not tree:
+		print("❌ get_tree() 返回 null，无法创建周阶段切换演出层")
 		return
-
+	
+	var root_node = tree.root
+	if not root_node:
+		print("❌ root 节点不存在，无法创建周阶段切换演出层")
+		return
+	
 	# 避免重复创建
 	if week_transition_overlay and is_instance_valid(week_transition_overlay):
 		return
-
+	
 	var existing = root_node.get_node_or_null("WeekTransitionOverlay")
 	if existing:
 		week_transition_overlay = existing
 		return
-
+	
 	week_transition_overlay = WEEK_TRANSITION_OVERLAY_SCRIPT.new()
 	week_transition_overlay.name = "WeekTransitionOverlay"
 	root_node.add_child(week_transition_overlay)
-
 
 func _play_week_phase_transition(on_midpoint: Callable = Callable()):
 	# 避免重复播放
@@ -876,7 +881,12 @@ func connect_dialogic_signals():
 
 func ensure_button_groups():
 	print("\n=== 手动添加按钮分组 ===")
-
+	
+	var tree = get_tree()
+	if not tree:
+		print("错误: get_tree() 返回 null，跳过分组添加")
+		return
+	
 	# 左箭头
 	if arrow_left:
 		if not arrow_left.is_in_group("left_arrow"):
@@ -884,7 +894,7 @@ func ensure_button_groups():
 			print("✅ 左箭头已加入 left_arrow 分组")
 		else:
 			print("左箭头已在分组中")
-
+	
 	# 右箭头
 	if arrow_right:
 		if not arrow_right.is_in_group("right_arrow"):
@@ -892,7 +902,7 @@ func ensure_button_groups():
 			print("✅ 右箭头已加入 right_arrow 分组")
 		else:
 			print("右箭头已在分组中")
-
+	
 	# 检查返回按钮（如果存在）
 	var back_btn = find_child("BackButton", true, false)
 	if back_btn:
@@ -902,14 +912,19 @@ func ensure_button_groups():
 
 
 func check_groups():
-	print("\n=== 检查按钮分组 ===")
-	var left = get_tree().get_nodes_in_group("left_arrow")
-	var right = get_tree().get_nodes_in_group("right_arrow")
-
+	# 添加安全检查
+	var tree = get_tree()
+	if not tree:
+		print("错误: get_tree() 返回 null，跳过分组检查")
+		return
+	
+	var left = tree.get_nodes_in_group("left_arrow")
+	var right = tree.get_nodes_in_group("right_arrow")
+	
 	print("left_arrow 组: ", left.size())
 	for btn in left:
 		print("  - ", btn.name)
-
+	
 	print("right_arrow 组: ", right.size())
 	for btn in right:
 		print("  - ", btn.name)
