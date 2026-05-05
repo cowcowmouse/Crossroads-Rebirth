@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://yi44n201w5d6" path="res://project/scenes/lounge/images/lounge.jpg" id="1_04c67"]
 [ext_resource type="Script" uid="uid://b1bnqa8lwnws5" path="res://project/scenes/lounge/lounge_scene.gd" id="1_wek5q"]
-[ext_resource type="Texture2D" uid="uid://ry54py63wynw" path="res://project/assets/buttons/arrow_right.png" id="3_baew8"]
-[ext_resource type="Script" uid="uid://dx8stvhvtuvmo" path="res://project/scenes/lounge/LoungeBackground.gd" id="3_y7n27"]
+[ext_resource type="Texture2D" uid="uid://ndxh2exbak31" path="res://project/assets/buttons/arrow_right.png" id="3_baew8"]
+[ext_resource type="Script" path="res://project/scenes/lounge/LoungeBackground.gd" id="3_y7n27"]
 [ext_resource type="Script" uid="uid://jnlartudsul0" path="res://project/scenes/lounge/back_button.gd" id="4_baew8"]
 [ext_resource type="Texture2D" uid="uid://dtyvnw357ycvu" path="res://project/assets/images/ui/icons/money.png" id="5_kqtjp"]
 [ext_resource type="Script" uid="uid://r08km7j8emn8" path="res://project/scripts/models/facility/facility_entry_button.gd" id="5_ocngs"]
@@ -14,11 +14,11 @@
 [ext_resource type="Texture2D" uid="uid://ysub1jlpwati" path="res://project/assets/images/ui/icons/Memory.png" id="9_5gkc5"]
 [ext_resource type="Texture2D" uid="uid://djl65dvfn2url" path="res://project/assets/images/ui/icons/ActionPoint.png" id="10_mt33l"]
 [ext_resource type="Shader" uid="uid://d0i6cdvlqd2pd" path="res://project/scenes/lounge/outline.gdshader" id="11_by5hv"]
-[ext_resource type="Texture2D" uid="uid://1850iqivpu1r" path="res://project/assets/buttons/loungeup.png" id="11_iiqy2"]
+[ext_resource type="Texture2D" uid="uid://c3of4ivxc0lm5" path="res://project/assets/buttons/loungeup.png" id="11_iiqy2"]
 [ext_resource type="Texture2D" uid="uid://byc0ahl5jg80x" path="res://project/assets/images/ui/clock/clock_mid.png" id="15_5gkc5"]
 [ext_resource type="Texture2D" uid="uid://slf5stjmfsyh" path="res://project/assets/images/ui/clock/clock_after.png" id="16_mt33l"]
 [ext_resource type="Texture2D" uid="uid://cj81w6fbmp1gf" path="res://project/assets/images/ui/clock/clock_before.png" id="17_mt33l"]
-[ext_resource type="Script" uid="uid://bdrcdpmk7urw5" path="res://project/scripts/MemberSpawner.gd" id="18_eqfy5"]
+[ext_resource type="Script" path="res://project/scripts/MemberSpawner.gd" id="18_eqfy5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_v2elt"]
 shader = ExtResource("11_by5hv")

@@ -2637,8 +2637,6 @@ func _open_result_ending(result_type: String, forced_skip: bool):
 	if result_type == "failure":
 		desc_text = "这场演出没能撑到最后。"
 
-
-
 func _unhandled_input(event):
 	if choice_active or performance_locked:
 		return

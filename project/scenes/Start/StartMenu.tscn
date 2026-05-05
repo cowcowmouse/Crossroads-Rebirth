@@ -80,9 +80,9 @@ text = "⚙"
 
 [node name="QuitButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 1441.0
-offset_top = 647.0
-offset_right = 1483.0
-offset_bottom = 678.0
-scale = Vector2(5.3634763, 4.0525436)
+offset_left = 1415.0
+offset_top = 657.0
+offset_right = 1461.0
+offset_bottom = 688.0
+scale = Vector2(5.581, 4.218)
 text = "Quit"

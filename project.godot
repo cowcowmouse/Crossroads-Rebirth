@@ -29,12 +29,11 @@ ClockState="*res://project/scripts/autoload/ClockState.gd"
 Signals="*res://project/scripts/autoload/signals.gd"
 EventManager="*res://project/scripts/autoload/EventManager.gd"
 AudioManager="*res://project/scripts/autoload/AudioManager.gd"
-<<<<<<<HEADMemberManager="*res://project/data/members/MemberManager.gd"
+EndingManager="*res://project/scripts/autoload/EndingManager.gd"
+MemberEventManager="*res://project/scripts/autoload/MemberEventManager.gd"
 UIManager="*res://project/scripts/autoload/UIManager.gd"
 MemberSpawn="*res://project/data/members/MemberSpawnSystem.gd"
 MembersDatabase="*res://project/scripts/models/member/MembersDatabase.gd"
-EndingManager="*res://project/scripts/autoload/EndingManager.gd"
-MemberEventManager="*res://project/scripts/autoload/MemberEventManager.gd"
 ">>>>>>>f086a46ca089fe5fcf25695afb05288033e58986[dialogic]directories/dch_directory"={
 "unit_test_character": "res://project/Tests/Resources/unit_test_character.dch",
 "老钉子": "res://老钉子.dch"
@@ -100,7 +99,46 @@ directories/dtl_directory={
 "stage_2": "res://addons/dialogic/characters/old_nail/stage_2.dtl",
 "stage_3": "res://addons/dialogic/characters/old_nail/stage_3.dtl"
 }
-layout/style_directory={}
+layout/style_directory={
+"": "res://New_File.tres",
+"New_File": "res://New_File.tres"
+}
+glossary/default_case_sensitive=true
+layout/style_list=["res://New_File.tres"]
+layout/default_style="res://New_File.tres"
+text/letter_speed=0.01
+text/initial_text_reveal_skippable=true
+text/text_reveal_skip_delay=0.1
+text/advance_delay=0.1
+text/autoadvance_per_character_delay=0.1
+text/autoadvance_ignored_characters_enabled=true
+animations/join_default_length=0.5
+animations/join_default_wait=true
+animations/leave_default_length=0.5
+animations/leave_default_wait=true
+animations/cross_fade_default_length=0.5
+choices/autofocus_first=true
+choices/delay=0.2
+choices/reveal_delay=0
+choices/reveal_by_input=false
+save/autosave_delay=60.0
+save/encryption_on_exports_only=true
+text/autopauses={}
+audio/channel_defaults={
+"": {
+"audio_bus": "",
+"fade_length": 0.0,
+"loop": false,
+"volume": 0.0
+},
+"music": {
+"audio_bus": "",
+"fade_length": 0.0,
+"loop": true,
+"volume": 0.0
+}
+}
+variables={}
 
 [display]
 

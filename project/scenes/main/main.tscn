@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://bkmekgpgq855c" path="res://project/scenes/main/main.gd" id="1_87m5t"]
 [ext_resource type="Texture2D" uid="uid://c4lvblykh1k4q" path="res://project/scenes/main/bar.jpg" id="1_hyk8p"]
 [ext_resource type="PackedScene" uid="uid://dgnu5ega1avui" path="res://project/scenes/main/TutorialLayer.tscn" id="2_j0ny1"]
-[ext_resource type="Texture2D" uid="uid://c081ycqu7klpj" path="res://project/assets/buttons/arrow_left.png" id="4_j0ny1"]
-[ext_resource type="Script" uid="uid://dlnmxbg5ocni1" path="res://project/scenes/main/BarBackground.gd" id="4_u6irc"]
-[ext_resource type="Texture2D" uid="uid://ry54py63wynw" path="res://project/assets/buttons/arrow_right.png" id="5_q5kvs"]
+[ext_resource type="Texture2D" uid="uid://c8np51yqr7au6" path="res://project/assets/buttons/arrow_left.png" id="4_j0ny1"]
+[ext_resource type="Script" path="res://project/scenes/main/BarBackground.gd" id="4_u6irc"]
+[ext_resource type="Texture2D" uid="uid://ndxh2exbak31" path="res://project/assets/buttons/arrow_right.png" id="5_q5kvs"]
 [ext_resource type="Script" uid="uid://dfl0os8qca18h" path="res://project/scenes/main/button.gd" id="5_wiwuw"]
 [ext_resource type="Script" uid="uid://d3biv27nvyji2" path="res://project/scenes/main/rehab_btn.gd" id="6_1hgs3"]
 [ext_resource type="Texture2D" uid="uid://dtyvnw357ycvu" path="res://project/assets/images/ui/icons/money.png" id="6_da6bn"]
@@ -21,8 +21,8 @@
 [ext_resource type="PackedScene" uid="uid://qvf8llp2hilo" path="res://project/scenes/facility/facility_panel.tscn" id="16_k7nr8"]
 [ext_resource type="Script" uid="uid://r08km7j8emn8" path="res://project/scripts/models/facility/facility_entry_button.gd" id="17_dniyw"]
 [ext_resource type="Shader" uid="uid://d0i6cdvlqd2pd" path="res://project/scenes/lounge/outline.gdshader" id="19_ptfxj"]
-[ext_resource type="Texture2D" uid="uid://bj0xjax3adgom" path="res://project/assets/buttons/stageup.png" id="20_oesgy"]
-[ext_resource type="Texture2D" uid="uid://d37jay72hpkji" path="res://project/assets/buttons/barup.png" id="21_svdfk"]
+[ext_resource type="Texture2D" uid="uid://bfcsannk62hyi" path="res://project/assets/buttons/stageup.png" id="20_oesgy"]
+[ext_resource type="Texture2D" uid="uid://c232k4fmjtvm3" path="res://project/assets/buttons/barup.png" id="21_svdfk"]
 [ext_resource type="Shader" uid="uid://ce8lsaeamn455" path="res://project/scenes/main/outlinebar.gdshader" id="22_fkgpr"]
 [ext_resource type="PackedScene" uid="uid://cy72tji61wjdt" path="res://project/scenes/settlement/settlement_panel.tscn" id="22_wsoed"]
 [ext_resource type="PackedScene" uid="uid://bpfjlk8a6mk23" path="res://project/scenes/member/MemberStanding.tscn" id="23_gmtqm"]
@@ -30,7 +30,7 @@
 [ext_resource type="PackedScene" uid="uid://4y42wmkxig7p" path="res://project/scenes/member/MemberTeamUI.tscn" id="25_ptfxj"]
 [ext_resource type="Texture2D" uid="uid://b33h6yd8jib34" path="res://project/assets/character/调整图片透明背景 (1).png" id="28_rhwvr"]
 [ext_resource type="Texture2D" uid="uid://slf5stjmfsyh" path="res://project/assets/images/ui/clock/clock_after.png" id="29_bieqv"]
-[ext_resource type="Script" uid="uid://bdrcdpmk7urw5" path="res://project/scripts/MemberSpawner.gd" id="30_bieqv"]
+[ext_resource type="Script" path="res://project/scripts/MemberSpawner.gd" id="30_bieqv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_j0ny1"]
 line_spacing = 28.0
@@ -94,9 +94,6 @@ shader_parameter/line_color = Color(1, 1, 1, 1)
 [node name="main_scene" type="Node2D"]
 position = Vector2(4, 0)
 script = ExtResource("1_87m5t")
-
-[node name="TutorialLayer" parent="." instance=ExtResource("2_j0ny1")]
-visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(1.6565933, 1.646552)
@@ -275,7 +272,6 @@ size_flags_vertical = 4
 color = Color(0.44705883, 1, 1, 1)
 
 [node name="Rehabpanel" type="Panel" parent="UILayer"]
-visible = false
 modulate = Color(0.8047426, 0.80474263, 0.8047426, 1)
 offset_left = 343.0
 offset_top = 207.00002
@@ -563,17 +559,17 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -413.0
-offset_top = -66.99994
-offset_right = -383.0
-offset_bottom = -36.0
+offset_left = -472.0
+offset_top = -39.0
+offset_right = -442.0
+offset_bottom = -8.0
 grow_horizontal = 0
 grow_vertical = 0
-scale = Vector2(2.2055025, 1.9309621)
+scale = Vector2(1.1635177, 1.0846941)
 text = "⚙"
 
 [node name="MemberStanding_tscn" parent="." instance=ExtResource("23_gmtqm")]
-position = Vector2(423, 157)
+position = Vector2(459, 191)
 
 [node name="TalkSystem" parent="." instance=ExtResource("24_2myfi")]
 position = Vector2(347, 232)

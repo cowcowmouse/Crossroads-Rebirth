@@ -264,6 +264,7 @@ func _get_weight_value(weight_type: String) -> int:
 
 # 启动最终演出小游戏
 func _start_final_performance():
+	print("=== start_final_performance 被调用 ===")
 	print("启动最终演出小游戏")
 	final_performance_started.emit()
 	
@@ -274,7 +275,7 @@ func _start_final_performance():
 		return
 	
 	tree.change_scene_to_file(minigame_path)
-
+	
 # 小游戏结束后调用（由小游戏场景调用）
 func on_final_performance_finished(success: bool):
 	print("最终演出结束，成功: ", success)
@@ -327,3 +328,72 @@ func _finalize_ending_with_performance():
 			ending_key = "%s_regret" % top_weight
 	
 	_trigger_ending(ending_key)
+
+#func start_final_performance():
+	#if is_ending_triggered or is_ending_processing:
+		#print("结局已在处理中，跳过")
+		#return
+	#
+	#var memory = ResourceManager.get_memory()
+	#
+	#print("=== 启动最终演出小游戏 ===")
+	#print("记忆恢复度: ", memory)
+	#
+	## 检查记忆恢复度是否足够
+	#if memory < 100:
+		#print("记忆恢复度不足100，直接结算结局")
+		#_direct_ending_without_performance()
+		#return
+	#
+	#is_ending_processing = true
+	
+	# 显示提示框并等待确认
+	#var confirmed = await _show_final_performance_confirm()
+	#
+	#if not confirmed:
+		#print("玩家取消最终演出")
+		#is_ending_processing = false
+		#return
+	#
+	#print("玩家确认开始最终演出")
+	#
+	## 切换到小游戏场景
+	#var minigame_path = "res://project/scenes/minigame/final_performance.tscn"
+	#var tree = get_tree()
+	#if not tree:
+		#return
+	#
+	#tree.change_scene_to_file(minigame_path)
+
+func _show_final_performance_confirm():
+	# 创建确认对话框
+	var confirm = ConfirmationDialog.new()
+	confirm.title = "即将进入最终演出"
+	confirm.dialog_text = "🎸 最终演出 🎸\n\n这是你最后的舞台！\n乐队成员们都在等着你。\n\n准备好迎接挑战了吗？"
+	confirm.ok_button_text = "开始演出"
+	confirm.cancel_button_text = "再准备一下"
+	confirm.dialog_autowrap = true
+	confirm.min_size = Vector2(400, 200)
+	
+	# 添加到当前场景
+	var current_scene = get_tree().current_scene
+	if not current_scene:
+		print("错误: 无法获取当前场景")
+		return false
+	
+	current_scene.add_child(confirm)
+	confirm.popup_centered()
+	
+	# 等待用户选择
+	var result = await confirm.confirmed
+	
+	# 获取是否确认（如果点击取消，confirmed 信号不会触发，需要检查）
+	var is_confirmed = result == OK
+	
+	# 等待对话框关闭
+	await get_tree().process_frame
+	
+	if is_instance_valid(confirm):
+		confirm.queue_free()
+	
+	return is_confirmed

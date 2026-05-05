@@ -199,7 +199,16 @@ func _ready():
 	# 加载保存的音量设置
 	_load_volume_setting()
 	call_deferred("_maybe_show_post_midweek_member_event")
+	
+	# 连接周数变化信号，更新新手按钮可见性
+	if not EventBus.week_changed.is_connected(_on_week_changed_for_tutorial):
+		EventBus.week_changed.connect(_on_week_changed_for_tutorial)
 
+func _on_week_changed_for_tutorial(week: int):
+	# 找到新手按钮并更新可见性
+	var tutorial_button = $Button  # 根据你的实际节点路径修改
+	if tutorial_button and tutorial_button.has_method("_check_and_update_visibility"):
+		tutorial_button._check_and_update_visibility()
 
 func _maybe_show_post_midweek_member_event():
 	if not MemberEventManager.has_post_midweek_return_events():
@@ -943,7 +952,7 @@ func _on_timeline_ended(timeline_name: String):
 		await get_tree().create_timer(0.3).timeout
 
 		# 开始引导
-		start_tutorial()
+		#start_tutorial()
 
 
 func _on_dialogic_signal(argument: String):
@@ -952,15 +961,15 @@ func _on_dialogic_signal(argument: String):
 	if argument == "old_nail_ended":
 		print("✅ 匹配到 old_nail_ended 信号，开始引导")
 		await get_tree().create_timer(0.3).timeout
-		start_tutorial()
+		#start_tutorial()
 
-
-func start_tutorial():
-	print("🎯 开始引导流程")
-
-	# 第一步：高亮左箭头
-	# 注意：这里不需要 await，因为 highlight_button 内部会处理等待
-	tutorial_layer.highlight_button("left_arrow", "点击左箭头切换场景")
+#
+#func start_tutorial():
+	#print("🎯 开始引导流程")
+#
+	## 第一步：高亮左箭头
+	## 注意：这里不需要 await，因为 highlight_button 内部会处理等待
+	#tutorial_layer.highlight_button("left_arrow", "点击左箭头切换场景")
 
 
 # ===================== 顶部UI初始化 =====================
@@ -1213,7 +1222,7 @@ var jump_button: Button = null
 func _create_debug_panel():
 	# 创建调试面板（扩大尺寸）
 	debug_panel = Panel.new()
-	debug_panel.size = Vector2(520, 360)
+	debug_panel.size = Vector2(520, 480)
 	debug_panel.position = Vector2(10, 200)
 
 	# 设置面板样式
@@ -1406,7 +1415,7 @@ func _create_debug_panel():
 	# ===== 添加关闭按钮 =====
 	var close_btn = Button.new()
 	close_btn.size = Vector2(60, 25)
-	close_btn.position = Vector2(320, 280)
+	close_btn.position = Vector2(320, 320)
 	close_btn.text = "关闭"
 	close_btn.add_theme_color_override("font_color", Color(1, 1, 1))
 	var close_style = StyleBoxFlat.new()
@@ -1415,11 +1424,97 @@ func _create_debug_panel():
 	close_btn.add_theme_stylebox_override("normal", close_style)
 	close_btn.pressed.connect(_toggle_debug_panel)
 	debug_panel.add_child(close_btn)
+	
+	# ==================== 分割线 ====================
+	var divider = HSeparator.new()
+	divider.size = Vector2(480, 5)
+	divider.position = Vector2(10, 180)
+	debug_panel.add_child(divider)
 
+	# ==================== 方向值修改区域 ====================
+	var weight_title = Label.new()
+	weight_title.text = "=== 方向值修改 ==="
+	weight_title.position = Vector2(10, 185)
+	weight_title.size = Vector2(200, 25)
+	weight_title.add_theme_color_override("font_color", Color(0.9, 0.8, 0.5, 1))
+	debug_panel.add_child(weight_title)
+
+	# 艺术权重
+	var art_label = Label.new()
+	art_label.text = "艺术:"
+	art_label.position = Vector2(10, 250)
+	art_label.size = Vector2(50, 25)
+	art_label.add_theme_color_override("font_color", Color(1, 1, 1))
+	debug_panel.add_child(art_label)
+
+	var art_value = LineEdit.new()
+	art_value.name = "ArtValue"
+	art_value.size = Vector2(120, 25)
+	art_value.position = Vector2(65, 250)
+	art_value.placeholder_text = str(ResourceManager.get_art_weight())
+	art_value.add_theme_color_override("font_color", Color(1, 1, 1))
+	debug_panel.add_child(art_value)
+
+	var art_set_btn = Button.new()
+	art_set_btn.size = Vector2(70, 25)
+	art_set_btn.position = Vector2(195, 250)
+	art_set_btn.text = "设置"
+	art_set_btn.add_theme_color_override("font_color", Color(1, 1, 1))
+	art_set_btn.pressed.connect(_on_debug_set_art_weight.bind(art_value))
+	debug_panel.add_child(art_set_btn)
+
+	# 商业权重
+	var business_label = Label.new()
+	business_label.text = "商业:"
+	business_label.position = Vector2(270, 250)
+	business_label.size = Vector2(50, 25)
+	business_label.add_theme_color_override("font_color", Color(1, 1, 1))
+	debug_panel.add_child(business_label)
+
+	var business_value = LineEdit.new()
+	business_value.name = "BusinessValue"
+	business_value.size = Vector2(100, 25)
+	business_value.position = Vector2(325, 250)
+	business_value.placeholder_text = str(ResourceManager.get_business_weight())
+	business_value.add_theme_color_override("font_color", Color(1, 1, 1))
+	debug_panel.add_child(business_value)
+
+	var business_set_btn = Button.new()
+	business_set_btn.size = Vector2(70, 25)
+	business_set_btn.position = Vector2(435, 250)
+	business_set_btn.text = "设置"
+	business_set_btn.add_theme_color_override("font_color", Color(1, 1, 1))
+	business_set_btn.pressed.connect(_on_debug_set_business_weight.bind(business_value))
+	debug_panel.add_child(business_set_btn)
+
+	# 人情权重
+	var human_label = Label.new()
+	human_label.text = "人情:"
+	human_label.position = Vector2(10, 280)
+	human_label.size = Vector2(50, 25)
+	human_label.add_theme_color_override("font_color", Color(1, 1, 1))
+	debug_panel.add_child(human_label)
+
+	var human_value = LineEdit.new()
+	human_value.name = "HumanValue"
+	human_value.size = Vector2(120, 25)
+	human_value.position = Vector2(65, 280)
+	human_value.placeholder_text = str(ResourceManager.get_human_weight())
+	human_value.add_theme_color_override("font_color", Color(1, 1, 1))
+	debug_panel.add_child(human_value)
+
+	var human_set_btn = Button.new()
+	human_set_btn.size = Vector2(70, 25)
+	human_set_btn.position = Vector2(195, 280)
+	human_set_btn.text = "设置"
+	human_set_btn.add_theme_color_override("font_color", Color(1, 1, 1))
+	human_set_btn.pressed.connect(_on_debug_set_human_weight.bind(human_value))
+	debug_panel.add_child(human_set_btn)
+	
 	# 提示标签
 	var tip_label = Label.new()
 	tip_label.text = "按 F12 隐藏/显示"
-	tip_label.position = Vector2(10, 260)
+	tip_label.position = Vector2(10, 320	)
 	tip_label.size = Vector2(200, 20)
 	tip_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
 	debug_panel.add_child(tip_label)
@@ -1525,7 +1620,35 @@ func _on_debug_jump_pressed():
 	else:
 		print("GameManager 不存在或没有 jump_to_week 方法")
 
+# ===================== 方向值设置 =====================
 
+func _on_debug_set_art_weight(input_field: LineEdit):
+	var value = input_field.text.to_int()
+	var current = ResourceManager.get_art_weight()
+	var delta = value - current
+	ResourceManager.modify_ai_weight(Constants.WEIGHT_ART, delta)
+	input_field.placeholder_text = str(ResourceManager.get_art_weight())
+	_refresh_resource_display()
+	print("设置艺术权重为: ", ResourceManager.get_art_weight())
+
+func _on_debug_set_business_weight(input_field: LineEdit):
+	var value = input_field.text.to_int()
+	var current = ResourceManager.get_business_weight()
+	var delta = value - current
+	ResourceManager.modify_ai_weight(Constants.WEIGHT_BUSINESS, delta)
+	input_field.placeholder_text = str(ResourceManager.get_business_weight())
+	_refresh_resource_display()
+	print("设置商业权重为: ", ResourceManager.get_business_weight())
+
+func _on_debug_set_human_weight(input_field: LineEdit):
+	var value = input_field.text.to_int()
+	var current = ResourceManager.get_human_weight()
+	var delta = value - current
+	ResourceManager.modify_ai_weight(Constants.WEIGHT_HUMAN, delta)
+	input_field.placeholder_text = str(ResourceManager.get_human_weight())
+	_refresh_resource_display()
+	print("设置人情权重为: ", ResourceManager.get_human_weight())
+	
 func _show_jump_notification(week: int):
 	# 显示一个短暂的提示（简化版）
 	var notification = Label.new()
