@@ -8,6 +8,7 @@ id = "rio"
 name = "里奥"
 role = "鼓手"
 personality = "酒精心魔"
+portrait = "res://project/assets/character/fullbody/rio.png"
 health = 75
 skill = 70
 charm = 40

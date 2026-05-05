@@ -1,7 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://c6yftgnd3biyx"]
+[gd_scene load_steps=11 format=3 uid="uid://c6yftgnd3biyx"]
 
 [ext_resource type="Texture2D" uid="uid://b28510ks1x2au" path="res://project/assets/scenebackup/member_background.png" id="1_64ym4"]
 [ext_resource type="Script" uid="uid://c5qt4u8atxr37" path="res://project/scenes/UI/TeamOverview.gd" id="1_h2p8h"]
+[ext_resource type="Texture2D" uid="uid://dnyljm77sauxe" path="res://project/assets/character/onlyhead/meihead.png" id="3_x3tg8"]
+[ext_resource type="Texture2D" uid="uid://c8r6c2oym7du3" path="res://project/assets/character/onlyhead/riohead.png" id="4_qry2b"]
+[ext_resource type="Texture2D" uid="uid://cx5ccq367l78k" path="res://project/assets/character/onlyhead/finnhead.png" id="5_bpqyk"]
+[ext_resource type="Texture2D" uid="uid://vnnq25vweut0" path="res://project/assets/character/onlyhead/sebastianhead.png" id="6_tixtm"]
+[ext_resource type="Texture2D" uid="uid://dw3u6btp5kh16" path="res://project/assets/character/onlyhead/lilyhead.png" id="7_wsy2s"]
+[ext_resource type="Texture2D" uid="uid://buu6krfcqbayn" path="res://project/assets/character/onlyhead/kaylahead.png" id="8_gag5p"]
+[ext_resource type="Texture2D" uid="uid://oj03q345e6xe" path="res://project/assets/character/onlyhead/duanehead.png" id="9_pxcvy"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_h2p8h"]
+load_path = "res://.godot/imported/kirahead.png-e16fbd519fdbbcf0c161cf1ccbc1da5e.ctex"
 
 [node name="TeamOverview" type="Control"]
 custom_minimum_size = Vector2(1920, 1080)
@@ -73,24 +83,28 @@ custom_minimum_size = Vector2(260, 180)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Kira"
+icon = SubResource("CompressedTexture2D_h2p8h")
 
 [node name="MemberSlot3" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(260, 180)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Mei"
+icon = ExtResource("3_x3tg8")
 
 [node name="MemberSlot4" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(260, 180)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Rio"
+icon = ExtResource("4_qry2b")
 
 [node name="MemberSlot5" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(260, 180)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Finn"
+icon = ExtResource("5_bpqyk")
 
 [node name="MemberSlot6" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(260, 180)
@@ -98,6 +112,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Sebastian
 "
+icon = ExtResource("6_tixtm")
 
 [node name="MemberSlot7" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(260, 180)
@@ -105,12 +120,14 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Lily
 "
+icon = ExtResource("7_wsy2s")
 
 [node name="MemberSlot8" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(260, 180)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Aya"
+icon = ExtResource("8_gag5p")
 
 [node name="MemberSlot9" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(260, 180)
@@ -118,6 +135,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Duane
 "
+icon = ExtResource("9_pxcvy")
 
 [node name="CloseButton" type="Button" parent="."]
 layout_mode = 0

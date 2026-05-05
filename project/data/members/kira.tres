@@ -8,6 +8,7 @@ id = "kira"
 name = "凯拉"
 role = "主唱"
 personality = "流量vs真实"
+portrait = "res://project/assets/character/fullbody/kira.png"
 morale = 65
 fatigue = 35
 health = 85

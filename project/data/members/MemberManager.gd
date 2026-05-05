@@ -28,6 +28,9 @@ func _load_all_members():
 			if member:
 				all_members[member.id] = member
 				print("已加载成员：", member.name, " (", member.id, ")")
+				if not "favor" in member:
+					member.favor = 0
+				print("   └─ 好感度初始化为 0")
 		else:
 			push_warning("成员文件不存在：", path)
 
@@ -62,18 +65,6 @@ func unlock_member(id: String):
 		
 
 
-# 判断是否可以招募
-func can_recruit(member_id: String) -> bool:
-	var member = all_members.get(member_id)
-	if not member: return false
-
-	var cost_money = member.unlock_condition.get("money", 0)
-	var cost_reputation = member.unlock_condition.get("reputation", 0)
-
-	return (
-		ResourceManager.can_afford(cost_money) and
-		ResourceManager.get_resource_value("reputation") >= cost_reputation
-	)
 	
 	# 获取所有可招募的成员（未解锁的）
 func get_recruitable_members() -> Array:
@@ -101,3 +92,16 @@ func kick_member(id: String) -> bool:
 	
 	print(member.name, " 已被踢出队伍，声誉减少 ", reputation_penalty, " 点")
 	return true
+	# 【新增】增加好感度（对话每次调用这个）
+func add_favor(member_id: String, amount: int = 1):
+	if all_members.has(member_id):
+		all_members[member_id].favor += amount
+		print("✅ ", all_members[member_id].name, " 好感度 +", amount, " → ", all_members[member_id].favor)
+
+# 【修改】现在招募条件改为：好感度 >= 10
+func can_recruit(member_id: String) -> bool:
+	var member = all_members.get(member_id)
+	if not member:
+		return false
+	# 新条件：好感度达到10才可以招募（不再看 unlock_condition 的钱和声誉）
+	return member.favor >= 10
