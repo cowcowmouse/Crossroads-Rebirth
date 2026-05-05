@@ -219,6 +219,10 @@ var ui_main_font: Font
 
 
 func _ready():
+	var audio_manager = get_node("/root/AudioManager")
+	if audio_manager:
+		audio_manager.stop_bgm()
+		audio_manager.bgm_locked = true
 	add_to_group("final_performance_root")
 	randomize()
 	base_bgm_volume_db = audio_player.volume_db

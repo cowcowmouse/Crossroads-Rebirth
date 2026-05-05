@@ -107,7 +107,7 @@ func _refresh_panel():
 		effect_value_label.text = "效果：记忆恢复度 +%d" % training_memory_gain
 
 	if action_point_value_label:
-		action_point_value_label.text = "当前行动点：%d/%d" % [current_ap, max_ap]
+		action_point_value_label.text = "当前行动点：%d/%d" % [current_ap, max_ap] 
 
 	# 检查当前是否可触发阶段关键事件
 	var can_trigger_stage_event := false

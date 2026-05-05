@@ -30,7 +30,7 @@
 [ext_resource type="PackedScene" uid="uid://4y42wmkxig7p" path="res://project/scenes/member/MemberTeamUI.tscn" id="25_ptfxj"]
 [ext_resource type="Texture2D" uid="uid://b33h6yd8jib34" path="res://project/assets/character/调整图片透明背景 (1).png" id="28_rhwvr"]
 [ext_resource type="Texture2D" uid="uid://slf5stjmfsyh" path="res://project/assets/images/ui/clock/clock_after.png" id="29_bieqv"]
-[ext_resource type="Script" path="res://project/scripts/MemberSpawner.gd" id="30_bieqv"]
+[ext_resource type="Script" uid="uid://bdrcdpmk7urw5" path="res://project/scripts/MemberSpawner.gd" id="30_bieqv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_j0ny1"]
 line_spacing = 28.0
@@ -272,6 +272,7 @@ size_flags_vertical = 4
 color = Color(0.44705883, 1, 1, 1)
 
 [node name="Rehabpanel" type="Panel" parent="UILayer"]
+visible = false
 modulate = Color(0.8047426, 0.80474263, 0.8047426, 1)
 offset_left = 343.0
 offset_top = 207.00002
@@ -569,6 +570,7 @@ scale = Vector2(1.1635177, 1.0846941)
 text = "⚙"
 
 [node name="MemberStanding_tscn" parent="." instance=ExtResource("23_gmtqm")]
+visible = false
 position = Vector2(459, 191)
 
 [node name="TalkSystem" parent="." instance=ExtResource("24_2myfi")]
