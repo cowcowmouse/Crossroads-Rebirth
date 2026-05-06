@@ -666,16 +666,23 @@ func _refresh_bar_background():
 
 # ===================== AI权重接口 =====================
 
+
+
 func modify_ai_weight(weight_name: String, delta: int):
 	if ai_weights.has(weight_name):
 		ai_weights[weight_name] += delta
 		
-		# 记录本周方向值变化，供周结算面板显示
+		# 记录本周方向值变化...
 		if weekly_weight_changes.has(weight_name):
 			weekly_weight_changes[weight_name] += delta
 		
 		event_bus.weight_changed.emit(weight_name, ai_weights[weight_name], delta)
 		print("权重变动：", weight_name, " ", delta, "，当前值：", ai_weights[weight_name])
+		
+		# 【新增】数值变化时实时切换背景音乐
+		if AudioManager and AudioManager.has_method("update_bgm"):
+			AudioManager.update_bgm()
+
 
 func get_ai_weight(weight_name: String) -> int:
 	if ai_weights.has(weight_name):

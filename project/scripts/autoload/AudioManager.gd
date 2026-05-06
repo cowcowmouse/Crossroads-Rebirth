@@ -56,7 +56,7 @@ func _deferred_boot_bgm():
 		stop_bgm()
 		return
 
-	play_bgm()
+	update_bgm()
 
 
 func _should_block_default_bgm() -> bool:
@@ -185,3 +185,44 @@ func unlock_bgm(play_default_after_unlock: bool = false):
 	bgm_locked = false
 	if play_default_after_unlock:
 		play_bgm()
+# ===================== 按人情/商业/艺术切换背景音乐 =====================
+
+func update_bgm():
+	
+	if bgm_locked:
+		return
+	
+	var art = ResourceManager.get_art_weight()
+	var business = ResourceManager.get_business_weight()
+	var human = ResourceManager.get_human_weight()
+	
+	var bgm_path = "res://project/audio/bgm/Bar.mp3"  # 默认
+	
+	# 规则1：全部 ≤10 → 默认
+	if art <= 10 and business <= 10 and human <= 10:
+		bgm_path = "res://project/audio/bgm/Bar.mp3"
+	
+	# 规则2：三个数值完全相同 → 优先商业
+	elif art == business and business == human:
+		if business >= 50:
+			bgm_path = "res://project/audio/bgm/Bar_commerce1.mp3"
+		else:
+			bgm_path = "res://project/audio/bgm/Bar_Commerce2.mp3"
+	
+	# 规则3：取数值最高的那个方向
+	else:
+		var max_value = maxi(art, maxi(business, human))
+		
+		if max_value == business:
+			bgm_path = "res://project/audio/bgm/Bar_commerce1.mp3" if business >= 50 else "res://project/audio/bgm/Bar_Commerce2.mp3"
+		elif max_value == human:
+			bgm_path = "res://project/audio/bgm/Bar_emotion1.mp3" if human >= 50 else "res://project/audio/bgm/Bar_emotion2.mp3"
+		elif max_value == art:
+			bgm_path = "res://project/audio/bgm/Bar_art1.mp3" if art >= 50 else "res://project/audio/bgm/Bar_art2.mp3"
+	
+	# 切换并播放
+	if ResourceLoader.exists(bgm_path):
+		play_bgm(bgm_path)
+		print("🎵 BGM已切换 → ", bgm_path.get_file(), " | 人情:", human, " 商业:", business, " 艺术:", art)
+	else:
+		push_warning("❌ BGM文件不存在: ", bgm_path)
