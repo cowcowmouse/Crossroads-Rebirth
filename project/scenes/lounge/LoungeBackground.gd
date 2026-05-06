@@ -1,4 +1,3 @@
-# LoungeBackground.gd
 extends Sprite2D
 
 @onready var resource_manager = get_node_or_null("/root/ResourceManager")
@@ -7,40 +6,46 @@ func _ready():
 	add_to_group("lounge_background")
 	centered = true
 	call_deferred("update_background")
+	print("✅ LoungeBackground 初始化完成（新规则）")
 
-# 核心：根据当前资源数值决定背景
 func update_background():
 	if not resource_manager:
-		print("❌ ResourceManager 未找到")
+		print("❌ LoungeBackground: 无法找到 ResourceManager")
 		return
-
-	var money = resource_manager.get_resource_value(Constants.RES_MONEY) if resource_manager.has_method("get_resource_value") else 0
-	var cohesion = resource_manager.get_cohesion() if resource_manager.has_method("get_cohesion") else 0
-	var creativity = resource_manager.get_creativity() if resource_manager.has_method("get_creativity") else 0
-
-	var filename = "lounge.jpg"  # 默认
-
-	# 按你指定的顺序判断（后面的条件会覆盖前面的）
 	
-	if cohesion <= 20:
-		filename = "lounge6.jpg"
-	elif cohesion >= 50:
-		filename = "lounge2.jpg"
-
-	if creativity <= 20:
-		filename = "lounge7.jpg"
-	elif creativity >= 50:
-		filename = "lounge5.jpg"
+	var art = resource_manager.get_art_weight()
+	var business = resource_manager.get_business_weight()
+	var human = resource_manager.get_human_weight()
+	
+	var filename = "lounge.jpg"  # 默认
+	
+	# 规则1：所有数值都在10以下 → 默认
+	if art <= 10 and business <= 10 and human <= 10:
+		filename = "lounge.jpg"
+	
+	# 规则2：三个数值完全相同 → 优先商业
+	elif art == business and business == human:
+		if business >= 50:
+			filename = "lounge3.jpg"   # 高商业
+		else:
+			filename = "lounge4.jpg"   # 低商业
+	
+	# 规则3：取数值最高的那个方向
+	else:
+		var max_value = maxi(art, maxi(business, human))
 		
-	if money >= 10000:
-		filename = "lounge3.jpg"
-	elif money <= 1000:
-		filename = "lounge4.jpg"
-
-	var path = "res://project/scenes/lounge/images/" + filename
-
+		if max_value == business:
+			filename = "lounge3.jpg" if business >= 50 else "lounge4.jpg"
+		elif max_value == human:
+			filename = "lounge2.jpg" if human >= 50 else "lounge6.jpg"
+		elif max_value == art:
+			filename = "lounge5.jpg" if art >= 50 else "lounge7.jpg"
+	
+	var path = "res://project/scenes/lounge/images/" + filename   # ← 注意路径
+	
 	if ResourceLoader.exists(path):
 		texture = load(path)
-		print("✅ 休息室背景已更新 → ", filename, " (资金:", money, " 凝聚力:", cohesion, " 创造力:", creativity, ")")
+		print("✅ 休息室背景切换 → ", filename, 
+			  " | 人情:", human, " 商业:", business, " 艺术:", art)
 	else:
-		print("❌ 找不到图片: ", path)
+		push_warning("❌ 休息室背景图片不存在: ", path)

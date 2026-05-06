@@ -30,9 +30,13 @@ func _load_all_members():
 				print("已加载成员：", member.name, " (", member.id, ")")
 				if not "favor" in member:
 					member.favor = 0
+				if not "weekly_talk_count" in member:
+					member.weekly_talk_count = 0
+			
 				print("   └─ 好感度初始化为 0")
 		else:
 			push_warning("成员文件不存在：", path)
+			
 
 # ====================== 设置默认招募状态 ======================
 	# 加载完成后，强制设置默认招募状态
@@ -105,3 +109,22 @@ func can_recruit(member_id: String) -> bool:
 		return false
 	# 新条件：好感度达到10才可以招募（不再看 unlock_condition 的钱和声誉）
 	return member.favor >= 10
+	
+	# 增加对话次数并返回是否还能对话
+func talk_to_member(member_id: String) -> bool:
+	if not all_members.has(member_id):
+		return false
+	
+	var member = all_members[member_id]
+	if member.weekly_talk_count >= 5:
+		return false  # 已达上限
+	
+	member.weekly_talk_count += 1
+	print("📢 ", member.name, " 本周对话次数：", member.weekly_talk_count, "/5")
+	return true
+
+# 新一周重置所有对话次数（在 ResourceManager 新周开始时调用）
+func reset_weekly_talk_counts():
+	for member in all_members.values():
+		member.weekly_talk_count = 0
+	print("🔄 已重置所有成员本周对话次数")

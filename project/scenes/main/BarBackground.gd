@@ -3,47 +3,49 @@ extends Sprite2D
 @onready var resource_manager = get_node_or_null("/root/ResourceManager")
 
 func _ready():
-	# 加入组，供 ResourceManager 调用
 	add_to_group("bar_background")
-	
-	# 确保居中显示（根据你的场景需要可自行调整）
 	centered = true
-	
-	# 延迟一帧刷新，确保 ResourceManager 已就绪
 	call_deferred("update_background")
+	print("✅ BarBackground 初始化完成（新规则）")
 
 func update_background():
 	if not resource_manager:
-		push_warning("BarBackground: 无法找到 ResourceManager")
+		print("❌ BarBackground: 无法找到 ResourceManager")
 		return
 	
-	var money = resource_manager.get_money()
-	var cohesion = resource_manager.get_cohesion()
-	var creativity = resource_manager.get_creativity()
+	var art = resource_manager.get_art_weight()
+	var business = resource_manager.get_business_weight()
+	var human = resource_manager.get_human_weight()
 	
-	var filename = "bar.jpg"  # 默认背景
+	var filename = "bar.jpg"  # 默认
 	
-	# 严格按照你指定的优先级判断
-	if cohesion <= 20:
-		filename = "bar7.jpg"
-	elif cohesion >= 50:
+	# 规则1：所有数值都在10以下 → 默认
+	if art <= 10 and business <= 10 and human <= 10:
 		filename = "bar.jpg"
 	
-	if creativity <= 20:
-		filename = "bar6.jpg"
-	elif creativity >= 50:
-		filename = "bar5.jpg"
+	# 规则2：所有数值相同 → 优先商业
+	elif art == business and business == human:
+		if business >= 50:
+			filename = "bar2.jpg"   # 高商业
+		else:
+			filename = "bar3.jpg"   # 低商业
+	
+	# 规则3：取数值最高的那个方向
+	else:
+		var max_value = maxi(art, maxi(business, human))
 		
-	if money >= 10000:
-		filename = "bar2.jpg"
-	elif money <= 1000:
-		filename = "bar3.jpg"
+		if max_value == business:
+			filename = "bar2.jpg" if business >= 50 else "bar3.jpg"
+		elif max_value == human:
+			filename = "bar4.jpg" if human >= 50 else "bar7.jpg"
+		elif max_value == art:
+			filename = "bar5.jpg" if art >= 50 else "bar6.jpg"
 	
 	var path = "res://project/scenes/main/" + filename
 	
-	# 安全加载图片
 	if ResourceLoader.exists(path):
 		texture = load(path)
-		print("✅ 主场景背景已切换为：", filename)
+		print("✅ 酒吧背景切换 → ", filename, 
+			  " | 人情:", human, " 商业:", business, " 艺术:", art)
 	else:
-		push_error("❌ 主场景背景图片不存在：", path)
+		push_warning("❌ 背景图片不存在: ", path)

@@ -1,9 +1,9 @@
 [gd_scene load_steps=27 format=3 uid="uid://b8uve8pei0ak7"]
 
 [ext_resource type="Script" uid="uid://bdpkroltk0uem" path="res://project/scenes/rehearsal/rehearsal_scene.gd" id="1_ow65r"]
-[ext_resource type="Texture2D" uid="uid://hxuvlt2vt282" path="res://project/scenes/rehearsal/images/rehearsal.jpg" id="2_e6c5m"]
-[ext_resource type="Texture2D" uid="uid://c8np51yqr7au6" path="res://project/assets/buttons/arrow_left.png" id="2_xw3uf"]
-[ext_resource type="Script" path="res://project/scenes/rehearsal/RehearsalBackground.gd" id="3_e6c5m"]
+[ext_resource type="Texture2D" uid="uid://74jorwl6hifk" path="res://project/scenes/rehearsal/images/rehearsal.jpg" id="2_e6c5m"]
+[ext_resource type="Texture2D" uid="uid://c081ycqu7klpj" path="res://project/assets/buttons/arrow_left.png" id="2_xw3uf"]
+[ext_resource type="Script" uid="uid://bm2msgajuofq5" path="res://project/scenes/rehearsal/RehearsalBackground.gd" id="3_e6c5m"]
 [ext_resource type="Script" uid="uid://uk1adtanru31" path="res://project/scenes/rehearsal/back_button.gd" id="4_rwpb6"]
 [ext_resource type="Texture2D" uid="uid://dtyvnw357ycvu" path="res://project/assets/images/ui/icons/money.png" id="5_rw2xq"]
 [ext_resource type="Texture2D" uid="uid://dvoqy40o7v2ik" path="res://project/assets/images/ui/icons/Repuation.png" id="6_4jwa2"]
@@ -12,13 +12,13 @@
 [ext_resource type="Texture2D" uid="uid://ysub1jlpwati" path="res://project/assets/images/ui/icons/Memory.png" id="9_o8wsl"]
 [ext_resource type="Texture2D" uid="uid://djl65dvfn2url" path="res://project/assets/images/ui/icons/ActionPoint.png" id="10_k03si"]
 [ext_resource type="Script" uid="uid://r08km7j8emn8" path="res://project/scripts/models/facility/facility_entry_button.gd" id="11_qn4nl"]
-[ext_resource type="Texture2D" uid="uid://dlevr8wn3xnpn" path="res://project/assets/buttons/rehearsalup.png" id="12_4jwa2"]
+[ext_resource type="Texture2D" uid="uid://buo3p1nfqnovn" path="res://project/assets/buttons/rehearsalup.png" id="12_4jwa2"]
 [ext_resource type="Shader" uid="uid://g7r7lx8ad3m" path="res://project/scenes/rehearsal/outline_rehearsal.gdshader" id="12_6q26r"]
 [ext_resource type="PackedScene" uid="uid://qvf8llp2hilo" path="res://project/scenes/facility/facility_panel.tscn" id="12_e6c5m"]
 [ext_resource type="Texture2D" uid="uid://cj81w6fbmp1gf" path="res://project/assets/images/ui/clock/clock_before.png" id="15_k03si"]
 [ext_resource type="Texture2D" uid="uid://slf5stjmfsyh" path="res://project/assets/images/ui/clock/clock_after.png" id="16_qn4nl"]
 [ext_resource type="Texture2D" uid="uid://byc0ahl5jg80x" path="res://project/assets/images/ui/clock/clock_mid.png" id="17_e6c5m"]
-[ext_resource type="Script" path="res://project/scripts/MemberSpawner.gd" id="18_qn4nl"]
+[ext_resource type="Script" uid="uid://bdrcdpmk7urw5" path="res://project/scripts/MemberSpawner.gd" id="18_qn4nl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rn2sn"]
 shader = ExtResource("12_6q26r")
@@ -209,10 +209,10 @@ vertical_alignment = 1
 
 [node name="Btn_TeamOverview" type="Button" parent="UILayer"]
 offset_left = 42.0
-offset_top = 215.0
-offset_right = 290.0
+offset_top = 279.0
+offset_right = 210.0
 offset_bottom = 342.0
-theme_override_font_sizes/font_size = 60
+theme_override_font_sizes/font_size = 40
 text = "成员列表"
 
 [node name="MemberSpawnPoints" type="Node2D" parent="."]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://c6yftgnd3biyx"]
+[gd_scene load_steps=12 format=3 uid="uid://c6yftgnd3biyx"]
 
-[ext_resource type="Texture2D" uid="uid://b28510ks1x2au" path="res://project/assets/scenebackup/member_background.png" id="1_64ym4"]
 [ext_resource type="Script" uid="uid://c5qt4u8atxr37" path="res://project/scenes/UI/TeamOverview.gd" id="1_h2p8h"]
+[ext_resource type="Texture2D" uid="uid://dolign0et7cb4" path="res://project/assets/images/ui/Individual/Bg.png" id="2_x3tg8"]
+[ext_resource type="Texture2D" uid="uid://bocls2k1kk3iy" path="res://project/assets/character/onlyhead/oldnailhead.png" id="3_bpqyk"]
 [ext_resource type="Texture2D" uid="uid://dnyljm77sauxe" path="res://project/assets/character/onlyhead/meihead.png" id="3_x3tg8"]
 [ext_resource type="Texture2D" uid="uid://c8r6c2oym7du3" path="res://project/assets/character/onlyhead/riohead.png" id="4_qry2b"]
 [ext_resource type="Texture2D" uid="uid://cx5ccq367l78k" path="res://project/assets/character/onlyhead/finnhead.png" id="5_bpqyk"]
@@ -9,9 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://dw3u6btp5kh16" path="res://project/assets/character/onlyhead/lilyhead.png" id="7_wsy2s"]
 [ext_resource type="Texture2D" uid="uid://buu6krfcqbayn" path="res://project/assets/character/onlyhead/kaylahead.png" id="8_gag5p"]
 [ext_resource type="Texture2D" uid="uid://oj03q345e6xe" path="res://project/assets/character/onlyhead/duanehead.png" id="9_pxcvy"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_h2p8h"]
-load_path = "res://.godot/imported/kirahead.png-e16fbd519fdbbcf0c161cf1ccbc1da5e.ctex"
+[ext_resource type="Texture2D" uid="uid://cd3a6y574t4a0" path="res://project/assets/character/onlyhead/ayahead.png" id="9_qry2b"]
 
 [node name="TeamOverview" type="Control"]
 custom_minimum_size = Vector2(1920, 1080)
@@ -28,14 +27,14 @@ script = ExtResource("1_h2p8h")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(958.49994, 546.99994)
 scale = Vector2(1.8243114, 1.419786)
-texture = ExtResource("1_64ym4")
+texture = ExtResource("2_x3tg8")
 
 [node name="TitleLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 1017.0
-offset_top = 116.0
-offset_right = 1594.0
-offset_bottom = 276.0
+offset_left = 649.0
+offset_top = 166.0
+offset_right = 1226.0
+offset_bottom = 326.0
 theme_override_font_sizes/font_size = 32
 text = "乐队成员"
 horizontal_alignment = 1
@@ -64,6 +63,7 @@ custom_minimum_size = Vector2(260, 180)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Old Nail"
+icon = ExtResource("3_bpqyk")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GridContainer/MemberSlot1"]
 layout_mode = 0
@@ -83,7 +83,7 @@ custom_minimum_size = Vector2(260, 180)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Kira"
-icon = SubResource("CompressedTexture2D_h2p8h")
+icon = ExtResource("8_gag5p")
 
 [node name="MemberSlot3" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(260, 180)
@@ -127,7 +127,7 @@ custom_minimum_size = Vector2(260, 180)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Aya"
-icon = ExtResource("8_gag5p")
+icon = ExtResource("9_qry2b")
 
 [node name="MemberSlot9" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(260, 180)
@@ -139,10 +139,10 @@ icon = ExtResource("9_pxcvy")
 
 [node name="CloseButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 1544.0
-offset_top = 91.0
-offset_right = 1792.0
-offset_bottom = 183.0
+offset_left = 1489.0
+offset_top = 196.0
+offset_right = 1737.0
+offset_bottom = 288.0
 theme_override_font_sizes/font_size = 60
 text = "退出"
 

@@ -31,42 +31,58 @@ func spawn_members():
 	
 	if spawn_points.is_empty() or not member_manager:
 		return
-	
-	# 获取符合条件的成员
+
 	var candidates = []
-	var all_members = member_manager.all_members.values()
 	
-	for member in all_members:
-		if not member.unlocked:
-			if current_path != "res://project/scenes/main/main.tscn":
-				continue  # 未入队只能在主场景
-		candidates.append(member)
-	
-	# 限制数量
-		# 限制生成数量 = 当前场景可用位置数 和 max_members_per_scene
+	for member in member_manager.all_members.values():
+		if member.unlocked:
+			# 已招募的成员：可以在所有场景出现
+			candidates.append(member)
+		else:
+			# 未招募的成员：只能在主场景出现
+			if current_path == "res://project/scenes/main/main.tscn":
+				candidates.append(member)
+
+	if candidates.is_empty():
+		return
+
+	# 限制生成数量
 	var max_to_spawn = mini(candidates.size(), spawn_points.size())
 	max_to_spawn = mini(max_to_spawn, max_members_per_scene)
 	
 	candidates.shuffle()
 	var to_spawn = candidates.slice(0, max_to_spawn)
 	
-	for member in to_spawn:
-		if spawn_points.size() > 0:
-			var point = spawn_points[randi() % spawn_points.size()]
-			var offset = Vector2(
-				randf_range(-60, 60),
-				randf_range(-60, 60)
-			)
-			_spawn_member(member, point.global_position + offset)
+	# 打乱生成点
+	var points = spawn_points.duplicate()
+	points.shuffle()
+	
+	for i in range(to_spawn.size()):
+		if i >= points.size():
+			break
+		var point = points[i]
+		_spawn_member(to_spawn[i], point.global_position)
+		print("✅ 生成成员：", to_spawn[i].name, " (", "已招募" if to_spawn[i].unlocked else "未招募", ")")
 
 func _spawn_member(member, pos: Vector2):
-	# 【修改】使用可点击版本
 	var clickable_scene = preload("res://project/scenes/characters/ClickableMember.tscn")
 	if not clickable_scene:
-		push_warning("找不到 ClickableMember.tscn")
 		return
 	
 	var member_instance = clickable_scene.instantiate()
+	member_instance.setup(member.id, member.portrait)
+	member_instance.global_position = pos
+	member_instance.add_to_group("scene_member")
+	get_tree().current_scene.add_child(member_instance)
+
+#func _spawn_member(member, pos: Vector2):
+	# 【修改】使用可点击版本
+	#var clickable_scene = preload("res://project/scenes/characters/ClickableMember.tscn")
+	#if not clickable_scene:
+	#	push_warning("找不到 ClickableMember.tscn")
+	#	return
+	
+	#var member_instance = clickable_scene.instantiate()
 	
 	# 调用 setup（传入ID 和 立绘路径）
 	# 如果你的 CharacterBase 里立绘字段不是 portrait，请改成实际名称（常见是 portrait 或 portrait_path）

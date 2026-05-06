@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://5e5nekgclh4q"]
+[gd_scene load_steps=2 format=3 uid="uid://5e5nekgclh4q"]
 
 [ext_resource type="Script" uid="uid://b0i2a7iofmge2" path="res://project/scenes/UI/DialoguePanel.gd" id="1_dgbqb"]
-[ext_resource type="Texture2D" uid="uid://slf5stjmfsyh" path="res://project/assets/images/ui/clock/clock_after.png" id="2_2t1e4"]
 
 [node name="DialoguePanel" type="Panel"]
 offset_left = -5368.0
@@ -17,7 +16,6 @@ offset_left = 4070.0
 offset_top = 4045.0
 offset_right = 4470.0
 offset_bottom = 4645.0
-texture = ExtResource("2_2t1e4")
 
 [node name="TextBox" type="Panel" parent="."]
 custom_minimum_size = Vector2(1980, 220)

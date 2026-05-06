@@ -1,11 +1,11 @@
-[gd_scene load_steps=47 format=3 uid="uid://em05axaem0ia"]
+[gd_scene load_steps=46 format=3 uid="uid://em05axaem0ia"]
 
 [ext_resource type="Script" uid="uid://bkmekgpgq855c" path="res://project/scenes/main/main.gd" id="1_87m5t"]
 [ext_resource type="Texture2D" uid="uid://c4lvblykh1k4q" path="res://project/scenes/main/bar.jpg" id="1_hyk8p"]
 [ext_resource type="PackedScene" uid="uid://dgnu5ega1avui" path="res://project/scenes/main/TutorialLayer.tscn" id="2_j0ny1"]
-[ext_resource type="Texture2D" uid="uid://c8np51yqr7au6" path="res://project/assets/buttons/arrow_left.png" id="4_j0ny1"]
-[ext_resource type="Script" path="res://project/scenes/main/BarBackground.gd" id="4_u6irc"]
-[ext_resource type="Texture2D" uid="uid://ndxh2exbak31" path="res://project/assets/buttons/arrow_right.png" id="5_q5kvs"]
+[ext_resource type="Texture2D" uid="uid://c081ycqu7klpj" path="res://project/assets/buttons/arrow_left.png" id="4_j0ny1"]
+[ext_resource type="Script" uid="uid://dlnmxbg5ocni1" path="res://project/scenes/main/BarBackground.gd" id="4_u6irc"]
+[ext_resource type="Texture2D" uid="uid://ry54py63wynw" path="res://project/assets/buttons/arrow_right.png" id="5_q5kvs"]
 [ext_resource type="Script" uid="uid://dfl0os8qca18h" path="res://project/scenes/main/button.gd" id="5_wiwuw"]
 [ext_resource type="Script" uid="uid://d3biv27nvyji2" path="res://project/scenes/main/rehab_btn.gd" id="6_1hgs3"]
 [ext_resource type="Texture2D" uid="uid://dtyvnw357ycvu" path="res://project/assets/images/ui/icons/money.png" id="6_da6bn"]
@@ -21,11 +21,10 @@
 [ext_resource type="PackedScene" uid="uid://qvf8llp2hilo" path="res://project/scenes/facility/facility_panel.tscn" id="16_k7nr8"]
 [ext_resource type="Script" uid="uid://r08km7j8emn8" path="res://project/scripts/models/facility/facility_entry_button.gd" id="17_dniyw"]
 [ext_resource type="Shader" uid="uid://d0i6cdvlqd2pd" path="res://project/scenes/lounge/outline.gdshader" id="19_ptfxj"]
-[ext_resource type="Texture2D" uid="uid://bfcsannk62hyi" path="res://project/assets/buttons/stageup.png" id="20_oesgy"]
-[ext_resource type="Texture2D" uid="uid://c232k4fmjtvm3" path="res://project/assets/buttons/barup.png" id="21_svdfk"]
+[ext_resource type="Texture2D" uid="uid://bj0xjax3adgom" path="res://project/assets/buttons/stageup.png" id="20_oesgy"]
+[ext_resource type="Texture2D" uid="uid://d37jay72hpkji" path="res://project/assets/buttons/barup.png" id="21_svdfk"]
 [ext_resource type="Shader" uid="uid://ce8lsaeamn455" path="res://project/scenes/main/outlinebar.gdshader" id="22_fkgpr"]
 [ext_resource type="PackedScene" uid="uid://cy72tji61wjdt" path="res://project/scenes/settlement/settlement_panel.tscn" id="22_wsoed"]
-[ext_resource type="PackedScene" uid="uid://bpfjlk8a6mk23" path="res://project/scenes/member/MemberStanding.tscn" id="23_gmtqm"]
 [ext_resource type="PackedScene" uid="uid://dfbwrjpx5x318" path="res://project/scenes/main/talk_system.tscn" id="24_2myfi"]
 [ext_resource type="PackedScene" uid="uid://4y42wmkxig7p" path="res://project/scenes/member/MemberTeamUI.tscn" id="25_ptfxj"]
 [ext_resource type="Texture2D" uid="uid://b33h6yd8jib34" path="res://project/assets/character/调整图片透明背景 (1).png" id="28_rhwvr"]
@@ -407,6 +406,7 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [node name="StageButton" type="Button" parent="UILayer"]
+visible = false
 material = SubResource("ShaderMaterial_fkgpr")
 custom_minimum_size = Vector2(220, 140)
 offset_left = -1.0
@@ -569,11 +569,9 @@ grow_vertical = 0
 scale = Vector2(1.1635177, 1.0846941)
 text = "⚙"
 
-[node name="MemberStanding_tscn" parent="." instance=ExtResource("23_gmtqm")]
-visible = false
-position = Vector2(459, 191)
 
 [node name="TalkSystem" parent="." instance=ExtResource("24_2myfi")]
+visible = false
 position = Vector2(347, 232)
 
 [node name="MemberTeamUi" parent="." instance=ExtResource("25_ptfxj")]
@@ -584,11 +582,11 @@ offset_bottom = 377.0
 metadata/_edit_use_anchors_ = true
 
 [node name="Btn_TeamOverview" type="Button" parent="."]
-offset_left = -1164.0
-offset_top = -365.0
-offset_right = -916.0
-offset_bottom = -238.0
-theme_override_font_sizes/font_size = 60
+offset_left = -1140.0
+offset_top = -346.0
+offset_right = -972.0
+offset_bottom = -283.0
+theme_override_font_sizes/font_size = 40
 text = "成员列表"
 
 [node name="MemberSpawnPoints" type="Node2D" parent="."]
@@ -606,36 +604,42 @@ position = Vector2(-5650, 7210)
 texture = ExtResource("28_rhwvr")
 
 [node name="Marker2D3" type="Marker2D" parent="MemberSpawnPoints"]
-position = Vector2(247, 394)
+position = Vector2(263, 214)
 
 [node name="Sprite2D" type="Sprite2D" parent="MemberSpawnPoints/Marker2D3"]
 visible = false
-position = Vector2(247, 394)
+position = Vector2(10, -2)
 scale = Vector2(0.2879518, 0.30769232)
 texture = ExtResource("9_nlgu0")
 
 [node name="Marker2D4" type="Marker2D" parent="MemberSpawnPoints"]
-position = Vector2(1156, 434)
+position = Vector2(843, 171)
 
 [node name="Sprite2D" type="Sprite2D" parent="MemberSpawnPoints/Marker2D4"]
 visible = false
-position = Vector2(1156.0001, 434.00003)
-scale = Vector2(0.3192771, 0.36410257)
+position = Vector2(4.000122, -22.99997)
+scale = Vector2(0.3192771, 0.38974363)
 texture = ExtResource("11_j0ny1")
 
 [node name="Marker2D2" type="Marker2D" parent="MemberSpawnPoints"]
-position = Vector2(-341.785, 150.442)
+position = Vector2(-334, 23.000002)
 scale = Vector2(0.9999998, 0.9999998)
 
 [node name="Sprite2D" type="Sprite2D" parent="MemberSpawnPoints/Marker2D2"]
 visible = false
-position = Vector2(-447.21515, 134.55804)
+position = Vector2(64.000015, 3.9999847)
 scale = Vector2(0.28668892, 0.2838307)
 texture = ExtResource("29_bieqv")
 
+[node name="Marker2D5" type="Marker2D" parent="MemberSpawnPoints"]
+position = Vector2(-413, 623)
+
+[node name="Marker2D6" type="Marker2D" parent="MemberSpawnPoints"]
+position = Vector2(14, -269)
+
 [node name="MemberSpawner" type="Node" parent="." node_paths=PackedStringArray("main_spawn_points")]
 script = ExtResource("30_bieqv")
-main_spawn_points = [NodePath("../MemberSpawnPoints/Marker2D"), NodePath("../MemberSpawnPoints/Marker2D3"), NodePath("../MemberSpawnPoints/Marker2D4"), NodePath("../MemberSpawnPoints/Marker2D2")]
+main_spawn_points = [NodePath("../MemberSpawnPoints/Marker2D"), NodePath("../MemberSpawnPoints/Marker2D3"), NodePath("../MemberSpawnPoints/Marker2D4"), NodePath("../MemberSpawnPoints/Marker2D2"), NodePath("../MemberSpawnPoints/Marker2D5"), NodePath("../MemberSpawnPoints/Marker2D6")]
 
 [connection signal="pressed" from="UILayer/ArrowLeft" to="." method="_on_texture_button_pressed"]
 [connection signal="pressed" from="UILayer/ArrowRight" to="." method="_on_arrow_right_pressed"]

@@ -11,7 +11,7 @@ class_name CharacterBase
 @export var unlocked: bool = true
 @export var favor: int = 0
 @export var portrait: String = ""   
-
+@export var weekly_talk_count: int = 0  
 # ==================== 基础状态 ====================
 @export var morale: int = 60      # 心情
 @export var fatigue: int = 30     # 疲劳
