@@ -2397,3 +2397,25 @@ func _on_btn_team_overview_pressed():
 			print("跳转失败！错误码：", err)
 	else:
 		print("错误：找不到 TeamOverview.tscn 文件")
+
+
+# 调试按钮1：所有成员关系度设为40
+
+	
+
+# 调试按钮2：所有成员关系度设为70
+
+
+
+func _on_debug_set_40_button_pressed() -> void:
+	if MemberManager and MemberManager.has_method("set_all_relationship_progress"):
+		MemberManager.set_all_relationship_progress(40)
+	else:
+		print("❌ MemberManager 未找到或方法不存在")
+
+
+func _on_debug_set_70_button_pressed() -> void:
+	if MemberManager and MemberManager.has_method("set_all_relationship_progress"):
+		MemberManager.set_all_relationship_progress(70)
+	else:
+		print("❌ MemberManager 未找到或方法不存在")

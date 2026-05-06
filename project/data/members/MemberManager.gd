@@ -148,3 +148,10 @@ func reset_weekly_talk_counts():
 	for member in all_members.values():
 		member.weekly_talk_count = 0
 	print("🔄 已重置所有成员本周对话次数")
+
+
+# 调试按钮专用：快速设置所有成员关系度
+func set_all_relationship_progress(value: int):
+	for member in all_members.values():
+		member.relationship_progress = value
+	print("✅ 调试：所有成员关系度已设置为 ", value)

@@ -569,6 +569,21 @@ grow_vertical = 0
 scale = Vector2(1.1635177, 1.0846941)
 text = "⚙"
 
+[node name="DebugSet40Button" type="Button" parent="UILayer"]
+offset_left = 14.0
+offset_top = 209.0
+offset_right = 119.0
+offset_bottom = 258.0
+theme_override_font_sizes/font_size = 30
+text = "中好感"
+
+[node name="DebugSet70Button" type="Button" parent="UILayer"]
+offset_left = 16.0
+offset_top = 283.0
+offset_right = 123.0
+offset_bottom = 337.0
+theme_override_font_sizes/font_size = 30
+text = "高好感"
 
 [node name="TalkSystem" parent="." instance=ExtResource("24_2myfi")]
 visible = false
@@ -582,10 +597,10 @@ offset_bottom = 377.0
 metadata/_edit_use_anchors_ = true
 
 [node name="Btn_TeamOverview" type="Button" parent="."]
-offset_left = -1140.0
-offset_top = -346.0
-offset_right = -972.0
-offset_bottom = -283.0
+offset_left = -1239.0
+offset_top = -293.0
+offset_right = -1071.0
+offset_bottom = -230.0
 theme_override_font_sizes/font_size = 40
 text = "成员列表"
 
@@ -645,4 +660,6 @@ main_spawn_points = [NodePath("../MemberSpawnPoints/Marker2D"), NodePath("../Mem
 [connection signal="pressed" from="UILayer/ArrowRight" to="." method="_on_arrow_right_pressed"]
 [connection signal="pressed" from="UILayer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="UILayer/TopBar/RehabBtn" to="." method="_on_rehab_trigger"]
+[connection signal="pressed" from="UILayer/DebugSet40Button" to="." method="_on_debug_set_40_button_pressed"]
+[connection signal="pressed" from="UILayer/DebugSet70Button" to="." method="_on_debug_set_70_button_pressed"]
 [connection signal="pressed" from="Btn_TeamOverview" to="." method="_on_btn_team_overview_pressed"]

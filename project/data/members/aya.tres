@@ -44,3 +44,4 @@ resource_effects = {
 "cohesion": 0.7,
 "morale_boost": 5.0
 }
+join_cost = 120
