@@ -102,6 +102,26 @@ func add_favor(member_id: String, amount: int = 1):
 		all_members[member_id].favor += amount
 		print("✅ ", all_members[member_id].name, " 好感度 +", amount, " → ", all_members[member_id].favor)
 
+
+# 增加关系进度（每次对话 +5）
+func add_relationship_progress(member_id: String, delta: int = 10) -> int:
+	if not all_members.has(member_id):
+		return 0
+	
+	var member = all_members[member_id]
+	
+	# Resource 类型必须用这种安全写法
+	var old_progress = 0
+	if "relationship_progress" in member:
+		old_progress = member.relationship_progress
+	
+	var new_progress = old_progress + delta
+	member.relationship_progress = new_progress
+	
+	print("📈 ", member.name, " 关系度 +", delta, " → ", new_progress)
+	
+	return new_progress
+
 # 【修改】现在招募条件改为：好感度 >= 10
 func can_recruit(member_id: String) -> bool:
 	var member = all_members.get(member_id)

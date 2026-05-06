@@ -859,9 +859,15 @@ func _check_resource_boundary_event(resource_name: String, new_value: int):
 # ===================== 周结算相关 =====================
 
 # 执行每周扣款
+# 执行每周扣款 + 重置对话次数
 func apply_weekly_expense() -> bool:
-	return add_money(-WEEKLY_EXPENSE)
-
+	var success = add_money(-WEEKLY_EXPENSE)
+	
+	# 【关键修复】新一周开始，重置所有成员每周对话次数
+	if MemberManager and MemberManager.has_method("reset_weekly_talk_counts"):
+		MemberManager.reset_weekly_talk_counts()
+	
+	return success
 # 获取每周支出金额
 func get_weekly_expense() -> int:
 	return WEEKLY_EXPENSE
@@ -1735,7 +1741,9 @@ func show_first_time_minigame_description(stage_name: String):
 
 func set_action_points(value: int):
 	action_points = clamp(value, 0, MAX_ACTION_POINTS)
-	refresh_current_scene_topbar()
+	refresh_current_scene_topbar()	
+	if MemberManager and MemberManager.has_method("reset_weekly_talk_counts"):
+		MemberManager.reset_weekly_talk_counts()
 	print("行动点已设置为: ", action_points)
 
 # ===================== 便捷获取方法 =====================

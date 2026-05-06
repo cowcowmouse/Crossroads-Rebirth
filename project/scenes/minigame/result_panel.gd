@@ -103,7 +103,40 @@ func _calculate_and_apply_rewards(score: int):
 	show_performance_summary(performance_level, rep_gain, cohesion_gain, money_gain, stage_info.name)
 
 func show_performance_summary(level: String, rep: int, cohesion: int, money: int, stage_name: String):
-	var summary = """
+	# 创建一个漂亮的自定义面板
+	var panel = Panel.new()
+	panel.name = "PerformanceSummaryPanel"
+	panel.z_index = 3000
+	panel.size = Vector2(560, 380)
+	panel.position = (get_viewport_rect().size - panel.size) / 2
+	
+	# 半透明深色背景 + 边框
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.08, 0.08, 0.12, 0.95)
+	style.border_width_left = 4
+	style.border_width_top = 4
+	style.border_width_right = 4
+	style.border_width_bottom = 4
+	style.border_color = Color(0.95, 0.75, 0.3, 0.9)
+	style.corner_radius_top_left = 20
+	style.corner_radius_top_right = 20
+	style.corner_radius_bottom_left = 20
+	style.corner_radius_bottom_right = 20
+	panel.add_theme_stylebox_override("panel", style)
+	
+	# 标题
+	var title = Label.new()
+	title.text = "本周表演总结"
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	title.add_theme_font_size_override("font_size", 28)
+	title.add_theme_color_override("font_color", Color(1, 0.85, 0.3))
+	title.position = Vector2(0, 30)
+	title.size = Vector2(560, 50)
+	panel.add_child(title)
+	
+	# 内容
+	var summary_text = """
 当前表演规模：%s
 
 表演表现：%s
@@ -114,11 +147,28 @@ func show_performance_summary(level: String, rep: int, cohesion: int, money: int
 资金 +%d
 """ % [stage_name, level, rep, cohesion, money]
 	
-	var dialog = AcceptDialog.new()
-	dialog.title = "本周表演总结"
-	dialog.dialog_text = summary
-	add_child(dialog)
-	dialog.popup_centered()
+	var content = RichTextLabel.new()
+	content.bbcode_enabled = true
+	content.text = summary_text
+	content.add_theme_font_size_override("normal_font_size", 22)
+	content.add_theme_color_override("default_color", Color(0.95, 0.95, 0.95))
+	content.position = Vector2(50, 100)
+	content.size = Vector2(460, 250)
+	panel.add_child(content)
+	
+	# 确定按钮
+	var ok_btn = Button.new()
+	ok_btn.text = "确定"
+	ok_btn.position = Vector2(210, 320)
+	ok_btn.size = Vector2(140, 45)
+	ok_btn.add_theme_font_size_override("font_size", 24)
+	ok_btn.pressed.connect(func():
+		panel.queue_free()
+	)
+	panel.add_child(ok_btn)
+
+	add_child(panel)
+	panel.move_to_front()
 
 # ===================== 重新开始按钮 =====================
 func _on_restart_pressed():

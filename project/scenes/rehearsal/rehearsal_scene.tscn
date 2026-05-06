@@ -159,6 +159,7 @@ layout_mode = 2
 text = "查看个人状态🔜"
 
 [node name="FacilityPanel" parent="UILayer" instance=ExtResource("12_e6c5m")]
+visible = false
 
 [node name="RehearsalButton" type="Button" parent="UILayer"]
 material = SubResource("ShaderMaterial_rn2sn")
@@ -226,7 +227,7 @@ position = Vector2(-249, -82)
 texture = ExtResource("15_k03si")
 
 [node name="Marker2D2" type="Marker2D" parent="MemberSpawnPoints"]
-position = Vector2(-958, 677)
+position = Vector2(-950, 472)
 
 [node name="Sprite2D" type="Sprite2D" parent="MemberSpawnPoints/Marker2D2"]
 visible = false
@@ -234,15 +235,18 @@ position = Vector2(-958, 677)
 texture = ExtResource("16_qn4nl")
 
 [node name="Marker2D3" type="Marker2D" parent="MemberSpawnPoints"]
-position = Vector2(148, 378)
+position = Vector2(158, 261)
 
 [node name="Sprite2D" type="Sprite2D" parent="MemberSpawnPoints/Marker2D3"]
 visible = false
 position = Vector2(148, 378)
 texture = ExtResource("17_e6c5m")
 
+[node name="Marker2D4" type="Marker2D" parent="MemberSpawnPoints"]
+position = Vector2(1002, 369)
+
 [node name="System" type="Node" parent="." node_paths=PackedStringArray("rehearsal_spawn_points")]
 script = ExtResource("18_qn4nl")
-rehearsal_spawn_points = [NodePath("../MemberSpawnPoints/Marker2D"), NodePath("../MemberSpawnPoints/Marker2D2"), NodePath("../MemberSpawnPoints/Marker2D3")]
+rehearsal_spawn_points = [NodePath("../MemberSpawnPoints/Marker2D"), NodePath("../MemberSpawnPoints/Marker2D2"), NodePath("../MemberSpawnPoints/Marker2D3"), NodePath("../MemberSpawnPoints/Marker2D4")]
 
 [connection signal="pressed" from="UILayer/Btn_TeamOverview" to="." method="_on_btn_team_overview_pressed"]
