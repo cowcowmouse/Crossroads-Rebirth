@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cbjgt0bfu6dlb"]
 
 [ext_resource type="Texture2D" uid="uid://cbu67rtodxxbi" path="res://project/assets/images/events/events.png" id="1_6ohw0"]
-[ext_resource type="PackedScene" uid="uid://wpouuvk6qjny" path="res://project/scenes/event/test_event.tscn" id="2_vpjb5"]
+[ext_resource type="Script" path="res://project/scripts/models/events/midweek_event_ui.gd" id="2_ui"]
 
 [node name="Event" type="Node2D"]
 
@@ -13,6 +13,5 @@ zoom = Vector2(0.755, 0.64)
 scale = Vector2(2.5655203, 3.775128)
 texture = ExtResource("1_6ohw0")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="TestEvent" parent="CanvasLayer" instance=ExtResource("2_vpjb5")]
+[node name="EventUI" type="CanvasLayer" parent="."]
+script = ExtResource("2_ui")

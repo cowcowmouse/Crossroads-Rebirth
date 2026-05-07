@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmskup7h8imiq"]
+
+[ext_resource type="Script" uid="uid://br22f8q4s3ruq" path="res://project/scripts/models/minigame/Note.gd" id="1_3s55s"]
+
+[node name="Note" type="Control"]
+custom_minimum_size = Vector2(40, 20)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3s55s")
+
+[node name="Body" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1884.0
+offset_bottom = -960.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Head" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 120.0
+offset_right = -1884.0
+offset_bottom = -924.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ReleaseHint" type="Label" parent="."]
+layout_mode = 0
+offset_left = 86.0
+offset_top = 73.0
+offset_right = 152.0
+offset_bottom = 122.0
+text = "	RELEASE
+"

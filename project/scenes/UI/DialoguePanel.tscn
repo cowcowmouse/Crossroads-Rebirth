@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=3 uid="uid://5e5nekgclh4q"]
+
+[ext_resource type="Script" uid="uid://b0i2a7iofmge2" path="res://project/scenes/UI/DialoguePanel.gd" id="1_dgbqb"]
+
+[node name="DialoguePanel" type="Panel"]
+offset_left = -5368.0
+offset_top = -4103.0
+offset_right = 6241.0
+offset_bottom = 4926.0
+script = ExtResource("1_dgbqb")
+
+[node name="PortraitRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(400, 600)
+layout_mode = 0
+offset_left = 4070.0
+offset_top = 4045.0
+offset_right = 4470.0
+offset_bottom = 4645.0
+
+[node name="TextBox" type="Panel" parent="."]
+custom_minimum_size = Vector2(1980, 220)
+layout_mode = 0
+offset_left = 4078.0
+offset_top = 4664.0
+offset_right = 6979.0
+offset_bottom = 4884.0
+
+[node name="DialogueText" type="RichTextLabel" parent="TextBox"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 45.0
+offset_right = 909.0
+offset_bottom = 174.0
+theme_override_font_sizes/normal_font_size = 40
+theme_override_font_sizes/bold_font_size = 40
+theme_override_font_sizes/bold_italics_font_size = 40
+theme_override_font_sizes/italics_font_size = 40
+theme_override_font_sizes/mono_font_size = 40
+tab_size = 24

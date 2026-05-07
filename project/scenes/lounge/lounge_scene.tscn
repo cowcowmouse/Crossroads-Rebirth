@@ -1,8 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://bpd3gsxwdnfqs"]
+[gd_scene load_steps=28 format=3 uid="uid://bpd3gsxwdnfqs"]
 
 [ext_resource type="Texture2D" uid="uid://yi44n201w5d6" path="res://project/scenes/lounge/images/lounge.jpg" id="1_04c67"]
 [ext_resource type="Script" uid="uid://b1bnqa8lwnws5" path="res://project/scenes/lounge/lounge_scene.gd" id="1_wek5q"]
-[ext_resource type="Texture2D" uid="uid://ry54py63wynw" path="res://project/assets/images/ui/buttons/arrow_right.png" id="3_baew8"]
+[ext_resource type="Texture2D" uid="uid://ry54py63wynw" path="res://project/assets/buttons/arrow_right.png" id="3_baew8"]
+[ext_resource type="Script" uid="uid://dx8stvhvtuvmo" path="res://project/scenes/lounge/LoungeBackground.gd" id="3_y7n27"]
 [ext_resource type="Script" uid="uid://jnlartudsul0" path="res://project/scenes/lounge/back_button.gd" id="4_baew8"]
 [ext_resource type="Texture2D" uid="uid://dtyvnw357ycvu" path="res://project/assets/images/ui/icons/money.png" id="5_kqtjp"]
 [ext_resource type="Script" uid="uid://r08km7j8emn8" path="res://project/scripts/models/facility/facility_entry_button.gd" id="5_ocngs"]
@@ -12,7 +13,17 @@
 [ext_resource type="Texture2D" uid="uid://45rrp1pjqu55" path="res://project/assets/images/ui/icons/Creativity.png" id="8_v2elt"]
 [ext_resource type="Texture2D" uid="uid://ysub1jlpwati" path="res://project/assets/images/ui/icons/Memory.png" id="9_5gkc5"]
 [ext_resource type="Texture2D" uid="uid://djl65dvfn2url" path="res://project/assets/images/ui/icons/ActionPoint.png" id="10_mt33l"]
-[ext_resource type="Texture2D" uid="uid://1850iqivpu1r" path="res://project/assets/images/ui/buttons/loungeup.png" id="11_iiqy2"]
+[ext_resource type="Shader" uid="uid://d0i6cdvlqd2pd" path="res://project/scenes/lounge/outline.gdshader" id="11_by5hv"]
+[ext_resource type="Texture2D" uid="uid://1850iqivpu1r" path="res://project/assets/buttons/loungeup.png" id="11_iiqy2"]
+[ext_resource type="Texture2D" uid="uid://byc0ahl5jg80x" path="res://project/assets/images/ui/clock/clock_mid.png" id="15_5gkc5"]
+[ext_resource type="Texture2D" uid="uid://slf5stjmfsyh" path="res://project/assets/images/ui/clock/clock_after.png" id="16_mt33l"]
+[ext_resource type="Texture2D" uid="uid://cj81w6fbmp1gf" path="res://project/assets/images/ui/clock/clock_before.png" id="17_mt33l"]
+[ext_resource type="Script" uid="uid://bdrcdpmk7urw5" path="res://project/scripts/MemberSpawner.gd" id="18_eqfy5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v2elt"]
+shader = ExtResource("11_by5hv")
+shader_parameter/line_thickness = 20.0
+shader_parameter/line_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_by5hv"]
 
@@ -26,8 +37,17 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y7n27"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iiqy2"]
-bg_color = Color(0.043137256, 0.043137256, 0.043137256, 0.78431374)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_by5hv"]
+bg_color = Color(0.14117648, 0.08235294, 0.043137256, 0.54901963)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.5411765, 0.3529412, 0.14117648, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
 
 [node name="lounge_scene" type="Node2D"]
 script = ExtResource("1_wek5q")
@@ -35,6 +55,7 @@ script = ExtResource("1_wek5q")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(1.657, 1.647)
 texture = ExtResource("1_04c67")
+script = ExtResource("3_y7n27")
 metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -140,6 +161,8 @@ layout_mode = 2
 text = "查看个人状态🔜"
 
 [node name="LoungeButton" type="Button" parent="UILayer"]
+visible = false
+material = SubResource("ShaderMaterial_v2elt")
 custom_minimum_size = Vector2(160, 60)
 offset_left = 264.0
 offset_top = 281.00003
@@ -159,31 +182,79 @@ script = ExtResource("5_ocngs")
 facility_type = "lounge"
 
 [node name="RepairMask" type="Panel" parent="UILayer/LoungeButton"]
-visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 65.00006
+offset_top = 24.999878
+offset_right = -30.000061
+offset_bottom = -10.000244
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_by5hv")
+
+[node name="Label" type="Label" parent="UILayer/LoungeButton/RepairMask"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_iiqy2")
-
-[node name="Label" type="Label" parent="UILayer/LoungeButton/RepairMask"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = -11.5
-offset_right = 24.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 200
+theme_override_colors/font_color = Color(0.9607843, 0.93333334, 0.5803922, 1)
+theme_override_colors/font_shadow_color = Color(0.16470589, 0.08627451, 0.039215688, 1)
+theme_override_colors/font_outline_color = Color(0.16470589, 0.08627451, 0.039215688, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 64
 text = "维修中"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="FacilityPanel" parent="UILayer" instance=ExtResource("6_ocos6")]
+visible = false
+
+[node name="Btn_TeamOverview" type="Button" parent="UILayer"]
+offset_left = 37.0
+offset_top = 345.0
+offset_right = 205.0
+offset_bottom = 408.0
+theme_override_font_sizes/font_size = 40
+text = "成员列表"
+
+[node name="MemberSpawnPoints" type="Node2D" parent="."]
+
+[node name="Marker2D" type="Marker2D" parent="MemberSpawnPoints"]
+position = Vector2(-701, 572)
+
+[node name="Sprite2D" type="Sprite2D" parent="MemberSpawnPoints/Marker2D"]
+visible = false
+position = Vector2(-713, 654)
+scale = Vector2(0.8724138, 0.7994012)
+texture = ExtResource("15_5gkc5")
+
+[node name="Marker2D2" type="Marker2D" parent="MemberSpawnPoints"]
+position = Vector2(324, 60)
+
+[node name="Sprite2D" type="Sprite2D" parent="MemberSpawnPoints/Marker2D2"]
+visible = false
+position = Vector2(325.25, 189)
+scale = Vector2(0.7137931, 0.62650603)
+texture = ExtResource("16_mt33l")
+
+[node name="Marker2D3" type="Marker2D" parent="MemberSpawnPoints"]
+position = Vector2(-593, -54)
+
+[node name="Sprite2D" type="Sprite2D" parent="MemberSpawnPoints/Marker2D3"]
+visible = false
+position = Vector2(-591.75, 153.25)
+scale = Vector2(0.6862069, 0.5242424)
+texture = ExtResource("17_mt33l")
+
+[node name="Marker2D4" type="Marker2D" parent="MemberSpawnPoints"]
+position = Vector2(1003, 328)
+
+[node name="System" type="Node" parent="." node_paths=PackedStringArray("lounge_spawn_points")]
+script = ExtResource("18_eqfy5")
+lounge_spawn_points = [NodePath("../MemberSpawnPoints/Marker2D"), NodePath("../MemberSpawnPoints/Marker2D2"), NodePath("../MemberSpawnPoints/Marker2D3"), NodePath("../MemberSpawnPoints/Marker2D4")]
+
+[connection signal="pressed" from="UILayer/Btn_TeamOverview" to="." method="_on_btn_team_overview_pressed"]

@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://bl7gffwf4ojkk"]
+
+[ext_resource type="Script" uid="uid://cmpgotp2pghf2" path="res://CharacterInteraction.gd" id="1_tic5w"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_27qek"]
+
+[node name="CharacterInteraction" type="Node2D" node_paths=PackedStringArray("char_sprite", "anim_player", "label_chat_count", "btn_talk")]
+script = ExtResource("1_tic5w")
+char_sprite = NodePath("Char")
+anim_player = NodePath("Char/AnimationPlayer")
+label_chat_count = NodePath("LabelChatCount")
+btn_talk = NodePath("BtnTalk")
+
+[node name="Char" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Char"]
+scale = Vector2(3, 3)
+shape = SubResource("CircleShape2D_27qek")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Char"]
+
+[node name="LabelChatCount" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="BtnTalk" type="Button" parent="."]
+offset_left = -34.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0

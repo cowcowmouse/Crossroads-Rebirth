@@ -1,10 +1,11 @@
-[gd_scene load_steps=36 format=3 uid="uid://em05axaem0ia"]
+[gd_scene load_steps=46 format=3 uid="uid://em05axaem0ia"]
 
 [ext_resource type="Script" uid="uid://bkmekgpgq855c" path="res://project/scenes/main/main.gd" id="1_87m5t"]
 [ext_resource type="Texture2D" uid="uid://c4lvblykh1k4q" path="res://project/scenes/main/bar.jpg" id="1_hyk8p"]
 [ext_resource type="PackedScene" uid="uid://dgnu5ega1avui" path="res://project/scenes/main/TutorialLayer.tscn" id="2_j0ny1"]
-[ext_resource type="Texture2D" uid="uid://c081ycqu7klpj" path="res://project/assets/images/ui/buttons/arrow_left.png" id="4_j0ny1"]
-[ext_resource type="Texture2D" uid="uid://ry54py63wynw" path="res://project/assets/images/ui/buttons/arrow_right.png" id="5_q5kvs"]
+[ext_resource type="Texture2D" uid="uid://c081ycqu7klpj" path="res://project/assets/buttons/arrow_left.png" id="4_j0ny1"]
+[ext_resource type="Script" uid="uid://dlnmxbg5ocni1" path="res://project/scenes/main/BarBackground.gd" id="4_u6irc"]
+[ext_resource type="Texture2D" uid="uid://ry54py63wynw" path="res://project/assets/buttons/arrow_right.png" id="5_q5kvs"]
 [ext_resource type="Script" uid="uid://dfl0os8qca18h" path="res://project/scenes/main/button.gd" id="5_wiwuw"]
 [ext_resource type="Script" uid="uid://d3biv27nvyji2" path="res://project/scenes/main/rehab_btn.gd" id="6_1hgs3"]
 [ext_resource type="Texture2D" uid="uid://dtyvnw357ycvu" path="res://project/assets/images/ui/icons/money.png" id="6_da6bn"]
@@ -19,9 +20,16 @@
 [ext_resource type="FontFile" uid="uid://b004kl1b50uq5" path="res://project/assets/fonts/ui/new_font_file.tres" id="14_ogan2"]
 [ext_resource type="PackedScene" uid="uid://qvf8llp2hilo" path="res://project/scenes/facility/facility_panel.tscn" id="16_k7nr8"]
 [ext_resource type="Script" uid="uid://r08km7j8emn8" path="res://project/scripts/models/facility/facility_entry_button.gd" id="17_dniyw"]
-[ext_resource type="Texture2D" uid="uid://bj0xjax3adgom" path="res://project/assets/images/ui/buttons/stageup.png" id="20_oesgy"]
-[ext_resource type="Texture2D" uid="uid://d37jay72hpkji" path="res://project/assets/images/ui/buttons/barup.png" id="21_svdfk"]
+[ext_resource type="Shader" uid="uid://d0i6cdvlqd2pd" path="res://project/scenes/lounge/outline.gdshader" id="19_ptfxj"]
+[ext_resource type="Texture2D" uid="uid://bj0xjax3adgom" path="res://project/assets/buttons/stageup.png" id="20_oesgy"]
+[ext_resource type="Texture2D" uid="uid://d37jay72hpkji" path="res://project/assets/buttons/barup.png" id="21_svdfk"]
+[ext_resource type="Shader" uid="uid://ce8lsaeamn455" path="res://project/scenes/main/outlinebar.gdshader" id="22_fkgpr"]
 [ext_resource type="PackedScene" uid="uid://cy72tji61wjdt" path="res://project/scenes/settlement/settlement_panel.tscn" id="22_wsoed"]
+[ext_resource type="PackedScene" uid="uid://dfbwrjpx5x318" path="res://project/scenes/main/talk_system.tscn" id="24_2myfi"]
+[ext_resource type="PackedScene" uid="uid://4y42wmkxig7p" path="res://project/scenes/member/MemberTeamUI.tscn" id="25_ptfxj"]
+[ext_resource type="Texture2D" uid="uid://b33h6yd8jib34" path="res://project/assets/character/调整图片透明背景 (1).png" id="28_rhwvr"]
+[ext_resource type="Texture2D" uid="uid://slf5stjmfsyh" path="res://project/assets/images/ui/clock/clock_after.png" id="29_bieqv"]
+[ext_resource type="Script" uid="uid://bdrcdpmk7urw5" path="res://project/scripts/MemberSpawner.gd" id="30_bieqv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_j0ny1"]
 line_spacing = 28.0
@@ -40,6 +48,11 @@ font_color = Color(0.9411765, 0.5137255, 0, 0.9372549)
 outline_size = 10
 outline_color = Color(1, 1, 0.23921569, 1)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fkgpr"]
+shader = ExtResource("19_ptfxj")
+shader_parameter/line_thickness = 7.930000376675
+shader_parameter/line_color = Color(1, 1, 1, 1)
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oesgy"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_svdfk"]
@@ -50,8 +63,22 @@ outline_color = Color(1, 1, 0.23921569, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pt5qx"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_svdfk"]
-bg_color = Color(0.043137256, 0.043137256, 0.043137256, 0.78431374)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fkgpr"]
+bg_color = Color(0.14117648, 0.08235294, 0.043137256, 0.54901963)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.5411765, 0.3529412, 0.14117648, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_582ml"]
+shader = ExtResource("22_fkgpr")
+shader_parameter/line_thickness = 7.3530003492675
+shader_parameter/line_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2myfi"]
 
@@ -67,11 +94,10 @@ bg_color = Color(0.043137256, 0.043137256, 0.043137256, 0.78431374)
 position = Vector2(4, 0)
 script = ExtResource("1_87m5t")
 
-[node name="TutorialLayer" parent="." instance=ExtResource("2_j0ny1")]
-
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(1.6565933, 1.646552)
 texture = ExtResource("1_hyk8p")
+script = ExtResource("4_u6irc")
 metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -102,7 +128,6 @@ ignore_texture_size = true
 stretch_mode = 5
 
 [node name="TutorialLayer" parent="UILayer/ArrowRight" instance=ExtResource("2_j0ny1")]
-visible = false
 
 [node name="Button" type="Button" parent="UILayer"]
 offset_left = 900.0
@@ -204,7 +229,49 @@ layout_mode = 2
 texture = ExtResource("13_c2s8q")
 script = ExtResource("13_dniyw")
 
+[node name="WeekPhaseGroup" type="HBoxContainer" parent="UILayer/TopBar"]
+layout_mode = 2
+
+[node name="WeekLabel" type="Label" parent="UILayer/TopBar/WeekPhaseGroup"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "第几周"
+
+[node name="DividerLabel" type="Label" parent="UILayer/TopBar/WeekPhaseGroup"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "|"
+
+[node name="PhaseLabel" type="Label" parent="UILayer/TopBar/WeekPhaseGroup"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "周初"
+
+[node name="PhaseDotContainer" type="HBoxContainer" parent="UILayer/TopBar/WeekPhaseGroup"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="BeforeDot" type="ColorRect" parent="UILayer/TopBar/WeekPhaseGroup/PhaseDotContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+color = Color(1, 1, 0.7411765, 1)
+
+[node name="MidDot" type="ColorRect" parent="UILayer/TopBar/WeekPhaseGroup/PhaseDotContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_vertical = 4
+color = Color(1, 0.5254902, 1, 1)
+
+[node name="AfterDot" type="ColorRect" parent="UILayer/TopBar/WeekPhaseGroup/PhaseDotContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_vertical = 4
+color = Color(0.44705883, 1, 1, 1)
+
 [node name="Rehabpanel" type="Panel" parent="UILayer"]
+visible = false
 modulate = Color(0.8047426, 0.80474263, 0.8047426, 1)
 offset_left = 343.0
 offset_top = 207.00002
@@ -225,30 +292,30 @@ texture = ExtResource("13_nlgu0")
 
 [node name="TitleLabel" type="Label" parent="UILayer/Rehabpanel"]
 layout_mode = 0
-offset_left = 673.0
-offset_top = 215.0
-offset_right = 873.0
-offset_bottom = 284.0
+offset_left = 672.62305
+offset_top = 166.13438
+offset_right = 872.62305
+offset_bottom = 235.13438
 theme_override_font_sizes/font_size = 24
 text = "个人状态"
 label_settings = SubResource("LabelSettings_j0ny1")
 
 [node name="MemoryProgress" type="ProgressBar" parent="UILayer/Rehabpanel"]
 layout_mode = 0
-offset_left = 394.0
-offset_top = 497.0
-offset_right = 1165.0
-offset_bottom = 547.0
+offset_left = 384.57147
+offset_top = 643.7708
+offset_right = 1155.5715
+offset_bottom = 693.7708
 theme_override_colors/font_color = Color(0.9617985, 0.95734864, 0.76673377, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 30
 
 [node name="ProgressLabel" type="Label" parent="UILayer/Rehabpanel"]
 layout_mode = 0
-offset_left = 602.0
-offset_top = 342.0
-offset_right = 948.0
-offset_bottom = 405.0
+offset_left = 951.62585
+offset_top = 401.49146
+offset_right = 1301.6259
+offset_bottom = 464.49146
 text = "记忆恢复度： 0%"
 label_settings = SubResource("LabelSettings_q5kvs")
 
@@ -269,25 +336,83 @@ offset_right = 1533.0
 offset_bottom = 89.0
 text = "❌"
 
+[node name="StageEventBtn" type="Button" parent="UILayer/Rehabpanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="MemoryValueLabel" type="Label" parent="UILayer/Rehabpanel"]
+layout_mode = 0
+offset_left = 695.24493
+offset_top = 391.8003
+offset_right = 797.24493
+offset_bottom = 419.8003
+theme_override_colors/font_color = Color(1, 0.8156863, 0.6313726, 1)
+theme_override_font_sizes/font_size = 20
+text = "memvalue"
+
+[node name="TargetValueLabel" type="Label" parent="UILayer/Rehabpanel"]
+layout_mode = 0
+offset_left = 625.8712
+offset_top = 326.731
+offset_right = 877.8712
+offset_bottom = 368.731
+theme_override_colors/font_color = Color(1, 0.8156863, 0.6313726, 1)
+theme_override_font_sizes/font_size = 30
+text = "TargetValueLabel"
+
+[node name="CostValueLabel" type="Label" parent="UILayer/Rehabpanel"]
+layout_mode = 0
+offset_left = 684.68805
+offset_top = 505.32547
+offset_right = 803.68805
+offset_bottom = 528.32544
+theme_override_colors/font_color = Color(1, 0.8156863, 0.6313726, 1)
+theme_override_font_sizes/font_size = 20
+text = "CostValueLabel"
+
+[node name="EffectValueLabel" type="Label" parent="UILayer/Rehabpanel"]
+layout_mode = 0
+offset_left = 675.6393
+offset_top = 438.87173
+offset_right = 804.6393
+offset_bottom = 461.87173
+theme_override_colors/font_color = Color(1, 0.8156863, 0.6313726, 1)
+theme_override_font_sizes/font_size = 20
+text = "EffectValueLabel"
+
+[node name="ActionPointValueLabel" type="Label" parent="UILayer/Rehabpanel"]
+layout_mode = 0
+offset_left = 1051.1621
+offset_top = 224.28145
+offset_right = 1323.1621
+offset_bottom = 259.28143
+theme_override_colors/font_color = Color(1, 0.8156863, 0.6313726, 1)
+theme_override_font_sizes/font_size = 25
+text = "ActionPointValueLabel"
+
 [node name="FacilityPanel" parent="UILayer" instance=ExtResource("16_k7nr8")]
+visible = false
 anchors_preset = 0
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 630.0
-offset_top = 378.0
-offset_right = 1335.0
-offset_bottom = 809.0
+offset_left = 439.0
+offset_top = 290.0
+offset_right = 1199.0
+offset_bottom = 721.0
 grow_horizontal = 1
 grow_vertical = 1
 
 [node name="StageButton" type="Button" parent="UILayer"]
+visible = false
+material = SubResource("ShaderMaterial_fkgpr")
 custom_minimum_size = Vector2(220, 140)
-offset_left = 136.0
-offset_top = 279.0
-offset_right = 1672.0
-offset_bottom = 1303.0
+offset_left = -1.0
+offset_top = 115.0
+offset_right = 1172.3334
+offset_bottom = 865.0
 scale = Vector2(0.3, 0.3)
 theme_override_styles/normal = SubResource("StyleBoxEmpty_oesgy")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_svdfk")
@@ -300,37 +425,41 @@ expand_icon = true
 script = ExtResource("17_dniyw")
 
 [node name="RepairMask" type="Panel" parent="UILayer/StageButton"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 273.3333
+offset_top = 90.0
+offset_right = -320.00006
+offset_bottom = -110.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fkgpr")
+
+[node name="Label" type="Label" parent="UILayer/StageButton/RepairMask"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_svdfk")
-
-[node name="Label" type="Label" parent="UILayer/StageButton/RepairMask"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = -11.5
-offset_right = 24.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 200
+theme_override_colors/font_color = Color(0.9607843, 0.93333334, 0.5803922, 1)
+theme_override_colors/font_shadow_color = Color(0.16470589, 0.08627451, 0.039215688, 1)
+theme_override_colors/font_outline_color = Color(0.16470589, 0.08627451, 0.039215688, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 64
 text = "维修中"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="BarButton" type="Button" parent="UILayer"]
-offset_left = 1322.0
-offset_top = 128.0
-offset_right = 2858.0
-offset_bottom = 1152.0
+material = SubResource("ShaderMaterial_582ml")
+offset_left = 1435.0
+offset_top = 102.0
+offset_right = 2971.0
+offset_bottom = 1126.0
 scale = Vector2(0.3, 0.3)
 theme_override_styles/normal = SubResource("StyleBoxEmpty_2myfi")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_ptfxj")
@@ -343,28 +472,31 @@ script = ExtResource("17_dniyw")
 facility_type = "bar"
 
 [node name="RepairMask" type="Panel" parent="UILayer/BarButton"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 273.3333
+offset_top = 90.0
+offset_right = -320.00006
+offset_bottom = -110.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fkgpr")
+
+[node name="Label" type="Label" parent="UILayer/BarButton/RepairMask"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_svdfk")
-
-[node name="Label" type="Label" parent="UILayer/BarButton/RepairMask"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = -11.5
-offset_right = 24.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 200
+theme_override_colors/font_color = Color(0.9607843, 0.93333334, 0.5803922, 1)
+theme_override_colors/font_shadow_color = Color(0.16470589, 0.08627451, 0.039215688, 1)
+theme_override_colors/font_outline_color = Color(0.16470589, 0.08627451, 0.039215688, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 64
 text = "维修中"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -381,12 +513,153 @@ offset_right = -46.0
 offset_bottom = -60.0
 grow_horizontal = 0
 grow_vertical = 0
+theme_override_colors/font_color = Color(0.9607843, 0.93333334, 0.8745098, 1)
 text = "跳过阶段"
 
 [node name="SettlementPanel" parent="UILayer" instance=ExtResource("22_wsoed")]
 visible = false
 
+[node name="SettingsPanel" type="Control" parent="UILayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -34.0
+offset_top = 67.0
+offset_right = 6.0
+offset_bottom = 107.0
+
+[node name="VolumeLabel" type="Label" parent="UILayer/SettingsPanel"]
+layout_mode = 0
+offset_left = 1212.0001
+offset_top = 893.0
+offset_right = 1312.0001
+offset_bottom = 916.0
+scale = Vector2(1.3202837, 1.6714369)
+text = "BGM Volume"
+
+[node name="VolumeSlider" type="HSlider" parent="UILayer/SettingsPanel"]
+layout_mode = 0
+offset_left = 1354.0
+offset_top = 907.0
+offset_right = 1478.0
+offset_bottom = 923.0
+max_value = 1.0
+step = 0.05
+value = 0.7
+
+[node name="CloseButton" type="Button" parent="UILayer/SettingsPanel"]
+layout_mode = 0
+offset_left = 1213.0
+offset_top = 865.0
+offset_right = 1231.0
+offset_bottom = 896.0
+text = "X"
+
+[node name="SettingsButton" type="Button" parent="UILayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -472.0
+offset_top = -39.0
+offset_right = -442.0
+offset_bottom = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(1.1635177, 1.0846941)
+text = "⚙"
+
+[node name="DebugSet40Button" type="Button" parent="UILayer"]
+offset_left = 14.0
+offset_top = 209.0
+offset_right = 119.0
+offset_bottom = 258.0
+theme_override_font_sizes/font_size = 30
+text = "中好感"
+
+[node name="DebugSet70Button" type="Button" parent="UILayer"]
+offset_left = 16.0
+offset_top = 283.0
+offset_right = 123.0
+offset_bottom = 337.0
+theme_override_font_sizes/font_size = 30
+text = "高好感"
+
+[node name="TalkSystem" parent="." instance=ExtResource("24_2myfi")]
+visible = false
+position = Vector2(347, 232)
+
+[node name="MemberTeamUi" parent="." instance=ExtResource("25_ptfxj")]
+offset_left = 27.0
+offset_top = 377.0
+offset_right = 27.0
+offset_bottom = 377.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Btn_TeamOverview" type="Button" parent="."]
+offset_left = -1239.0
+offset_top = -293.0
+offset_right = -1071.0
+offset_bottom = -230.0
+theme_override_font_sizes/font_size = 40
+text = "成员列表"
+
+[node name="MemberSpawnPoints" type="Node2D" parent="."]
+
+[node name="Marker2D" type="Marker2D" parent="MemberSpawnPoints"]
+modulate = Color(0.29411766, 1, 1, 1)
+self_modulate = Color(0.33333334, 1, 1, 1)
+position = Vector2(-5650, 7210)
+scale = Vector2(0.1, 0.1)
+gizmo_extents = 0.0
+
+[node name="Sprite2D" type="Sprite2D" parent="MemberSpawnPoints/Marker2D"]
+visible = false
+position = Vector2(-5650, 7210)
+texture = ExtResource("28_rhwvr")
+
+[node name="Marker2D3" type="Marker2D" parent="MemberSpawnPoints"]
+position = Vector2(263, 214)
+
+[node name="Sprite2D" type="Sprite2D" parent="MemberSpawnPoints/Marker2D3"]
+visible = false
+position = Vector2(10, -2)
+scale = Vector2(0.2879518, 0.30769232)
+texture = ExtResource("9_nlgu0")
+
+[node name="Marker2D4" type="Marker2D" parent="MemberSpawnPoints"]
+position = Vector2(843, 171)
+
+[node name="Sprite2D" type="Sprite2D" parent="MemberSpawnPoints/Marker2D4"]
+visible = false
+position = Vector2(4.000122, -22.99997)
+scale = Vector2(0.3192771, 0.38974363)
+texture = ExtResource("11_j0ny1")
+
+[node name="Marker2D2" type="Marker2D" parent="MemberSpawnPoints"]
+position = Vector2(-334, 23.000002)
+scale = Vector2(0.9999998, 0.9999998)
+
+[node name="Sprite2D" type="Sprite2D" parent="MemberSpawnPoints/Marker2D2"]
+visible = false
+position = Vector2(64.000015, 3.9999847)
+scale = Vector2(0.28668892, 0.2838307)
+texture = ExtResource("29_bieqv")
+
+[node name="Marker2D5" type="Marker2D" parent="MemberSpawnPoints"]
+position = Vector2(-413, 623)
+
+[node name="Marker2D6" type="Marker2D" parent="MemberSpawnPoints"]
+position = Vector2(14, -269)
+
+[node name="MemberSpawner" type="Node" parent="." node_paths=PackedStringArray("main_spawn_points")]
+script = ExtResource("30_bieqv")
+main_spawn_points = [NodePath("../MemberSpawnPoints/Marker2D"), NodePath("../MemberSpawnPoints/Marker2D3"), NodePath("../MemberSpawnPoints/Marker2D4"), NodePath("../MemberSpawnPoints/Marker2D2"), NodePath("../MemberSpawnPoints/Marker2D5"), NodePath("../MemberSpawnPoints/Marker2D6")]
+
 [connection signal="pressed" from="UILayer/ArrowLeft" to="." method="_on_texture_button_pressed"]
 [connection signal="pressed" from="UILayer/ArrowRight" to="." method="_on_arrow_right_pressed"]
 [connection signal="pressed" from="UILayer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="UILayer/TopBar/RehabBtn" to="." method="_on_rehab_trigger"]
+[connection signal="pressed" from="UILayer/DebugSet40Button" to="." method="_on_debug_set_40_button_pressed"]
+[connection signal="pressed" from="UILayer/DebugSet70Button" to="." method="_on_debug_set_70_button_pressed"]
+[connection signal="pressed" from="Btn_TeamOverview" to="." method="_on_btn_team_overview_pressed"]

@@ -152,7 +152,6 @@ func upgrade_facility(facility_type: String) -> Dictionary:
 		"reason": "",
 		"new_level": -1
 	}
-
 	if not facility_data.has(facility_type):
 		result["reason"] = "设施不存在"
 		return result
@@ -165,7 +164,6 @@ func upgrade_facility(facility_type: String) -> Dictionary:
 	var data = facility_data[facility_type]
 	var current_level: int = ResourceManager.get_facility_level(facility_type)
 	var max_level: int = int(data["max_level"])
-
 	if current_level >= max_level:
 		result["reason"] = "已满级"
 		return result
@@ -182,7 +180,6 @@ func upgrade_facility(facility_type: String) -> Dictionary:
 	if not ResourceManager.can_afford(cost):
 		result["reason"] = "资金不足\n需要：%d" % cost
 		return result
-
 	if not ResourceManager.can_consume_action_points(1):
 		result["reason"] = "行动点不足"
 		return result
@@ -194,8 +191,7 @@ func upgrade_facility(facility_type: String) -> Dictionary:
 
 	# 扣行动点
 	if not ResourceManager.consume_action_point(1):
-		# 如果行动点扣除失败，把钱补回去
-		ResourceManager.add_money(cost)
+		ResourceManager.add_money(cost)  # 回滚
 		result["reason"] = "行动点不足"
 		return result
 
@@ -204,13 +200,28 @@ func upgrade_facility(facility_type: String) -> Dictionary:
 	ResourceManager.set_facility_pending_level(facility_type, next_level)
 	ResourceManager.set_facility_upgrading(facility_type, true)
 
-
 	# 刷新当前场景顶部UI
 	ResourceManager.refresh_current_scene_topbar()
+
+	# ====================== 新增：休息室升级后切换背景 ======================
+	if facility_type == "lounge":
+		var bg_node = get_tree().get_first_node_in_group("lounge_background")
+		if bg_node and bg_node.has_method("update_background"):
+			bg_node.update_background()
+		else:
+			print("⚠️ 未找到 lounge_background 节点")
 
 	result["success"] = true
 	result["new_level"] = next_level
 	return result
+	
+# ====================== 新增：排练室升级后切换背景 ======================
+	if facility_type == "rehearsal":
+		var bg_node = get_tree().get_first_node_in_group("rehearsal_background")
+		if bg_node and bg_node.has_method("update_background"):
+			bg_node.update_background()
+		else:
+			print("⚠️ 未找到排练室背景节点")
 
 # ===================== 设施方向值加成 =====================
 

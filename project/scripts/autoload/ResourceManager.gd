@@ -22,6 +22,8 @@ var facility_upgrading: Dictionary = {}
 
 # 设施待生效等级（升级延迟到下周生效）
 var facility_pending_levels: Dictionary = {}
+# ===================== 休息室背景切换 =====================
+# 不再依赖升级等级，完全根据当前资源数值实时切换
 
 # 连续负债周数（用于失败判定）
 var debt_weeks: int = 0
@@ -29,8 +31,31 @@ var debt_weeks: int = 0
 # 每周固定支出（租金+工资）
 const WEEKLY_EXPENSE = 1500
 
+# ===================== 记忆恢复阶段状态 =====================
+
+# 记忆恢复阶段：
+# 0 = 初始阶段
+# 1 = 手伤痊愈
+# 2 = 记忆基本恢复
+# 3 = 记忆完全恢复
+var memory_stage: int = 0
+
+# 三个关键阶段事件的完成标记
+# - stage_0_to_1_done：0 -> 1 已完成
+# - stage_1_to_2_done：1 -> 2 已完成
+# - stage_2_to_3_done：2 -> 3 已完成
+var memory_stage_event_flags := {
+	"stage_0_to_1_done": false,
+	"stage_1_to_2_done": false,
+	"stage_2_to_3_done": false
+}
+
+# 人物系统数据入口
+var character_data = null
+
 # 节点就绪后自动初始化（此时 constants 已赋值）
 func _ready():
+	_init_character_system()
 	init_new_game()
 
 # 新游戏初始化
@@ -49,7 +74,8 @@ func init_new_game():
 		constants.RES_REPUTATION: {"value": 10, "min": 0, "max": 100},
 		constants.RES_COHESION: {"value": 60, "min": 0, "max": 100},
 		constants.RES_CREATIVITY: {"value": 30, "min": 0, "max": 100},
-		constants.RES_MEMORY: {"value": 0, "min": 0, "max": 100}
+		constants.RES_MEMORY: {"value": 0, "min": 0, "max": 100},
+		constants.RES_MOOD: {"value": 60, "min": 0, "max": 100}
 	}
 	
 	# 行动点初始化
@@ -57,7 +83,13 @@ func init_new_game():
 	
 	# 连续负债周数初始化
 	debt_weeks = 0
-	
+	# 记忆恢复阶段初始化
+	memory_stage = 0
+	memory_stage_event_flags = {
+		"stage_0_to_1_done": false,
+		"stage_1_to_2_done": false,
+		"stage_2_to_3_done": false
+	}
 	# 设施等级初始化
 	facility_levels = {
 		"stage": 1,
@@ -94,6 +126,12 @@ func init_new_game():
 	
 	print("核心资源初始化完成")
 	refresh_current_scene_topbar()
+	_refresh_rehearsal_background()
+		# 初始游戏时也刷新一次休息室背景
+	var bg_node = get_tree().get_first_node_in_group("lounge_background")
+	if bg_node and bg_node.has_method("update_background"):
+		bg_node.update_background()
+
 
 # 初始化默认成员
 func _init_default_members():
@@ -102,6 +140,7 @@ func _init_default_members():
 			"name": "里奥",
 			"role": "鼓手",
 			"unlocked": true,
+			"relationship": 0,
 			"relationship_progress": 0,
 			"weekly_chat_count": 0,
 			"morale": 60,
@@ -114,6 +153,7 @@ func _init_default_members():
 			"name": "凯拉",
 			"role": "主唱",
 			"unlocked": true,
+			"relationship": 0,
 			"relationship_progress": 0,
 			"weekly_chat_count": 0,
 			"morale": 60,
@@ -126,6 +166,7 @@ func _init_default_members():
 			"name": "梅",
 			"role": "贝斯手",
 			"unlocked": true,
+			"relationship": 0,
 			"relationship_progress": 0,
 			"weekly_chat_count": 0,
 			"morale": 60,
@@ -138,6 +179,7 @@ func _init_default_members():
 			"name": "老钉子",
 			"role": "酒吧守护者",
 			"unlocked": true,
+			"relationship": 0,
 			"relationship_progress": 1,
 			"weekly_chat_count": 0,
 			"morale": 100,
@@ -145,6 +187,71 @@ func _init_default_members():
 			"health": 100,
 			"skill": 80,
 			"charm": 60
+		},
+		constants.MEMBER_FINN: {
+			"name": "芬恩",
+			"role": "吉他手",
+			"unlocked": true,
+			"relationship": 0,
+			"relationship_progress": 0,
+			"weekly_chat_count": 0,
+			"morale": 60,
+			"fatigue": 30,
+			"health": 80,
+			"skill": 50,
+			"charm": 50
+		},
+		constants.MEMBER_SEBASTIAN: {
+			"name": "塞巴斯蒂安",
+			"role": "键盘手",
+			"unlocked": true,
+			"relationship": 0,
+			"relationship_progress": 0,
+			"weekly_chat_count": 0,
+			"morale": 60,
+			"fatigue": 30,
+			"health": 80,
+			"skill": 50,
+			"charm": 50
+		},
+		constants.MEMBER_LILY: {
+			"name": "莉莉",
+			"role": "小提琴手",
+			"unlocked": true,
+			"relationship": 0,
+			"relationship_progress": 0,
+			"weekly_chat_count": 0,
+			"morale": 60,
+			"fatigue": 30,
+			"health": 80,
+			"skill": 50,
+			"charm": 50
+		},
+		constants.MEMBER_AYA: {
+			"name": "阿雅",
+			"role": "舞蹈演员",
+			"unlocked": true,
+			"relationship": 0,
+			"relationship_progress": 0,
+			"weekly_chat_count": 0,
+			"morale": 60,
+			"fatigue": 30,
+			"health": 80,
+			"skill": 50,
+			"charm": 50
+		},
+		constants.MEMBER_DUAN: {
+			"name": "杜安",
+			"role": "声乐教练",
+			"unlocked": true,
+			"relationship": 0,
+			"relationship_progress": 0,
+			"weekly_chat_count": 0,
+			"morale": 60,
+			"fatigue": 30,
+			"health": 80,
+			"skill": 50,
+			"charm": 50
 		}
 	}
 
@@ -152,6 +259,7 @@ func _init_default_members():
 
 # 修改核心资源，返回是否成功
 func modify_core_resource(resource_name: String, delta: int) -> bool:
+	
 	if not core_resources.has(resource_name):
 		print("错误：不存在的资源", resource_name)
 		return false
@@ -170,7 +278,20 @@ func modify_core_resource(resource_name: String, delta: int) -> bool:
 	
 	# 发射信号通知UI刷新
 	event_bus.core_resource_changed.emit(resource_name, new_value, actual_delta)
-	
+	if resource_name in [constants.RES_MONEY, constants.RES_COHESION, constants.RES_CREATIVITY]:
+			var bg_node = get_tree().get_first_node_in_group("lounge_background")
+			if bg_node and bg_node.has_method("update_background"):
+				bg_node.update_background()
+				
+		# 资源变化时刷新排练室背景
+	if resource_name in [constants.RES_MONEY, constants.RES_COHESION, constants.RES_CREATIVITY]:
+		_refresh_rehearsal_background()
+		
+		# 资源变化时刷新主场景（酒吧）背景
+	if resource_name in [constants.RES_MONEY, constants.RES_COHESION, constants.RES_CREATIVITY]:
+		_refresh_bar_background()
+		
+		
 	# 检查资源边界事件
 	_check_resource_boundary_event(resource_name, new_value)
 	
@@ -201,7 +322,231 @@ func add_creativity(amount: int) -> bool:
 	return modify_core_resource(constants.RES_CREATIVITY, amount)
 
 func add_memory(amount: int) -> bool:
-	return modify_core_resource(constants.RES_MEMORY, amount)
+	var result = modify_core_resource(constants.RES_MEMORY, amount)
+	
+	# 记忆恢复度变化后，检查是否满足结局条件
+	if result:
+		var ending_manager = get_node("/root/EndingManager")
+		if ending_manager and ending_manager.has_method("check_ending"):
+			ending_manager.check_ending()
+	
+	return result
+	
+# 获取资金（供人物面板等脚本直接调用）
+func get_money() -> int:
+	return get_resource_value(constants.RES_MONEY)
+	
+# 获取记忆恢复度
+func get_memory() -> int:
+	return get_resource_value(constants.RES_MEMORY)
+
+# 获取声誉
+func get_reputation() -> int:
+	return get_resource_value(constants.RES_REPUTATION)
+
+# 获取凝聚力
+func get_cohesion() -> int:
+	return get_resource_value(constants.RES_COHESION)
+
+# 获取创造力
+func get_creativity() -> int:
+	return get_resource_value(constants.RES_CREATIVITY)
+	
+# 获取当前记忆恢复阶段
+func get_memory_stage() -> int:
+	return memory_stage
+	
+# ===================== 康复训练接口 =====================
+# 获取当前阶段的恢复度上限
+# 当前规则：
+# - 0阶段上限：30（达到后可触发 0 -> 1 关键事件）
+# - 1阶段上限：60（达到后可触发 1 -> 2 关键事件）
+# - 2阶段上限：90（达到后可触发 2 -> 3 关键事件）
+# - 3阶段上限：100（最终满值）
+func get_memory_stage_cap() -> int:
+	match memory_stage:
+		0:
+			return 30
+		1:
+			return 60
+		2:
+			return 90
+		3:
+			return 100
+
+	return 100
+
+# 获取当前阶段对应的关键事件 ID
+# 后续 EventManager / 面板按钮可直接用这个 ID 去触发剧情演出
+func get_memory_stage_event_id() -> String:
+	match memory_stage:
+		0:
+			return "memory_stage_0_to_1"
+		1:
+			return "memory_stage_1_to_2"
+		2:
+			return "memory_stage_2_to_3"
+
+	return ""
+
+# 获取当前阶段事件对应的标记 key
+func _get_memory_stage_flag_key() -> String:
+	match memory_stage:
+		0:
+			return "stage_0_to_1_done"
+		1:
+			return "stage_1_to_2_done"
+		2:
+			return "stage_2_to_3_done"
+
+	return ""
+
+# 检查是否可以执行康复训练
+# 当前规则：
+# - 需要 1 点行动点
+# - 只能恢复到“当前阶段上限”
+# - 达到当前阶段上限后，不再通过按钮继续恢复
+func can_do_rehab_training() -> Dictionary:
+	var result := {
+		"success": true,
+		"reason": ""
+	}
+
+	if not can_consume_action_points(1):
+		result["success"] = false
+		result["reason"] = "行动点不足"
+		return result
+
+	var current_memory = get_resource_value(constants.RES_MEMORY)
+	var stage_cap = get_memory_stage_cap()
+
+	# 先判断阶段上限，再判断最终满值
+	if current_memory >= stage_cap:
+		if memory_stage >= 3 and current_memory >= 100:
+			result["success"] = false
+			result["reason"] = "记忆恢复度已满"
+		else:
+			result["success"] = false
+			result["reason"] = "当前阶段恢复已达上限"
+		return result
+
+	return result
+
+# 检查是否可以触发“当前阶段”的关键事件
+# 当前规则：
+# - 当前记忆恢复度必须达到当前阶段上限
+# - 当前阶段必须还存在可触发的下一阶段事件
+func can_trigger_memory_stage_event() -> Dictionary:
+	var result := {
+		"success": false,
+		"reason": ""
+	}
+
+	# 已经是最终阶段，不能再触发转阶段事件
+	if memory_stage >= 3:
+		result["reason"] = "已达到最终恢复阶段"
+		return result
+
+	var current_memory = get_resource_value(constants.RES_MEMORY)
+	var stage_cap = get_memory_stage_cap()
+
+	if current_memory < stage_cap:
+		result["reason"] = "恢复度未达到本阶段目标"
+		return result
+
+	var flag_key = _get_memory_stage_flag_key()
+	if flag_key != "" and memory_stage_event_flags.get(flag_key, false):
+		result["reason"] = "当前阶段事件已完成"
+		return result
+
+	result["success"] = true
+	return result
+
+# 执行一次康复训练（面板上的日常恢复按钮）
+# 当前规则：
+# - 消耗 1 点行动点
+# - 恢复记忆值 +5
+# - 但不会超过“当前阶段上限”
+# 后续如果接剧情表现或小游戏，只需要保留这层“数值收口”
+func perform_rehab_training() -> Dictionary:
+	var result := {
+		"success": false,
+		"reason": "",
+		"changes": {}
+	}
+
+	var check_result = can_do_rehab_training()
+	if not check_result["success"]:
+		result["reason"] = check_result["reason"]
+		return result
+
+	var current_memory = get_resource_value(constants.RES_MEMORY)
+	var stage_cap = get_memory_stage_cap()
+
+	# 当前一次训练的基础恢复值
+	var base_memory_gain := 5
+
+	# 实际恢复值不能超过本阶段上限
+	var memory_gain = min(base_memory_gain, stage_cap - current_memory)
+
+	if memory_gain <= 0:
+		result["reason"] = "当前阶段恢复已达上限"
+		return result
+
+	# 先扣行动点
+	if not consume_action_point(1):
+		result["reason"] = "行动点不足"
+		return result
+
+	# 再加记忆恢复度
+	if not add_memory(memory_gain):
+		# 理论上这里基本不会失败；失败则把行动点补回去
+		action_points += 1
+		refresh_current_scene_topbar()
+		result["reason"] = "记忆恢复度增加失败"
+		return result
+
+	result["success"] = true
+	result["changes"] = {
+		"memory": memory_gain,
+		"action_point": -1
+	}
+
+	print("康复训练执行成功：行动点-1 记忆恢复度+", memory_gain, "（当前阶段上限：", stage_cap, "）")
+	return result
+
+# 完成当前阶段关键事件
+# 用法：
+# - 当 0 -> 1 关键事件演出结束后调用一次
+# - 当 1 -> 2 关键事件演出结束后调用一次
+# - 当 2 -> 3 关键事件演出结束后调用一次
+# 作用：
+# - 标记当前阶段事件完成
+# - 解锁下一恢复阶段
+func complete_memory_stage_event() -> Dictionary:
+	var result := {
+		"success": false,
+		"reason": "",
+		"new_stage": memory_stage
+	}
+
+	var check_result = can_trigger_memory_stage_event()
+	if not check_result["success"]:
+		result["reason"] = check_result["reason"]
+		return result
+
+	var flag_key = _get_memory_stage_flag_key()
+	if flag_key != "":
+		memory_stage_event_flags[flag_key] = true
+
+	if memory_stage < 3:
+		memory_stage += 1
+
+	result["success"] = true
+	result["new_stage"] = memory_stage
+
+	print("记忆恢复阶段提升到：", memory_stage)
+	return result
 
 # ===================== 资金状态接口 =====================
 
@@ -233,7 +578,7 @@ func update_debt_status_after_settlement():
 # 是否应触发负债失败
 # 当前规则：负债持续 1 周即失败
 func should_trigger_debt_game_over() -> bool:
-	return debt_weeks >= 1
+	return debt_weeks >= 3
 
 # ===================== 行动点接口 =====================
 
@@ -306,18 +651,38 @@ func refresh_current_scene_topbar():
 	if action_point_label:
 		action_point_label.text = "行动点: %d/%d" % [action_points, MAX_ACTION_POINTS]
 
+# 新增：排练室背景刷新
+func _refresh_rehearsal_background():
+	var bg_node = get_tree().get_first_node_in_group("rehearsal_background")
+	if bg_node and bg_node.has_method("update_background"):
+		bg_node.update_background()
+		
+# 新增：主场景（酒吧）背景刷新
+func _refresh_bar_background():
+	var bg_node = get_tree().get_first_node_in_group("bar_background")
+	if bg_node and bg_node.has_method("update_background"):
+		bg_node.update_background()
+		
+
 # ===================== AI权重接口 =====================
+
+
 
 func modify_ai_weight(weight_name: String, delta: int):
 	if ai_weights.has(weight_name):
 		ai_weights[weight_name] += delta
 		
-		# 记录本周方向值变化，供周结算面板显示
+		# 记录本周方向值变化...
 		if weekly_weight_changes.has(weight_name):
 			weekly_weight_changes[weight_name] += delta
 		
 		event_bus.weight_changed.emit(weight_name, ai_weights[weight_name], delta)
 		print("权重变动：", weight_name, " ", delta, "，当前值：", ai_weights[weight_name])
+		
+		# 【新增】数值变化时实时切换背景音乐
+		if AudioManager and AudioManager.has_method("update_bgm"):
+			AudioManager.update_bgm()
+
 
 func get_ai_weight(weight_name: String) -> int:
 	if ai_weights.has(weight_name):
@@ -326,7 +691,16 @@ func get_ai_weight(weight_name: String) -> int:
 
 func get_all_weights() -> Dictionary:
 	return ai_weights.duplicate()
+# 获取单个权重值
+func get_art_weight() -> int:
+	return get_ai_weight(constants.WEIGHT_ART)
 
+func get_business_weight() -> int:
+	return get_ai_weight(constants.WEIGHT_BUSINESS)
+
+func get_human_weight() -> int:
+	return get_ai_weight(constants.WEIGHT_HUMAN)
+	
 # 获取本周方向值变化记录
 func get_weekly_weight_changes() -> Dictionary:
 	return weekly_weight_changes.duplicate()
@@ -387,6 +761,17 @@ func get_member_stat(member_id: String, stat_name: String) -> int:
 	if members.has(member_id) and members[member_id].has(stat_name):
 		return members[member_id][stat_name]
 	return -1
+
+# 治疗全体成员（供人物特殊能力调用）
+func heal_all_members():
+	for member_id in members.keys():
+		modify_member_stat(member_id, "health", 20)
+	print("已为全体成员恢复健康")
+
+# 化解冲突（供人物特殊能力调用）
+func resolve_conflict():
+	add_cohesion(10)
+	print("已化解一次团队冲突，凝聚力+10")
 
 # ===================== 互动进度管理 =====================
 
@@ -474,9 +859,15 @@ func _check_resource_boundary_event(resource_name: String, new_value: int):
 # ===================== 周结算相关 =====================
 
 # 执行每周扣款
+# 执行每周扣款 + 重置对话次数
 func apply_weekly_expense() -> bool:
-	return add_money(-WEEKLY_EXPENSE)
-
+	var success = add_money(-WEEKLY_EXPENSE)
+	
+	# 【关键修复】新一周开始，重置所有成员每周对话次数
+	if MemberManager and MemberManager.has_method("reset_weekly_talk_counts"):
+		MemberManager.reset_weekly_talk_counts()
+	
+	return success
 # 获取每周支出金额
 func get_weekly_expense() -> int:
 	return WEEKLY_EXPENSE
@@ -1087,3 +1478,272 @@ func apply_pending_facility_upgrades():
 			set_facility_upgrading(facility_type, false)
 
 			print("设施升级正式生效：", facility_type, " -> ", pending_level)
+
+# ===================== 人物系统接口 =====================
+
+# 初始化人物系统
+func _init_character_system():
+	if character_data != null:
+		return
+
+	var member_data_script = load("res://project/data/members/MemberData.gd")
+	if member_data_script == null:
+		push_error("ResourceManager: 找不到人物数据脚本 res://project/data/members/MemberData.gd")
+		return
+
+	character_data = member_data_script.new()
+
+	# 如果人物数据脚本是 Node，则挂到树上；如果不是，也允许作为普通对象使用
+	if character_data is Node:
+		add_child(character_data)
+
+# 将任意人物数据标准化为 Dictionary，兼容 Resource / Object / Dictionary
+func _normalize_character_data(raw_data) -> Dictionary:
+	var result: Dictionary = {}
+
+	if raw_data == null:
+		return result
+
+	if raw_data is Dictionary:
+		return raw_data.duplicate(true)
+
+	# 如果返回的是 Resource/Object，则把常用字段抽成字典
+	var keys = [
+		"id", "name", "role", "avatar", "personality", "unlocked",
+		"morale", "fatigue", "health", "skill", "charm",
+		"special_stats", "relationship", "interaction_count", "current_stage",
+		"stage2_condition", "stage3_condition", "unlock_condition",
+		"join_income", "join_effect_text", "special_ability",
+		"resource_effects", "events_triggered", "relationship_progress",
+		"weekly_chat_count"
+	]
+
+	if raw_data is Object:
+		for key in keys:
+			var value = raw_data.get(key)
+			if value != null:
+				result[key] = value
+
+	return result
+
+# 取出人物脚本里的 characters 表
+func _extract_character_map() -> Dictionary:
+	if character_data == null:
+		return {}
+
+	if character_data.has_method("get_all_characters_map"):
+		var data = character_data.get_all_characters_map()
+		if data is Dictionary:
+			return data
+
+	if character_data is Object:
+		var maybe_map = character_data.get("characters")
+		if maybe_map is Dictionary:
+			return maybe_map
+
+	return {}
+
+# 获取单个人物数据
+func get_character(char_id: String) -> Dictionary:
+	if character_data == null:
+		_init_character_system()
+
+	var result: Dictionary = {}
+
+	if character_data != null and character_data.has_method("get_character"):
+		result = _normalize_character_data(character_data.get_character(char_id))
+	else:
+		var characters = _extract_character_map()
+		if characters.has(char_id):
+			result = _normalize_character_data(characters[char_id])
+
+	# 回退：如果人物总表里没有，但 members 里有，就至少保证面板能打开
+	if result.is_empty() and members.has(char_id):
+		result = members[char_id].duplicate(true)
+		result["id"] = char_id
+
+	# 补齐一些常用字段，避免面板直接空取
+	if members.has(char_id):
+		if not result.has("name"):
+			result["name"] = members[char_id].get("name", "未知角色")
+		if not result.has("role"):
+			result["role"] = members[char_id].get("role", "未知身份")
+		if not result.has("relationship"):
+			result["relationship"] = members[char_id].get("relationship_progress", 0)
+
+	if not result.has("special_ability"):
+		result["special_ability"] = {}
+
+	return result
+
+# 获取全部人物数据
+func get_all_characters() -> Array:
+	if character_data == null:
+		_init_character_system()
+
+	var list: Array = []
+
+	if character_data != null and character_data.has_method("get_all_characters"):
+		var raw_list = character_data.get_all_characters()
+		if raw_list is Array:
+			for item in raw_list:
+				list.append(_normalize_character_data(item))
+			return list
+
+	var characters = _extract_character_map()
+	for char_id in characters.keys():
+		list.append(_normalize_character_data(characters[char_id]))
+
+	return list
+
+# 增加人物关系
+func add_relationship(char_id: String, delta: int):
+	if character_data == null:
+		_init_character_system()
+
+	if character_data != null and character_data.has_method("add_relationship"):
+		var new_rel = character_data.add_relationship(char_id, delta)
+		# 发射信号更新UI
+		EventBus.relationship_changed.emit(char_id, new_rel)
+		return new_rel
+
+	var characters = _extract_character_map()
+	if characters.has(char_id) and characters[char_id] is Dictionary:
+		var old_rel = int(characters[char_id].get("relationship", 0))
+		var new_rel = clamp(old_rel + delta, 0, 100)
+		characters[char_id]["relationship"] = new_rel
+		EventBus.relationship_changed.emit(char_id, new_rel)
+		return new_rel
+
+	# 回退到 members 的 relationship_progress
+	if members.has(char_id):
+		var new_progress = add_relationship_progress(char_id, delta)
+		EventBus.relationship_changed.emit(char_id, new_progress)
+		return new_progress
+
+	return 0
+
+func get_relationship(char_id: String) -> int:
+	if character_data == null:
+		_init_character_system()
+
+	var characters = _extract_character_map()
+	if characters.has(char_id):
+		var raw = characters[char_id]
+		if raw is Dictionary:
+			return int(raw.get("relationship", 0))
+		elif raw is Object:
+			return int(raw.get("relationship"))
+
+	# 回退到 members
+	if members.has(char_id):
+		return int(members[char_id].get("relationship_progress", 0))
+
+	return 0
+
+func get_character_stage(char_id: String) -> int:
+	if character_data == null:
+		_init_character_system()
+
+	var characters = _extract_character_map()
+	if characters.has(char_id):
+		var raw = characters[char_id]
+		if raw is Dictionary:
+			return int(raw.get("current_stage", 1))
+		elif raw is Object:
+			return int(raw.get("current_stage"))
+
+	return 1
+
+# ===================== 声誉阶段系统（周末小游戏规模） ====================
+const REPUTATION_STAGES = {
+	"small":  {"min": 0,   "max": 39,  "name": "小型表演", "scale": 0.6, "desc": "小型酒吧驻唱，观众不多，但很亲切。"},
+	"medium": {"min": 40,  "max": 79,  "name": "中型表演", "scale": 1.0, "desc": "中型场地演出，观众明显增多，氛围热烈。"},
+	"large":  {"min": 80,  "max": 999, "name": "大型表演", "scale": 1.5, "desc": "大型舞台表演，观众爆满，影响力显著提升！"}
+}
+# 声誉阶段判断
+func get_reputation_stage() -> Dictionary:
+	var rep = get_resource_value("reputation")
+	
+	for stage_name in REPUTATION_STAGES:
+		var stage = REPUTATION_STAGES[stage_name]
+		if rep >= stage.min and rep <= stage.max:
+			return stage
+	
+	return REPUTATION_STAGES["small"]
+
+
+# ===================== 小游戏结果结算 =====================
+
+func apply_minigame_result(score: int, max_combo: int = 0):
+	var stage = get_reputation_stage()
+	var performance_level = ""
+	var rep_gain = 0
+	var cohesion_gain = 0
+	var money_gain = 0
+	
+	# 根据得分判断表演质量
+	if score >= 11000:
+		performance_level = "完美演出！"
+		rep_gain = 28
+		cohesion_gain = 15
+		money_gain = 1500
+	elif score >= 9000:
+		performance_level = "优秀演出"
+		rep_gain = 20
+		cohesion_gain = 10
+		money_gain = 1000
+	elif score >= 7000:
+		performance_level = "良好演出"
+		rep_gain = 14
+		cohesion_gain = 7
+		money_gain = 700
+	elif score >= 5000:
+		performance_level = "普通演出"
+		rep_gain = 8
+		cohesion_gain = 4
+		money_gain = 400
+	else:
+		performance_level = "发挥一般"
+		rep_gain = 3
+		cohesion_gain = 2
+		money_gain = 150
+	
+	# 应用规模系数加成
+	rep_gain = int(rep_gain * stage.scale)
+	cohesion_gain = int(cohesion_gain * stage.scale)
+	money_gain = int(money_gain * stage.scale)
+	
+	# 更新资源
+	add_reputation(rep_gain)
+	add_cohesion(cohesion_gain)
+	add_money(money_gain)
+	
+	print("小游戏结算完成 | 阶段:", stage.name, " | 表现:", performance_level, 
+		  " | 声誉+", rep_gain, " | 凝聚力+", cohesion_gain, " | 资金+", money_gain)
+
+# 第一次触发某阶段时显示说明弹窗
+func show_first_time_minigame_description(stage_name: String):
+	var dialog = AcceptDialog.new()
+	dialog.title = "本周表演说明"
+	dialog.dialog_text = """
+	当前声誉阶段：%s
+	
+	%s
+	
+	注意：
+	- 规模越大，奖励越高，但失败惩罚也越大
+	- 努力争取完美演出吧！
+	""" % [stage_name, get_reputation_stage().desc]
+	
+	get_tree().current_scene.add_child(dialog)
+	dialog.popup_centered()
+
+func set_action_points(value: int):
+	action_points = clamp(value, 0, MAX_ACTION_POINTS)
+	refresh_current_scene_topbar()	
+	if MemberManager and MemberManager.has_method("reset_weekly_talk_counts"):
+		MemberManager.reset_weekly_talk_counts()
+	print("行动点已设置为: ", action_points)
+
+# ===================== 便捷获取方法 =====================

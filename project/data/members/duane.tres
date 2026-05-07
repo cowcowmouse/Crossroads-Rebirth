@@ -1,0 +1,50 @@
+[gd_resource type="Resource" script_class="CharacterBase" load_steps=2 format=3 uid="uid://b208m4xywe3se"]
+
+[ext_resource type="Script" uid="uid://dfr3i02a2qnew" path="res://project/scripts/models/member/character_base.gd" id="1_mms12"]
+
+[resource]
+script = ExtResource("1_mms12")
+id = "duane"
+name = "杜安"
+role = "电子鼓手"
+personality = "数据与感性"
+portrait = "res://project/assets/character/fullbody/duane.png"
+morale = 55
+fatigue = 25
+health = 90
+skill = 90
+charm = 30
+special_stats = {
+"chaos_tolerance": 20,
+"precision_rate": 95
+}
+unlock_condition = {
+"facility_level": {
+"rehearsal": 3
+},
+"reputation": 45
+}
+join_income = {
+"cohesion": -3,
+"creativity": -5,
+"money": 0,
+"precision": 10,
+"reputation": 0
+}
+join_effect_text = "入队后技巧+10，凝聚力-3，创造力-5"
+special_ability = {
+"description": "消耗1行动点，分析演出数据，提升下次演出效果",
+"effect": {
+"cost_action": 1,
+"cost_money": 0,
+"delta": 0,
+"special_effect": "performance_boost",
+"target_stat": "precision_rate"
+},
+"icon_path": "",
+"name": "数据分析"
+}
+resource_effects = {
+"creativity": -0.2,
+"precision": 1.1
+}

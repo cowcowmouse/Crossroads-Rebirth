@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://ufts1pp2meat"]
+
+[ext_resource type="Script" uid="uid://cpjeeqlnqthq1" path="res://characters/MemberAvatar.gd" id="1_xbway"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xbway"]
+
+[node name="MemberAvatar" type="Area2D"]
+script = ExtResource("1_xbway")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_xbway")

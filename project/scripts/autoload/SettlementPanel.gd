@@ -1,14 +1,14 @@
 extends Panel
 
-@onready var week_label = $WeekLabel
-@onready var expense_label = $ExpenseLabel
-@onready var income_label = $IncomeLabel
-@onready var net_change_label = $NetChangeLabel
-@onready var money_after_label = $MoneyAfterLabel
-@onready var lounge_bonus_label = $LoungeBonusLabel
-@onready var weight_change_label = $WeightChangeLabel
-@onready var debt_status_label = $DebtStatusLabel
-@onready var confirm_button = $ConfirmButton
+@onready var week_label = $CardPanel/WeekLabel
+@onready var expense_label = $CardPanel/ExpenseLabel
+@onready var income_label = $CardPanel/IncomeLabel
+@onready var net_change_label = $CardPanel/NetChangeLabel
+@onready var money_after_label = $CardPanel/MoneyAfterLabel
+@onready var lounge_bonus_label = $CardPanel/LoungeBonusLabel
+@onready var weight_change_label = $CardPanel/WeightChangeLabel
+@onready var debt_status_label = $CardPanel/DebtStatusLabel
+@onready var confirm_button = $CardPanel/ConfirmButton
 
 func _ready():
 	visible = false

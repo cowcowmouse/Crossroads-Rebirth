@@ -64,26 +64,33 @@ func SpawnFallingKey(button_name: String, delay: float):
 	await get_tree().create_timer(delay).timeout
 	Signals.CreateFallingKey.emit(button_name)
 
-# 音乐结束，弹出结算面板
+# 音乐结束，弹出结算面板 + 声誉联动结算
+# 音乐结束，弹出结算面板 + 声誉联动结算
+# 音乐结束，弹出结算面板 + 声誉联动结算
 func _on_music_player_finished():
 	print(fk_output_arr)
 	
-	# ========== 空值检查，避免报错 ==========
-	# 检查GameUI节点是否存在
 	if not is_instance_valid(game_ui):
-		print("错误：找不到GameUI节点！请检查节点名和路径是否正确")
-		return
-	# 检查结算面板是否存在
-	if not is_instance_valid(result_panel):
-		print("错误：结算面板实例化失败！请检查ResultPanel.tscn的路径")
+		print("错误：找不到GameUI节点！")
 		return
 	
-	# 获取最终得分和最高连击
+	if not is_instance_valid(result_panel):
+		print("错误：结算面板实例化失败！")
+		return
+	
 	var final_score = game_ui.get_final_score()
 	var max_combo = game_ui.get_max_combo()
 	
-	# 打印调试信息，方便排查问题
 	print("最终得分：", final_score, " | 最高连击：", max_combo)
+	
+	# ===================== 声誉阶段处理 =====================
+	var stage_info = ResourceManager.get_reputation_stage()
+	
+	# 第一次触发该阶段时显示说明（简化版：每次都显示，后面再优化）
+	ResourceManager.show_first_time_minigame_description(stage_info.name)
 	
 	# 显示结算面板
 	result_panel.show_result(final_score, max_combo)
+	
+	# 执行资源结算
+	ResourceManager.apply_minigame_result(final_score, max_combo)

@@ -1,6 +1,6 @@
 [
   {
-	"id": "high_business_001",
+	"id": "high_biz_001",
 	"title": "品牌代言",
 	"description": "知名品牌想找乐队代言，费用丰厚，但需要配合拍摄广告。",
 	"trigger_conditions": {},
@@ -8,7 +8,7 @@
 	"options": [
 	  {
 		"text": "签下代言合同",
-		"effects": {"money": 5000, "reputation": 10, "business_weight": 5},
+		"effects": {"money": 4000, "reputation": 8, "business_weight": 5},
 		"result_text": "代言费到账，知名度提升！"
 	  },
 	  {
@@ -19,42 +19,332 @@
 	]
   },
   {
-	"id": "high_business_002",
+	"id": "high_biz_002",
 	"title": "巡演计划",
 	"description": "有演出商想安排全国巡演，收入可观但成员压力很大。",
 	"trigger_conditions": {},
 	"weight": 30,
+	"min_stage": 1,
+	"max_stage": 2,
 	"options": [
 	  {
 		"text": "接受巡演，大赚一笔",
-		"effects": {"money": 8000, "cohesion": -10, "business_weight": 4},
+		"effects": {"money": 6000, "cohesion": -8, "business_weight": 4},
 		"result_text": "巡演很成功，但成员都很疲惫。"
 	  },
 	  {
 		"text": "先做专辑再巡演",
-		"effects": {"creativity": 10, "reputation": 15, "art_weight": 3},
+		"effects": {"creativity": 10, "reputation": 12, "art_weight": 3},
 		"result_text": "新专辑让巡演更受期待。"
 	  }
 	]
   },
   {
-	"id": "high_business_003",
+	"id": "high_biz_003",
 	"title": "团队凝聚力危机",
 	"description": "高强度的商业活动让成员身心俱疲，内部矛盾开始激化。",
 	"trigger_conditions": {
-	  "cohesion": {"max": 50}
+	  "cohesion": {"max": 40}
 	},
 	"weight": 55,
 	"options": [
 	  {
 		"text": "暂停商业活动，团建修复关系",
 		"effects": {"cohesion": 15, "money": -1000, "human_weight": 3},
-		"result_text": "团建活动让大家重新拉近距离，但损失了些收入。"
+		"result_text": "团建活动让大家重新拉近距离。"
 	  },
 	  {
 		"text": "继续推进，用奖金安抚",
 		"effects": {"money": -2000, "cohesion": 5, "business_weight": 2},
-		"result_text": "奖金暂时缓解了不满，但问题没有根本解决。"
+		"result_text": "奖金暂时缓解了不满。"
+	  }
+	]
+  },
+  {
+	"id": "high_biz_004",
+	"title": "风评不佳品牌的推广邀约",
+	"description": "某个貌似风评不是很好的品牌希望你们可以给他们做推广，报酬倒是很丰厚。",
+	"trigger_conditions": {},
+	"weight": 40,
+	"min_stage": 1,
+	"options": [
+	  {
+		"text": "接受推广合作",
+		"effects": {"money": 5000, "reputation": -8, "business_weight": 4},
+		"result_text": "拿到了不少钱，但部分粉丝表达了不满。",
+		"unlocks": ["chain_brand_B1"]
+	  },
+	  {
+		"text": "拒绝，不砸自己招牌",
+		"effects": {"reputation": 5, "art_weight": 2},
+		"result_text": "你婉拒了对方，守住了乐队的底线。"
+	  }
+	]
+  },
+  {
+	"id": "high_biz_005",
+	"title": "资金充裕下的商业扩张",
+	"description": "手上资金充裕，经纪人建议趁势扩大商业版图，签几个新合作。",
+	"trigger_conditions": {
+	  "money": {"min": 8000}
+	},
+	"weight": 35,
+	"stage": 2,
+	"options": [
+	  {
+		"text": "大力扩张，抢占市场",
+		"effects": {"money": -3000, "reputation": 15, "business_weight": 6},
+		"result_text": "新合作带来了更多曝光，商业版图扩大了。"
+	  },
+	  {
+		"text": "稳健经营，不急于扩张",
+		"effects": {"money": 1000, "cohesion": 5},
+		"result_text": "保守策略让团队轻松了些。"
+	  }
+	]
+  },
+  {
+	"id": "high_biz_006",
+	"title": "资金紧张时的紧急商演",
+	"description": "账上快见底了，有个婚庆公司急需乐队表演，价格可以商量。",
+	"trigger_conditions": {
+	  "money": {"max": 3000}
+	},
+	"weight": 50,
+	"options": [
+	  {
+		"text": "接下婚庆商演救急",
+		"effects": {"money": 3500, "reputation": -5, "business_weight": 3, "art_weight": -2},
+		"result_text": "赚到了救命钱，但成员有些郁闷。"
+	  },
+	  {
+		"text": "还是算了，想别的办法",
+		"effects": {"cohesion": 3, "art_weight": 1},
+		"result_text": "虽然没赚到钱，但保住了面子。"
+	  }
+	]
+  },
+  {
+	"id": "high_biz_007",
+	"title": "大型综艺节目邀约",
+	"description": "一档当红综艺节目邀请乐队参加，可能带来爆炸性的曝光度，但需要配合节目效果做一些妥协。",
+	"trigger_conditions": {
+	  "reputation": {"min": 45}
+	},
+	"weight": 35,
+	"stage": 3,
+	"options": [
+	  {
+		"text": "参加综艺，全力配合",
+		"effects": {"money": 8000, "reputation": 25, "business_weight": 8, "art_weight": -5},
+		"result_text": "节目效果爆炸，乐队一夜之间家喻户晓！但老粉有些不满。"
+	  },
+	  {
+		"text": "只参加音乐环节，拒绝搞笑桥段",
+		"effects": {"money": 3000, "reputation": 12, "business_weight": 3, "art_weight": 2},
+		"result_text": "保持了音乐人的格调，效果也还可以。"
+	  }
+	]
+  },
+  {
+	"id": "high_biz_008",
+	"title": "高凝聚力下的团队商业决策",
+	"description": "团队氛围很好，大家一起讨论下一步商业规划，气氛融洽。",
+	"trigger_conditions": {
+	  "cohesion": {"min": 70}
+	},
+	"weight": 30,
+	"stage": 2,
+	"options": [
+	  {
+		"text": "趁士气高昂接个大项目",
+		"effects": {"money": 5000, "business_weight": 5, "cohesion": -5},
+		"result_text": "项目顺利完成，虽然累但成就感满满。"
+	  },
+	  {
+		"text": "保持节奏，不要贪多",
+		"effects": {"cohesion": 5, "human_weight": 3},
+		"result_text": "大家觉得你很体贴，团队更团结了。"
+	  }
+	]
+  },
+  {
+	"id": "high_biz_009",
+	"title": "品牌联名周边",
+	"description": "一家设计工作室提出联名周边计划，前期投入不小，但若卖爆能带来可观现金流与曝光。",
+	"trigger_conditions": {
+	  "reputation": {"min": 30}
+	},
+	"weight": 33,
+	"stage": 2,
+	"options": [
+	  {
+		"text": "立刻推进联名",
+		"effects": {"money": -2000, "business_weight": 4, "reputation": 8},
+		"result_text": "首批周边上线后卖得不错，社交平台讨论度明显上升。"
+	  },
+	  {
+		"text": "先小批量试水",
+		"effects": {"money": 500, "business_weight": 2},
+		"result_text": "风险可控，但传播效果也比较温和。"
+	  }
+	]
+  },
+  {
+	"id": "high_biz_010",
+	"title": "商务负责人空缺",
+	"description": "经纪团队里负责商务对接的人突然离职，许多合作在等待回复。若处理不好，会直接影响后续收入。",
+	"trigger_conditions": {},
+	"weight": 35,
+	"options": [
+	  {
+		"text": "高薪挖人，尽快补位",
+		"effects": {"money": -2500, "business_weight": 3, "reputation": 4},
+		"result_text": "新负责人经验丰富，很快把商务节奏稳住了。"
+	  },
+	  {
+		"text": "成员临时兼任",
+		"effects": {"cohesion": -4, "money": 800},
+		"result_text": "你们勉强接住了工作，但排练与创作时间被严重挤压。"
+	  }
+	]
+  },
+  {
+	"id": "high_biz_011",
+	"title": "跨城巡演赞助谈判",
+	"description": "巡演前夕，赞助商提出临时压价并追加露出条款。要么接受，要么重新找资金。时间只剩三天。",
+	"trigger_conditions": {
+	  "money": {"min": 4000}
+	},
+	"weight": 37,
+	"stage": 3,
+	"interaction_steps": 2,
+	"options": [
+	  {
+		"text": "硬谈条件，争取更优方案",
+		"effects": {"business_weight": 4, "reputation": 5},
+		"result_text": "你没有立刻妥协，谈判拉扯了一整夜。对方态度开始松动。",
+		"follow_up": {
+		  "description": "对方最后给出两个版本：高金额高露出，或中金额低露出。",
+		  "options": [
+			{
+			  "text": "选高金额高露出",
+			  "effects": {"money": 5000, "business_weight": 3, "art_weight": -2},
+			  "result_text": "巡演资金彻底稳住，但商业露出引发部分老粉争议。"
+			},
+			{
+			  "text": "选中金额低露出",
+			  "effects": {"money": 2500, "reputation": 4, "art_weight": 1},
+			  "result_text": "你保住了舞台表达完整性，资金压力则需要自己再补。"
+			}
+		  ]
+		}
+	  },
+	  {
+		"text": "直接接受对方压价",
+		"effects": {"money": 2000, "business_weight": 2, "reputation": -2},
+		"result_text": "合作虽然保住了，但团队都觉得这次让步太多。"
+	  }
+	]
+  },
+  {
+	"id": "high_biz_012",
+	"title": "财务审计提醒",
+	"description": "会计提醒你们合同与报销单据存在不规范风险。现在补齐资料会很烦，但不处理可能埋雷。",
+	"trigger_conditions": {},
+	"weight": 31,
+	"stage": 2,
+	"options": [
+	  {
+		"text": "花一周系统梳理",
+		"effects": {"business_weight": 3, "money": -800, "cohesion": -1},
+		"result_text": "流程被理顺后，后续合作效率明显提升。"
+	  },
+	  {
+		"text": "先放一放，演出优先",
+		"effects": {"money": 500, "reputation": -2},
+		"result_text": "短期看似省事，但风险依然悬着。"
+	  }
+	]
+  },
+  {
+	"id": "high_biz_013",
+	"title": "媒体专访排期冲突",
+	"description": "两家媒体同时约访：一家流量大但偏娱乐，一家垂直专业但受众小。你只能选其一。",
+	"trigger_conditions": {
+	  "reputation": {"min": 40}
+	},
+	"weight": 30,
+	"options": [
+	  {
+		"text": "选流量媒体，先拿曝光",
+		"effects": {"reputation": 10, "business_weight": 3, "art_weight": -1},
+		"result_text": "访问传播很广，短时间新增了大量路人关注。"
+	  },
+	  {
+		"text": "选专业媒体，稳住口碑",
+		"effects": {"reputation": 6, "art_weight": 2},
+		"result_text": "虽然曝光量小，但深度访谈为你们积累了高质量口碑。"
+	  }
+	]
+  },
+  {
+	"id": "high_biz_014",
+	"title": "会员体系试点",
+	"description": "经纪团队建议做粉丝会员体系：提前购票、排练室直播、限定周边等。可以提高复购，但运营成本不低。",
+	"trigger_conditions": {},
+	"weight": 32,
+	"stage": 3,
+	"options": [
+	  {
+		"text": "上线完整会员计划",
+		"effects": {"money": 3500, "business_weight": 4, "cohesion": -2},
+		"result_text": "付费用户增长很快，但内容维护压力落在了每个人身上。"
+	  },
+	  {
+		"text": "只做轻量订阅",
+		"effects": {"money": 1500, "human_weight": 2},
+		"result_text": "你们维持了较低负担，收入增长相对平稳。"
+	  }
+	]
+  },
+  {
+	"id": "high_biz_repeatable_01",
+	"title": "无事发生",
+	"description": "今天酒馆和乐队都没什么特别的事发生，平平淡淡的一天。老钉子在吧台擦杯子，成员们各自休息。",
+	"trigger_conditions": {},
+	"weight": 15,
+	"repeatable": true,
+	"options": [
+	  {
+		"text": "去帮老钉子擦擦杯子",
+		"effects": {"cohesion": 2, "human_weight": 1},
+		"result_text": "老钉子笑了笑，递给你一杯免费的饮料。"
+	  },
+	  {
+		"text": "躺着休息一天",
+		"effects": {"creativity": 1},
+		"result_text": "难得清闲的一天。"
+	  }
+	]
+  },
+  {
+	"id": "high_biz_repeatable_02",
+	"title": "商务邮件清空计划",
+	"description": "邮箱里堆着十几封待回复商务邮件。没有突发大事，但每一封都可能是下一次机会。",
+	"trigger_conditions": {},
+	"weight": 12,
+	"repeatable": true,
+	"options": [
+	  {
+		"text": "逐封认真回复",
+		"effects": {"business_weight": 1, "reputation": 1},
+		"result_text": "你把邮件清到零，节奏终于回到可控状态。"
+	  },
+	  {
+		"text": "挑重点先回",
+		"effects": {"money": 500},
+		"result_text": "你快速处理了高价值合作，其他邮件留到明天。"
 	  }
 	]
   }

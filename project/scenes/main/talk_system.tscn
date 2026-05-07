@@ -1,0 +1,52 @@
+[gd_scene load_steps=3 format=3 uid="uid://dfbwrjpx5x318"]
+
+[ext_resource type="Script" uid="uid://u7s6nanpeup6" path="res://project/scripts/systems/MemberTalkSystem.gd" id="1_kn27j"]
+[ext_resource type="PackedScene" uid="uid://c64gj0q27n4ew" path="res://project/scenes/member/MemberPanel.tscn" id="2_tn4wb"]
+
+[node name="TalkSystem" type="Node2D"]
+script = ExtResource("1_kn27j")
+
+[node name="UI_SimpleChat" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 500.0
+offset_top = 700.0
+offset_right = 540.0
+offset_bottom = 740.0
+
+[node name="Panel" type="Panel" parent="UI_SimpleChat"]
+layout_mode = 0
+offset_left = -200.0
+offset_top = -321.0
+offset_right = -22.0
+offset_bottom = -191.0
+
+[node name="Lbl_ChatText" type="Label" parent="UI_SimpleChat"]
+layout_mode = 0
+offset_left = -159.0
+offset_top = -310.0
+offset_right = -112.0
+offset_bottom = -287.0
+text = "text："
+
+[node name="Btn_ViewInfo" type="Button" parent="UI_SimpleChat"]
+layout_mode = 0
+offset_left = -203.0
+offset_top = -286.0
+offset_right = -99.0
+offset_bottom = -240.0
+text = "查看角色信息"
+
+[node name="Btn_StartEvent" type="Button" parent="UI_SimpleChat"]
+layout_mode = 0
+offset_left = -100.0
+offset_top = -280.0
+offset_right = -57.0
+offset_bottom = -246.0
+text = "对话"
+
+[node name="MemberPanel" parent="." instance=ExtResource("2_tn4wb")]
+offset_left = 5.0
+offset_top = 3.0
+offset_right = 5.0
+offset_bottom = 3.0

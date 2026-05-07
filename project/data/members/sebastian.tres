@@ -1,0 +1,55 @@
+[gd_resource type="Resource" script_class="CharacterBase" load_steps=2 format=3 uid="uid://bet788b3b3cxf"]
+
+[ext_resource type="Script" uid="uid://dfr3i02a2qnew" path="res://project/scripts/models/member/character_base.gd" id="1_mx436"]
+
+[resource]
+script = ExtResource("1_mx436")
+id = "sebastian"
+name = "塞巴斯蒂安"
+role = "投资人"
+personality = "资本代理人"
+portrait = "res://project/assets/character/fullbody/sebastian.png"
+morale = 50
+fatigue = 20
+health = 95
+skill = 60
+charm = 65
+special_stats = {
+"capital_purity": 90,
+"investment_amount": 0
+}
+stage2_condition = {
+"investment": 10000,
+"relationship": 30
+}
+stage3_condition = {
+"event": "true_partner",
+"relationship": 60
+}
+unlock_condition = {
+"money": 20000,
+"reputation": 60
+}
+join_income = {
+"cohesion": -10,
+"creativity": 0,
+"money": 5000,
+"reputation": 20
+}
+join_effect_text = "入队后资金+5000，声誉+20，凝聚力-10"
+special_ability = {
+"description": "消耗2000资金，获得额外收入",
+"effect": {
+"cost_action": 1,
+"cost_money": 2000,
+"delta": 2000,
+"special_effect": "future_income",
+"target_stat": "investment_amount"
+},
+"icon_path": "",
+"name": "商业投资"
+}
+resource_effects = {
+"cohesion": -0.5,
+"money": 2.0
+}

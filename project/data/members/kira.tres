@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="CharacterBase" load_steps=2 format=3 uid="uid://bvwq7stderjbl"]
+
+[ext_resource type="Script" uid="uid://dfr3i02a2qnew" path="res://project/scripts/models/member/character_base.gd" id="1_xio3q"]
+
+[resource]
+script = ExtResource("1_xio3q")
+id = "kira"
+name = "凯拉"
+role = "主唱"
+personality = "流量vs真实"
+portrait = "res://project/assets/character/fullbody/kira.png"
+morale = 65
+fatigue = 35
+health = 85
+skill = 75
+charm = 85
+special_stats = {
+"authenticity": 30,
+"popularity_pressure": 80
+}
+join_income = {
+"cohesion": 3,
+"creativity": 0,
+"money": 500,
+"reputation": 10
+}
+join_effect_text = "入队后资金+500，声誉+10"
+special_ability = {
+"description": "消耗50资金，提升真实度，降低人气压力",
+"effect": {
+"cost_action": 1,
+"cost_money": 50,
+"delta": 5,
+"secondary_delta": -5,
+"secondary_stat": "popularity_pressure",
+"target_stat": "authenticity"
+},
+"icon_path": "",
+"name": "真实表达"
+}
+resource_effects = {
+"cohesion": 0.4,
+"reputation": 0.6
+}

@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dfhofgm01hnb0"]
+
+[node name="MemberAvatar" type="Area2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+top_level = true
+scale = Vector2(0.30089486, 0.32166666)
+
+[node name="Label" type="Label" parent="."]
+offset_left = 121.0
+offset_top = 72.0
+offset_right = 443.0
+offset_bottom = 168.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]

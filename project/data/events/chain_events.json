@@ -1,0 +1,190 @@
+[
+  {
+    "id": "chain_brand_B1",
+    "title": "风评品牌的进一步绑定",
+    "description": "之前做推广的那个品牌听说酒馆资金近况不太好，愿意以资金援助的形式换取与酒馆的进一步绑定。他们提出了一份长期合作协议。",
+    "pool": "high_business",
+    "requires_event": "high_biz_004",
+    "trigger_conditions": {
+      "money": {"max": 5000}
+    },
+    "weight": 60,
+    "min_stage": 1,
+    "options": [
+      {
+        "text": "接受资金援助，签长期协议",
+        "effects": {"money": 6000, "business_weight": 8, "reputation": -10, "art_weight": -3},
+        "result_text": "大笔资金到账，但酒馆的品牌形象被进一步绑定了。",
+        "unlocks": ["chain_brand_C1"]
+      },
+      {
+        "text": "拒绝绑定，保持独立",
+        "effects": {"business_weight": -3, "reputation": 5, "art_weight": 2},
+        "result_text": "你拒绝了他们的'好意'，独立的形象反而赢得了一些尊重。"
+      }
+    ]
+  },
+  {
+    "id": "chain_brand_C1",
+    "title": "品牌丑闻曝光",
+    "description": "那个合作品牌爆出了严重的丑闻，媒体开始关注所有与之合作过的机构。酒馆也被波及，你需要尽快做出回应。",
+    "pool": "high_business",
+    "requires_event": "chain_brand_B1",
+    "trigger_conditions": {},
+    "weight": 70,
+    "min_stage": 2,
+    "options": [
+      {
+        "text": "立刻发声明切割关系，承担违约金",
+        "effects": {"money": -4000, "reputation": 15, "business_weight": -5, "human_weight": 5},
+        "result_text": "切割得干净利落，公众对你们的态度转为同情和支持。虽然赔了不少钱，但保住了名声。"
+      },
+      {
+        "text": "低调处理，等风头过去",
+        "effects": {"reputation": -20, "business_weight": 3, "cohesion": -8},
+        "result_text": "风头过去了，但网友骂了很久，成员们也对这件事很不满。"
+      }
+    ]
+  },
+  {
+    "id": "chain_indie_A",
+    "title": "独立音乐人的合作邀请",
+    "description": "一位正在崛起的独立音乐人通过社交媒体联系到你们，想合作一首歌。他的音乐很有特色，但圈内争议不小。",
+    "pool": "high_art",
+    "trigger_conditions": {
+      "creativity": {"min": 40}
+    },
+    "weight": 35,
+    "min_stage": 1,
+    "options": [
+      {
+        "text": "答应合作，碰撞火花",
+        "effects": {"creativity": 10, "art_weight": 4, "reputation": 5},
+        "result_text": "合作让双方都受益匪浅，一首极具实验性的作品诞生了。",
+        "unlocks": ["chain_indie_B"]
+      },
+      {
+        "text": "婉拒，专注自己的项目",
+        "effects": {"art_weight": 1},
+        "result_text": "你礼貌地拒绝了，专心做自己的事。"
+      }
+    ]
+  },
+  {
+    "id": "chain_indie_B",
+    "title": "合作成果引发的关注",
+    "description": "你们和独立音乐人合作的那首歌意外走红，一个独立音乐厂牌向你们抛出了橄榄枝，想签下这首歌的发行权。",
+    "pool": "low_art",
+    "requires_event": "chain_indie_A",
+    "trigger_conditions": {},
+    "weight": 55,
+    "min_stage": 1,
+    "options": [
+      {
+        "text": "签约厂牌，让更多人听到",
+        "effects": {"money": 3000, "reputation": 12, "business_weight": 3, "art_weight": 2},
+        "result_text": "歌曲通过厂牌的渠道传播到了更多人耳中。",
+        "unlocks": ["chain_indie_C"]
+      },
+      {
+        "text": "自己发行，保留全部版权",
+        "effects": {"art_weight": 4, "creativity": 5},
+        "result_text": "虽然传播范围有限，但所有权归你们。"
+      }
+    ]
+  },
+  {
+    "id": "chain_indie_C",
+    "title": "独立音乐节的压轴邀请",
+    "description": "因为之前合作歌曲的成功，一个颇有影响力的独立音乐节邀请你们担任压轴演出。这是乐队迄今为止最大的舞台。",
+    "pool": "high_art",
+    "requires_event": "chain_indie_B",
+    "trigger_conditions": {
+      "reputation": {"min": 40}
+    },
+    "weight": 60,
+    "min_stage": 2,
+    "options": [
+      {
+        "text": "全力压轴，一鸣惊人",
+        "effects": {"money": -2000, "reputation": 25, "creativity": 18, "art_weight": 8, "cohesion": 8},
+        "result_text": "这是乐队历史上最辉煌的一夜！所有人都记住了你们的名字。"
+      },
+      {
+        "text": "普通参演就好，不想压力太大",
+        "effects": {"reputation": 8, "art_weight": 3, "cohesion": 3},
+        "result_text": "演出中规中矩，但也不算差。"
+      }
+    ]
+  },
+  {
+    "id": "chain_member_A",
+    "title": "新成员的试探",
+    "description": "一个有才华的年轻音乐人来到酒馆，说他很喜欢你们的音乐，想加入乐队。但他的性格似乎有些棱角。",
+    "pool": "low_human",
+    "trigger_conditions": {
+      "cohesion": {"min": 45}
+    },
+    "weight": 35,
+    "min_stage": 1,
+    "max_stage": 2,
+    "options": [
+      {
+        "text": "给他一个试用期",
+        "effects": {"creativity": 8, "cohesion": -5, "human_weight": 3},
+        "result_text": "他的才华确实不错，但和老成员之间的磨合还需要时间。",
+        "unlocks": ["chain_member_B"]
+      },
+      {
+        "text": "婉拒，现在团队够稳定了",
+        "effects": {"cohesion": 5, "human_weight": 1},
+        "result_text": "他有些失望地离开了，但团队气氛没有被打扰。"
+      }
+    ]
+  },
+  {
+    "id": "chain_member_B",
+    "title": "新成员的融入危机",
+    "description": "新来的成员和一位老成员因为排练方式的分歧产生了严重冲突，两人互不相让。",
+    "pool": "low_human",
+    "requires_event": "chain_member_A",
+    "trigger_conditions": {},
+    "weight": 55,
+    "min_stage": 1,
+    "options": [
+      {
+        "text": "一对一调解，找到共同点",
+        "effects": {"cohesion": 12, "human_weight": 6, "creativity": 5},
+        "result_text": "经过你的斡旋，两人发现了对方的闪光点，开始互相尊重。",
+        "unlocks": ["chain_member_C"]
+      },
+      {
+        "text": "让新成员离开，保老团队",
+        "effects": {"cohesion": 8, "creativity": -5, "human_weight": -3},
+        "result_text": "新成员离开了，团队恢复了平静，但失去了一份新的活力。"
+      }
+    ]
+  },
+  {
+    "id": "chain_member_C",
+    "title": "新成员的蜕变",
+    "description": "经历了磨合期后，新成员已经完全融入了团队。更惊喜的是，他带来了一个可能改变乐队命运的消息——他之前的音乐老师是业内大佬，愿意给你们一次特别指导。",
+    "pool": "high_human",
+    "requires_event": "chain_member_B",
+    "trigger_conditions": {},
+    "weight": 60,
+    "min_stage": 2,
+    "options": [
+      {
+        "text": "接受大佬指导",
+        "effects": {"creativity": 20, "reputation": 15, "cohesion": 10, "art_weight": 5, "human_weight": 5},
+        "result_text": "大佬的一番话让所有人茅塞顿开，乐队的音乐水平跃升了一个台阶！"
+      },
+      {
+        "text": "感谢好意，但想靠自己成长",
+        "effects": {"cohesion": 8, "art_weight": 3, "human_weight": 3},
+        "result_text": "新成员理解你的想法，团队的自信心更强了。"
+      }
+    ]
+  }
+]

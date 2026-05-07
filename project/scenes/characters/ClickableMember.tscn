@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://5ts703njckgy"]
+
+[ext_resource type="Script" uid="uid://csgoj7di1oybv" path="res://project/scenes/characters/ClickableMember.gd" id="1_mu81v"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vr4yh"]
+size = Vector2(255.66666, 269.8333)
+
+[node name="ClickableMember" type="Node2D"]
+scale = Vector2(0.6, 0.6)
+script = ExtResource("1_mu81v")
+
+[node name="Portrait" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+
+[node name="ClickArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickArea"]
+position = Vector2(-3.3333435, 5)
+shape = SubResource("RectangleShape2D_vr4yh")

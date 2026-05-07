@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="CharacterBase" load_steps=2 format=3 uid="uid://b188arucpytch"]
+
+[ext_resource type="Script" uid="uid://dfr3i02a2qnew" path="res://project/scripts/models/member/character_base.gd" id="1_tobwk"]
+
+[resource]
+script = ExtResource("1_tobwk")
+id = "aya"
+name = "阿雅"
+role = "音乐治疗师"
+personality = "音乐治疗"
+morale = 80
+fatigue = 20
+health = 90
+skill = 70
+charm = 75
+special_stats = {
+"community_service": 50,
+"healing_power": 60
+}
+unlock_condition = {
+"event": "community_event",
+"reputation": 35
+}
+join_income = {
+"cohesion": 10,
+"creativity": 5,
+"money": 0,
+"reputation": 5
+}
+join_effect_text = "入队后凝聚力+10，创造力+5，声誉+5"
+special_ability = {
+"description": "消耗1行动点，恢复全员心情",
+"effect": {
+"cost_action": 1,
+"cost_money": 0,
+"delta": 0,
+"special_effect": "heal_all_members",
+"target_stat": "healing_power"
+},
+"icon_path": "",
+"name": "音乐治疗"
+}
+resource_effects = {
+"cohesion": 0.7,
+"morale_boost": 5.0
+}
+join_cost = 120

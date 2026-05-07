@@ -14,6 +14,16 @@ var current_week: int = 1
 
 func _ready():
 	process_mode = PROCESS_MODE_ALWAYS
+	call_deferred("_emit_initial_week_state")
+
+# 初次进入场景时，主动把当前周数和阶段推给 UI
+func _emit_initial_week_state():
+	if EventBus.has_signal("week_changed"):
+		EventBus.week_changed.emit(current_week)
+	if EventBus.has_signal("week_phase_changed"):
+		EventBus.week_phase_changed.emit(current_phase)
+
+
 
 func start_new_week():
 	current_week += 1
@@ -41,6 +51,10 @@ func start_new_week():
 	
 	set_phase(GamePhase.BEFORE_WEEK)
 	
+	# 关键：新周开始时立刻通知 UI 更新周数
+	if EventBus.has_signal("week_changed"):
+		EventBus.week_changed.emit(current_week)
+	
 	print("=== 第", current_week, "周开始 ===")
 
 func force_to_mid_week():
@@ -50,15 +64,34 @@ func force_to_mid_week():
 func set_phase(phase: GamePhase):
 	if current_phase != phase:
 		current_phase = phase
-		phase_changed.emit(current_phase)
-		print("游戏阶段变化: ", _get_phase_name(current_phase))
-
+		_update_clock_state(phase)
+		EventBus.week_phase_changed.emit(current_phase)  # 发射每周内阶段信号
+		print("每周阶段变化: ", _get_phase_name(current_phase))
+		
+func _update_clock_state(phase: GamePhase):
+	var clock_state = get_node("/root/ClockState")
+	if not clock_state:
+		return
+	
+	match phase:
+		GamePhase.BEFORE_WEEK:
+			clock_state.set_phase(clock_state.ClockPhase.BEFORE_WEEK)
+		GamePhase.MID_WEEK:
+			clock_state.set_phase(clock_state.ClockPhase.MID_WEEK)
+		GamePhase.AFTER_WEEK:
+			clock_state.set_phase(clock_state.ClockPhase.AFTER_WEEK)
+			
 func complete_mid_week():
 	if current_phase == GamePhase.MID_WEEK:
 		set_phase(GamePhase.AFTER_WEEK)
 
 # 执行周后结算
 func _execute_week_settlement():
+	# 从 GameManager 获取正确的周数
+	var game_manager = get_node("/root/GameManager")
+	if game_manager:
+		current_week = game_manager.get_current_week()
+	
 	print("=== 第", current_week, "周结算开始 ===")
 	
 	# 记录结算前资金（用于计算净变化）
@@ -173,11 +206,11 @@ func get_current_week() -> int:
 func _get_phase_name(phase: GamePhase) -> String:
 	match phase:
 		GamePhase.BEFORE_WEEK:
-			return "周前"
+			return "周初"
 		GamePhase.MID_WEEK:
 			return "周中"
 		GamePhase.AFTER_WEEK:
-			return "周后"
+			return "周末"
 	return "未知"
 
 func _refresh_all_facility_buttons():
@@ -196,3 +229,13 @@ func _refresh_all_facility_buttons():
 		var facility_button = current_scene.get_node_or_null(path)
 		if facility_button and facility_button.has_method("refresh_repair_state"):
 			facility_button.refresh_repair_state()
+
+# 设置当前周数（用于跳转后同步）
+func set_current_week(week: int):
+	current_week = week
+	
+	# 关键：外部同步周数后，也立刻通知 UI
+	if EventBus.has_signal("week_changed"):
+		EventBus.week_changed.emit(current_week)
+	
+	print("WeekCycleManager 周数已同步: ", current_week)

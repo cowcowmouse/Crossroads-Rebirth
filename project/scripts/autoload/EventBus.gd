@@ -31,12 +31,24 @@ signal action_points_exhausted()
 
 # ==================== 游戏流程相关信号 ====================
 signal game_over(reason: String)
-signal week_changed(week: int)
+signal game_over_triggered(reason: String)
+signal week_changed(week: int)  
+signal game_phase_changed(phase: String)
+signal week_phase_changed(phase: int)
 signal phase_changed(phase: String)
-
+signal final_week_ready(can_perform: bool)
 # ==================== UI相关信号 ====================
 signal ui_refresh_requested(target: String)
 signal element_highlight(element: Node, text: String)
 signal highlight_cleared()
 signal scene_opened(scene_name: String)
 signal scene_closed()
+
+# ==================== 人物相关信号 ====================
+signal relationship_changed(char_id: String, new_value: int)
+signal character_stage_changed(char_id: String, new_stage: int)
+signal character_unlocked(char_id: String)
+
+signal game_reset()  # 游戏重置信号
+
+signal show_notification(text: String)
